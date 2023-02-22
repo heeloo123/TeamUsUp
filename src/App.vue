@@ -12,7 +12,7 @@ export default {
 }
 </script>
 
-Hello :D
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
