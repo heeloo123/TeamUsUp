@@ -1,6 +1,6 @@
 
 <template>
-<img class="logo" src="../assets/register_logo.png">
+<img class="logo" alt="SignUp logo" src="../assets/register_logo.png"/>
 <div class="container">
   <h1>REGISTRATION</h1>
   <div class="registration">
