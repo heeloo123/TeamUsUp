@@ -1,12 +1,14 @@
 
 <template>
+  <!-- Can anyone help with the style<>...cant do exactly same as the ui layout...-->
+  
 <img class="logo" alt="SignUp logo" src="../assets/register_logo.png"/>
 <div class="container">
   <h1>REGISTRATION</h1>
   <div class="registration">
     <form @submit.prevent="signUp">
       <label>
-        Email<input type="email" placeholder="Enter your email address" v-model="email" required=""/>
+        Email<input type="email" placeholder="Enter your email address" v-model="email" required=""/> 
       </label>
       <label>
         First Name<input type="text" placeholder="Enter your first name" v-model="FirstName" required=""/>
@@ -28,9 +30,10 @@
   </div>
 </template>
 
+
 <script>
 
-const Swal = require('sweetalert2')
+const Swal = require('sweetalert2') 
 
 export default {
 name:'SignUp',
@@ -60,7 +63,8 @@ methods:{
      
 
 </script>
-<style>
+
+<style> 
  .logo 
  {
     float: right;
