@@ -1,90 +1,96 @@
+
 <template>
   
-
+<div class="container">
   <h1>REGISTRATION</h1>
   <div class="registration">
     <form @submit.prevent="signUp">
       <label>
-        Email address <input type="email" v-model="email" required/>
+        Email<input type="email" v-model="email" required=""/>
       </label>
       <label>
-        First Name <input type="text" v-model="FirstName" required/>
+        First Name<input type="text" v-model="FirstName" required=""/>
       </label>
       <label>
-        Last Name <input type="text" v-model="LastName" required/>
+        Last Name<input type="text" v-model="LastName" required=""/>
       </label>
       <label>
-        Password
-        <input type="password" v-model="password" required/>
+        Password<input type="password" v-model="password" required=""/>
       </label>
-      <label>
-        Re-enter password
-        <input type="password" v-model="passwordVerify" required/>
-      </label>
-
-      <button type="submit">Register</button>
-
+      <div class="box">
+        Re-enter password<input type="password" v-model="passwordVerify" required=""/>
+      </div>
+      <button style="border-radius:6px; background:black;color:white; font-size:large" type="submit">Register</button>
+      
     </form>
-
+  </div>
+ 
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+
+const Swal = require('sweetalert2')
 
 export default {
-name : 'SignUp',
+name:'SignUp',
+
 data(){
   return{
     email:'',
     FirstName:'',
     LastName:'',
-    password: '',
+    password: '', rules:{min:v=> v.lenght>=8 || 'Min 8 characters'},
     passwordVerify: ''
   }
 },
+
 methods:{
   signUp(){
     //verify that passwords match
     if(this.password !== this.passwordVerify){
-      this.swal({
-        Title:'Password does not match.',
-        type: 'warning',
-        showCloseButton: true
+      Swal.fire({
+        title:'Password does not match.',
+        icon: 'warning'
       })
-    } else{
-      axios.post('/api/register',{
-        email:this.email,
-        FirstName:this.FirstName,
-        LastName:this.LastName,
-        password: this.password
-      })
-      .then(response =>{
-        console.log(response.data)
-        this.swal({
-          Title: 'Registration successful',
-          type:'success',
-          showCloseButton:true
-        })
-      })
-      .catch(error =>{
-        console.log(error)
-        this.swal({
-          title:'Registration failed',
-          type:'error',
-          showCloseButton: true
-
-        })
-      })
-    }
+    } 
   }
-  
-  
+ }
 }
+     
 
-}
 </script>
-
 <style>
+  
+  
+
+.registration input{
+    width: 500px;
+    height: 50px;
+    padding-left: 30px;
+    display: block;
+    margin-bottom: 20px;
+    font-size: larger;
+    border-radius: 6px;
+    position: inherit;
+}
+
+
+.container{
+  display: block;
+  block-size:fit-content;
+  background: #d8d2d3;
+  border-radius:6px;
+  margin-right:500px;
+  margin-left:100px;
+  position:fixed;
+  text-align: left;
+  padding:20px;
+  
+
+}
+
+
+
 
 </style>
