@@ -1,26 +1,26 @@
 
 <template>
-  
+<img class="logo" src="../assets/register_logo.png">
 <div class="container">
   <h1>REGISTRATION</h1>
   <div class="registration">
     <form @submit.prevent="signUp">
       <label>
-        Email<input type="email" v-model="email" required=""/>
+        Email<input type="email" placeholder="Enter your email address" v-model="email" required=""/>
       </label>
       <label>
-        First Name<input type="text" v-model="FirstName" required=""/>
+        First Name<input type="text" placeholder="Enter your first name" v-model="FirstName" required=""/>
       </label>
       <label>
-        Last Name<input type="text" v-model="LastName" required=""/>
+        Last Name<input type="text" placeholder="Enter your last name" v-model="LastName" required=""/>
       </label>
       <label>
-        Password<input type="password" v-model="password" required=""/>
+        Password<input type="password" placeholder="8-20 Characters" v-model="password" required=""/>
       </label>
       <div class="box">
-        Re-enter password<input type="password" v-model="passwordVerify" required=""/>
+        Comfirmed password<input type="password" placeholder="Re-Enter password" v-model="passwordVerify" required=""/>
       </div>
-      <button style="border-radius:6px; background:black;color:white; font-size:large" type="submit">Register</button>
+      <button style="width:150px;border-radius:6px; background:black;color:white; font-size:large" type="submit">Register</button>
       
     </form>
   </div>
@@ -61,7 +61,14 @@ methods:{
 
 </script>
 <style>
+ .logo 
+ {
+    float: right;
+    margin:90px;
+    width: 400px;
+    position: fixed;
   
+ } 
   
 
 .registration input{
@@ -78,11 +85,10 @@ methods:{
 
 .container{
   display: block;
-  block-size:fit-content;
   background: #d8d2d3;
   border-radius:6px;
   margin-right:500px;
-  margin-left:100px;
+  margin-left:200px;
   position:fixed;
   text-align: left;
   padding:20px;
