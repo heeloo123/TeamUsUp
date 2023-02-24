@@ -1,5 +1,7 @@
 
 <template>
+
+ 
   <!-- Can anyone help with the style<>...cant do exactly same as the ui layout...-->
 <img class="logo" alt="SignUp logo" src="../assets/register_logo.png"/>
 <div class="container">
@@ -27,7 +29,7 @@
   </div>
  
   </div>
- 
+
 </template>
 
 
@@ -36,10 +38,10 @@
 const Swal = require('sweetalert2')
 
 //import PageHeader from './Header.vue'
-
 export default {
 componenets: {
   name:'SignUpView',
+ 
   //PageHeader
 },
 
@@ -73,7 +75,10 @@ methods:{
 
 </script>
 
-<style> 
+<style scoped> 
+
+
+
  .logo 
  {
     float: right;
@@ -109,7 +114,7 @@ methods:{
   padding:20px;
   left: 160px;
   top: 230px;
-
+  
 }
 
 </style>

@@ -9,3 +9,4 @@ import VueSweetaleart2 from 'vue-sweetalert2';
 
 import router from './router'
 Vue.use(VueSweetaleart2);
+

@@ -1,5 +1,7 @@
 <template>
-  <div class="header">
+ 
+  <div class="header" >
+ 
   <nav>
     <router-link to="/">
       <img
@@ -17,49 +19,94 @@
         placeholder="Search"
         aria-label="Search"
       />
-      
-    
     </form>
 
-   <button class="loginBtn"> <router-link to="/Login">Login/Register</router-link> </button>
+   <button v-if="showButton" @click="hideButton" class="loginBtn"> <router-link to="/Login">Login/Register</router-link> </button>
+  
   </nav>
 
   <router-view />
+
   </div>
+
 </template>
 
-<style scoped>
-#app{
+
+<!--hide the button when nav to login page-->
+<script>
+export default {
+  
+  data() {
+    return {
+      showButton: true
+    }
+  },methods:{
+    hideButton() {
+      this.showButton = false
+    }
+  },
+  watch: {
+    '$route'() {
+      if (this.$route.path === '/') {
+        this.showButton = true
+      }
+    }
+  }
   
 }
+
+</script>
+
+
+<style>
+
 .header{
+    display: block; 
     background-color:black;
     width: -webkit-fill-available;
     height: 100px;
     margin:-8px; 
-    z-index: -1;
+    
+    
   }
 
 .TeamUsUp_logo {
   width: 400px;
   float:left;
-  margin:-15px
+  margin:-15px;
+  
 }
 
+.SearchInput{
+  width: 300px;
+  height: 50px;
+  border-radius: 60px;
+  font-size: larger;
+  text-align:inherit;
+  
+}
 .SearchBtn{
+text-align: center;
+margin-right: 300px;
 
 
 }
 .loginBtn{
     float:right;
-    height: 40px;
+    height: 60px;
+    width: 150px;
     background: #e12744;
-    border-radius: 20px;
-    margin:-15px
+    border-radius: 40px;
+    margin: -55px;
+    margin-right:auto;
+    font-size:larger
+    
 }
+
 
 nav {
   padding: 30px;
+  
 }
 
 nav a {
