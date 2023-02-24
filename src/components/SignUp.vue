@@ -107,9 +107,11 @@ methods:{
 .header{
   background-color: black;
   width: 2000px;
-  margin: 10px;
-  height: 100px;
-  position: static;
+  height: 110px;
+  margin-left:-8px;
+  position: relative;
+  top: -65px;
+  
 }
 
 
