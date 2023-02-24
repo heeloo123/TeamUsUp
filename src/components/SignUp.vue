@@ -3,7 +3,6 @@
   <!-- Can anyone help with the style<>...cant do exactly same as the ui layout...-->
   
 <img class="logo" alt="SignUp logo" src="../assets/register_logo.png"/>
-
 <div class="container">
   <h1>REGISTRATION</h1>
   <div class="registration">
@@ -29,6 +28,7 @@
   </div>
  
   </div>
+
 </template>
 
 
@@ -100,11 +100,6 @@ methods:{
 
 }
 
-.header{
-  box-sizing: boarder-box;
-  background-color: black;
-
-}
 
 
 
