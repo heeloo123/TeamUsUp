@@ -3,9 +3,6 @@
   <!-- Can anyone help with the style<>...cant do exactly same as the ui layout...-->
   
 <img class="logo" alt="SignUp logo" src="../assets/register_logo.png"/>
-<img class="TeamUsUp_logo" alt="TeamUsUp logo" src="../assets/TeamUsUp_logo.png"/>
-
-<div class="header"></div>
 <div class="container">
   <h1>REGISTRATION</h1>
   <div class="registration">
@@ -37,9 +34,15 @@
 
 <script>
 
+import PageHeader from './Headers.vue'
+
 const Swal = require('sweetalert2') 
 
 export default {
+componenets: {
+  PageHeader
+},
+
 name:'SignUp',
 
 data(){
@@ -64,6 +67,8 @@ methods:{
   }
  }
 }
+
+
      
 
 </script>
@@ -105,24 +110,6 @@ methods:{
   left: 160px;
   top: 230px;
 
-}
-
-.header{
-  background-color: black;
-  width: 2000px;
-  height: 110px;
-  margin-left:-8px;
-  position: relative;
-  bottom: 159px;
-  z-index: -1;
-  
-}
-
-.TeamUsUp_logo{
-  width: 500px;
-  position: relative;
-  top: -55px;
-  left: -670px
 }
 
 </style>
