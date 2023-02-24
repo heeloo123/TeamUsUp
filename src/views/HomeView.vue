@@ -1,20 +1,32 @@
 <template>
-  <div class="container">
-    <img class="home_logo" alt="TeamUsUp logo" src="../assets/Home_logo.png">
-
-  </div>
-
-  <section>
-    <h1>
-      Description
-    </h1>
-
-    <p>
-      They are designed to help students evaluate their potential teammates' teamwork history and make informed decisions about future collaborations. It allow students to create a
-      profile and list their 
+  
+    <img class="T_logo" alt="TeamUsUp logo" src="../assets/Portal_logo.jpg">
+  <form>
+    <img class="H_logo" alt="portal logo" src="../assets/Home_logo.png">
+  
+  <section class="text">
+    <p style="font-size: 35px; text-align: left; position: relative; top: 140px; left:150px; color: red;">
+        Student Web Portal
     </p>
 
-  </section>
+    <h2 style="font-size: 35px; text-align: left; position: relative; top: 140px; left:150px;">
+      Description
+    </h2>
+
+    <p style="font-size: 25px; text-align: left; position: relative; top: 140px; left:150px;">
+      They are designed to help students evaluate their potential <br> teammates' teamwork history and make informed decisions <br> about future collaborations.
+    </p>
+
+    <p style="font-size: 25px; text-align: left; position: relative; top: 140px; left:150px;">
+      It allow students to create a profile and list their past <br> projects, including ratings and evaluations from other team <br> memmbers.
+    </p>
+
+    <nav>
+    <button class="SignUpButton"><router-link to="/SignUp">Sign-Up Now</router-link></button>
+    </nav>
+
+</section>
+</form>
 
 </template>
 
@@ -31,17 +43,40 @@ export default {
   
 
 <style scoped>
-.container{
-  display:block;
-  background:transparent
-  
+
+.text{
+  float: left;
 }
-.home_logo{
-  width: 650px;
-  height: 440px;
+
+.T_logo{
+  width: 790px;
+  height: 120px;
   position: relative;
-  left: 800px;
-  top: 180px;
+  top: 150px;
+  left: 150px;
+}
+
+.H_logo{
+  float:right;
+  width:600px;
+  position: relative;
+  top: 140px;
+  right: 130px;
+}
+
+.SignUpButton{
+    float:right;
+    height: 70px;
+    width: 170px;
+    background: #e12744;
+    border-radius: 40px;
+    margin: -55px;
+    margin-right:auto;
+    color: white;
+    position: relative;
+    top: 190px;
+    left: 300px;
+    font-size: 20px;
 }
 
 
