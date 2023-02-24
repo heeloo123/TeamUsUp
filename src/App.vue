@@ -1,26 +1,55 @@
 <template>
+  <div class="header">
   <nav>
     <router-link to="/">
-      <img class="TeamUsUp_logo" alt="TeamUsUp logo" src="./assets/TeamUsUp_logo.png"/>
-    </router-link> 
+      <img
+        class="TeamUsUp_logo"
+        alt="TeamUsUp logo"
+        src="./assets/TeamUsUp_logo.png"
+      />
+    </router-link>
+
+    <form class="SearchBtn" role="search">
+      <input
+        class="SearchInput"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      
     
-     <router-link to="/Login">Login/Register</router-link>
+    </form>
+
+   <button class="loginBtn"> <router-link to="/Login">Login/Register</router-link> </button>
   </nav>
-  <router-view/>
+
+  <router-view />
+  </div>
 </template>
 
 <style>
-.TeamUsUp_logo{
-  width: 200px;
+
+.header{
+    background-color:black;
+    width: -webkit-fill-available;
+    height: 100px;
+    margin:-8px; 
+    z-index: -1;
+  }
+
+.TeamUsUp_logo {
+  width: 400px;
+  float:left;
+  margin:-15px
 }
 
+.SearchBtn{
 
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+}
+.loginBtn{
+float:right;
+
 }
 
 nav {
