@@ -1,6 +1,6 @@
 import Vue from'vue'
 import { createApp } from 'vue'
-import App from './DefaultPage.vue'
+import App from './HomePage.vue'
 
 createApp(App).mount('#app')
 

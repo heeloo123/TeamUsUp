@@ -1,14 +1,17 @@
 <template>
-<div class="app">
-  <div id="defaultPage">
+<main class="HomePage">
+  <div id="container">
     <img class="TeamUsUp_logo" alt="TeamUsUp logo" src="./assets/TeamUsUp_logo.png"/>
     <img class="Home_logo" alt="Home logo" src="./assets/Home_logo.png"/>
 
   </div>
-</div>  
+</main>  
 </template>
 
 <script>
+export default{
+  name:"HomePage"
+}
 //import SignUp from "./components/SignUp.vue";
 //export default {
 //  name: "DefaultPage",
@@ -19,15 +22,7 @@
 </script>
 
 
-<style>
-.app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
 
 .TeamUsUp_logo{
   width:500px;
@@ -35,7 +30,9 @@
   float:left;
 }
 
-.Homelogo{
-  
+.Home_logo{
+  float:right;
+  width:500px;
+
 }
 </style>
