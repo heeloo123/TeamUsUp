@@ -1,14 +1,20 @@
 <template>
-  <nav class ="header">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/SignUp">SignUp</router-link> |
-    <router-link to="/Login">LoginPage</router-link>
-
+  <nav>
+    <router-link to="/">
+      <img class="TeamUsUp_logo" alt="TeamUsUp logo" src="./assets/TeamUsUp_logo.png"/>
+    </router-link> |
+    
+     <router-link to="/Login">Login/Register</router-link>
   </nav>
   <router-view/>
 </template>
 
 <style>
+.TeamUsUp_logo{
+  width: 200px;
+}
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

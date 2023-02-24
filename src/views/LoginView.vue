@@ -1,5 +1,7 @@
 <template>
 <h1>Login Page</h1>
+  
+    <router-link to="/SignUp">SignUp</router-link>
     
 </template>
 
