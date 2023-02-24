@@ -21,7 +21,7 @@
     
     </form>
 
-   <button v-if="" class="loginBtn"> <router-link to="/Login">Login/Register</router-link> </button>
+   <button class="loginBtn"> <router-link to="/Login">Login/Register</router-link> </button>
   </nav>
 
   <router-view />
