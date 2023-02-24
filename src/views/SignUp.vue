@@ -34,13 +34,10 @@
 
 <script>
 
-import PageHeader from './Header.vue'
-
 const Swal = require('sweetalert2') 
 
 export default {
 componenets: {
-  PageHeader,
   name:'SignUpView'
 },
 
