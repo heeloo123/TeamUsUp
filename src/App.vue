@@ -2,7 +2,7 @@
   <nav>
     <router-link to="/">
       <img class="TeamUsUp_logo" alt="TeamUsUp logo" src="./assets/TeamUsUp_logo.png"/>
-    </router-link> |
+    </router-link> 
     
      <router-link to="/Login">Login/Register</router-link>
   </nav>
