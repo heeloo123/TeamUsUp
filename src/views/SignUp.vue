@@ -1,7 +1,7 @@
 
 <template>
   <!-- Can anyone help with the style<>...cant do exactly same as the ui layout...-->
-  
+ 
 <img class="logo" alt="SignUp logo" src="../assets/register_logo.png"/>
 <div class="container">
   <h1>REGISTRATION</h1>
@@ -28,22 +28,23 @@
   </div>
  
   </div>
-
+ 
 </template>
 
 
 <script>
 
-import PageHeader from './Headers.vue'
+import PageHeader from './Header.vue'
 
 const Swal = require('sweetalert2') 
 
 export default {
 componenets: {
-  PageHeader
+  PageHeader,
+  name:'SignUpView'
 },
 
-name:'SignUp',
+
 
 data(){
   return{
