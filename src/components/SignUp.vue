@@ -75,6 +75,8 @@ methods:{
     margin:90px;
     width: 400px;
     position: fixed;
+    right: 400px;
+    top: 190px;
   
  } 
   
@@ -99,7 +101,9 @@ methods:{
   margin-left:200px;
   position:fixed;
   text-align: left;
-  padding:20px;  
+  padding:20px;
+  left: 160px;
+  top: 230px;
 
 }
 
@@ -109,12 +113,16 @@ methods:{
   height: 110px;
   margin-left:-8px;
   position: relative;
-  top: -65px;
+  top: -159px;
+  z-index: -1;
   
 }
 
 .TeamUsUp_logo{
   width: 500px;
+  position: relative;
+  top: -53px;
+  left: -670px
 }
 
 </style>
