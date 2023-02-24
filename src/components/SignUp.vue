@@ -3,10 +3,8 @@
   <!-- Can anyone help with the style<>...cant do exactly same as the ui layout...-->
   
 <img class="logo" alt="SignUp logo" src="../assets/register_logo.png"/>
-
-<div class="header">
-    
-</div>
+<img class="TeamUsUp logo" src="src\assets\TeamUsUp_logo.PNG"/>
+<div class="header"></div>
 <div class="container">
   <h1>REGISTRATION</h1>
   <div class="registration">
@@ -114,6 +112,9 @@ methods:{
   
 }
 
-
+.TeamUsUp logo{
+  width: 500px;
+  height: 400px;
+}
 
 </style>
