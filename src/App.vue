@@ -9,6 +9,7 @@
       />
     </router-link>
 
+    <!--need to import db for search-->
     <form class="SearchBtn" role="search">
       <input
         class="SearchInput"
@@ -20,15 +21,17 @@
     
     </form>
 
-   <button class="loginBtn"> <router-link to="/Login">Login/Register</router-link> </button>
+   <button v-if="" class="loginBtn"> <router-link to="/Login">Login/Register</router-link> </button>
   </nav>
 
   <router-view />
   </div>
 </template>
 
-<style>
-
+<style scoped>
+#app{
+  
+}
 .header{
     background-color:black;
     width: -webkit-fill-available;
@@ -48,8 +51,11 @@
 
 }
 .loginBtn{
-float:right;
-
+    float:right;
+    height: 40px;
+    background: #e12744;
+    border-radius: 20px;
+    margin:-15px
 }
 
 nav {
@@ -57,11 +63,10 @@ nav {
 }
 
 nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #feffff;
 }
 </style>
