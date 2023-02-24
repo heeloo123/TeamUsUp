@@ -1,7 +1,21 @@
 <template>
   <div class="container">
     <img class="home_logo" alt="TeamUsUp logo" src="../assets/Home_logo.png">
+
   </div>
+
+  <section>
+    <h1>
+      Description
+    </h1>
+
+    <p>
+      They are designed to help students evaluate their potential teammates' teamwork history and make informed decisions about future collaborations. It allow students to create a
+      profile and list their 
+    </p>
+
+  </section>
+
 </template>
 
 <script>
@@ -9,10 +23,12 @@
 //import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'HomeView'
-  
-}
+  name: 'HomeView',
+
+  }
+
 </script>
+  
 
 <style scoped>
 .container{
@@ -21,10 +37,12 @@ export default {
   
 }
 .home_logo{
-  width: 200px;
-  height: 100px;
+  width: 650px;
+  height: 440px;
   position: relative;
-  right: 200px;
-  bottom: 50px;
+  left: 800px;
+  top: 180px;
 }
+
+
 </style>
