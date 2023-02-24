@@ -1,9 +1,11 @@
 import Vue from'vue'
 import { createApp } from 'vue'
-import App from './HomePage.vue'
+import App from './App.vue'
 
-createApp(App).mount('#app')
+createApp(App).use(router).mount('#app')
 
 //import sweetalert
 import VueSweetaleart2 from 'vue-sweetalert2';
+
+import router from './router'
 Vue.use(VueSweetaleart2);
