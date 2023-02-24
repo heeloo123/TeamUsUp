@@ -1,9 +1,10 @@
 <template>
-  <nav>
+  <nav class ="header">
     <router-link to="/">Home</router-link> |
     <router-link to="/SignUp">SignUp</router-link>
   </nav>
   <router-view/>
+  
 </template>
 
 <style>
