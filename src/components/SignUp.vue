@@ -113,7 +113,7 @@ methods:{
   height: 110px;
   margin-left:-8px;
   position: relative;
-  top: -159px;
+  bottom: 159px;
   z-index: -1;
   
 }
@@ -121,7 +121,7 @@ methods:{
 .TeamUsUp_logo{
   width: 500px;
   position: relative;
-  top: -53px;
+  top: -55px;
   left: -670px
 }
 
