@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/Home_logo.png">
+    <img alt="TeamUsUp logo" src="../assets/Home_logo.png">
   </div>
 </template>
 
