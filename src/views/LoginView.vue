@@ -5,7 +5,9 @@
 
 <script>
 export default {
-    name:"LoginPage"
+component:{
+    name:'LoginView'
+}
 }
 </script>
 

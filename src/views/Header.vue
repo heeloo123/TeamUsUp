@@ -16,7 +16,7 @@ export default{
 <style>
 
 .header{
-    background-color: black;
+    background-color:black;
     width: 2000px;
     height: 110px;
     margin-left:-8px;
