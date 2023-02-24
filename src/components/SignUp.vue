@@ -3,6 +3,10 @@
   <!-- Can anyone help with the style<>...cant do exactly same as the ui layout...-->
   
 <img class="logo" alt="SignUp logo" src="../assets/register_logo.png"/>
+
+<div class="header">
+    
+</div>
 <div class="container">
   <h1>REGISTRATION</h1>
   <div class="registration">
@@ -100,7 +104,13 @@ methods:{
 
 }
 
-
+.header{
+  background-color: black;
+  width: 2000px;
+  margin: 10px;
+  height: 100px;
+  position: static;
+}
 
 
 
