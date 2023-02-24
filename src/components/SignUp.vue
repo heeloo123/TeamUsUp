@@ -115,6 +115,8 @@ methods:{
 
 .TeamUsUp_logo{
   width: 500px;
+  position: relative;
+  top: -10px;
 }
 
 </style>
