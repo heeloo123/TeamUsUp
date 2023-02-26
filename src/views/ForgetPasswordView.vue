@@ -14,7 +14,7 @@
 
     <div>
       <form>
-        <div class="form-group">
+        <div class="email">
             <label for="email">Email</label>
             <input type="email" id="email" placeholder="Enter your email.." v-model="email" required />
         </div>
@@ -27,7 +27,12 @@
 export default {
   name: 'ForgetPaswordView',
 
+  data() {
+    return {
+        email:''
+    }
   }
+}
 
 </script>
 
@@ -43,7 +48,7 @@ export default {
     margin: auto;
 }
 
-.form-group{
+.email{
     display: block;
     margin: 30px;
     font-size: 40px; 
