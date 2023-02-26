@@ -15,11 +15,11 @@
       </form>
     </div>
 
-    <p class style="font-size: 23px; position: relative; left: 190px;">
-        
+  <nav>
+    <p class style="font-size: 23px; position: relative; left: 190px;">   
       <router-link to="/ForgetPassword">Forget Password</router-link>
-
     </p>
+  </nav>
 
     <form class style="padding: 30px">
       <button class="defaultBtn">
