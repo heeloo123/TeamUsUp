@@ -1,4 +1,5 @@
 <template>
+    <img class="F_logo" alt="F_logo" src="">
     <div class="container">
         <h1 class style="font-size:50px; position: fixed; top: 220px;">FORGET YOUR PASSWORD</h1>
         <section class="text">
@@ -48,12 +49,12 @@ export default {
     flex-direction: column;
     background: rgb(224, 216, 216);
     border-radius: 10px;
-    width: 60%;
+    width: 55%;
     margin: auto;
     height: 550px;
     position: fixed;
     top: 230px;
-    right: 550px;
+    right: 650px;
 }
 
 .email{
@@ -61,7 +62,7 @@ export default {
     margin: 30px;
     font-size: 40px;
     position: fixed;
-    left: 610px;
+    left: 560px;
     top: 565px;
 }
 
@@ -92,9 +93,14 @@ export default {
   margin: 50px;
   position: fixed;
   bottom: 155px;
-  left: 670px;
+  left: 620px;
 }
 
+.F_logo{
+  position: fixed;
+  top: 250px;
+  left: 1300px;
+}
 
 
 
