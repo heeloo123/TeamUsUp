@@ -8,7 +8,7 @@
                     The system will send a recovery link to your email<br>shortly. You can click on the link to recover your<br>account.
                 </p>
                     <p>
-                        For locked account, contact admin at<br>admin1234@gmail.com.
+                        For locked account, contact admin at admin1234@gmail.com.
                     </p>
     </div>
 
@@ -46,13 +46,26 @@ export default {
     border-radius: 10px;
     width: 70%;
     margin: auto;
+    height: 550px;
 }
 
 .email{
     display: block;
     margin: 30px;
-    font-size: 40px; 
+    font-size: 40px;
+    position: fixed;
+    left: 800px;
+    top: 520px;
 }
+
+.email input{
+    width: 300px;
+    height: 35px;
+    display: block;
+    position: fixed;
+    margin: auto;
+}
+
 
 
 
