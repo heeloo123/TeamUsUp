@@ -10,12 +10,24 @@
                     <p>
                         For locked account, contact admin at<br>admin1234@gmail.com.
                     </p>
-
-
     </div>
+
+    <div>
+      <form>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email.." v-model="email" required />
+        </div>
+      </form>
+    </div>
+
 </template>
 
 <script>
+export default {
+  name: 'ForgetPaswordView',
+
+  }
 
 </script>
 
