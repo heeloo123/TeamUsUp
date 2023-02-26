@@ -15,6 +15,10 @@
       </form>
     </div>
 
+    <p>
+      Forget Password
+    </p>
+
     <form class style="padding: 30px">
       <button class="defaultBtn">
         <router-link to="/SignUp" class style="color: white"
