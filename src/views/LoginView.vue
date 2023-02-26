@@ -57,8 +57,9 @@ export default {
     width: 70%;
     height: 650px;
     margin: auto;
-    position: relative;
-    top: 80px;
+    position: fixed;
+    top: 170px;
+    left: 300px;
 }
 
 .form-group{
