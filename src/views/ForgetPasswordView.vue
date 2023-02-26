@@ -43,13 +43,7 @@ export default {
     margin: auto;
 }
 
-input[type="email"]{
-  width:20%;
-  height: 30px;
-  margin: auto;
-  font-size: 30px;
-  border-radius: 10px;
-}
+
 
 
 </style>
