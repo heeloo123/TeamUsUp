@@ -15,7 +15,7 @@
       </form>
     </div>
 
-    <p class style="font-size: 15px;">
+    <p class style="font-size: 25px;">
       Forget Password
     </p>
 
