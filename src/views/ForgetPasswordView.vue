@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1 class style="font-size:50px; position: fixed; top: 180px;">FORGET YOUR PASSWORD</h1>
+        <h1 class style="font-size:50px; position: fixed; top: 150px;">FORGET YOUR PASSWORD</h1>
         <section class="text">
             <p>
                 To recover your account, please enter your email<br>address.
@@ -22,6 +22,8 @@
         </div>
       </form>
     </div>
+
+    <button class="confirmBtn" type="submit">Confirm</button>
 
 </template>
 
@@ -59,7 +61,7 @@ export default {
     font-size: 40px;
     position: fixed;
     left: 800px;
-    top: 520px;
+    top: 460px;
 }
 
 .email input{
@@ -71,9 +73,24 @@ export default {
 
 .text{
     position: fixed;
-    bottom: 430px;
+    bottom: 480px;
     text-align: center;
     font-size: 20px;
+}
+
+.confirmBtn{
+  height: 60px;
+  width: 150px;
+  background: black;
+  border-radius: 40px;
+  margin-right: auto;
+  color: white;
+  font-size: 20px;
+  font: bolder;
+  margin: 50px;
+  position: fixed;
+  bottom: 250px;
+  left: 860px;
 }
 
 
