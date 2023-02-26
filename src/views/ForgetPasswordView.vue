@@ -49,7 +49,7 @@ export default {
     width: 60%;
     margin: auto;
     height: 550px;
-    position: relative;
+    position: fixed;
     top: 50px;
 }
 
@@ -70,7 +70,7 @@ export default {
 }
 
 .text{
-    position: relative;
+    position: fixed;
     bottom: 130px;
     text-align: center;
     font-size: 20px;
