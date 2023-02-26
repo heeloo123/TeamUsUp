@@ -9,9 +9,9 @@
         Student Web Portal
     </p>
 
-    <h2 style="font-size: 35px; text-align: left; position: relative; top: 140px; left:150px;">
+    <h1 style="font-size: 35px; text-align: left; position: relative; top: 140px; left:150px;">
       Description
-    </h2>
+    </h1>
 
     <p style="font-size: 25px; text-align: left; position: relative; top: 140px; left:150px;">
       They are designed to help students evaluate their potential <br> teammates' teamwork history and make informed decisions <br> about future collaborations.
