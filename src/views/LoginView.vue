@@ -16,7 +16,7 @@
     </div>
 
     <p class style="font-size: 23px; position: relative; left: 190px;">   
-      <router-link to="/ForgetPassword">Forget Password</router-link>
+      <router-link to="/ForgetPassword" class style="color: black" >Forget Password</router-link>
     </p>
 
     <form class style="padding: 30px">
