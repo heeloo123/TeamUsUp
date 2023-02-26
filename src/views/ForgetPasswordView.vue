@@ -51,8 +51,9 @@ export default {
     width: 60%;
     margin: auto;
     height: 550px;
-    position: relative;
-    top: 50px;
+    position: fixed;
+    top: 230px;
+    right: 520px;
 }
 
 .email{
@@ -83,6 +84,7 @@ export default {
   width: 150px;
   background: black;
   border-radius: 40px;
+  margin-left: auto;
   margin-right: auto;
   color: white;
   font-size: 20px;
@@ -90,7 +92,7 @@ export default {
   margin: 50px;
   position: fixed;
   bottom: 250px;
-  left: 860px;
+  left: 600px;
 }
 
 
