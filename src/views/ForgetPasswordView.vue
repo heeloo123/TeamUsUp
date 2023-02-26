@@ -1,5 +1,5 @@
 <template>
-    <img class="F_logo" alt="F_logo" src="">
+    <img class="F_logo" alt="F_logo" src="../assets/Forgot_Password_logo.png">
     <div class="container">
         <h1 class style="font-size:50px; position: fixed; top: 220px;">FORGET YOUR PASSWORD</h1>
         <section class="text">
