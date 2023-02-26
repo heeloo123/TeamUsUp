@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class style="font-size:50px;">TEAMUSUP MEMBER</h1>
+    <h1 class style="font-size:50px; position: relative; top: 40px;">TEAMUSUP MEMBER</h1>
 
     <div>
       <form>
@@ -55,13 +55,18 @@ export default {
     background: rgb(224, 216, 216);
     border-radius: 10px;
     width: 70%;
+    height: 650px;
     margin: auto;
+    position: relative;
+    top: 80px;
 }
 
 .form-group{
     display: block;
     margin: 30px;
     font-size: 40px;
+    position: relative;
+    top: 5px;
 
 }
 
@@ -84,5 +89,7 @@ input[type="password"]{
   font-size: 20px;
   font: bolder;
   margin: 50px;
+  position: relative;
+  bottom: 50px;
 }
 </style>

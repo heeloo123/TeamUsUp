@@ -63,7 +63,6 @@ export default {
     height: 35px;
     display: block;
     position: fixed;
-    margin: auto;
 }
 
 
