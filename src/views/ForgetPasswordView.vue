@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1 class style="font-size:50px; position: relative; bottom: 110px;">FORGET YOUR PASSWORD</h1>
+        <h1 class style="font-size:50px; position: fixed; top: 180px;">FORGET YOUR PASSWORD</h1>
         <section class="text">
             <p>
                 To recover your account, please enter your email<br>address.
@@ -49,7 +49,7 @@ export default {
     width: 60%;
     margin: auto;
     height: 550px;
-    position: fixed;
+    position: relative;
     top: 50px;
 }
 
@@ -71,7 +71,7 @@ export default {
 
 .text{
     position: fixed;
-    bottom: 130px;
+    bottom: 430px;
     text-align: center;
     font-size: 20px;
 }
