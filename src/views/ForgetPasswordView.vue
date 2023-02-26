@@ -43,6 +43,13 @@ export default {
     margin: auto;
 }
 
+.form-group{
+    display: block;
+    margin: 30px;
+    font-size: 40px; 
+}
+
+
 
 
 
