@@ -20,7 +20,7 @@ const routes = [
     component:LoginView
   },
   {
-    path: '/',
+    path: '/ForgetPassword',
     name: 'ForgetPasswordPage',
     component: ForgetPasswordPage
   },
