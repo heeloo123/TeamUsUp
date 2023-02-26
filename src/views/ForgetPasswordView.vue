@@ -61,7 +61,7 @@ export default {
     font-size: 40px;
     position: fixed;
     left: 800px;
-    top: 460px;
+    top: 470px;
 }
 
 .email input{
@@ -73,9 +73,9 @@ export default {
 
 .text{
     position: fixed;
-    bottom: 480px;
+    bottom: 465px;
     text-align: center;
-    font-size: 20px;
+    font-size: 23px;
 }
 
 .confirmBtn{
