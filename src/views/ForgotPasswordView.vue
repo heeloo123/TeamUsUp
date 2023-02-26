@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="container">
+        <h class style="font-size:50px;">FORGET YOUR PASSWORD</h>
 
     </div>
 </template>
