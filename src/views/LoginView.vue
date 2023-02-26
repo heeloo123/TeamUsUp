@@ -66,14 +66,13 @@ export default {
 }
 
 input[type="email"],
-input[type="password"] {
+input[type="password"]{
   width:100%;
   height: 60px;
   margin: auto;
   font-size: 30px;
   border-radius: 10px;
 }
-
 
 .defaultBtn {
   height: 60px;
