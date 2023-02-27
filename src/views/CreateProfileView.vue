@@ -32,8 +32,16 @@ export default {
 }
 </script>
 
-<style>
-
-
+<style scoped>
+.container{
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  flex-direction: column;
+  margin: 50px;
+  height: 600px;
+  background: rgb(219, 217, 217);
+  border-radius: 6px;
+}
 
 </style>
