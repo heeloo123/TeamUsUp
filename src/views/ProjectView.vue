@@ -1,0 +1,14 @@
+<template>
+  <h1>Project</h1>
+</template>
+
+<script>
+export default {
+    name:'ProjectView',
+}
+
+</script>
+
+<style>
+
+</style>

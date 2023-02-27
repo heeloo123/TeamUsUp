@@ -4,6 +4,9 @@ import SignUpView from '../views/SignUp.vue'
 import LoginView from '../views/LoginView.vue'
 import ForgetPasswordPage from '../views/ForgetPasswordView.vue'
 import CreateProfileView from '../views/CreateProfileView.vue'
+import CreateProjectView from '../views/CreateProjectView.vue'
+import ProfileView from '../views/ProfileView.vue'
+import ProjectView from '../views/ProjectView.vue'
 
 const routes = [
   {
@@ -31,7 +34,21 @@ const routes = [
     name: 'CreateProfile',
     component: CreateProfileView
   },
-
+  {
+    path: '/CreateProject',
+    name: 'CreateProject',
+    component: CreateProjectView
+  },
+  {
+    path: '/Profile',
+    name: 'Profile',
+    component: ProfileView
+  },
+  {
+    path: '/Project',
+    name: 'Project',
+    component: ProjectView
+  },
 
 
 
