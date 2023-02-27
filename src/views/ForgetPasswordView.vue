@@ -2,7 +2,7 @@
   <img class="F_logo" alt="F_logo" src="../assets/Forgot_Password_logo.png" />
   <div class="container">
     <div class="item">
-      <h1 style="font-size: xxx-large">FORGET YOUR PASSWORD</h1>
+      <h1 style="font-size: 40px;">FORGET YOUR PASSWORD</h1>
       <section class="text">
         <p>To recover your account, please enter your email<br />address.</p>
         <p>
@@ -22,9 +22,11 @@
           required
         />
       </form>
-      <button class="confirmBtn" type="submit">Confirm</button>
-    </div>
+      </div>
+      <div class="btn"><button class="confirmBtn" type="submit">Confirm</button>
+      </div>
   </div>
+  
 </template>
 
 <script>
@@ -46,8 +48,9 @@ export default {
   align-items: left;
   flex-direction: column;
   margin: 50px;
-  height: 450px;
+  height: 600px;
   background: rgb(219, 217, 217);
+  border-radius: 6px;
 }
 
 .item {
@@ -55,25 +58,53 @@ export default {
 }
 
 .text{
-    display: block;
-    justify-content: center;
-    font-size: 20px;
     
+    text-align: center;
+    font-size: 30px;
+    font-family: math
+}
+
+.btn{
+    margin-left: 400px;
 }
 .confirmBtn {
-  height: 60px;
-  width: 150px;
+  height: 50px;
+  width: 200px;
   background: black;
   border-radius: 40px;
   color: white;
-  font-size: 20px;
+  font-size: x-large;
   font: bolder;
 }
 
+form.email {
+  display: flex;
+  margin: 30px;
+  border-radius: 10px;
+  
+}
+form.email label {
+  font-size: x-large;
+  color: white;
+  padding: 6px;
+  background: black;
+  width: 100px;
+
+}
+
+form.email input[type="email"] {
+  height: 50px;
+  width: 70%;
+  font-size: x-large;
+  margin-left: 0px;
+  padding-left: 60px;
+  float:right;
+}
 .F_logo {
   display: block;
   float: right;
   width: 400px;
-  margin: 50px;
+  margin-top: 150px;
+  margin-right:100px ;
 }
 </style>
