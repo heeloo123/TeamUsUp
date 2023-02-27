@@ -1,20 +1,18 @@
 <template>
-  <img class="img" alt="img" src="../assets/Upload_pic_logo.png">
-  <div>
+  <div class="profile-pic">
     <label for="profilePic">Profile Pic:</label>
     <input type="file" id="profilePic">
   </div>
   
   <div class="container">
-    <h1 style= "font-size: 40px; position: fixed; top: 200px; left:100px">Profile Creation</h1>
-    <div class="createProfile">
+    <h1 style= "font-size: 40px; position: fixed; top: 160px; left:100px">Profile Creation</h1>
     <form @submit.prevent="submitForm"></form>
-      <div>
+      <div class="major">
         <label for="major">Major:</label>
         <input type="text" id="major" v-model="major" required>
       </div>
-      <div>
-        <label for="bio">Bio:</label>
+      <div class="bio">
+        <label for="bio">Biography:</label>
         <textarea id="bio" v-model="bio" required></textarea>
       </div>
       <div>
@@ -22,7 +20,6 @@
       <button class="submitBtn" type="submit">Create</button>
       </div>
   </div>
-</div>
  
 </template>
 
@@ -54,7 +51,7 @@ export default {
   font: bolder;
   position: fixed;
   top: 700px;
-  left: 300px;
+  left: 150px;
 }
 
 .submitBtn{
@@ -67,13 +64,43 @@ export default {
   font: bolder;
   position: fixed;
   top: 700px;
-  right: 300px;
+  right: 150px;
 }
 
-.createProfile{
+.major{
   position: fixed;
-  top: 400px;
-  left: 1000px;
+  top: 280px;
+  right: 550px;
+  font-size: 25px;
+}
+
+.bio{
+  position: fixed;
+  top: 390px;
+  right: 550px;
+  font-size: 25px;
+}
+
+input[type="text"]{
+  width: 600px;
+  height: 50px;
+  display: block;
+
+}
+
+textarea[id="bio"]{
+  width: 600px;
+  height: 130px;
+  display: block;
+}
+
+.profile-pic{
+  position: fixed;
+  top: 280px;
+  left: 150px;
+  background: rgb(234, 231, 231);
+  width: 300px;
+  height: 300px;
 }
 
 
