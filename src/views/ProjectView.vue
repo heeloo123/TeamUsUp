@@ -19,7 +19,7 @@
               font-family: math;
               font-family: math;
               word-spacing: 5px;
-              font-size:21px
+              font-size: 21px;
             "
           >
             {{ project.description }}
@@ -38,7 +38,7 @@
             border-radius: 20px;
             display: flex;
             background: white;
-            border:solid;
+            border: solid;
             margin: 20px;
           "
         >
@@ -62,7 +62,7 @@
                 style="display: felx; margin-top: -200px; margin-bottom: 20px"
               >
                 <div class="rating">
-                  <p>Teamwork :</p>
+                  <p>Teamwork :</p><p></p>
                   <div class="star-rating">
                     <span>&star;</span>
                     <span>&star;</span>
@@ -72,7 +72,7 @@
                   </div>
                 </div>
                 <div class="rating">
-                  <p>Skills :</p>
+                  <p>Skills:</p><p></p><p></p>
                   <div class="star-rating">
                     <span>&star;</span>
                     <span>&star;</span>
@@ -115,7 +115,14 @@ export default {
       project: {
         name: "Personal Expense Tracker",
         description:
-          "The Personal Expense Tracker is a simple project designed to help individuals keep track of their daily expenses. The project will consist of a web or mobile application that allows users to input and categorize their expenses, such as groceries, transportation, entertainment, and others. The application will automatically calculate and display the total expenses for each category, as well as the overall expenses for the day, week, or month. It will also provide visual graphs and charts to help users visualize their spending habits and identify areas where they can save money. The project will be designed to be user-friendly, with a clean and intuitive interface that requires minimal setup and configuration. Ultimately, the Personal Expense Tracker will help individuals become more aware of their spending habits, manage their finances more effectively, and save money for the things that matter most to them.",
+          "The Personal Expense Tracker is a simple project designed to help individuals keep track of their daily expenses. " +
+          "The project will consist of a web or mobile application that allows users to input and categorize their expenses, " +
+          " such as groceries, transportation, entertainment, and others. The application will automatically calculate and display" +
+          "the total expenses for each category, as well as the overall expenses for the day, week, or month. It will also provide" +
+          "visual graphs and charts to help users visualize their spending habits and identify areas where they can save money." +
+          "The project will be designed to be user-friendly, with a clean and intuitive interface that requires minimal setup and" +
+          "configuration. Ultimately, the Personal Expense Tracker will help individuals become more aware of their spending habits," +
+          "manage their finances more effectively, and save money for the things that matter most to them.",
         pic: require("../assets/test_projectpic.png"),
         members: [
           {
@@ -189,7 +196,7 @@ export default {
   object-fit: cover;
 }
 .star-rating {
-  display: inline-block;
+  display: flex;
   color: gold;
   font-size: 50px;
   position: relative;
