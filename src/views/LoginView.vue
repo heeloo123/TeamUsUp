@@ -3,7 +3,7 @@
     <h1 class style="font-size:50px; position: relative; top: 40px;">TEAMUSUP MEMBER</h1>
 
     <div>
-      <form>
+      <form @submit.prevent ="login">
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" placeholder="Enter your email.." v-model="email" required />
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
 export default {
   component: {
     name: "LoginView",
@@ -41,6 +42,7 @@ export default {
       password: ''
     }
   },
+  
 
 };
 </script>

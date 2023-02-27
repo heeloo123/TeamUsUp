@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import SignUpView from '../views/SignUp.vue'
 import LoginView from '../views/LoginView.vue'
 import ForgetPasswordPage from '../views/ForgetPasswordView.vue'
+import CreateProfileView from '../views/CreateProfileView.vue'
+
 const routes = [
   {
     path: '/',
@@ -24,6 +26,15 @@ const routes = [
     name: 'ForgetPasswordPage',
     component: ForgetPasswordPage
   },
+  {
+    path: '/CreateProfile',
+    name: 'CreateProfile',
+    component: CreateProfileView
+  },
+
+
+
+
   {
     path: '/about',
     name: 'about',
