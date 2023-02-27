@@ -1,109 +1,79 @@
 <template>
-    <img class="F_logo" alt="F_logo" src="../assets/Forgot_Password_logo.png">
-    <div class="container">
-        <h1 class style="font-size:50px; position: fixed; top: 220px;">FORGET YOUR PASSWORD</h1>
-        <section class="text">
-            <p>
-                To recover your account, please enter your email<br>address.
-            </p>
-                <p>
-                    The system will send a recovery link to your email<br>shortly. You can click on the link to recover your<br>account.
-                </p>
-                    <p>
-                        For locked account, contact admin at<br>admin1234@gmail.com.
-                    </p>
-        </section>
-    </div>
+  <img class="F_logo" alt="F_logo" src="../assets/Forgot_Password_logo.png" />
+  <div class="container">
+    <div class="item">
+      <h1 style="font-size: xxx-large">FORGET YOUR PASSWORD</h1>
+      <section class="text">
+        <p>To recover your account, please enter your email<br />address.</p>
+        <p>
+          The system will send a recovery link to your email<br />shortly. You
+          can click on the link to recover your<br />account.
+        </p>
+        <p>For locked account, contact admin at<br />admin1234@gmail.com.</p>
+      </section>
 
-    <div>
-      <form>
-        <div class="email">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Enter your email.." v-model="email" required />
-        </div>
+      <form class="email">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email.."
+          v-model="email"
+          required
+        />
       </form>
+      <button class="confirmBtn" type="submit">Confirm</button>
     </div>
-
-    <button class="confirmBtn" type="submit">Confirm</button>
-
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'ForgetPaswordView',
+  name: "ForgetPaswordView",
 
   data() {
     return {
-        email:''
-    }
-  }
-}
-
+      email: "",
+    };
+  },
+};
 </script>
 
-<style>
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: rgb(224, 216, 216);
-    border-radius: 10px;
-    width: 55%;
-    margin: auto;
-    height: 550px;
-    position: fixed;
-    top: 230px;
-    right: 650px;
+<style scoped>
+.container {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  flex-direction: column;
+  margin: 50px;
+  height: 450px;
+  background: rgb(219, 217, 217);
 }
 
-.email{
-    display: block;
-    margin: 30px;
-    font-size: 40px;
-    position: fixed;
-    left: 560px;
-    top: 565px;
-}
-
-.email input{
-    width: 300px;
-    height: 35px;
-    display: block;
-    position: fixed;
+.item {
+  margin-left: 70px;
 }
 
 .text{
-    position: fixed;
-    bottom: 380px;
-    text-align: center;
-    font-size: 23px;
+    display: block;
+    justify-content: center;
+    font-size: 20px;
+    
 }
-
-.confirmBtn{
+.confirmBtn {
   height: 60px;
   width: 150px;
   background: black;
   border-radius: 40px;
-  margin-left: auto;
-  margin-right: auto;
   color: white;
   font-size: 20px;
   font: bolder;
+}
+
+.F_logo {
+  display: block;
+  float: right;
+  width: 400px;
   margin: 50px;
-  position: fixed;
-  bottom: 155px;
-  left: 620px;
 }
-
-.F_logo{
-  position: fixed;
-  top: 250px;
-  left: 1300px;
-}
-
-
-
-
-
 </style>
