@@ -1,32 +1,36 @@
 <template>
-  <div>
-    <h1>Project</h1>
-
-    <div class="project-pic">
-      <img class="img" :src="project.image" alt="Project Picture" />
-    </div>
-    <div>
-      <label>Project Title</label>
-      <p>#Test TeamUsUp</p>
-    </div>
-    <div>
-      <label>Project Discription</label>
-      <p>bla bla bla</p>
-    </div>
-
-    <button class="defaultBtn">
-          <router-link to="/EditProject"> Edit Project</router-link>
-        </button>
+  <h1>Project</h1>
+  <div class="project-pic">
+    <img class="img" alt="Project Picture" />
   </div>
+
+  <div>
+    <label>Project Title</label>
+    <p>#Test TeamUsUp</p>
+  </div>
+  <div>
+    <label>Project Discription</label>
+    <p>bla bla bla</p>
+  </div>
+  <nav>
+    <button class="defaultBtn">
+      <router-link to="/EditProject"> Edit Project</router-link>
+    </button>
+  </nav>
+<h3>Members</h3>
+<ul>
+  <li></li>
+</ul>
+
 </template>
 
 <script>
 export default {
-  name: "ProjectView",
+  name: "ProjecView",
 };
 </script>
 
-<style>
+<style scoped>
 .project-pic {
   width: 300px;
   height: 300px;

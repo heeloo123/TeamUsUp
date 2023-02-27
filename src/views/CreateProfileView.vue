@@ -6,7 +6,7 @@
   </div>
   
   <div class="container">
-    <h1>Profile Creation</h1>
+    <h1 style= "font-size: 40px; position: fixed; top: 200px; left:100px">Profile Creation</h1>
     <form @submit.prevent="submitForm">
       <div>
         <label for="major">Major:</label>
@@ -61,6 +61,11 @@ export default {
   color: white;
   font-size: x-large;
   font: bolder;
+}
+
+.{
+  position: fixed;
+  top: 300px;
 }
 
 
