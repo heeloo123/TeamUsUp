@@ -8,6 +8,9 @@ import CreateProjectView from '../views/CreateProjectView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import ProjectView from '../views/ProjectView.vue'
 import EditProjectView from '../views/EditProjectView.vue'
+import SelfEvaView from '../views/SelfEvaluate.vue'
+import PeerEvaView from '../views/PeerEvaluate.vue'
+import AdminPage from '../views/AdminPage.vue'
 
 const routes = [
   {
@@ -55,10 +58,22 @@ const routes = [
     name: 'EditProjectView',
     component: EditProjectView
   },
-
-
-
-
+  {
+    path: '/SelfEva',
+    name: 'SelfEva',
+    component: SelfEvaView
+  },
+  {
+    path: '/PeerEva',
+    name: 'PeerEva',
+    component: PeerEvaView
+  },
+  {
+    path: '/AdminPage',
+    name: 'AdminPage',
+    component: AdminPage
+  },
+  
   {
     path: '/about',
     name: 'about',
