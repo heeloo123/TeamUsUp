@@ -18,7 +18,7 @@
           aria-label="Search"
         />
       </form>
-     <!--when logger in-->
+      <!--when logger in-->
       <div v-if="loggedIn" class="userDropdown">
         <span>{{ currentUser }}</span>
         <div class="dropdownContent">
@@ -27,9 +27,7 @@
         </div>
       </div>
 
-
-
-      <button v-if="showButton" @click="hideButton" class="loginBtn">
+      <button v-else @click="hideButton" v-show="showButton" class="loginBtn">
         <router-link to="/Login">Login/Register</router-link>
       </button>
     </nav>
@@ -45,6 +43,8 @@ export default {
   data() {
     return {
       showButton: true,
+      loggedIn: false,
+      currentUser: null,
     };
   },
   methods: {
@@ -52,21 +52,31 @@ export default {
       this.showButton = false;
     },
   },
-  showLoginModal() {
-      // logic to show login modal
-    },
-    logout() {
-      // logic to log out the user
-      this.loggedIn = false;
-      this.currentUser = null;
-    },
+  showLogin() {
+    this.hideButton();
+    this.showButton =false;
+     
+    // logic to show login modal
+  },
+  logout() {
+    // logic to log out the user
+    this.loggedIn = false;
+    this.currentUser = null;
+    this.showButton = true;
+  },
   watch: {
     $route() {
       if (this.$route.path === "/") {
-        this.showButton = true;
+        this.showButton = !this.loggedIn;
       }
     },
-  },
+      loggedIn(){
+        this.showbutton=!this.loggedIn;
+      }
+    },
+
+    immediate: true,
+  
 };
 </script>
 
