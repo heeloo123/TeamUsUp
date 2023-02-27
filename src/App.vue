@@ -129,4 +129,18 @@ nav a {
 nav a.router-link-exact-active {
   color: #feffff;
 }
+
+.defaultBtn {
+  height: 60px;
+  width: 150px;
+  background: black;
+  border-radius: 40px;
+  margin-right: auto;
+  color: white;
+  font-size: 20px;
+  font: bolder;
+  margin: 50px;
+  position: relative;
+  bottom: 50px;
+}
 </style>

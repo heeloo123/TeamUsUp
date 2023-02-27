@@ -1,5 +1,10 @@
 <template>
   <div>
+        <label for="profilePic">Profile Pic:</label>
+        <input type="file" id="profilePic">
+      </div>
+  
+  <div class="container">
     <h1>Profile Creation</h1>
     <form @submit.prevent="submitForm">
       <div>
@@ -10,10 +15,7 @@
         <label for="bio">Bio:</label>
         <textarea id="bio" v-model="bio" required></textarea>
       </div>
-      <div>
-        <label for="profilePic">Profile Pic:</label>
-        <input type="file" id="profilePic" @change="handleFileUpload">
-      </div>
+      <button type="cancel">Cancel</button>
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -31,5 +33,7 @@ export default {
 </script>
 
 <style>
+
+
 
 </style>
