@@ -65,7 +65,7 @@ export default {
 }
 
 .btn{
-    margin-left: 400px;
+    margin-left: 600px;
 }
 .confirmBtn {
   height: 50px;
