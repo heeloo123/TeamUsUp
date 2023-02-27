@@ -63,7 +63,7 @@ export default {
   font: bolder;
 }
 
-.{
+.form-group{
   position: fixed;
   top: 300px;
 }
