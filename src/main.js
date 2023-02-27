@@ -10,3 +10,6 @@ import VueSweetaleart2 from 'vue-sweetalert2';
 import router from './router'
 Vue.use(VueSweetaleart2);
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios);

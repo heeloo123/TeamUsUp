@@ -93,7 +93,7 @@ margin-right: 300px;
 }
 .loginBtn{
     float:right;
-    height: 60px;
+    height: 50px;
     width: 150px;
     background: #e12744;
     border-radius: 40px;
