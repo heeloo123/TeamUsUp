@@ -28,7 +28,7 @@
       </div>
 
       <button v-else @click="hideButton" v-show="showButton" class="loginBtn">
-        <router-link to="/Login">Login/Register</router-link>
+        <router-link to="/Login">Login</router-link>
       </button>
     </nav>
 

@@ -1,5 +1,5 @@
 <template>
-  <img class="img" alt="img" src="../">
+  <img class="img" alt="img" src="../assets/Upload_pic_logo.png">
   <div>
     <label for="profilePic">Profile Pic:</label>
     <input type="file" id="profilePic">
