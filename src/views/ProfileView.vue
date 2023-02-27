@@ -31,6 +31,7 @@
 import axios from "axios";
 
 export default {
+  name:'ProfileView',
   data() {
     return {
       loading: true,
