@@ -47,18 +47,16 @@
 </template>
 
 <script>
-
 export default {
   component: {
     name: "LoginView",
   },
   data() {
     return {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     };
   },
-
 };
 </script>
 

@@ -7,7 +7,8 @@
   
   <div class="container">
     <h1 style= "font-size: 40px; position: fixed; top: 200px; left:100px">Profile Creation</h1>
-    <form @submit.prevent="submitForm">
+    <div class="createProfile">
+    <form @submit.prevent="submitForm"></form>
       <div>
         <label for="major">Major:</label>
         <input type="text" id="major" v-model="major" required>
@@ -18,10 +19,10 @@
       </div>
       <div>
       <button class="cancelBtn" type="cancel">Cancel</button>
-      <button class="submitBtn" type="submit">Submit</button>
+      <button class="submitBtn" type="submit">Create</button>
       </div>
-    </form>
   </div>
+</div>
  
 </template>
 
@@ -51,6 +52,9 @@ export default {
   color: white;
   font-size: x-large;
   font: bolder;
+  position: fixed;
+  top: 700px;
+  left: 300px;
 }
 
 .submitBtn{
@@ -61,11 +65,15 @@ export default {
   color: white;
   font-size: x-large;
   font: bolder;
+  position: fixed;
+  top: 700px;
+  right: 300px;
 }
 
-.form-group{
+.createProfile{
   position: fixed;
-  top: 300px;
+  top: 400px;
+  left: 1000px;
 }
 
 
