@@ -1,8 +1,9 @@
 <template>
+  <img class="img" alt="img" src="../">
   <div>
-        <label for="profilePic">Profile Pic:</label>
-        <input type="file" id="profilePic">
-      </div>
+    <label for="profilePic">Profile Pic:</label>
+    <input type="file" id="profilePic">
+  </div>
   
   <div class="container">
     <h1>Profile Creation</h1>
@@ -15,15 +16,13 @@
         <label for="bio">Bio:</label>
         <textarea id="bio" v-model="bio" required></textarea>
       </div>
-      <button type="cancel">Cancel</button>
-      <button type="submit">Submit</button>
+      <div>
+      <button class="cancelBtn" type="cancel">Cancel</button>
+      <button class="submitBtn" type="submit">Submit</button>
+      </div>
     </form>
   </div>
  
-
-
-
-
 </template>
 
 <script>
@@ -43,5 +42,26 @@ export default {
   background: rgb(219, 217, 217);
   border-radius: 6px;
 }
+
+.cancelBtn{
+  height: 50px;
+  width: 200px;
+  background: black;
+  border-radius: 40px;
+  color: white;
+  font-size: x-large;
+  font: bolder;
+}
+
+.submitBtn{
+  height: 50px;
+  width: 200px;
+  background: black;
+  border-radius: 40px;
+  color: white;
+  font-size: x-large;
+  font: bolder;
+}
+
 
 </style>

@@ -7,6 +7,7 @@ import CreateProfileView from '../views/CreateProfileView.vue'
 import CreateProjectView from '../views/CreateProjectView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import ProjectView from '../views/ProjectView.vue'
+import EditProjectView from '../views/EditProjectView.vue'
 
 const routes = [
   {
@@ -49,6 +50,12 @@ const routes = [
     name: 'Project',
     component: ProjectView
   },
+  {
+    path: '/Editproject',
+    name: 'EditProject',
+    component: EditProjectView
+  },
+
 
 
 
