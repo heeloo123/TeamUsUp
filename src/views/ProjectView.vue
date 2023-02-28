@@ -55,14 +55,16 @@
                 font-family: sans-serif;
               "
             >
+            <div class="detail">
               <h3>{{ member.name }}</h3>
               <p>{{ member.major }}</p>
-              <p>{{ member.bio }}</p>
+              <p>{{ member.bio }}</p></div>
               <div
                 style="display: felx; margin-top: -200px; margin-bottom: 20px"
               >
                 <div class="rating">
-                  <p>Teamwork :</p><p></p>
+                  <p>Teamwork :</p>
+                  <p></p>
                   <div class="star-rating">
                     <span>&star;</span>
                     <span>&star;</span>
@@ -72,7 +74,9 @@
                   </div>
                 </div>
                 <div class="rating">
-                  <p>Skills:</p><p></p><p></p>
+                  <p>Skills:</p>
+                  <p></p>
+                  <p></p>
                   <div class="star-rating">
                     <span>&star;</span>
                     <span>&star;</span>
@@ -128,14 +132,14 @@ export default {
           {
             name: "John Doe",
             major: "Computer Science",
-            bio: "John is a computer science student.",
+            bio: "I am a quick learner and has worked on several projects related to software development. He is also an active participant in coding competitions and hackathons, where he enjoys putting his skills to the test. ",
             pic: require("../assets/male image test.png"),
             rate: 4,
           },
           {
             name: "Jane Doe",
             major: "Design",
-            bio: "Jane is a design student.",
+            bio: "I passion for creativity and loves to bring ideas to life through visual art. I have skilled in various design software, including Adobe Photoshop and Illustrator. I am natural at understanding clients' needs and is always willing to take on new design challenges. ",
             pic: require("../assets/female image(test).png"),
             rate: 5,
           },
@@ -211,5 +215,12 @@ export default {
   margin: 20px;
   padding: 10px;
   font-size: 25px;
+}
+.detail p {
+  display:flex;
+  text-align: justify;
+  width: 800px;
+  height: auto;
+  
 }
 </style>
