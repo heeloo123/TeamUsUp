@@ -1,5 +1,5 @@
 <template>
-  <h1>this is admmin page</h1>
+  <h1>this is admin page</h1>
 </template>
 
 <script>
