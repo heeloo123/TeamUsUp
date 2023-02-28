@@ -20,6 +20,7 @@
               font-family: math;
               word-spacing: 5px;
               font-size: 21px;
+             
             "
           >
             {{ project.description }}
