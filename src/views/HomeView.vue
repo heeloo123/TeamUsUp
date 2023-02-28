@@ -1,38 +1,53 @@
 <template>
-  
-    <img class="T_logo" alt="TeamUsUp logo" src="../assets/Portal_logo.jpg">
-  <form>
-    <img class="H_logo" alt="portal logo" src="../assets/Home_logo.png">
-  
-  <section class="text">
-    <p style="font-size: 35px; color: red;">
-        Student Web Portal
-    </p>
+  <div class="background">
+    <!---->
+    <label>
+      ||||
+      <router-link to="/CreateProfile">*Test*C_Profile</router-link> |
+      <router-link to="/CreateProject">*Test*C_Project</router-link> |
+      <router-link to="/Profile">*Test*Profile</router-link> |
+      <router-link to="/Project">*Test*Project</router-link> |
+    </label>
+    <form>
+        <img
+          class="T_logo"
+          alt="TeamUsUp logo"
+          src="../assets/Portal_logo.jpg"
+        />
+        <form>
+          <div style="display: flex; flex-direction: row; align-items: center;">
+          
 
-    <h1 style="font-size: 35px;">
-      Description
-    </h1>
+          <section class="text">
+            <p style="font-size: 35px; color: red">Student Web Portal</p>
 
-    <p style="font-size: 25px;">
-      They are designed to help students evaluate their potential <br> teammates' teamwork history and make informed decisions <br> about future collaborations.
-    </p>
+            <h1 style="font-size: 35px">Description</h1>
 
-    <p style="font-size: 25px; text-align: left;">
-      It allow students to create a profile and list their past <br> projects, including ratings and evaluations from other team <br> memmbers.
-    </p>
+            <p style="font-size: 25px">
+              They are designed to help students evaluate their potential <br />
+              teammates' teamwork history and make informed decisions <br />
+              about future collaborations.
+            </p>
 
-    <nav>
-    <button class="SignUpButton"><router-link to="/SignUp">Sign-Up Now</router-link></button>
-    </nav>
+            <p style="font-size: 25px; text-align: left">
+              It allow students to create a profile and list their past <br />
+              projects, including ratings and evaluations from other team <br />
+              memmbers.
+            </p>
 
-</section>
-</form>
-<!---->
-<router-link to="/CreateProfile">*Test*C_Profile</router-link> |
-<router-link to="/CreateProject">*Test*C_Project</router-link> |
-<router-link to="/Profile">*Test*Profile</router-link> |
-<router-link to="/Project">*Test*Project</router-link> |
-
+            <nav>
+              
+              <button class="SignUpButton">
+                <router-link class="link" to="/SignUp">Sign-Up Now</router-link>
+              </button>
+            </nav>
+          </section>
+          <img class="H_logo" alt="portal logo" src="../assets/Home_logo.png" />
+          </div>
+       </form> 
+      
+    </form>
+  </div>
 </template>
 
 <script>
@@ -40,54 +55,53 @@
 //import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'HomeView',
-
-  }
-
+  name: "HomeView",
+};
 </script>
   
 
 <style scoped>
-
-.text{
+.background {
+  background: rgb(224, 216, 216);
+  height: 100vh;
+  width: 100vw;
+  margin: -10px;
+  font-family: math;
+}
+.text {
   text-align: left;
   float: left;
-  position: fixed;
-  top: 380px; 
-  left:150px;
+  margin-left:100px;
+ 
+}
+
+.T_logo {
+  width: 1000px;
+  height: 100px;
+  margin: 40px;
 
 }
 
-.T_logo{
-  width: 790px;
-  height: 120px;
-  position: fixed;
-  top: 250px;
-  left: 150px;
-}
-
-.H_logo{
+.H_logo {
   float:right;
-  width:600px;
-  position: fixed;
-  top: 400px;
-  right: 130px;
+  width: 600px;
+  height: 500px;
+  margin-left:400px;
+  border-radius:10px;
+  
+  
+
 }
 
-.SignUpButton{
-    float:right;
-    height: 70px;
-    width: 170px;
-    background: #e12744;
-    border-radius: 40px;
-    margin: -55px;
-    margin-right:auto;
-    color: white;
-    position: fixed;
-    top: 850px;
-    left: 690px;
-    font-size: 20px;
+.SignUpButton {
+  height: 70px;
+  width: 170px;
+  background: #e12744;
+  border-radius: 40px;
+  color: white;
+  font-size: 25px;
+  border:transparent;
+  margin-left:100px ;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
-
-
 </style>

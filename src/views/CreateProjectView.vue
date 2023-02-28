@@ -157,4 +157,9 @@ input[type="file"] {
   margin-left: 40px;
   padding: 10px;
 }
+
+.defaultBtn{
+  position: relative;
+  top: 70px;
+}
 </style>

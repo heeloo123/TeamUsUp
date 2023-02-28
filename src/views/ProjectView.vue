@@ -8,7 +8,7 @@
         </div>
 
         <div class="dis_container">
-          <label style="font-size: 40px">Project Discription</label>
+          <label style="font-size: 40px">Project Description</label>
           <p
             style="
               background: white;

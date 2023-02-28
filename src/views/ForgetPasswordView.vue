@@ -1,35 +1,43 @@
 <template>
-  <img class="F_logo" alt="F_logo" src="../assets/Forgot_Password_logo.png" />
-  <div class="container">
-    <div class="item">
-      <h1 style="font-size: 40px;">FORGET YOUR PASSWORD</h1>
-      <section class="text">
-        <p>To recover your account, please enter your email<br />address.</p>
-        <p>
-          The system will send a recovery link to your email<br />shortly. You
-          can click on the link to recover your<br />account.
-        </p>
-        <p>For locked account, contact admin at<br />admin1234@gmail.com.</p>
-      </section>
+  <div style="display: flex; text-align: -webkit-center">
+    <div class="background">
+      <div class="container">
+        <h1 style="font-size: 50px; padding-top: 20px">
+          Forgot Your Password?
+        </h1>
+        <div class="text">
+          <p>
+            To recover your account, please enter your email address. The system
+            will send a recovery link to your email shortly. You can click on
+            the link to recover your account. For locked account, please contact
+            the administrator at
+            <a href="mailto:admin1234@gmail.com">admin1234@gmail.com</a>.
+          </p>
+        </div>
 
-      <form class="email">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Enter your email.."
-          v-model="email"
-          required
-        />
-      </form>
+        <form @submit.prevent="submitEmail" class="email">
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email.."
+            v-model="email"
+            required
+          />
+
+          <div>
+            <button class="defaultBtn" type="submit">Submit</button>
+          </div>
+        </form>
+        <router-link to="/login" class style="font-size: 25px; color: black"
+          >Return to Login Page</router-link
+        >
       </div>
-      <div class="btn"><button class="confirmBtn" type="submit">Confirm</button>
-      </div>
+    </div>
   </div>
-  
 </template>
 
 <script>
+const Swal = require("sweetalert2");
 export default {
   name: "ForgetPaswordView",
 
@@ -38,73 +46,78 @@ export default {
       email: "",
     };
   },
+  methods: {
+    submitEmail() {
+      //need import axios here to check email
+      const isEmailValid = this.validateEmail();
+      if (isEmailValid) {
+        Swal.fire({
+          title: "Success!",
+          text: "An email has been sent to your address. Please check your inbox and follow the instructions to reset your password.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Please enter a valid email address.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
+    },
+
+    validateEmail() {
+      // Regular expression to validate email has following pattern 'username@domain.com'
+      //the type:email is done for this part,so <<< this need to link to db to check>>>
+      const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // Return true if the email is valid, otherwise return false
+      return emailCheck.test(this.email);
+    },
+  },
 };
 </script>
 
 <style scoped>
+.background {
+  background: rgb(224, 216, 216);
+  height: 100vh;
+  width: 100vw;
+  margin: -10px;
+  font-family: math;
+}
+
 .container {
-  display: flex;
-  justify-content: left;
-  align-items: left;
-  flex-direction: column;
-  margin: 50px;
-  height: 600px;
-  background: rgb(219, 217, 217);
-  border-radius: 6px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: block;
+  margin: 20px;
+  width: 800px;
+  margin-top: 100px;
 }
 
-.item {
-  margin-left: 70px;
-}
-
-.text{
-    
-    text-align: center;
-    font-size: 30px;
-    font-family: math
-}
-
-.btn{
-    margin-left: 600px;
-}
-.confirmBtn {
-  height: 50px;
-  width: 200px;
-  background: black;
-  border-radius: 40px;
-  color: white;
-  font-size: x-large;
-  font: bolder;
-}
-
-form.email {
-  display: flex;
-  margin: 30px;
-  border-radius: 10px;
-  
-}
-form.email label {
-  font-size: x-large;
-  color: white;
-  padding: 6px;
-  background: black;
-  width: 100px;
-
+.text {
+  font-size: 25px;
+  font-family: math;
+  margin: 20px;
+  text-align: justify;
 }
 
 form.email input[type="email"] {
-  height: 50px;
-  width: 70%;
+  height: 55px;
+  min-width: 520px;
+  width: auto;
   font-size: x-large;
-  margin-left: 0px;
-  padding-left: 60px;
-  float:right;
+  padding-left: 20px;
+  float: left;
+  margin-left: 20px;
+  border-radius: 10px;
+  border: transparent;
+  background: rgb(243, 236, 236);
 }
+
 .F_logo {
-  display: block;
-  float: right;
-  width: 400px;
-  margin-top: 150px;
-  margin-right:100px ;
+  width: 30px;
 }
 </style>
