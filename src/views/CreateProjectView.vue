@@ -10,7 +10,7 @@
       </div>
       <div class="searchU">
         <input v-model="search" type="text" placeholder="Search users..." />
-         <ul>
+        <ul>
           <li v-for="(user, index) in userList" :key="index">
             {{ user }}
             <button
@@ -25,9 +25,9 @@
             </button>
           </li>
         </ul>
-     </div>
+      </div>
 
-      <div style="margin-left: 400px; margin-top: -720px">
+      <div style="margin-left: 400px; margin-top: -670px">
         <div class="insertP_name">
           <lable> Project Name: </lable>
           <input
@@ -39,26 +39,25 @@
 
           <div>Project description :</div>
           <textarea v-model="projectDescription" required></textarea>
-</div></div>
+        </div>
+      </div>
 
-          <nav>
-            <label>
-              <button class="defaultBtn" type="submit">
-                <router-link to="/Profile">Cancel</router-link>
-              </button></label
-            >
-            <label style="margin-left: 1200px"
-              ><button
-                class="defaultBtn"
-                type="submit"
-                @click.prevent="createProject"
-              >
-                Create Project
-              </button></label
-            >
-          </nav>
-        
-      
+      <nav>
+        <label>
+          <button class="defaultBtn" type="submit">
+            <router-link to="/Profile">Cancel</router-link>
+          </button></label
+        >
+        <label style="margin-left: 1200px"
+          ><button
+            class="defaultBtn"
+            type="submit"
+            @click.prevent="createProject"
+          >
+            Create Project
+          </button></label
+        >
+      </nav>
     </div>
   </form>
 </template>
@@ -96,8 +95,8 @@ export default {
 }
 
 .project-pic {
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   margin: 40px;
   background: rgb(234, 231, 231);
   overflow: hidden;
@@ -140,7 +139,7 @@ input[type="file"] {
   min-width: 300px;
   width: auto;
   border-radius: 20px;
-  font-size:15px;
+  font-size: 15px;
 }
 
 .searchU ul {
