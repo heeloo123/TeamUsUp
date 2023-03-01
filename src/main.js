@@ -16,3 +16,6 @@ Vue.use(VueAxios, axios);
 
 import{ MotionPlugin } from '@vueuse/motion'
 App.use(MotionPlugin)
+
+
+
