@@ -15,4 +15,7 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios);
 
 import{ MotionPlugin } from '@vueuse/motion'
-App.use(MotionPlugin)
+App.use(MotionPlugin);
+
+import{ createPinia } from 'pinia'
+App.use(createPinia);
