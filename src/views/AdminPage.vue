@@ -19,6 +19,16 @@
             {{ profile.accountStatus }}
           </div>
         </div>
+        <div class="defaultBtn">
+          <button>
+            Unlock Account
+          </button>
+        </div>
+        <div class="defaultBtn">
+          <button>
+            Archive
+          </button>
+        </div>
 
     </div>
 
