@@ -67,12 +67,12 @@
     methods: {
         ClickPreviousPage()
         {
-            this.$emit ('switchPage', -1)
+            this.$emit ('switchPage', this.currentPage-1)
         },
 
         ClickNextPage()
         {
-            this.$emit ('switchPage', this.current+1)
+            this.$emit ('switchPage', this.currentPage+1)
         },
 
         ClickPage(page) {
@@ -113,8 +113,6 @@
     display: inline-block;
 }
 
-.active{
-    color: black;
-}
+
 
 </style>
