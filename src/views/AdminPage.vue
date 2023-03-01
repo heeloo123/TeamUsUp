@@ -1,5 +1,7 @@
 <template>
-  <h1>this is admin page</h1>
+  <h1>Admin page</h1>
+    <div class="container"></div>
+
 </template>
 
 <script>
