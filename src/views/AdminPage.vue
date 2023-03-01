@@ -4,7 +4,7 @@
         <div> 
           Student Name:
             <div class="Student Name">
-              {{ profile.firstName }} {{ profile.lastname }}
+              {{ profile.firstName }} {{ profile.lastName }}
             </div>
         </div>
         <div>
@@ -33,7 +33,12 @@ export default {
  name:'AdminPage',
  data() {
   return{
-    profile: {}
+    profile: [
+      { firstName: 'Joe', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Devin', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Sean', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Mary', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+    ]
   };
  }
  
