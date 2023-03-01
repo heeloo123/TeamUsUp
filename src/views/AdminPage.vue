@@ -7,6 +7,12 @@
               {{ profile.firstName }} {{ profile.lastname }}
             </div>
         </div>
+        <div>
+          Major
+            <div class="major">
+              {{ profile.major }}
+            </div>
+        </div>
 
     </div>
 
