@@ -1,7 +1,9 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
-      <h1>Admin page</h1>
+      <h1 style="font-size: 40px;margin-left: -1300px;">
+        Admin page
+      </h1>
         <div class="container">
           <div v-for="profile in profiles" :key="profile.name">
 
@@ -11,13 +13,13 @@
               Account Status: {{ profile.accountStatus }}<br></p>
             </div>
           </div>
-
-            <div class="defaultBtn">
-              <button>Unlock Account</button>
-            </div>
-            <div class="defaultBtn">
-              <button>Archive</button>
-            </div>
+        
+              <div class="defaultBtn">
+                <button>Unlock Account</button>
+              </div>
+              <div class="defaultBtn">
+                <button>Archive</button>
+              </div>
         </div>
      </div>
   </div>
@@ -57,10 +59,16 @@ export default {
 .container{
   background: rgb(255, 255, 255);
   border-radius: 20px;
-  display: flex;
   margin: 20px;
   width: auto;
   margin: 50px;
+  text-align: left;
+  padding-top: 0.5cm;
+  padding-left: 1cm;
+
+}
+
+.profile{
 
 }
 
