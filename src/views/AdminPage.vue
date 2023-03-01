@@ -57,10 +57,14 @@ export default {
 .container{
   background: rgb(255, 255, 255);
   border-radius: 20px;
-  display: flex;
   margin: 20px;
   width: auto;
   margin: 50px;
+  text-align: left;
+
+}
+
+.profile{
 
 }
 
