@@ -72,6 +72,14 @@
         return this.currentPage -1;
     },
 
+    firstPage() {
+        return this.currentPage === 1;
+    },
+
+    lastPage() {
+        return this.currentPage === this.totalPages;
+    },
+
     methods: {
         ClickPreviousPage()
         {
