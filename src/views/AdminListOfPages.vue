@@ -39,23 +39,7 @@
 
     computed: {
         
-    pages() {
-        const range = [];
-        for (
-            let x = this.startPage;
-            x <= Math.min (this.startPage + this.displayButtons -1, this.totalPages);
-            x++
-        )
-            {
-                range.push(
-                    {
-                        name: x,
-                        isDisabled: x === this.currentPage
-                    }
-                )
-            }
-        return range;
-    },
+    
 
     // if the page selected is the start page, which is also the first page
     startPage() {
@@ -98,7 +82,25 @@
         Page(page) {
             return this.currentPage === page
         }
-    }
+    },
+
+    pages() {
+            const range = [];
+            for (
+                let x = this.startPage;
+                x <= Math.min (this.startPage + this.displayButtons -1, this.totalPages);
+                x++
+            )
+                {
+                    range.push(
+                        {
+                            name: x,
+                            isDisabled: x === this.currentPage
+                        }
+                    )
+                }
+            return range;
+        },
 
   }
         
