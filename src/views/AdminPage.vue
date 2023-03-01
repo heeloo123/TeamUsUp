@@ -20,14 +20,10 @@
           </div>
         </div>
         <div class="defaultBtn">
-          <button>
-            Unlock Account
-          </button>
+          <button>Unlock Account</button>
         </div>
         <div class="defaultBtn">
-          <button>
-            Archive
-          </button>
+          <button>Archive</button>
         </div>
     </div>
 </template>
