@@ -34,9 +34,14 @@
 
 <script>
 export default {
- name:'AdminPage'
+ name:'AdminPage',
+ data() {
+  return{
+    profile: {}
+  };
+ }
  
-}
+};
 
 
 </script>
