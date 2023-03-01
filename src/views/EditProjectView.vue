@@ -56,8 +56,12 @@
                   required
                 />
                 <label style="padding: 20px; margin: 10px">
-                  <button class="e">Self evaluation</button>
-                  <button class="e">Peer evaluation</button></label
+                  <button class="e"><router-link to="/SelfEva" class="link"
+              >Self evaluationn</router-link
+            ></button>
+                  <button class="e"><router-link to="/PeerEva" class="link"
+              >Peer evaluation</router-link
+            ></button></label
                 >
               </div>
               <p></p>
@@ -137,9 +141,9 @@ export default {
 <style scoped>
 .background {
   background: rgb(207, 205, 205);
-  height: 100vh;
-  width: 100vw;
-  margin: -10px;
+  height: 100%;
+  width: 100%;
+  margin-top: -10px;
   font-family: math;
 }
 
