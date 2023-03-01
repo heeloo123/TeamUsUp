@@ -28,14 +28,14 @@ export default {
  data() {
   return{
     profiles: [
-      { firstName: 'Joe', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Devin', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Sean', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Calvin', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Harry', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Mary', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Perry', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Zen', lastname: 'Doe', major: 'Design', accountStatus: 'Deactivated, Locked' },
+      { firstName: 'Joe', lastName: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Devin', lastName: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Sean', lastName: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Calvin', lastName: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Harry', lastName: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Mary', lastName: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Perry', lastName: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Zen', lastName: 'Doe', major: 'Design', accountStatus: 'Deactivated, Locked' },
     ]
   };
  }
