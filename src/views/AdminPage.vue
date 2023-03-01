@@ -13,6 +13,12 @@
               {{ profile.major }}
             </div>
         </div>
+        <div>
+          Account Status
+          <div class="accountStatus">
+            {{ profile.accountStatus }}
+          </div>
+        </div>
 
     </div>
 
