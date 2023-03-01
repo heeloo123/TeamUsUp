@@ -17,7 +17,7 @@
           <div class="bio">{{ profile.biography }}</div>
         </div>
 
-        <div class="Project-container">Projects :</div>
+        <div class="Project-container">Recent Project</div>
         
         <div v-for="project in projects" :key="project.name">{{project.name}}</div>
         <nav>

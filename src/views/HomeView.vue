@@ -7,6 +7,11 @@
       <router-link to="/CreateProject">*Test*C_Project</router-link> |
       <router-link to="/Profile">*Test*Profile</router-link> |
       <router-link to="/Project">*Test*Project</router-link> |
+      <router-link to="/EditProject"> Edit Project</router-link>|
+      <router-link to="/SelfEva"> Self evaluation</router-link>|
+      <router-link to="/PeerEva"> Peer evaluation</router-link>|
+      <router-link to="/AdminPage"> admin page</router-link>
+
     </label>
     <form>
         <img
