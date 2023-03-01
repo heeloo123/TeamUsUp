@@ -47,7 +47,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .background {
   background: rgb(207, 205, 205);
   height: 100vh;

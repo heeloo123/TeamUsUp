@@ -2,21 +2,32 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="container">
-        <h1>Self Evaluation</h1>
+        <h1 style="margin-left: -900px; padding-top: 30px; font-size: 50px">
+          Self Evaluation
+        </h1>
         <div>
           <div class="profile-pic">
             <img src="" alt="profile" />
           </div>
-          <div>
-          <label>Fname </label><label>Lname</label>
-          
-          <div>
-          
-          
-          </div>
 
+          <div
+            style="
+              display: inline-block;
+              font-size: 40px;
+              float: left;
+              margin-top: 90px;
+              text-align: left;
+            "
+          >
+            <label>Jackson </label><label>Wang</label>
+
+            <div style="padding: 10px; margin-left: -10px">
+              Project name : {{ project.name }}
+            </div>
+            <label style="font-size: 35px">Project role : {{ project.role }}</label>
+          </div>
           <!--input area------------------------------->
-          <div style="display: inline-flex; padding: 20; width: inherit; padding: 20px">
+          <div style="display: inline-flex; width: inherit">
             <textarea placeholder="comment.." />
             <form class="rating_form">
               <div style="display: table-row; font-size: 30px">
@@ -58,9 +69,9 @@
             </form>
           </div>
           <!---End of input area----------------->
-        </div></div>
-        
-        <form style="display: flex; justify-content: space-between">
+        </div>
+
+        <form style="display: flex; justify-content: space-between; padding: 20px">
           <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
           <button class="defaultBtn" type="submit">Submit</button>
         </form>
@@ -79,6 +90,10 @@ export default {
       teamworkStars: [],
       skillsStars: [],
       communicationStars: [],
+      project: {
+        name: " Personal Expense Tracker",
+        role: "Project manager",
+      },
     };
   },
   mounted() {
@@ -135,7 +150,7 @@ export default {
   overflow: hidden;
   border-radius: 20px;
   float: left;
-    margin: 50px;
+  margin-left: 50px;
 }
 .profile-pic img {
   width: 100%;
@@ -171,7 +186,7 @@ export default {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   display: block;
-  
+  height: -webkit-fill-available;
   width: 1300px;
   margin-top: 50px;
 }
@@ -183,6 +198,6 @@ export default {
   height: auto;
   border: transparent;
   background: rgb(234, 231, 231);
-  margin-left:-100px
-  }
+  margin-left: -100px;
+}
 </style>

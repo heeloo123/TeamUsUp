@@ -4,7 +4,7 @@
     <div class="background">
       <div class="container">
         <div class="Title">
-          <h1 style="font-size: 40px; margin-left: -270px">Sign Up</h1>
+          <h1 style="font-size: 40px;margin-left:-270px">Sign Up</h1>
           <h2 style="margin-left: 50px; color: grey">
             Please fill in this form to create an account!
           </h2>
@@ -152,6 +152,7 @@ export default {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   width: fit-content;
+  display: block;
 
   margin-top: 100px;
 }
