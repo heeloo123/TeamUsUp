@@ -46,11 +46,22 @@ export default {
 </script>
 
 <style>
+.background {
+  background: rgb(207, 205, 205);
+  height: 100vh;
+  width: 100vw;
+  margin: -10px;
+  font-family: math;
+}
+
 .container{
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
   display: flex;
+  margin: 20px;
+  width: auto;
   margin: 50px;
-  background: rgb(211, 208, 208);
-  border-radius: 10px;
+
 }
 
 </style>
