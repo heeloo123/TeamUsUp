@@ -1,16 +1,16 @@
 <template>
     <ul>
         <li>
-            <button @click="onClickPreviousPage" :disabled="FirstPage">Previous</button>
+            <button @click="ClickPreviousPage" :disabled="firstPage">Previous</button>
         </li>
         <li>
-            <button @click="onClickNextPage" :disabled="FirstPage">Next</button>
+            <button @click="ClickNextPage" :disabled="lastPage">Next</button>
         </li>
     </ul>
 
-        <li v-for="page in pages" :key="page.name">
+        <li @click="ClickPage (page.number)" v-for="page in pages" :key="page.number">
             <button :disabled="page.isDisables">
-                {{ page.name }}
+                {{ page.number }}
             </button>
         </li>
 </template>
@@ -43,6 +43,7 @@
 
         return this.currentPage -1;
     },
+
     pages() {
         const range = [];
         for (
@@ -60,6 +61,31 @@
             }
         return range;
     },
+
+    firstPage() {
+        return this.currentPage === 1;
+    },
+
+    lastPage() {
+        return this.currentPage === this.totalPages;
+    },
+
+    methods: {
+        ClickPreviousPage()
+        {
+            this.$emit ('switchPage', -1);
+        },
+
+        ClickNextPage()
+        {
+            this.$emit ('switchPage', this.current+1)
+        },
+
+        ClickPage(page) {
+            this.$emit ('switchPage', page);
+        }
+    }
+
   }
         
 };
