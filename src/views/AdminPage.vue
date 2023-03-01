@@ -29,9 +29,7 @@
             Archive
           </button>
         </div>
-
     </div>
-
 </template>
 
 <script>
