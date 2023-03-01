@@ -1,23 +1,15 @@
+
 <template>
-  <div style="display: flex; text-align: -webkit-center">
-    <div class="background">
-      <div class="container">
-        <h1>Peer</h1>
-        <span v-for="(star, index) in stars" :key="index" @click="rate(index)">
-      <span :class="starClass(star)">&starf;</span>
+  <div>
+    <span v-for="(star, index) in stars" :key="index" @click="rate(index)">
+      <span :class="starClass(star)" >&starf;</span>
     </span>
-      
-      
-      
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
- name:'PeerEva',
- data() {
+  data() {
     return {
       rating: 0,
       maxRating: 5,
@@ -29,6 +21,7 @@ export default {
   },
   methods: {
     rate(index) {
+      console.log("click"+(index +1) +"star")
       this.rating = index + 1;
       this.stars = this.stars.map((star, i) => {
         if (i <= index) {
@@ -49,28 +42,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .star-filled {
   color: orange;
 }
 
 .star-empty {
   color: gray;
-}
-
-.background {
-  background: rgb(207, 205, 205);
-  height: 100vh;
-  width: 100vw;
-  margin-top: -10px;
-  font-family: math;
-}
-
-.container {
-  background: rgb(255, 255, 255);
-  border-radius: 20px;
-  display: flex;
-  margin: 20px;
-  margin: 50px;
 }
 </style>

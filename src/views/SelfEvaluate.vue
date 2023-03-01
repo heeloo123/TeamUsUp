@@ -29,8 +29,8 @@ export default {
   },
   methods: {
     rate(index) {
+      console.log("click"+(index +1) +"star")
       this.rating = index + 1;
-      this.rateScoreText=this.rateScoreDesc[index]
       this.stars = this.stars.map((star, i) => {
         if (i <= index) {
           return true;
@@ -47,29 +47,20 @@ export default {
       }
     },
   },
-  computed: {
-    rateScoreText() {
-      switch (this.rating) {
-        case 1:
-          return 'Need more work';
-        case 2:
-          return 'Good';
-        case 3:
-          return 'Very good';
-        case 4:
-          return 'Excellent';
-        case 5:
-          return 'Outstanding';
-        default:
-          return 'Please rate this product';
-      }
-    },
-  },
   };
 
 </script>
 
-<style>
+<style scoped>
+
+.star-filled {
+  
+  color: orange;
+}
+
+.star-empty {
+  color: gray;
+}
 .background {
   background: rgb(224, 216, 216);
   height: 100vh;

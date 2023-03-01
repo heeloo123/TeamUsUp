@@ -3,10 +3,10 @@
     <!---->
     <label>
       ||||
-      <router-link to="/CreateProfile">*Test*C_Profile</router-link> |
-      <router-link to="/CreateProject">*Test*C_Project</router-link> |
-      <router-link to="/Profile">*Test*Profile</router-link> |
-      <router-link to="/Project">*Test*Project</router-link> |
+      <router-link to="/CreateProfile">Create Profile</router-link> |
+      <router-link to="/CreateProject">Create Project</router-link> |
+      <router-link to="/Profile">Profile</router-link> |
+      <router-link to="/Project">Project</router-link> |
       <router-link to="/EditProject"> Edit Project</router-link>|
       <router-link to="/SelfEva"> Self evaluation</router-link>|
       <router-link to="/PeerEva"> Peer evaluation</router-link>|
