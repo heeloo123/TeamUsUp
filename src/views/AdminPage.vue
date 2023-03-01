@@ -18,6 +18,9 @@
                 <button class="archiveBtn">Archive</button>
               </form>
          </div>
+         <div class="page-number">
+            <button></button>
+         </div>
     </div>
   </div>
 </template>
