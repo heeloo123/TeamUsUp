@@ -9,7 +9,7 @@
     </ul>
         <li class="p-item" v-for="page in pages" :key="page.number">
             <button
-                :class="{active: Page (page.number)}"
+                :class="activePage (page.number)"
                 @click="ClickPage (page.number)"
                 :disabled="page.isDisables">
                 {{ page.number }}
@@ -49,7 +49,7 @@
 
     // if the page is the last page
         if (this.currentPage === this.totalPages) {
-            return this.totalPages - this.displayButtons;
+            return this.totalPages - this.displayButtons+1;
         }
 
     // if the page selected is in between the visible buttons
@@ -79,7 +79,7 @@
             this.$emit ('switchPage', page)
         },
 
-        Page(page) {
+        activePage(page) {
             return this.currentPage === page
         }
     },
