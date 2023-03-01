@@ -3,36 +3,67 @@
     <div class="background">
       <div class="container">
         <h1>Self Evaluation</h1>
-<div style="display:inline-flex;padding:20;width: inherit;padding:20px">
-<textarea placeholder="comment.."/>
-        <form class="rating_form">
-          <div style="display: table-row; font-size: 30px">
-            <label style="margin-right:75px">Teamwork</label>
-            <span class="starRate">
-              <span v-for="(star, index) in teamworkStars" :key="index" @click="rate(index,'teamwork')">
-                <span :class="['starRate', starClass(star)]">&starf;</span>
-              </span>
-            </span>
+        <div>
+          <div class="profile-pic">
+            <img src="" alt="profile" />
           </div>
-          <div style="display: table-row; font-size: 30px">
-            <label style="margin-right:145px">Skills</label>
-            <span class="starRate">
-              <span v-for="(star, index) in skillsStars" :key="index" @click="rate(index,'skills')">
-                <span :class="['starRate', starClass(star)]">&starf;</span>
-              </span>
-            </span>
-          </div>
-          <div style="display: table-row; font-size: 30px">
-            <label style="margin-right:10px">Communication</label>
-            <span class="starRate">
-              <span v-for="(star, index) in communicationStars" :key="index" @click="rate(index,'communication')">
-                <span :class="['starRate', starClass(star)]">&starf;</span>
-              </span>
-            </span>
+          <div>
+          <label>Fname </label><label>Lname</label>
+          
+          <div>
+          
+          
           </div>
 
+          <!--input area------------------------------->
+          <div style="display: inline-flex; padding: 20; width: inherit; padding: 20px">
+            <textarea placeholder="comment.." />
+            <form class="rating_form">
+              <div style="display: table-row; font-size: 30px">
+                <label style="margin-right: 75px">Teamwork</label>
+                <span class="starRate">
+                  <span
+                    v-for="(star, index) in teamworkStars"
+                    :key="index"
+                    @click="rate(index, 'teamwork')"
+                  >
+                    <span :class="['starRate', starClass(star)]">&starf;</span>
+                  </span>
+                </span>
+              </div>
+              <div style="display: table-row; font-size: 30px">
+                <label style="margin-right: 145px">Skills</label>
+                <span class="starRate">
+                  <span
+                    v-for="(star, index) in skillsStars"
+                    :key="index"
+                    @click="rate(index, 'skills')"
+                  >
+                    <span :class="['starRate', starClass(star)]">&starf;</span>
+                  </span>
+                </span>
+              </div>
+              <div style="display: table-row; font-size: 30px">
+                <label style="margin-right: 10px">Communication</label>
+                <span class="starRate">
+                  <span
+                    v-for="(star, index) in communicationStars"
+                    :key="index"
+                    @click="rate(index, 'communication')"
+                  >
+                    <span :class="['starRate', starClass(star)]">&starf;</span>
+                  </span>
+                </span>
+              </div>
+            </form>
+          </div>
+          <!---End of input area----------------->
+        </div></div>
+        
+        <form style="display: flex; justify-content: space-between">
+          <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
+          <button class="defaultBtn" type="submit">Submit</button>
         </form>
-</div>
       </div>
     </div>
   </div>
@@ -46,8 +77,8 @@ export default {
       rating: 0,
       maxRating: 5,
       teamworkStars: [],
-      skillsStars:[],
-      communicationStars:[],
+      skillsStars: [],
+      communicationStars: [],
     };
   },
   mounted() {
@@ -57,33 +88,33 @@ export default {
   },
   methods: {
     rate(index, category) {
-  console.log("click" + (index + 1) + "star");
-  if (category === 'teamwork') {
-    this.teamworkStars = this.teamworkStars.map((star, i) => {
-      if (i <= index) {
-        return true;
-      } else {
-        return false;
+      console.log("click" + (index + 1) + "star");
+      if (category === "teamwork") {
+        this.teamworkStars = this.teamworkStars.map((star, i) => {
+          if (i <= index) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      } else if (category === "skills") {
+        this.skillsStars = this.skillsStars.map((star, i) => {
+          if (i <= index) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      } else if (category === "communication") {
+        this.communicationStars = this.communicationStars.map((star, i) => {
+          if (i <= index) {
+            return true;
+          } else {
+            return false;
+          }
+        });
       }
-    });
-  } else if (category === 'skills') {
-    this.skillsStars = this.skillsStars.map((star, i) => {
-      if (i <= index) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-  } else if (category === 'communication') {
-    this.communicationStars = this.communicationStars.map((star, i) => {
-      if (i <= index) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-  }
-},
+    },
     starClass(star) {
       if (star) {
         return "star-filled";
@@ -96,6 +127,22 @@ export default {
 </script>
 
 <style scoped>
+.profile-pic {
+  width: 300px;
+  height: 300px;
+  margin: 50px;
+  background: rgb(234, 231, 231);
+  overflow: hidden;
+  border-radius: 20px;
+  float: left;
+    margin: 50px;
+}
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .star-filled {
   color: orange;
 }
@@ -105,11 +152,11 @@ export default {
 }
 
 .starRate {
-  font-size: 30px;
+  font-size: 40px;
 }
 .rating_form {
-  margin-left: 100px;
-    text-align: left;
+  margin-left: 30px;
+  text-align: left;
 }
 
 .background {
@@ -124,15 +171,18 @@ export default {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   display: block;
-  margin: 20px;
+  
   width: 1300px;
-  margin-top: 100px;
+  margin-top: 50px;
 }
-.container textarea{
+.container textarea {
   width: 700px;
-    padding: 10px;
-    font-size: 20px;
-    border-radius: 10px;
-    height: auto;
-}
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+  height: auto;
+  border: transparent;
+  background: rgb(234, 231, 231);
+  margin-left:-100px
+  }
 </style>
