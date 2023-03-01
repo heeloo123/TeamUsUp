@@ -70,9 +70,6 @@ export default {
   height: 75px;
 }
 
-.defaultBtn{
-  width: 200px;
 
-}
 
 </style>
