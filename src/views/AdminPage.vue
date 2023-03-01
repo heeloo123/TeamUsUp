@@ -4,9 +4,9 @@
       <div v-for="profile in profiles" :key="profile.name">
 
         <div class="profile">
-            Student Name: {{ profile.firstName }} {{ profile.lastName }}<br>
+            <p>Student Name: {{ profile.firstName }} {{ profile.lastName }}<br>
             Major: {{ profile.major }}<br>
-            Account Status: {{ profile.accountStatus }}<br>
+            Account Status: {{ profile.accountStatus }}<br></p>
         </div>
       </div>
 
@@ -28,7 +28,11 @@ export default {
       { firstName: 'Joe', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
       { firstName: 'Devin', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
       { firstName: 'Sean', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Mary', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Calvin', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Harry', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Mary', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Perry', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Zen', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
     ]
   };
  }
