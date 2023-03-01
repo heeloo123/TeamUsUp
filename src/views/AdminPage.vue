@@ -83,7 +83,8 @@ export default {
   font: bolder;
   margin-left: 20px;
   position: relative;
-  left: 600px;
+  left: 1250px;
+  bottom: 70px;
 }
 
 .unlockBtn{
@@ -97,7 +98,8 @@ export default {
   font: bolder;
   margin-right: 20px;
   position: relative;
-  left: 600px;
+  left: 1575px;
+  bottom: 70px;
 
 }
 
