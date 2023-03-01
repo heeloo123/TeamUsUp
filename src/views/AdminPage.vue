@@ -13,13 +13,10 @@
               Account Status: {{ profile.accountStatus }}<br></p>
             </div>
           </div>
-        
-              <div class="defaultBtn">
-                <button>Unlock Account</button>
-              </div>
-              <div class="defaultBtn">
-                <button>Archive</button>
-              </div>
+              <form style="display: flex; justify-content: space-between"> 
+                <button class="defaultBtn">Unlock Account</button>
+                <button class="defaultBtn">Archive</button>
+              </form>
          </div>
     </div>
   </div>
@@ -71,6 +68,10 @@ export default {
   border-width: 0.06cm;
   width: 1740px;
   height: 75px;
+}
+
+.defaultBtn{
+  width: 200px;
 
 }
 
