@@ -1,51 +1,79 @@
 <template>
-  <form class="project-container">
-    <div style="margin: 10px">
-      <h1 style="font-size: 50px; font-family: math; margin: 40px">Create A Project!</h1>
+  <div style="display: flex; text-align: -webkit-center">
+    <div class="background">
+      <div class="container">
+        <div class="item">
+          <h1 style="font-size: 40px; margin-left: -1200px">Create a project!</h1>
 
-      <div class="project-pic">
-        <input type="file" accept="image/*" @change="handleFileUpload" />
-      </div>
-      <div class="searchU">
-        <input v-model="search" type="text" placeholder="Search users..." @keydown.enter="addUser" />
-        <button class="addBtn" @click="addUser" v-if="search && !userList.includes(search)">
-          Add
-        </button>
-        <ul>
-          <li v-for="(user, index) in userList" :key="index">
-            {{ user }}
-            <button style="background: transparent; border: transparent" @click="deleteUser(index)">
-              <img style="width: 20px; height: 20px" src="../assets/delete.png" alt="delete icon" />
-            </button>
-          </li>
-        </ul>
-      </div>
+          <form class="detail">
+            <div>
+              <div class="profile-pic">
+                <input type="file" id="profilePic" />
+              </div>
+              <p></p>
+              <div class="searchU">
+                <input
+                  v-model="search"
+                  type="text"
+                  placeholder="Search users..."
+                  @keydown.enter="addUser"
+                />
+                <div>
+                <button
+                  class="addBtn"
+                  @click="addUser"
+                  v-if="search && !userList.includes(search)"
+                >
+                  Add
+                </button></div>
+                <ul>
+                  <li v-for="(user, index) in userList" :key="index">
+                    {{ user }}
+                    <button
+                      style="background: transparent; border: transparent"
+                      @click="deleteUser(index)"
+                    >
+                      <img
+                        style="width: 20px; height: 20px"
+                        src="../assets/delete.png"
+                        alt="delete icon"
+                      />
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div style="display: block; margin-left: 20px">
+              <p></p>
+              <span style="font-size: 30px">Project name:</span>
+              <input
+                placeholder="Enter your major here"
+                type="text"
+                id="major"
+                v-model="major"
+                required
+              />
+              <p></p>
+              <div style="font-size: 30px">Project description:</div>
 
-      <div style="margin-left: 400px; margin-top: -670px">
-        <div class="insertP_name">
-          <lable> Project Name: </lable>
-          <input v-model="projectName" type="text" placeholder="Enter project name.." required />
+              <textarea
+                placeholder="Enter your biography here"
+                v-model="bio"
+                required
+              ></textarea>
+            </div>
+          </form>
 
-          <div>Project description :</div>
-          <textarea v-model="projectDescription" required></textarea>
+          <form style="display: flex; justify-content: space-between">
+            <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
+            <button class="defaultBtn" type="submit">Create</button>
+          </form>
         </div>
       </div>
-      <div style="margin-top: 150px">
-        <nav>
-          <label style="float: left">
-            <button class="defaultBtn" type="submit">
-              <router-link to="/Profile">Cancel</router-link>
-            </button></label>
-          <label style="float: right"><button class="defaultBtn" type="submit" @click.prevent="createProject">
-              Create Project
-            </button></label>
-        </nav>
-      </div>
     </div>
-  </form>
+  </div>
 </template>
 
-<!---need import axios-for search input @hadelserach input-->
 <script>
 const Swal = require("sweetalert2");
 export default {
@@ -101,58 +129,64 @@ export default {
 </script>
 
 <style scoped>
-.project-container {
-  display: flex;
-  margin: 50px;
-  background: rgb(211, 208, 208);
-  border-radius: 10px;
+.background {
+  background: rgb(207, 205, 205);
+  height: 100vh;
+  width: 100vw;
+  margin: -10px;
+  font-family: math;
 }
 
-.project-pic {
-  width: 300px;
-  height: 300px;
-  margin: 40px;
+.container {
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  margin: 20px;
+  width: auto;
+  margin: 50px;
+}
+
+.item {
+  display: inline-table;
+}
+
+.detail {
+  display: flex;
+  padding: 20px;
+  text-align: left;
+
+  margin-left: 60px;
+}
+
+input[type="text"] {
+  border-radius: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border: transparent;
+  background: rgb(234, 229, 229);
+  width: 500px;
+}
+
+textarea {
+  border-radius: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border: transparent;
+  width: 1200px;
+  min-height: 500px;
+  height: auto;
+  background: rgb(234, 229, 229);
+}
+
+.profile-pic {
   background: rgb(234, 231, 231);
-  overflow: hidden;
-  align-items: center;
+  width: 320px;
+  height: 300px;
   border-radius: 20px;
 }
-
-input[type="file"] {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  margin: 60px;
+.searchU {
 }
-
-.insertP_name {
-  margin: 20px;
-  font-size: 40px;
-  font-family: math;
-  padding: 10px;
-}
-
-.insertP_name input {
-  font-size: 20px;
-  min-width: 700px;
-  width: auto;
-  height: 50px;
-  margin: 10px;
-  padding-left: 20px;
-  border-radius: 10px;
-}
-
-.insertP_name textarea {
-  width: 1200px;
-  min-height: 400px;
-  height: auto;
-  border-radius: 30px;
-  padding: 20px;
-  font-size: 20px;
-}
-
 .searchU input {
-  margin-left: 20px;
   padding: 15px;
   min-width: 300px;
   width: auto;
@@ -166,7 +200,7 @@ input[type="file"] {
   width: 300px;
   min-height: 200px;
   height: auto;
-  margin-left: 20px;
+
   border-radius: 20px;
   padding: 20px;
 }
@@ -178,9 +212,10 @@ input[type="file"] {
 }
 
 .addBtn {
-  margin: 10px;
   border-radius: 30px;
-  color: white;
-  background: black;
+    color: black;
+    display: flex;
+    margin-left: 280px;
+    margin-top: -30px;
 }
 </style>

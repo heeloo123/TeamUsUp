@@ -1,84 +1,97 @@
 <template>
-  <form class="edit-project-container">
-    <div style="margin: 10px">
-      <h1 style="font-size: 50px; font-family: math; margin: 40px">
-        Edit Project
-      </h1>
+  <div style="display: flex; text-align: -webkit-center">
+    <div class="background">
+      <div class="container">
+        <div class="item">
+          <h1 style="font-size: 40px; margin-left: -1300px">Edit project</h1>
 
-      <div class="project-pic">
-        <input type="file" accept="image/*" @change="handleFileUpload"/>
-      </div>
-
-      <div class="searchU">
-        <input v-model="search" type="text" placeholder="Search users..." />
-          <ul>
-            <li v-for="(user, index) in userList" :key="index">
-              {{ user }}
-              <button
-              style="background: transparent; border: transparent"
-              @click="deleteUser(index)"
-              >
-              <img
-                style="width: 20px; height: 20px"
-                src="../assets/delete.png"
-                alt="delete icon"
-              />
-              </button>
-            </li>
-         </ul>
-      </div>
-
-      <div style="margin-left: 400px; margin-top: -670px">
-        <div class="project-name">
-          <lable> Project Name: </lable>
-          <input v-model="projectName" 
-            type="text"
-            placeholder="Current project name"
-            required />
-
-        <div class="project-description"></div>
-            <label>Project Description: </label>
-            <textarea id="projectDescription" v-model="projectDescription" required></textarea>
-        </div>
-      </div>
-
-      <nav>
-        <button class="defaultBtn">
-          <router-link to="/SelfEva">Self Evaluation</router-link>
-        </button>
-          
-        <button class="defaultBtn">
-          <router-link to="/PeerEva">Peer evaluation</router-link>
-        </button>
-          <div class="btn2">
-            <button 
-              class="defaultBtn" 
-              type="submit">
-              <router-link to="/Project">Cancel</router-link>
-            </button>
-          </div>
-              <label style="margin-left: 1200px;">
-                <div class="btn3">
-                  <button 
-                    class="defaultBtn"
-                    type="submit"
-                    @click.prevent="updateProject">
-                    <router-link to="/Project">Save</router-link>
+          <form class="detail">
+            <div>
+              <div class="profile-pic">
+                <input type="file" id="profilePic" />
+              </div>
+              <p></p>
+              <div class="searchU">
+                <input
+                  v-model="search"
+                  type="text"
+                  placeholder="Search users..."
+                  @keydown.enter="addUser"
+                />
+                <div>
+                  <button
+                    class="addBtn"
+                    @click="addUser"
+                    v-if="search && !userList.includes(search)"
+                  >
+                    Add
                   </button>
                 </div>
-              </label>
-       </nav>
+                <ul>
+                  <li v-for="(user, index) in userList" :key="index">
+                    {{ user }}
+                    <button
+                      style="background: transparent; border: transparent"
+                      @click="deleteUser(index)"
+                    >
+                      <img
+                        style="width: 20px; height: 20px"
+                        src="../assets/delete.png"
+                        alt="delete icon"
+                      />
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div style="display: block; margin-left: 20px; margin-top: -32px;">
+              <p></p>
+              <div>
+                <span style="font-size: 30px">Project name:</span>
+                <input
+                  placeholder="Enter your major here"
+                  type="text"
+                  id="major"
+                  v-model="major"
+                  required
+                />
+                <label style="padding: 20px; margin: 10px">
+                  <button class="e">Self evaluation</button>
+                  <button class="e">Peer evaluation</button></label
+                >
+              </div>
+              <p></p>
+              <div style="font-size: 30px">Project description:</div>
+
+              <textarea
+                placeholder="Enter your biography here"
+                v-model="bio"
+                required
+              ></textarea>
+            </div>
+          </form>
+
+          <form style="display: flex; justify-content: space-between">
+            <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
+            <button class="defaultBtn" type="submit">Create</button>
+          </form>
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
+const Swal = require("sweetalert2");
 export default {
-  name: "EditProjectView",
+  name: "CreateProjectView",
   data() {
     return {
       search: "",
-      userList: ["Jane", "John"],
+      userList: ["John", "Jane", "jackson"],
+      projectName: "",
+      projectDescription: "",
+      projectPic: null,
     };
   },
   methods: {
@@ -91,61 +104,95 @@ export default {
     deleteUser(index) {
       this.userList.splice(index, 1);
     },
+    createProject() {
+      const invalidinput = /[~`!#$%^&*|\\:<>]/; // regular expression pattern
+      if (
+        this.projectName &&
+        !invalidinput.test(this.projectName) &&
+        this.projectName.trim() !== "" &&
+        this.projectDescription &&
+        !invalidinput.test(this.projectDescription) &&
+        this.projectDescription.trim() !== ""
+      ) {
+        Swal.fire({
+          icon: "success",
+
+          text: "Project has been created!",
+        });
+
+        // Navigate to projectpage
+        this.$router.push({ path: "/Project" });
+      } else {
+        Swal.fire({
+          icon: "warning",
+
+          text: "The text should not include~`!#$%^&*|\\:<>",
+        });
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.edit-project-container{
-  display: flex;
-  margin: 50px;
-  background: rgb(211, 208, 208);
-  border-radius: 10px;
+.background {
+  background: rgb(207, 205, 205);
+  height: 100vh;
+  width: 100vw;
+  margin: -10px;
+  font-family: math;
 }
 
-.project-pic{
-  width: 300px;
-  height: 300px;
-  margin: 40px;
+.container {
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  margin: 20px;
+  width: auto;
+  margin: 50px;
+}
+
+.item {
+  display: inline-table;
+}
+
+.detail {
+  display: flex;
+  padding: 20px;
+  text-align: left;
+
+  margin-left: 60px;
+}
+
+input[type="text"] {
+  border-radius: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border: transparent;
+  background: rgb(234, 229, 229);
+  width: 500px;
+}
+
+textarea {
+  border-radius: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border: transparent;
+  width: 1200px;
+  min-height: 500px;
+  height: auto;
+  background: rgb(234, 229, 229);
+}
+
+.profile-pic {
   background: rgb(234, 231, 231);
-  align-items: center;
-  overflow: hidden;
+  width: 320px;
+  height: 300px;
   border-radius: 20px;
 }
-
-input[type="file"] {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  margin: 60px;
+.searchU {
 }
-
-.project-name{
-  margin: 20px;
-  font-size: 40px;
-  font-family: math;
-  padding: 10px;
-}
-
-.project-name input{
-  font-size: 20px;
-  min-width: 700px;
-  width: auto;
-  height: 50px;
-  margin: 10px;
-  padding-left: 20px;
-  border-radius: 10px;
-}
-
-.project-name textarea{
-  width: 1200px;
-  min-height: 400px;
-  height: auto;
-  border-radius: 30px;
-}
-
 .searchU input {
-  margin-left: 20px;
   padding: 15px;
   min-width: 300px;
   width: auto;
@@ -159,7 +206,7 @@ input[type="file"] {
   width: 300px;
   min-height: 200px;
   height: auto;
-  margin-left: 20px;
+
   border-radius: 20px;
   padding: 20px;
 }
@@ -170,35 +217,19 @@ input[type="file"] {
   padding: 10px;
 }
 
-.defaultBtn{
-  position: relative;
-  top: 100px;
-  left: 500px;
+.addBtn {
+  border-radius: 30px;
+  color: black;
+  display: flex;
+  margin-left: 280px;
+  margin-top: -30px;
 }
-
-.btn2{
-  position: relative;
-  bottom: 300px;
-  right: 200px;
+.e{
+  color: white;
+  background: black;
+  margin: 20px;
+  font-size: 20px;
+  border-radius: 20px;
+  font-family: math;
 }
-
-.btn3{
-  position: relative;
-  bottom: 300px;
-  right: 100px;
-}
-
-.project-description{
-  position: relative;
-  top: 300px;
-  left: 300px;
-}
-
-textarea[id="projectDescription"]{
-  width: 1200px;
-  height: 40px;
-  display: block;
-}
-
-
 </style>
