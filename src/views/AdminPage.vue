@@ -14,6 +14,7 @@
         <div class="accountStatus">
           Account Status: {{ profile.accountStatus }}
         </div>
+      </div>
 
         <div class="defaultBtn">
           <button>Unlock Account</button>
@@ -21,7 +22,6 @@
         <div class="defaultBtn">
           <button>Archive</button>
         </div>
-      </div>
     </div>
 </template>
 
