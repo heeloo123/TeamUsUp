@@ -61,19 +61,15 @@
     startPage() {
         if (this.currentPage === 1) {
             return 1;
-    }
-    
-    // if the page selected is in between the visible buttons 
+        }
+
+    // if the page is the last page
+        if (this.currentPage === this.totalPages) {
+            return this.totalPages - this.displayButtons;
+        }
+
+    // if the page selected is in between the visible buttons
         return this.currentPage -1;
-    },
-
-    // if the current page is first page
-    firstPage() {
-        return this.currentPage === 1;
-    },
-
-    lastPage() {
-        return this.currentPage === this.totalPages;
     },
 
     methods: {
