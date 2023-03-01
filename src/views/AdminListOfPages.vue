@@ -1,17 +1,15 @@
 <template>
-    <ul>
-        <li>
+    <ul class="page">
+        <li class="p-item">
             <button @click="ClickPreviousPage" :disabled="firstPage">Previous</button>
         </li>
-        <li>
+        <li class="p-item">
             <button @click="ClickNextPage" :disabled="lastPage">Next</button>
         </li>
     </ul>
 
-        <li @click="ClickPage (page.number)" v-for="page in pages" :key="page.number">
-            <button :disabled="page.isDisables">
-                {{ page.number }}
-            </button>
+        <li class="p-item" v-for="page in pages" :key="page.number">
+            <button @click="ClickPage (page.number)" :disabled="page.isDisables">{{ page.number }}</button>
         </li>
 </template>
 
