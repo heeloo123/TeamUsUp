@@ -36,14 +36,7 @@
     },
 
     computed: {
-        startPage() {
-        if (this.currentPage === 1) {
-            return 1;
-        }
-
-        return this.currentPage -1;
-    },
-
+        
     pages() {
         const range = [];
         for (
@@ -61,6 +54,15 @@
             }
         return range;
     },
+
+    startPage() {
+            if (this.currentPage === 1) {
+                return 1;
+            }
+
+        // if the page selected is in between the visible buttons 
+            return this.currentPage -1;
+        },
 
     firstPage() {
         return this.currentPage === 1;
