@@ -1,6 +1,14 @@
 <template>
   <h1>Admin page</h1>
-    <div class="container"></div>
+    <div class="container">
+        <div> 
+          Student Name
+            <div class="Student Name">
+              {{ profile.firstName }} {{ profile.lastname }}
+            </div>
+        </div>
+
+    </div>
 
 </template>
 
