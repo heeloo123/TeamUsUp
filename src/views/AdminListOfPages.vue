@@ -10,6 +10,20 @@
 </template>
 
 <script>
+    export default{
+        props: {
+        maxButtons: {
+            type: Number,
+            required: false,
+            default: 3,
+        },
+
+        currentPage: {
+            type: Number,
+            required: true,
+        }
+    }
+};
 
 </script>
 
