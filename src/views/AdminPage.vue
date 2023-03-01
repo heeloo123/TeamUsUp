@@ -1,6 +1,7 @@
 <template>
   <h1>Admin page</h1>
     <div class="container">
+      <div v-for="profile in profiles" :key="profile.name">
         <div> 
           Student Name:
             <div class="Student Name">
@@ -25,6 +26,7 @@
         <div class="defaultBtn">
           <button>Archive</button>
         </div>
+      </div>
     </div>
 </template>
 
@@ -33,7 +35,7 @@ export default {
  name:'AdminPage',
  data() {
   return{
-    profile: [
+    profiles: [
       { firstName: 'Joe', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
       { firstName: 'Devin', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
       { firstName: 'Sean', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
