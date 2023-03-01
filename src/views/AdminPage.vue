@@ -14,8 +14,8 @@
             </div>
           </div>
               <form style="display: flex; justify-content: space-between"> 
-                <button class="defaultBtn">Unlock Account</button>
-                <button class="defaultBtn">Archive</button>
+                <button class="unlockBtn">Unlock Account</button>
+                <button class="archiveBtn">Archive</button>
               </form>
          </div>
     </div>
@@ -35,7 +35,7 @@ export default {
       { firstName: 'Harry', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
       { firstName: 'Mary', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
       { firstName: 'Perry', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Zen', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Zen', lastname: 'Doe', major: 'Design', accountStatus: 'Deactivated, Locked' },
     ]
   };
  }
@@ -70,6 +70,35 @@ export default {
   height: 75px;
 }
 
+.archiveBtn{
+  height: 60px;
+  min-width: 120px;
+  width: auto;
+  background: black;
+  border-radius: 20px;
+  margin-right: auto;
+  color: white;
+  font-size: 20px;
+  font: bolder;
+  margin-left: 20px;
+  position: relative;
+  left: 600px;
+}
+
+.unlockBtn{
+  height: 60px;
+  min-width: 120px;
+  width: auto;
+  background: black;
+  border-radius: 20px;
+  color: white;
+  font-size: 20px;
+  font: bolder;
+  margin-right: 20px;
+  position: relative;
+  left: 600px;
+
+}
 
 
 </style>
