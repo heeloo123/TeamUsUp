@@ -20,8 +20,8 @@
               <div class="defaultBtn">
                 <button>Archive</button>
               </div>
-        </div>
-     </div>
+         </div>
+    </div>
   </div>
 </template>
 
@@ -59,16 +59,18 @@ export default {
 .container{
   background: rgb(255, 255, 255);
   border-radius: 20px;
-  margin: 20px;
   width: auto;
   margin: 50px;
   text-align: left;
   padding-top: 0.5cm;
   padding-left: 1cm;
-
 }
 
 .profile{
+  border-style: solid;
+  border-width: 0.06cm;
+  width: 1740px;
+  height: 75px;
 
 }
 
