@@ -1,36 +1,104 @@
 <template>
-  <div class="profile-container">
-   <!-- <div v-if="loading">Loading profile...</div>
+  <div style="display: flex; text-align: -webkit-center">
+    <div class="background">
+      <div class="container">
+        <div class="item">
+          <form class="detail">
+            <div class="profile-pic">
+              <img class="img" :src="profile.image" alt="Profile Picture" />
+            </div>
 
-    <div v-else></div>-->
-      <div class="profile-pic">
-        <img class="img" :src="profile.image" alt="Profile Picture" />
-      </div>
-      <div class="contain">
-        <h2>{{ profile.firstName }} {{ profile.lastName }}</h2>
-        <div>
-          Major:
-          <div class="major">{{ profile.major }}</div>
-        </div>
-        <div>
-          Biography:
-          <div class="bio">{{ profile.biography }}</div>
-        </div>
+            <div style="padding: 15px; margin: 15px">
+              <div style="font-size: 40px; margin-top: -10px">
+                <span>{{ profile.firstName }} </span>
+                <span>{{ profile.lastName }} </span>
+              </div>
+              <p></p>
+              <span style="font-size: 30px">Major:</span>
+              <label
+                style="
+                  border-radius: 20px;
+                  font-size: 20px;
+                  padding: 10px;
+                  border: transparent;
+                  background: rgb(234, 229, 229);
+                  width: 500px;
+                "
+                >{{ profile.major }}</label
+              >
+              <p></p>
+              <div style="font-size: 30px">Biography:</div>
 
-        <div class="Project-container">Recent Project</div>
-        
-        <div v-for="project in projects" :key="project.name">{{project.name}}</div>
-        <nav>
-          <button class="defaultBtn">
-            <router-link to="/CreateProject"> Create Project</router-link>
-          </button>
-        </nav>
-      </div>
-      <div class="btn_d">
-        <button class="defaultBtn">Deactivate account</button>
+              <div
+                style="
+                  border-radius: 20px;
+                  font-size: 20px;
+                  padding: 10px;
+                  border: transparent;
+                  width: 1200px;
+                  min-height: 100px;
+                  height: auto;
+                  background: rgb(234, 229, 229);
+                "
+              >
+                {{ profile.biography }}
+              </div>
+
+              <div class="Project-container">
+                <div>
+                  Recent Project
+                  <div v-for="project in projects" :key="project.name">
+                    <div
+                      style="
+                        margin: 20px;
+                        background: white;
+                        filter: brightness(0.8);
+                        display: flex;
+                        width: 1400px;
+                        border-radius: 20px;
+                        padding: 10px;
+                      "
+                    >
+                      <div style="width: 300px">{{ project.name }}</div>
+                      <div
+                        style="
+                          display: flex;
+                          width: 800px;
+                          padding-left: 10px;
+                          min-height: 200px;
+                          height: auto;
+                          text-align: justify;
+                        "
+                      >
+                        <label
+                          >Project description
+                          <div style="font-size: 18px">
+                            {{ project.description }}
+                          </div>
+                        </label>
+                      </div>
+                      <label style="display: block; margin-left: 20px">
+                        <p>Skills: {{ project.skillsRating.skills }} of 5</p>
+                        <p>Teamwork: {{ project.skillsRating.teamwork }} of 5</p>
+                        <p>
+                          Communication: {{ project.skillsRating.communication }} of 5
+                        </p>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <form style="display: flex; justify-content: space-between">
+            <button class="defaultBtn" type="submit">Deactivate account</button>
+            <button class="defaultBtn">Create Project</button>
+          </form>
+        </div>
       </div>
     </div>
-  
+  </div>
 </template>
 
 <script>
@@ -41,10 +109,45 @@ export default {
   data() {
     return {
       loading: true,
-      profile: {},
-      projects: [],
+      profile: {
+        firstName: "Jackson",
+        lastName: "Wang",
+        major: "Computer Science",
+        biography:
+          "I passion for creativity and loves to bring ideas to life through visual art. I have skilled in various design software, including Adobe Photoshop and Illustrator. I am natural at understanding clients' needs and is always willing to take on new design challenges. ",
+      },
+      projects: [
+        {
+          name: "Personal Expense Tracker",
+          description:
+            "The Personal Expense Tracker is a simple project designed to help individuals keep track of their daily expenses. " +
+            "The project will consist of a web or mobile application that allows users to input and categorize their expenses, " +
+            " such as groceries, transportation, entertainment, and others. The application will automatically calculate and display" +
+            "the total expenses for each category, as well as the overall expenses for the day, week, or month. It will also provide" +
+            "visual graphs and charts to help users visualize their spending habits and identify areas where they can save money." +
+            "The project will be designed to be user-friendly, with a clean and intuitive interface that requires minimal setup and" +
+            "configuration. Ultimately, the Personal Expense Tracker will help individuals become more aware of their spending habits," +
+            "manage their finances more effectively, and save money for the things that matter most to them.",
+          skillsRating: {
+            skills: 4,
+            teamwork: 5,
+            communication: 4,
+          },
+        },
+        {
+          name: "Project B",
+          description:
+            "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          skillsRating: {
+            skills: 3,
+            teamwork: 4,
+            communication: 3,
+          },
+        },
+      ],
     };
   },
+
   mounted() {
     axios
       .get("http://49.245.48.28:8080/profile/userProfile", {
@@ -63,7 +166,6 @@ export default {
       .catch((error) => {
         console.error(error);
       });
-      
   },
   methods: {
     getProjects() {
@@ -86,60 +188,52 @@ export default {
 };
 </script>
 <style scoped>
-.profile-container {
+.background {
+  background: rgb(207, 205, 205);
+  height: 100;
+  width: 100;
+  margin: -10px;
+  font-family: math;
+}
+
+.container {
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
   display: flex;
+  margin: 20px;
+  width: auto;
   margin: 50px;
-  background: rgb(211, 208, 208);
-  border-radius: 10px;
+}
+
+.item {
+  display: inline-table;
+}
+
+.detail {
+  display: flex;
+  padding: 20px;
+  text-align: left;
+  margin: 20px;
+  margin-left: 60px;
 }
 
 .profile-pic {
+  background: rgb(234, 231, 231);
   width: 300px;
   height: 300px;
-  margin: 50px;
-  background: rgb(234, 231, 231);
-  overflow: hidden;
+  border-radius: 20px;
 }
-.profile-pic img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.contain {
-  margin: 10px;
-  font-size: xx-large;
-}
+
 .Project-container {
   margin: 50px;
-  margin-left: -300px;
-}
-
-.btn_d {
-  display: flex;
-  margin-top: 500px;
-}
-
-.bio {
-  width: 700px;
-  height: 100px;
-  display: flex;
-  background: white;
-  font-size: 30px;
-  font-family: math;
-  border-radius: 15px;
-  margin: 20px;
+  margin-left: -324px;
+  background: rgb(234, 231, 231);
+  display: inline-flex;
+  width: 1500px;
+  min-height: 277px;
+  height: auto;
+  border-radius: 20px;
   padding: 20px;
-}
-
-.major {
-  width: 200px;
-  height: 20px;
-  display: block;
-  background: white;
-  font-size: 30px;
-  font-family: math;
-  border-radius: 15px;
-  margin: 20px;
-  padding: 20px;
+  font-size: 25px;
 }
 </style>
