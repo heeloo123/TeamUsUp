@@ -18,16 +18,24 @@
                 <button class="archiveBtn">Archive</button>
               </form>
          </div>
-         <div class="page-number">
-            <button></button>
-         </div>
+         <studentListOfPage
+            :currentPage = "currentPage"
+            :totalPages= "10"
+            @switchPage= "PageSwitch"/>
     </div>
   </div>
 </template>
 
 <script>
+import studentListOfPage from '../views/AdminListOfPages.vue'
+
+
 export default {
  name:'AdminPage',
+ components: {
+  studentListOfPage
+ },
+
  data() {
   return{
     profiles: [
@@ -39,8 +47,18 @@ export default {
       { firstName: 'Mary', lastName: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
       { firstName: 'Perry', lastName: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
       { firstName: 'Zen', lastName: 'Doe', major: 'Design', accountStatus: 'Deactivated, Locked' },
+    ],
+
+    page: [
+      {currentPage: 1}
     ]
   };
+ },
+
+ methods: {
+  PageSwitch(page) {
+    console.log(page), this.currentPage = page
+  }
  }
  
 };

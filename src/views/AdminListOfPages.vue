@@ -79,7 +79,7 @@
     methods: {
         ClickPreviousPage()
         {
-            this.$emit ('switchPage', -1);
+            this.$emit ('switchPage', -1)
         },
 
         ClickNextPage()
@@ -88,11 +88,11 @@
         },
 
         ClickPage(page) {
-            this.$emit ('switchPage', page);
+            this.$emit ('switchPage', page)
         },
 
         Page(page) {
-            return this.currentPage === page;
+            return this.currentPage === page
         }
     }
 
