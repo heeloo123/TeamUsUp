@@ -7,9 +7,12 @@
             <button @click="ClickNextPage" :disabled="lastPage">Next</button>
         </li>
     </ul>
-
         <li class="p-item" v-for="page in pages" :key="page.number">
-            <button @click="ClickPage (page.number)" :disabled="page.isDisables">{{ page.number }}</button>
+            <button 
+                @click="ClickPage (page.number)" 
+                :disabled="page.isDisables">
+                {{ page.number }}
+            </button>
         </li>
 </template>
 
