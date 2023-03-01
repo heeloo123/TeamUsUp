@@ -57,7 +57,8 @@ export default {
 
  methods: {
   PageSwitch(page) {
-    console.log(page), this.currentPage = page
+    console.log(page)
+    this.currentPage = page
   }
  }
  
