@@ -61,6 +61,8 @@ export default {
   width: auto;
   margin: 50px;
   text-align: left;
+  padding-top: 0.5cm;
+  padding-left: 1cm;
 
 }
 
