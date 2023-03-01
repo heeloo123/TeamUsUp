@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
-      <h1 style="font-size: 40px;margin-left: -1300px;">
+      <h1 style="font-size: 40px; margin-left: 90px;">
         Admin page
       </h1>
         <div class="container">
@@ -61,6 +61,7 @@ export default {
   text-align: left;
   padding-top: 0.5cm;
   padding-left: 1cm;
+  margin-top: -10px;
 }
 
 .profile{
