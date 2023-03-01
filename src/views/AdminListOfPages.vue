@@ -1,10 +1,10 @@
 <template>
     <ul>
         <li>
-            <button>Previous</button>
+            <button @click="onClickPreviousPage" :disabled="FirstPage">Previous</button>
         </li>
         <li>
-            <button>Next</button>
+            <button @click="onClickNextPage" :disabled="FirstPage">Next</button>
         </li>
     </ul>
 
@@ -48,7 +48,7 @@
         for (
             let x = this.startPage;
             x <= Math.min (this.startPage + this.maxButtons -1, this.totalPages);
-            x ++
+            x++
         )
             {
                 range.push(
