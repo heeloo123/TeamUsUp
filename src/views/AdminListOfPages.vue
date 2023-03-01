@@ -8,8 +8,9 @@
         </li>
     </ul>
         <li class="p-item" v-for="page in pages" :key="page.number">
-            <button 
-                @click="ClickPage (page.number)" 
+            <button
+                :class="{active: Page (page.number)}"
+                @click="ClickPage (page.number)"
                 :disabled="page.isDisables">
                 {{ page.number }}
             </button>
@@ -19,7 +20,7 @@
 <script>
     export default{
         props: {
-        maxButtons: {
+        displayButtons: {
             type: Number,
             required: false,
             default: 3,
@@ -42,7 +43,7 @@
         const range = [];
         for (
             let x = this.startPage;
-            x <= Math.min (this.startPage + this.maxButtons -1, this.totalPages);
+            x <= Math.min (this.startPage + this.displayButtons -1, this.totalPages);
             x++
         )
             {
@@ -88,6 +89,10 @@
 
         ClickPage(page) {
             this.$emit ('switchPage', page);
+        },
+
+        Page(page) {
+            return this.currentPage === page;
         }
     }
 
@@ -98,5 +103,12 @@
 </script>
 
 <style scoped>
+.p-item{
+    display: inline-block;
+}
+
+.active{
+    color: black;
+}
 
 </style>
