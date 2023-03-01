@@ -55,15 +55,17 @@
         return range;
     },
 
+    // if the page selected is the start page, which is also the first page
     startPage() {
-            if (this.currentPage === 1) {
-                return 1;
-            }
+        if (this.currentPage === 1) {
+            return 1;
+    }
+    
+    // if the page selected is in between the visible buttons 
+        return this.currentPage -1;
+    },
 
-        // if the page selected is in between the visible buttons 
-            return this.currentPage -1;
-        },
-
+    // if the current page is first page
     firstPage() {
         return this.currentPage === 1;
     },
