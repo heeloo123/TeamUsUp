@@ -14,12 +14,17 @@
             </div>
           </div>
         
-          <div class="defaultBtn">
-            <button>Unlock Account</button>
-          </div>
+              <div class="defaultBtn">
+                <button>Unlock Account</button>
+              </div>
               <div class="defaultBtn">
                 <button>Archive</button>
               </div>
+
+          <div class="inner-container">
+            
+
+          </div>
         </div>
      </div>
   </div>
