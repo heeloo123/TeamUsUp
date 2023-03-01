@@ -2,24 +2,19 @@
   <h1>Admin page</h1>
     <div class="container">
       <div v-for="profile in profiles" :key="profile.name">
-        <div> 
-          Student Name:
-            <div class="Student Name">
-              {{ profile.firstName }} {{ profile.lastName }}
-            </div>
+
+        <div class="Student Name"> 
+          Student Name: {{ profile.firstName }} {{ profile.lastName }}
         </div>
-        <div>
-          Major:
-            <div class="major">
-              {{ profile.major }}
-            </div>
+
+        <div class="major">
+          Major: {{ profile.major }}
         </div>
-        <div>
-          Account Status:
-          <div class="accountStatus">
-            {{ profile.accountStatus }}
-          </div>
+
+        <div class="accountStatus">
+          Account Status: {{ profile.accountStatus }}
         </div>
+
         <div class="defaultBtn">
           <button>Unlock Account</button>
         </div>
