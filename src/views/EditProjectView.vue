@@ -44,7 +44,7 @@
                 </ul>
               </div>
             </div>
-            <div style="display: block; margin-left: 20px; margin-top: -32px;">
+            <div style="display: block; margin-left: 20px; margin-top: -32px">
               <p></p>
               <div>
                 <span style="font-size: 30px">Project name:</span>
@@ -56,12 +56,12 @@
                   required
                 />
                 <label style="padding: 20px; margin: 10px">
-                  <button class="e"><router-link to="/SelfEva" class="link"
-              >Self evaluationn</router-link
-            ></button>
-                  <button class="e"><router-link to="/PeerEva" class="link"
-              >Peer evaluation</router-link
-            ></button></label
+                  <button class="e">
+                    <router-link to="/SelfEva" class="link">Self evaluationn</router-link>
+                  </button>
+                  <button class="e" @click="openUserSelectionModal">
+                    <router-link to="/PeerEva" class="link">Peer evaluation</router-link>
+                  </button></label
                 >
               </div>
               <p></p>
@@ -88,7 +88,7 @@
 <script>
 const Swal = require("sweetalert2");
 export default {
-  name: "CreateProjectView",
+  name: "EditProjectView",
   data() {
     return {
       search: "",
@@ -133,6 +133,32 @@ export default {
           text: "The text should not include~`!#$%^&*|\\:<>",
         });
       }
+    },
+    openUserSelectionModal() {
+      Swal.fire({
+        title: "Select user for peer evaluation",
+        input: "select",
+        inputOptions: this.userList.reduce(
+          (options, user) => ({ ...options, [user]: user }),
+          {}
+        ),
+        inputPlaceholder: "Select a user",
+        showCancelButton: true,
+        confirmButtonText: "Select",
+        inputValidator: (value) => {
+          if (!value) {
+            return "Please select a user";
+          }
+        },
+      }).then(({ value }) => {
+        if (value) {
+          this.selectedUser = value;
+          this.navigateToPeerEvaPage();
+        }
+      });
+    },
+    navigateToPeerEvaPage() {
+      this.$router.push({ name: "PeerEva", params: { userName: this.selectedUser } });
     },
   },
 };
@@ -228,7 +254,7 @@ textarea {
   margin-left: 280px;
   margin-top: -30px;
 }
-.e{
+.e {
   color: white;
   background: black;
   margin: 20px;
