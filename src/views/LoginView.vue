@@ -92,7 +92,7 @@ export default {
     /**mock test *********************************/
     async submitLogin() {
       const mockResponse = {
-        status: 201,
+        status: 200,
       };
       try {
         const response = mockResponse; // Use mock response instead of axios post request

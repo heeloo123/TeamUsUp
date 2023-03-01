@@ -152,6 +152,7 @@ export default {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   width: fit-content;
+  display: block;
 
   margin-top: 100px;
 }
