@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
-      <h1 style="font-size: 40px;margin-left: -1300px;">
+      <h1 style="font-size: 40px; margin-left: 90px;">
         Admin page
       </h1>
         <div class="container">
@@ -13,15 +13,12 @@
               Account Status: {{ profile.accountStatus }}<br></p>
             </div>
           </div>
-        
-              <div class="defaultBtn">
-                <button>Unlock Account</button>
-              </div>
-              <div class="defaultBtn">
-                <button>Archive</button>
-              </div>
-        </div>
-     </div>
+              <form style="display: flex; justify-content: space-between"> 
+                <button class="unlockBtn">Unlock Account</button>
+                <button class="archiveBtn">Archive</button>
+              </form>
+         </div>
+    </div>
   </div>
 </template>
 
@@ -31,14 +28,14 @@ export default {
  data() {
   return{
     profiles: [
-      { firstName: 'Joe', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Devin', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Sean', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Calvin', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Harry', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Mary', lastname: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Perry', lastname: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
-      { firstName: 'Zen', lastname: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Joe', lastName: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Devin', lastName: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Sean', lastName: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Calvin', lastName: 'Doe', major: 'Design', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Harry', lastName: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Mary', lastName: 'Doe', major: 'Business', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Perry', lastName: 'Doe', major: 'Computer Science', accountStatus: 'Active, Unlocked' },
+      { firstName: 'Zen', lastName: 'Doe', major: 'Design', accountStatus: 'Deactivated, Locked' },
     ]
   };
  }
@@ -59,17 +56,52 @@ export default {
 .container{
   background: rgb(255, 255, 255);
   border-radius: 20px;
-  margin: 20px;
   width: auto;
   margin: 50px;
   text-align: left;
   padding-top: 0.5cm;
   padding-left: 1cm;
-
+  margin-top: -10px;
 }
 
 .profile{
+  border-style: solid;
+  border-width: 0.06cm;
+  width: 1740px;
+  height: 75px;
+}
+
+.archiveBtn{
+  height: 60px;
+  min-width: 120px;
+  width: auto;
+  background: black;
+  border-radius: 20px;
+  margin-right: auto;
+  color: white;
+  font-size: 20px;
+  font: bolder;
+  margin-left: 20px;
+  position: relative;
+  left: 1250px;
+  bottom: 70px;
+}
+
+.unlockBtn{
+  height: 60px;
+  min-width: 120px;
+  width: auto;
+  background: black;
+  border-radius: 20px;
+  color: white;
+  font-size: 20px;
+  font: bolder;
+  margin-right: 20px;
+  position: relative;
+  left: 1575px;
+  bottom: 70px;
 
 }
+
 
 </style>
