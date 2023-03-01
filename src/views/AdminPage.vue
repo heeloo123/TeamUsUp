@@ -3,16 +3,10 @@
     <div class="container">
       <div v-for="profile in profiles" :key="profile.name">
 
-        <div class="Student Name"> 
-          Student Name: {{ profile.firstName }} {{ profile.lastName }}
-        </div>
-
-        <div class="major">
-          Major: {{ profile.major }}
-        </div>
-
-        <div class="accountStatus">
-          Account Status: {{ profile.accountStatus }}
+        <div class="profile">
+            Student Name: {{ profile.firstName }} {{ profile.lastName }}<br>
+            Major: {{ profile.major }}<br>
+            Account Status: {{ profile.accountStatus }}<br>
         </div>
       </div>
 
