@@ -20,11 +20,6 @@
               <div class="defaultBtn">
                 <button>Archive</button>
               </div>
-
-          <div class="inner-container">
-            
-
-          </div>
         </div>
      </div>
   </div>
