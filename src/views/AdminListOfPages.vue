@@ -1,12 +1,18 @@
 <template>
     <ul>
         <li>
-            <button type="button">Previous</button>
+            <button>Previous</button>
         </li>
         <li>
-            <button type="button">Next</button>
+            <button>Next</button>
         </li>
     </ul>
+
+        <li v-for="page in pages" :key="page.name">
+            <button :disabled="page.isDisables">
+                {{ page.name }}
+            </button>
+        </li>
 </template>
 
 <script>
