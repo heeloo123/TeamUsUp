@@ -3,25 +3,56 @@
     <div class="background">
       <div style="font-size: 40px; padding: 20px">Admin page</div>
       <div class="container">
-        <div v-for="profile in profiles" :key="profile.name" @click="selectProfile(profile)"
-          :class="{ selected: selectedProfile === profile }">
-          <div class="profile">
-            <p>
-              Student Name: {{ profile.firstName }} {{ profile.lastName }}<br />
-              Major: {{ profile.major }}<br />
-              Account Status: {{ profile.accountStatus }}<br />
-            </p>
-          
+        <div style="padding:10px">
+        <div class="search-bar">
+          <input type="text" v-model="searchText" placeholder="Search profiles..." />
+        </div>
         
-        <form style="display: inline-grid;
-    margin-top: -70px;
-    float: right;
-    margin-right: 50px;" v-if="selectedProfile && selectedProfile === profile">
-          <button class="showBtn">Unlock Account</button>
-          <button class="showBtn">Archive</button>
-        </form>
-      </div></div></div>
-      <studentListOfPage :currentPage="currentPage" :totalPages="10" @switchPage="PageSwitch" />
+        
+        </div>
+        <div class="table">
+        <div class="theader">
+          <div class="cell">Student Name</div>
+          <div class="cell">Major</div>
+          <div class="cell">Account Status</div>
+          <div></div>
+          
+        </div>
+
+        
+        <div
+          v-for="profile in filteredProfiles"
+          :key="profile.name"
+          @click="selectProfile(profile)"
+          :class="{ selected: selectedProfile === profile }"
+          
+        >
+        <div class="trow">
+        <div class="cell">{{ profile.firstName }} {{ profile.lastName }}</div>
+          <div class="cell">{{ profile.major }}</div>
+          <div class="cell">{{ profile.accountStatus }}</div>
+          <div>
+           
+            
+            <form
+              style="
+                display: inline-grid;
+                
+              "
+              v-if="selectedProfile && selectedProfile === profile"
+            >
+              <button class="showBtn">Unlock Account</button>
+              <button class="showBtn">Archive</button>
+            </form>
+</div></div>
+          </div>
+        </div>
+      </div>
+      <studentListOfPage
+        :currentPage="currentPage"
+        :totalPages="10"
+        @switchPage="PageSwitch"
+      />
     </div>
   </div>
 </template>
@@ -114,6 +145,7 @@ export default {
 
       currentpage: 1,
       selectedProfile: null,
+      searchText: "",
     };
   },
 
@@ -124,19 +156,29 @@ export default {
     },
     selectProfile(profile) {
       this.selectedProfile = profile;
+      console.log(this.selectedProfile);
     },
   },
+  computed: {
+  filteredProfiles() {
+    const query = this.searchText.toLowerCase().trim()
+    if (!query) return this.profiles
+    return this.profiles.filter(profile => {
+      return profile.firstName.toLowerCase().startsWith(query) || profile.lastName.toLowerCase().startsWith(query)
+    })
+  },
+},
+
 };
 </script>
 
 <style scoped>
 .selected {
-  background-color: #ede6e6;
+  background-color: rgb(238, 232, 232) ;
 }
 .background {
   background: rgb(207, 205, 205);
   width: 100%;
-
   font-family: math;
 }
 
@@ -150,12 +192,32 @@ export default {
   margin-top: -10px;
 }
 
-.profile {
-  border-style: solid;
-  border-width: 0.06cm;
-  width: -webkit-fill-available;
-  height: 75px;
-  margin: 1px;
-  padding-left: 10px;
+.trow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin:1px;
+  border: 1px solid #000000;
 }
+.trow:nth-child(even) {
+    background-color: #e0dada;
+  }
+.theader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  padding: 10px;
+  
+  border: 1px solid #000000;
+}
+
+.cell {
+  flex: 1;
+  
+}
+
 </style>
