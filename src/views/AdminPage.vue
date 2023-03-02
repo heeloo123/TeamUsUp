@@ -3,48 +3,39 @@
     <div class="background">
       <div style="font-size: 40px; padding: 20px">Admin page</div>
       <div class="container">
-        <div style="padding:10px">
-        <div class="search-bar">
-          <input type="text" v-model="searchText" placeholder="Search profiles..." />
-        </div>
-        
-        
+        <div style="padding: 10px">
+          <div class="search-bar">
+            <input type="text" v-model="searchText" placeholder="Search profiles..." />
+          </div>
         </div>
         <div class="table">
-        <div class="theader">
-          <div class="cell">Student Name</div>
-          <div class="cell">Major</div>
-          <div class="cell">Account Status</div>
-          <div></div>
-          
-        </div>
+          <div class="theader">
+            <div class="cell">Student Name</div>
+            <div class="cell">Major</div>
+            <div class="cell">Account Status</div>
+            <div></div>
+          </div>
 
-        
-        <div
-          v-for="profile in filteredProfiles"
-          :key="profile.name"
-          @click="selectProfile(profile)"
-          :class="{ selected: selectedProfile === profile }"
-          
-        >
-        <div class="trow">
-        <div class="cell">{{ profile.firstName }} {{ profile.lastName }}</div>
-          <div class="cell">{{ profile.major }}</div>
-          <div class="cell">{{ profile.accountStatus }}</div>
-          <div>
-           
-            
-            <form
-              style="
-                display: inline-grid;
-                
-              "
-              v-if="selectedProfile && selectedProfile === profile"
-            >
-              <button class="showBtn">Unlock Account</button>
-              <button class="showBtn">Archive</button>
-            </form>
-</div></div>
+          <div
+            v-for="profile in filteredProfiles"
+            :key="profile.name"
+            @click="selectProfile(profile)"
+            :class="{ selected: selectedProfile === profile }"
+          >
+            <div class="trow">
+              <div class="cell">{{ profile.firstName }} {{ profile.lastName }}</div>
+              <div class="cell">{{ profile.major }}</div>
+              <div class="cell">{{ profile.accountStatus }}</div>
+              <div>
+                <form
+                  style="display: inline-grid"
+                  v-if="selectedProfile && selectedProfile === profile"
+                >
+                  <button class="showBtn">Unlock Account</button>
+                  <button class="showBtn">Archive</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -160,21 +151,21 @@ export default {
     },
   },
   computed: {
-  filteredProfiles() {
-    const query = this.searchText.toLowerCase().trim()
-    if (!query) return this.profiles
-    return this.profiles.filter(profile => {
-      return profile.firstName.toLowerCase().startsWith(query) || profile.lastName.toLowerCase().startsWith(query)
-    })
-  },
+    filteredProfiles() {
+  const query = this.searchText.toLowerCase().trim();
+  if (!query) return this.profiles;
+  return this.profiles.filter((profile) => {
+    const name = `${profile.firstName} ${profile.lastName}`.toLowerCase().trim();
+    return name.includes(query);
+  });
 },
-
+  },
 };
 </script>
 
 <style scoped>
 .selected {
-  background-color: rgb(238, 232, 232) ;
+  background-color: rgb(238, 232, 232);
 }
 .background {
   background: rgb(207, 205, 205);
@@ -198,12 +189,12 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  margin:1px;
+  margin: 1px;
   border: 1px solid #000000;
 }
 .trow:nth-child(even) {
-    background-color: #e0dada;
-  }
+  background-color: #e0dada;
+}
 .theader {
   display: flex;
   flex-direction: row;
@@ -211,13 +202,11 @@ export default {
   justify-content: space-between;
   background-color: #f2f2f2;
   padding: 10px;
-  
+
   border: 1px solid #000000;
 }
 
 .cell {
   flex: 1;
-  
 }
-
 </style>
