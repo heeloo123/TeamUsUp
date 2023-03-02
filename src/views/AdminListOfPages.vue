@@ -111,6 +111,7 @@
 <style scoped>
 .p-item{
     display: inline-block;
+    
 }
 
 
