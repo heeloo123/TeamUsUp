@@ -50,7 +50,7 @@
           >
           <div class="p-item">
             <button @click="ClickPreviousPage" :disabled="FirstPage">Previous</button>
-            <div v-for="page in pages" :key="page.number">
+            <div v-for="page in pages" :key="page.number" @click="ClickPage(page.number)">
               <button>{{ page.number }}</button>
             </div>
             <button @click="ClickNextPage" :disabled="LastPage">Next</button>
@@ -193,7 +193,7 @@ export default {
   });
 },
 
-  startPage() {
+  startingPage() {
     if (this.currentPage === 1) {
       return 1;
     }
@@ -201,9 +201,25 @@ export default {
       return this.pageCount - this.pageRange;
     }
     return this.currentPage-1;
+  },
+
+  pages() {
+    const range = [];
+    for (
+      let x = this.startingPage;
+      x <= Math.min(this.startingPage + this.pageRange - 1, this.pageCount);
+      x++
+    )
+  {
+    range.push({
+      name: x,
+      pageDisabled: x === this.currentPage
+    });
   }
 
+  return range;
   },
+ }
 };
 </script>
 
