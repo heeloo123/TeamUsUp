@@ -47,11 +47,11 @@
             @pagechanged="ChangePage"
           >
           <div class="p-item">
-            <button @click="ClickPreviousPage" :disabled="FirstPage">Previous</button>
-            <div v-for="page in pages" :key="page.number" @click="ClickPage(page.number)">
+            <button @click="clickPreviousPage" :disabled="firstPage">Previous</button>
+            <div v-for="page in pages" :key="page.number" @click="clickPage(page.number)">
               <button>{{ page.number }}</button>
             </div>
-            <button @click="ClickNextPage" :disabled="LastPage">Next</button>
+            <button @click="clickNextPage" :disabled="lastPage">Next</button>
           </div>
           </Paginate>
         </div>
@@ -171,16 +171,16 @@ export default {
   },
 
   methods: {
-    ClickResponse(page) {
+    clickResponse(page) {
       console.log(page)
       this.currentPage = page;
     },
 
-    ClickNextPage(page) {
+    clickNextPage(page) {
       this.$emit('ChangePage', page);
     },
 
-    ClickPreviousPage() {
+    clickPreviousPage() {
       this.$emit('ChangePage', this.currentPage -1);
     },
 
@@ -226,10 +226,10 @@ export default {
   return range;
   },
 
-  FirstPage(){
+  firstPage(){
     return this.currentPage === 1;
   },
-  LastPage() {
+  lastPage() {
     return this.currentPage === this.pageCount;
   },
 
