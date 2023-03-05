@@ -39,6 +39,7 @@
           </div>
           <Paginate
             v-model="currentPage"
+            :currentPage="1"
             :page-count="10"
             :page-range="3"
             :per-page="perPage"
@@ -61,6 +62,9 @@
 import Paginate from 'vuejs-paginate'
 export default {
   name: "AdminPage",
+  component: {
+    Paginate
+  },
 
   data() {
     return {
@@ -139,10 +143,8 @@ export default {
         },
       ],
       
-      currentPage: 1,
-      pageRange: 3,
-      pageCount: 10,
-      perPage: 10,
+
+
       selectedProfile: null,
       searchText: "",
     };
