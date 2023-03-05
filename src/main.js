@@ -17,5 +17,5 @@ Vue.use(VueAxios, axios);
 import{ MotionPlugin } from '@vueuse/motion'
 App.use(MotionPlugin)
 
-import{ VuejsPaginate } from 'vuejs-paginate'
-App.use(VuejsPaginate)
+import Paginate from 'vuejs-paginate'
+Vue.component('VueJsPaginate', Paginate)
