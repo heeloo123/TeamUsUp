@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import paginate from 'vuejs-paginate';
 
 export default {
   name: "AdminPage",
@@ -124,7 +125,7 @@ export default {
           accountStatus: "Active, Unlocked",
         },
       ],
-
+      paginate: "paginate",
       selectedProfile: null,
       searchText: "",
     };
