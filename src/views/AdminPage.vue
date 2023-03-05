@@ -38,7 +38,6 @@
             </div>
           </div>
           <Paginate
-            v-model="currentPage"
             :currentPage="1"
             :pageCount="10"
             :pageRange="3"
