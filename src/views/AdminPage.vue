@@ -39,11 +39,6 @@
           </div>
         </div>
       </div>
-      <studentListOfPage
-        :currentPage="currentPage"
-        :totalPages="10"
-        @switchPage="PageSwitch"
-      />
     </div>
   </div>
 </template>
@@ -136,10 +131,7 @@ export default {
   },
 
   methods: {
-    PageSwitch(page) {
-      console.log(page);
-      this.currentPage = page;
-    },
+  
     selectProfile(profile) {
       this.selectedProfile = profile;
       console.log(this.selectedProfile);
