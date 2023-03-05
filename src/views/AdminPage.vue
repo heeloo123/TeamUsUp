@@ -178,6 +178,14 @@ export default {
       this.currentPage = page;
     },
 
+    ClickNextPage(page) {
+      this.$emit('ChangePage', page);
+    },
+
+    ClickPreviousPage() {
+      this.$emit('ChangePage', this.currentPage -1);
+    },
+
     selectProfile(profile) {
       this.selectedProfile = profile;
       console.log(this.selectedProfile);
