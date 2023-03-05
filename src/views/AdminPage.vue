@@ -49,13 +49,9 @@
 </template>
 
 <script>
-import studentListOfPage from "../views/AdminListOfPages.vue";
 
 export default {
   name: "AdminPage",
-  components: {
-    studentListOfPage,
-  },
 
   data() {
     return {
@@ -134,7 +130,6 @@ export default {
         },
       ],
 
-      currentpage: 1,
       selectedProfile: null,
       searchText: "",
     };
