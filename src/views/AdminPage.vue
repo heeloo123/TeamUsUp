@@ -164,7 +164,7 @@ export default {
           default: 3
         },
       },
-
+      currentPage: 1,
       selectedProfile: null,
       searchText: "",
     };
