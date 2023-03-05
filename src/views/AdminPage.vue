@@ -37,18 +37,20 @@
               </div>
             </div>
           </div>
-          <paginate
-            :pageCount="10"
-            :pageRange="3"
+          <b-pagination
+            v-model="currentPage"
+            :page-count="pageCount"
+            :page-range="pageRange"
+            :per-Page="perPage"
             :click-handler="ClickResponse"
-            :prevPage="Previous"
-            :nextPage="Next"
+            :prev-text="Previous"
+            :next-text="Next"
+            @pagechanged="PageChange"
             :container-class="pagination"
             :page-class="p-item"
           >
-          <span class="previousBtn">Previous</span>
-          <span class="nextBtn">Next</span>
-          </paginate>
+        
+          </b-pagination>
         </div>
       </div>
     </div>
@@ -56,7 +58,7 @@
 </template>
 
 <script>
-
+import pagination from 'vuejs-paginate'
 export default {
   name: "AdminPage",
 
@@ -136,15 +138,19 @@ export default {
           accountStatus: "Active, Unlocked",
         },
       ],
-      paginate: "paginate",
+      
+      currentPage: 1,
+      pageRange: 3,
+      pageCount: 10,
+      perPage: 10,
       selectedProfile: null,
       searchText: "",
     };
   },
 
   methods: {
-    ClickResponse (pageNumber) {
-      console.log(pageNumber)
+    ClickResponse(page) {
+      console.log(page)
     },
 
     selectProfile(profile) {
