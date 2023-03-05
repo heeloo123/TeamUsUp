@@ -37,8 +37,15 @@
               </div>
             </div>
           </div>
-          <paginate>
-
+          <paginate
+            :toalPage="10"
+            :pageRange="3"
+            :click-handler="ClickResponse"
+            :prevPage="Previous"
+            :nextPage="Next"
+            :container-class="pagination"
+            :page-class="p-item"
+          > 
           </paginate>
         </div>
       </div>
@@ -47,7 +54,6 @@
 </template>
 
 <script>
-import paginate from 'vuejs-paginate'
 
 export default {
   name: "AdminPage",
@@ -128,14 +134,17 @@ export default {
           accountStatus: "Active, Unlocked",
         },
       ],
-      
+      paginate: "paginate",
       selectedProfile: null,
       searchText: "",
     };
   },
 
   methods: {
-  
+    ClickResponse (pageNumber) {
+      console.log(pageNumber)
+    },
+
     selectProfile(profile) {
       this.selectedProfile = profile;
       console.log(this.selectedProfile);
