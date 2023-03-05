@@ -50,6 +50,9 @@
           >
           <div class="p-item">
             <button @click="ClickPreviousPage" :disabled="FirstPage">Previous</button>
+            <div v-for="page in pages" :key="page.number">
+              <button>{{ page.number }}</button>
+            </div>
             <button @click="ClickNextPage" :disabled="LastPage">Next</button>
           </div>
           </Paginate>
