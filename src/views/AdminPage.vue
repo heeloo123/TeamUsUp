@@ -40,15 +40,16 @@
           <Paginate
             v-model="currentPage"
             :currentPage="1"
-            :page-count="10"
-            :page-range="3"
-            :per-page="10"
-            :click-handler="ClickResponse"
-            :prev-text="Previous"
-            :next-text="Next"
+            :pageCount="10"
+            :pageRange="3"
+            :perPage="10"
+            :clickHandler="ClickResponse"
+            :prevText="Previous"
+            :nextText="Next"
             @pagechanged="PageChange"
           >
           <div class="p-item">
+            <button @click="ClickPreviousPage" :disabled="FirstPage">Previous</button>
             <button @click="ClickNextPage" :disabled="LastPage">Next</button>
           </div>
           </Paginate>
