@@ -121,7 +121,7 @@ export default {
           firstName: "Zen",
           lastName: "Doe",
           major: "Design",
-          accountStatus: "Deactivated, Locked",
+          accountStatus: "Active, Unlocked",
         },
       ],
 
