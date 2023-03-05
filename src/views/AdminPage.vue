@@ -47,11 +47,11 @@
             :prev-text="Previous"
             :next-text="Next"
             @pagechanged="PageChange"
-            :container-class="pagination"
-            :page-class="p-item"
           >
-        
-        </Paginate>
+          <div class="p-item">
+            <button @click="ClickNextPage" :disabled="LastPage">Next</button>
+          </div>
+          </Paginate>
         </div>
       </div>
     </div>
@@ -143,7 +143,25 @@ export default {
         },
       ],
       
-      currentPage: 1,  
+      props: {
+        perPage: {
+          type: Number,
+          required: true
+        },
+        currentPage: {
+          type: Number,
+          required: true
+        },
+        pageCount: {
+          type: Number,
+          required: true
+        },
+        pageRange: {
+          type: Number,
+          required: false,
+          default: 3
+        },
+      },
 
       selectedProfile: null,
       searchText: "",
