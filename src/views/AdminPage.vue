@@ -42,7 +42,7 @@
             :currentPage="1"
             :page-count="10"
             :page-range="3"
-            :per-page="perPage"
+            :per-page="10"
             :click-handler="ClickResponse"
             :prev-text="Previous"
             :next-text="Next"
@@ -143,7 +143,7 @@ export default {
         },
       ],
       
-
+      currentPage: 1,  
 
       selectedProfile: null,
       searchText: "",
@@ -153,6 +153,7 @@ export default {
   methods: {
     ClickResponse(page) {
       console.log(page)
+      this.currentPage = page;
     },
 
     selectProfile(profile) {
