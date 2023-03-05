@@ -37,10 +37,10 @@
               </div>
             </div>
           </div>
-          <pagination
+          <Paginate
             v-model="currentPage"
-            :page-count="pageCount"
-            :page-range="pageRange"
+            :page-count="10"
+            :page-range="3"
             :per-page="perPage"
             :click-handler="ClickResponse"
             :prev-text="Previous"
@@ -50,7 +50,7 @@
             :page-class="p-item"
           >
         
-          </pagination>
+        </Paginate>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import pagination from 'vue-paginate'
+import Paginate from 'vuejs-paginate'
 export default {
   name: "AdminPage",
 
