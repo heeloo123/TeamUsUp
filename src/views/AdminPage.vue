@@ -219,6 +219,14 @@ export default {
 
   return range;
   },
+
+  FirstPage(){
+    return this.currentPage === 1;
+  },
+  LastPage() {
+    return this.currentPage === this.pageCount;
+  },
+
  }
 };
 </script>
