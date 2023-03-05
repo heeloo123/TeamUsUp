@@ -44,9 +44,7 @@
             :pageRange="3"
             :perPage="10"
             :clickHandler="ClickResponse"
-            :prevText="Previous"
-            :nextText="Next"
-            @pagechanged="PageChange"
+            @pagechanged="ChangePage"
           >
           <div class="p-item">
             <button @click="ClickPreviousPage" :disabled="FirstPage">Previous</button>
