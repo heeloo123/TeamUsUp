@@ -192,6 +192,17 @@ export default {
     return name.includes(query);
   });
 },
+
+  startPage() {
+    if (this.currentPage === 1) {
+      return 1;
+    }
+    if (this.currentPage === this.pageCount) {
+      return this.pageCount - this.pageRange;
+    }
+    return this.currentPage-1;
+  }
+
   },
 };
 </script>
