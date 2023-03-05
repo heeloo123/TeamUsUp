@@ -43,8 +43,8 @@
             :pageCount="10"
             :pageRange="3"
             :perPage="10"
-            :clickHandler="ClickResponse"
-            @pagechanged="ChangePage"
+            :clickHandler="clickResponse"
+            @pagechanged="changePage"
           >
           <div class="p-item">
             <button @click="clickPreviousPage" :disabled="firstPage">Previous</button>
@@ -177,11 +177,11 @@ export default {
     },
 
     clickNextPage(page) {
-      this.$emit('ChangePage', page);
+      this.$emit('changePage', page);
     },
 
     clickPreviousPage() {
-      this.$emit('ChangePage', this.currentPage -1);
+      this.$emit('changePage', this.currentPage -1);
     },
 
     selectProfile(profile) {
