@@ -38,14 +38,16 @@
             </div>
           </div>
           <paginate
-            :toalPage="10"
+            :pageCount="10"
             :pageRange="3"
             :click-handler="ClickResponse"
             :prevPage="Previous"
             :nextPage="Next"
             :container-class="pagination"
             :page-class="p-item"
-          > 
+          >
+          <span class="previousBtn">Previous</span>
+          <span class="nextBtn">Next</span>
           </paginate>
         </div>
       </div>
