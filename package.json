@@ -15,6 +15,7 @@
     "sweetalert2": "^11.7.2",
     "vue": "^3.2.13",
     "vue-axios": "^3.5.2",
+    "vue-cookie": "^1.1.4",
     "vue-cookies": "^1.8.3",
     "vue-mq": "^1.0.1",
     "vue-paginate": "^3.6.0",
