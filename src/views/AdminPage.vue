@@ -189,6 +189,7 @@ export default {
       pageSize: 10,
       currentPage: 1,
       sortProfiles: null,
+      dropDownActive: false,
     };
   },
 
@@ -208,6 +209,10 @@ export default {
       const end = start + this.pageSize;
       return profiles.slice(start, end);
     },
+
+    toggle() {
+      this.dropDownActive = true;
+    }
 
   },
   computed: {
