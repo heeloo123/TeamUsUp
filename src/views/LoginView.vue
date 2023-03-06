@@ -52,7 +52,7 @@
 </template>
 
 <script>
-//import axios from "axios";
+import axios from "axios";
 const Swal = require("sweetalert2");
 
 export default {
@@ -67,39 +67,16 @@ export default {
   },
 
   methods: {
-    // async submitLogin() {
-    //   try {
-    //     const response = await axios.post("http://49.245.48.28:8080/login", {
-    //       email: this.email,
-    //       password: this.password,
-    //     });
-    //     if (response.status === 200) {
-    //       // Login successful
-    //       console.log(response.data); // The user object returned by the server
-    //       this.$router.push({ name: "profile" });
-    //     } else {
-    //       // Login failed
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: "Oops...",
-    //         text: "Invalid email or password!",
-    //       });
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
-    /**mock test *********************************/
     async submitLogin() {
-      const mockResponse = {
-        status: 200,
-      };
       try {
-        const response = mockResponse; // Use mock response instead of axios post request
+        const response = await axios.post("http://49.245.48.28:8080/login", {
+          email: this.email,
+          password: this.password,
+        });
         if (response.status === 200) {
           // Login successful
           console.log(response.data); // The user object returned by the server
-          this.$router.push({ name: "Profile" });
+          this.$router.push({ name: "profile" });
         } else {
           // Login failed
           Swal.fire({
@@ -112,7 +89,30 @@ export default {
         console.error(error);
       }
     },
-    /*********end */
+    // /**mock test *********************************/
+    // async submitLogin() {
+    //   const mockResponse = {
+    //     status: 200,
+    //   };
+    //   try {
+    //     const response = mockResponse; // Use mock response instead of axios post request
+    //     if (response.status === 200) {
+    //       // Login successful
+    //       console.log(response.data); // The user object returned by the server
+    //       this.$router.push({ name: "Profile" });
+    //     } else {
+    //       // Login failed
+    //       Swal.fire({
+    //         icon: "error",
+    //         title: "Oops...",
+    //         text: "Invalid email or password!",
+    //       });
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // },
+    // /*********end */
   },
 };
 </script>

@@ -122,12 +122,8 @@ export default {
           description:
             "The Personal Expense Tracker is a simple project designed to help individuals keep track of their daily expenses. " +
             "The project will consist of a web or mobile application that allows users to input and categorize their expenses, " +
-            " such as groceries, transportation, entertainment, and others. The application will automatically calculate and display" +
-            "the total expenses for each category, as well as the overall expenses for the day, week, or month. It will also provide" +
-            "visual graphs and charts to help users visualize their spending habits and identify areas where they can save money." +
-            "The project will be designed to be user-friendly, with a clean and intuitive interface that requires minimal setup and" +
-            "configuration. Ultimately, the Personal Expense Tracker will help individuals become more aware of their spending habits," +
-            "manage their finances more effectively, and save money for the things that matter most to them.",
+            " such as groceries, transportation, entertainment, and others. The application will automatically calculate and display",
+            
           skillsRating: {
             skills: 4,
             teamwork: 5,
@@ -151,10 +147,7 @@ export default {
   mounted() {
     axios
       .get("http://49.245.48.28:8080/profile/userProfile", {
-        headers: {
-          Authorization: "Basic " + btoa("sparklechus@gmail.com:feelseveman"),
-        },
-        withCredentials: true,
+        
       })
       .then((response) => {
         this.loading = false;
@@ -171,10 +164,8 @@ export default {
     getProjects() {
       axios
         .get("http://49.245.48.28:8080/project/Proj2", {
-          headers: {
-            Authorization: "Basic " + btoa("sparklechus@gmail.com:feelseveman"),
-          },
-          withCredentials: true,
+          
+          
         })
         .then((response) => {
           this.projects = response.data;

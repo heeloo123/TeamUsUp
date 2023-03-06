@@ -19,3 +19,4 @@ App.use(MotionPlugin)
 
 import Paginate from 'vuejs-paginate'
 Vue.component('VueJsPaginate', Paginate)
+
