@@ -49,7 +49,7 @@
           <div class="sortDropDown">
             <img alt="sortBtn" src="../assets/sortBtn.png">
           </div>
-          <div class="dropDownContent">
+          <div class="dropDownContent" v-show="showDropDownContent">
             <p>
               <a href="#">Sort by name</a>
             </p>
@@ -189,7 +189,7 @@ export default {
       pageSize: 10,
       currentPage: 1,
       sortProfiles: null,
-      dropDownActive: false,
+      showDropDownContent: false,
     };
   },
 
@@ -210,9 +210,8 @@ export default {
       return profiles.slice(start, end);
     },
 
-    toggle() {
-      this.dropDownActive = ! this.dropDownActive;
-    }
+
+    
 
   },
   computed: {
