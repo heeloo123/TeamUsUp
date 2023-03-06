@@ -48,19 +48,23 @@
         <div class="sortDropDown">
           <div class="dropDownContent">
             <p>
-            <a href="#">Sort by name</a>
+              <a href="#">Sort by name</a>
             </p>
             <p>
-            <a href="#">Ascending</a>
+              <a href="#">Ascending</a>
             </p>
             <p>
-            <a href="#">Descending</a>
+              <a href="#">Descending</a>
             </p>
             <p>
-            <a href="#">Sort by major</a>
+              <a href="#">Sort by major</a>
             </p>
-            <a href="#">Ascending</a>
-            <a href="#">Descending</a>
+            <p>
+              <a href="#">Ascending</a>
+            </p>
+            <p>
+              <a href="#">Descending</a>
+            </p>
           </div>
         </div>
           
