@@ -20,3 +20,5 @@ App.use(MotionPlugin)
 import VueCookies from 'vue-cookies'
 VueCookies.set('auth_token')
 
+import pinia from './modules/pinia';
+Vue.use(pinia)
