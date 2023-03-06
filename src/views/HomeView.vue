@@ -1,57 +1,54 @@
 <template>
-  <div class="background">
-    <!---->
-    <label>
-      ||||
-      <router-link to="/CreateProfile">Create Profile</router-link> |
-      <router-link to="/CreateProject">Create Project</router-link> |
-      <router-link to="/Profile">Profile</router-link> |
-      <router-link to="/Project">Project</router-link> |
-      <router-link to="/EditProject"> Edit Project</router-link>|
-      <router-link to="/SelfEva"> Self evaluation</router-link>|
-      <router-link to="/PeerEva"> Peer evaluation</router-link>|
-      <router-link to="/AdminPage"> admin page</router-link>
+  <div style="display: flex; text-align: -webkit-center">
+    <div class="background">
+      <!---->
+      <div>
+        ||||
+        <router-link to="/CreateProfile">Create Profile</router-link> |
+        <router-link to="/CreateProject">Create Project</router-link> |
+        <router-link to="/Profile">Profile</router-link> |
+        <router-link to="/Project">Project</router-link> |
+        <router-link to="/EditProject"> Edit Project</router-link>|
+        <router-link to="/SelfEva"> Self evaluation</router-link>|
+        <router-link to="/PeerEva"> Peer evaluation</router-link>|
+        <router-link to="/AdminPage"> admin page</router-link>
+        <router-link to="/About"> About</router-link>
+      </div>
 
-    </label>
-    <form>
-        <img
-          class="T_logo"
-          alt="TeamUsUp logo"
-          src="../assets/Portal_logo.jpg"
-        />
-        <form>
-          <div style="display: flex; flex-direction: row; align-items: center;">
-          
-
-          <section class="text">
-            <p style="font-size: 35px; color: red">Student Web Portal</p>
-
-            <h1 style="font-size: 35px">Description</h1>
-
-            <p style="font-size: 25px">
-              They are designed to help students evaluate their potential <br />
-              teammates' teamwork history and make informed decisions <br />
-              about future collaborations.
-            </p>
-
-            <p style="font-size: 25px; text-align: left">
-              It allow students to create a profile and list their past <br />
-              projects, including ratings and evaluations from other team <br />
-              memmbers.
-            </p>
-
-            <nav>
-              
-              <button class="SignUpButton">
-                <router-link class="link" to="/SignUp">Sign-Up Now</router-link>
-              </button>
-            </nav>
-          </section>
-          <img class="H_logo" alt="portal logo" src="../assets/Home_logo.png" />
+      <form style="display: inline-flex; text-align: -webkit-center; margin: 50px">
+        <div style="width: 700px; height: 700px">
+          <img class="T_logo" alt="TeamUsUp logo" src="../assets/Portal_logo.jpg" />
+          <div>
+            <img class="H_logo" alt="portal logo" src="../assets/Home_logo.png" />
           </div>
-       </form> 
-      
-    </form>
+        </div>
+
+        <form style=" display:inline-grid">
+          <div>
+            <section class="text">
+              
+
+              <h1 style="font-size: 45px">Description</h1>
+
+              <p>
+                They are designed to help students evaluate their potential teammates'
+                teamwork history and make informed decisions about future collaborations.
+              </p>
+
+              <p>
+                It allow students to create a profile and list their past projects,
+                including ratings and evaluations from other team memmbers.
+              </p>
+            </section>
+          </div>
+          <nav>
+            <button class="SignUpButton">
+              <router-link class="link" to="/SignUp">Sign-Up Now</router-link>
+            </button>
+          </nav>
+        </form>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -63,7 +60,6 @@ export default {
   name: "HomeView",
 };
 </script>
-  
 
 <style scoped>
 .background {
@@ -74,28 +70,22 @@ export default {
   font-family: math;
 }
 .text {
-  text-align: left;
-  float: left;
-  margin-left:100px;
- 
+  margin-left: 70px;
+  width: 600px;
+  text-align: justify;
 }
 
 .T_logo {
-  width: 1000px;
-  height: 100px;
-  margin: 40px;
-
+  width: -webkit-fill-available;
 }
 
 .H_logo {
-  float:right;
-  width: 600px;
-  height: 500px;
-  margin-left:400px;
-  border-radius:10px;
-  
-  
+  width: -webkit-fill-available;
+}
 
+.text p {
+  font-size: 20px;
+  text-align: justify;
 }
 
 .SignUpButton {
@@ -105,8 +95,8 @@ export default {
   border-radius: 40px;
   color: white;
   font-size: 25px;
-  border:transparent;
-  margin-left:100px ;
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+  border: transparent;
+  margin-left: 100px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 </style>

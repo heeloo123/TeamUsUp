@@ -11,6 +11,7 @@ import EditProjectView from '../views/EditProjectView.vue'
 import SelfEvaView from '../views/SelfEvaluate.vue'
 import PeerEvaView from '../views/PeerEvaluate.vue'
 import AdminPage from '../views/AdminPage.vue'
+import AdminHome from '../views/AdminHomePage.vue'
 
 const routes = [
   {
@@ -73,7 +74,14 @@ const routes = [
     name: 'AdminPage',
     component: AdminPage
   },
-  
+  {
+    path: '/AdminHome',
+    name: 'AdminHome',
+    component: AdminHome
+  },
+
+
+
   {
     path: '/about',
     name: 'about',

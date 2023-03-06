@@ -17,8 +17,8 @@
           </div>
 
           <div
-            v-for="profile in filteredProfiles"
-            :key="profile.name"
+            v-for="(profile, index) in filteredProfiles"
+            :key="index"
             @click="selectProfile(profile)"
             :class="{ selected: selectedProfile === profile }"
           >
@@ -37,22 +37,13 @@
               </div>
             </div>
           </div>
-          <Paginate
-            :currentPage="1"
-            :pageCount="10"
-            :pageRange="3"
-            :perPage="10"
-            :clickHandler="clickResponse"
-            @pagechanged="changePage"
-          >
-          <div class="p-item">
-            <button @click="clickPreviousPage" :disabled="firstPage">Previous</button>
-            <div v-for="page in pages" :key="page.number" @click="clickPage(page.number)">
-              <button>{{ page.number }}</button>
-            </div>
-            <button @click="clickNextPage" :disabled="lastPage">Next</button>
-          </div>
-          </Paginate>
+        </div>
+        <!--change part--->
+        <div style="display: flex; margin: 20px;">
+          <div style="margin-left:auto">Page {{ currentPage }} of {{ pageCount }}</div>
+          <button class="B" v-if="currentPage > 1" @click="prevPage">Prev</button>
+          <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>
+          <!---->
         </div>
       </div>
     </div>
@@ -60,12 +51,9 @@
 </template>
 
 <script>
-import Paginate from 'vuejs-paginate'
 export default {
-  name: "AdminPage",
-  component: {
-    Paginate
-  },
+  name: "AdminHome",
+  component: {},
 
   data() {
     return {
@@ -142,97 +130,76 @@ export default {
           major: "Design",
           accountStatus: "Active, Unlocked",
         },
+        {
+          firstName: "Boob13",
+          lastName: "Doe",
+          major: "Computer Science",
+          accountStatus: "Active, Unlocked",
+        },
+        {
+          firstName: "Takashi14",
+          lastName: "Doe",
+          major: "Design",
+          accountStatus: "Active, Unlocked",
+        },
+        {
+          firstName: "yoshi15",
+          lastName: "Doe",
+          major: "Computer Science",
+          accountStatus: "Active, Unlocked",
+        },
+        {
+          firstName: "inoki14",
+          lastName: "Doe",
+          major: "Design",
+          accountStatus: "Active, Unlocked",
+        },
       ],
-      
-      props: {
-        perPage: {
-          type: Number,
-          required: true
-        },
-        currentPage: {
-          type: Number,
-          required: true
-        },
-        pageCount: {
-          type: Number,
-          required: true
-        },
-        pageRange: {
-          type: Number,
-          required: false,
-          default: 3
-        },
-      },
-      currentPage: 1,
       selectedProfile: null,
       searchText: "",
+      pageSize: 10,
+      currentPage: 1,
     };
   },
 
   methods: {
-    clickResponse(page) {
-      console.log(page)
-      this.currentPage = page;
-    },
-
-    clickNextPage(page) {
-      this.$emit('changePage', page);
-    },
-
-    clickPreviousPage() {
-      this.$emit('changePage', this.currentPage -1);
-    },
-
     selectProfile(profile) {
       this.selectedProfile = profile;
       console.log(this.selectedProfile);
     },
+    nextPage() {
+      this.currentPage++;
+    },
+    prevPage() {
+      this.currentPage--;
+    },
+    paginatedProfiles(profiles) {
+      const start = (this.currentPage - 1) * this.pageSize;
+      const end = start + this.pageSize;
+      return profiles.slice(start, end);
+    },
   },
   computed: {
+    pageCount() {
+      return Math.ceil(this.profiles.length / this.pageSize);
+    },
     filteredProfiles() {
-  const query = this.searchText.toLowerCase().trim();
-  if (!query) return this.profiles;
-  return this.profiles.filter((profile) => {
-    const name = `${profile.firstName} ${profile.lastName}`.toLowerCase().trim();
-    return name.includes(query);
-  });
-},
+      const query = this.searchText.toLowerCase().trim();
+      const filtered = query
+        ? this.profiles.filter((profile) => {
+            const name = `${profile.firstName} ${profile.lastName}`.toLowerCase().trim();
+            return name.includes(query);
+          })
+        : this.profiles;
 
-  startingPage() {
-    if (this.currentPage === 1) {
-      return 1;
-    }
-    if (this.currentPage === this.pageCount) {
-      return this.pageCount - this.pageRange;
-    }
-    return this.currentPage-1;
+      return this.paginatedProfiles(filtered);
+    },
   },
-
-  pages() {
-    const range = [];
-    for (
-      let x = this.startingPage;
-      x <= Math.min(this.startingPage + this.pageRange - 1, this.pageCount);
-      x++
-    )
-  {
-    range.push({
-      name: x,
-      pageDisabled: x === this.currentPage
-    });
-  }
-
-  return range;
+  watch: {
+    currentPage() {
+      this.filteredProfiles;
+    },
   },
-
-  firstPage(){
-    return this.currentPage === 1;
-  },
-  lastPage() {
-    return this.currentPage === this.pageCount;
-  },
-
- }
 };
 </script>
 
@@ -243,6 +210,7 @@ export default {
 .background {
   background: rgb(207, 205, 205);
   width: 100%;
+  height: 100vh;
   font-family: math;
 }
 
@@ -281,5 +249,9 @@ export default {
 
 .cell {
   flex: 1;
+}
+
+.B{
+ margin-left: auto;
 }
 </style>
