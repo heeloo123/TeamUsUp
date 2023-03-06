@@ -130,7 +130,8 @@ export default {
             title: "Sign-up done!",
             icon: "success",
           });
-          // localStorage
+          
+
           this.$router.push({ name: "CreateProfile" });
         } else {
           Swal.fire({

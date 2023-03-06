@@ -52,6 +52,7 @@
 </template>
 
 <script>
+
 import axios from "axios";
 const Swal = require("sweetalert2");
 
@@ -63,6 +64,7 @@ export default {
     return {
       email: "",
       password: "",
+      
       
     };
   },

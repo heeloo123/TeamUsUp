@@ -17,6 +17,6 @@ Vue.use(VueAxios, axios);
 import{ MotionPlugin } from '@vueuse/motion'
 App.use(MotionPlugin)
 
-import Paginate from 'vuejs-paginate'
-Vue.component('VueJsPaginate', Paginate)
+import VueCookies from 'vue-cookies'
+VueCookies.set('auth_token')
 

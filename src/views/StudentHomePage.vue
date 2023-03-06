@@ -105,7 +105,8 @@
 import axios from "axios";
 
 export default {
-  name: "ProfileView",
+  name: "StudentHome",
+
   props: ["profileID"],
   data() {
     return {
