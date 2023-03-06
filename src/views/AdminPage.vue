@@ -211,7 +211,7 @@ export default {
     },
 
     toggle() {
-      this.dropDownActive = true;
+      this.dropDownActive = ! this.dropDownActive;
     }
 
   },
