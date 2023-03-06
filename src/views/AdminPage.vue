@@ -45,6 +45,15 @@
           <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>
           <!---->
         </div>
+        <div>
+          
+          
+
+        </div>
+          
+
+      
+      
       </div>
     </div>
   </div>
@@ -215,10 +224,6 @@ export default {
     return this.profiles.sort(compare);
 
   }
-
-
-
-
 
 };
 </script>
