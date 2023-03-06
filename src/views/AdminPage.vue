@@ -47,7 +47,7 @@
         </div>
         <div class="sort">
           <div class="sortDropDown">
-            <img alt="sortBtn" src="../assets/sortBtn.png">
+            <img class="sortBtn" alt="sortBtn" src="../assets/sortBtn.png">
           </div>
           <div class="dropDownContent" v-show="showDropDownContent">
             <p>
@@ -302,5 +302,14 @@ export default {
 
 .B{
  margin-left: auto;
+}
+
+.sortBtn{
+  width: 50px;
+  height: 50px;
+  margin-left: 1740px;
+  position: relative;
+  bottom: 570px;
+
 }
 </style>
