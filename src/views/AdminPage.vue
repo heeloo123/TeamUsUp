@@ -159,6 +159,7 @@ export default {
       searchText: "",
       pageSize: 10,
       currentPage: 1,
+      sortProfiles: null,
     };
   },
 
@@ -178,6 +179,7 @@ export default {
       const end = start + this.pageSize;
       return profiles.slice(start, end);
     },
+
   },
   computed: {
     pageCount() {
@@ -200,6 +202,24 @@ export default {
       this.filteredProfiles;
     },
   },
+
+  sortProfiles: function() {
+    function compare (a,b) {
+      if (a.firstName < b.firstName)
+        return -1;
+      if (a.firstName > b.firstName)
+        return 1;
+      return 0;
+    }
+
+    return this.profiles.sort(compare);
+
+  }
+
+
+
+
+
 };
 </script>
 
