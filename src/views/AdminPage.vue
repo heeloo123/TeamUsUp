@@ -45,10 +45,23 @@
           <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>
           <!---->
         </div>
-        <div>
-          
-          
-
+        <div class="sortDropDown">
+          <div class="dropDownContent">
+            <p>
+            <a href="#">Sort by name</a>
+            </p>
+            <p>
+            <a href="#">Ascending</a>
+            </p>
+            <p>
+            <a href="#">Descending</a>
+            </p>
+            <p>
+            <a href="#">Sort by major</a>
+            </p>
+            <a href="#">Ascending</a>
+            <a href="#">Descending</a>
+          </div>
         </div>
           
 
