@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <button v-else @click="hideButton" v-show="showButton" class="loginBtn">
+      <button v-else-if="$route.path !=='/login'" @click="hideButton" v-show="showButton" class="loginBtn">
         <router-link class="link" to="/Login">Login</router-link>
       </button>
     </nav>
@@ -75,10 +75,17 @@ export default {
     $route() {
       if (this.$route.path === "/") {
         this.showButton = !this.loggedIn;
+      } else if (this.$route.path ==="/login"){
+        this.showButton=false;
+      }else{
+        this.showButton =!this.loggedIn
       }
     },
     loggedIn() {
-      this.showbutton = !this.loggedIn;
+      if(this.$route.path ==="/login"){
+        this.showButton = false;
+      }else{
+      this.showbutton = !this.loggedIn;}
     },
   },
 

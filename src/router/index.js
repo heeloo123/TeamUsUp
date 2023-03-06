@@ -66,7 +66,7 @@ const routes = [
     component: SelfEvaView
   },
   {
-    path: '/PeerEva',
+    path: '/PeerEva/:userName',
     name: 'PeerEva',
     component: PeerEvaView
   },

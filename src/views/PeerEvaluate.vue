@@ -19,7 +19,7 @@
               text-align: left;
             "
           >
-            <label>{{ userName }} </label><label>Lname </label>
+            <label>{{ userName }} </label>
 
             <div style="padding: 10px; margin-left: -10px">
               Project name : {{ project.name }}

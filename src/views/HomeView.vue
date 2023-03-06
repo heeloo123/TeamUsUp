@@ -9,8 +9,7 @@
         <router-link to="/Profile">Profile</router-link> |
         <router-link to="/Project">Project</router-link> |
         <router-link to="/EditProject"> Edit Project</router-link>|
-        <router-link to="/SelfEva"> Self evaluation</router-link>|
-        <router-link to="/PeerEva"> Peer evaluation</router-link>|
+        
         <router-link to="/AdminPage"> admin page</router-link>
         <router-link to="/About"> About</router-link>
       </div>
