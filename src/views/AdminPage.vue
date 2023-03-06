@@ -45,7 +45,10 @@
           <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>
           <!---->
         </div>
-        <div class="sortDropDown">
+        <div class="sort">
+          <div class="sortDropDown">
+            <img alt="sortBtn" src="../assets/sortBtn.png">
+          </div>
           <div class="dropDownContent">
             <p>
               <a href="#">Sort by name</a>
