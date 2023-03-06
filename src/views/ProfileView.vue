@@ -106,6 +106,7 @@ import axios from "axios";
 
 export default {
   name: "ProfileView",
+  props:['profileID'],
   data() {
     return {
       loading: true,
@@ -115,14 +116,14 @@ export default {
         major: "Computer Science",
         biography:
           "I passion for creativity and loves to bring ideas to life through visual art. I have skilled in various design software, including Adobe Photoshop and Illustrator. I am natural at understanding clients' needs and is always willing to take on new design challenges. ",
+        
       },
       projects: [
         {
+          
           name: "Personal Expense Tracker",
           description:
-            "The Personal Expense Tracker is a simple project designed to help individuals keep track of their daily expenses. " +
-            "The project will consist of a web or mobile application that allows users to input and categorize their expenses, " +
-            " such as groceries, transportation, entertainment, and others. The application will automatically calculate and display",
+            "The Personal Expense Tracker is a simple project designed to help individuals keep track of their daily expenses. ",
             
           skillsRating: {
             skills: 4,
@@ -147,7 +148,8 @@ export default {
   mounted() {
     axios
       .get("http://49.245.48.28:8080/profile/userProfile", {
-        
+        headers: {
+          Authorization: "Basic " + btoa(this.email + ":" + this.password)}
       })
       .then((response) => {
         this.loading = false;
@@ -164,8 +166,8 @@ export default {
     getProjects() {
       axios
         .get("http://49.245.48.28:8080/project/Proj2", {
-          
-          
+          headers: {
+          Authorization: "Basic " + btoa(this.email + ":" + this.password)}
         })
         .then((response) => {
           this.projects = response.data;

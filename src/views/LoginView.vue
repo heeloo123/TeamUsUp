@@ -63,22 +63,29 @@ export default {
     return {
       email: "",
       password: "",
+      
     };
   },
 
   methods: {
     async submitLogin() {
       try {
-        const response = await axios.post("http://49.245.48.28:8080/login", {
-          email: this.email,
-          password: this.password,
+        console.log(this.email);
+        console.log(this.password)
+        // here you use withAuthentication instead. The endpoint doesnt receive a body
+          const response = await axios.post("http://49.245.48.28:8080/login", {},{
+            //following this, the next requests shud probably only need with credentials
+        headers: {
+          Authorization: "Basic " + btoa(this.email + ":" + this.password)}
         });
-        if (response.status === 200) {
+        if (response.status === 202) {
           // Login successful
           console.log(response.data); // The user object returned by the server
-          this.$router.push({ name: "profile" });
+          this.$router.push("/home");
+          
         } else {
           // Login failed
+          console.log("login failed!")
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -86,17 +93,25 @@ export default {
           });
         }
       } catch (error) {
-        console.error(error);
+        //handle api request errors
+        if(error.response.status === 401){
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid email or password!",
+          });
+        } else{
+        console.error(error);}
       }
     },
     // /**mock test *********************************/
     // async submitLogin() {
     //   const mockResponse = {
-    //     status: 200,
+    //     status: 202,
     //   };
     //   try {
     //     const response = mockResponse; // Use mock response instead of axios post request
-    //     if (response.status === 200) {
+    //     if (response.status == 200) {
     //       // Login successful
     //       console.log(response.data); // The user object returned by the server
     //       this.$router.push({ name: "Profile" });

@@ -1,10 +1,9 @@
-
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="container">
         <div class="Title">
-          <h1 style="font-size: 40px;margin-left:-270px">Sign Up</h1>
+          <h1 style="font-size: 40px; margin-left: -270px">Sign Up</h1>
           <h2 style="margin-left: 50px; color: grey">
             Please fill in this form to create an account!
           </h2>
@@ -23,7 +22,7 @@
               <input
                 type="text"
                 placeholder="Enter your first name"
-                v-model="FirstName"
+                v-model="firstName"
                 required=""
               />
             </label>
@@ -31,11 +30,14 @@
               <input
                 type="text"
                 placeholder="Enter your last name"
-                v-model="LastName"
+                v-model="lastName"
                 required=""
               />
             </label>
-            <span v-if="passwordError" style="color: red; font-size: 15px;margin-left:200px">
+            <span
+              v-if="passwordError"
+              style="color: red; font-size: 15px; margin-left: 200px"
+            >
               {{ passwordError }}
             </span>
             <label>
@@ -57,7 +59,7 @@
               />
             </div>
             <div style="margin-left: 400px">
-              <button class="defaultBtn" type="submit">SIGN UP</button>
+              <button class="defaultBtn" v-on:click="Submit">SIGN UP</button>
             </div>
           </form>
         </div>
@@ -70,8 +72,8 @@
   </div>
 </template>
 
-
 <script>
+import axios from "axios";
 const Swal = require("sweetalert2");
 
 //import PageHeader from './Header.vue'
@@ -85,8 +87,8 @@ export default {
   data() {
     return {
       email: "",
-      FirstName: "",
-      LastName: "",
+      firstName: "",
+      lastName: "",
       password: "",
       rules: { min: 8 },
       passwordVerify: "",
@@ -112,8 +114,35 @@ export default {
           title: "Password does not match.",
           icon: "warning",
         });
-      } else {
-        this.$router.push({ name: "CreateProfile" });
+      }
+    },
+    async Submit() {
+      try {
+        let result = await axios.post("http://49.245.48.28:8080/register", {
+          email: this.email,
+          password: this.password,
+          firstName: this.firstName,
+          lastName: this.lastName,
+        });
+        console.warn(result);
+        if (result.status == 201) {
+          Swal.fire({
+            title: "Sign-up done!",
+            icon: "success",
+          });
+
+          this.$router.push({ name: "CreateProfile" });
+        } else {
+          Swal.fire({
+            title: "Somethings wrong...",
+            icon: "error",
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          title: "Something went wrong",
+          icon: "error",
+        });
       }
     },
   },

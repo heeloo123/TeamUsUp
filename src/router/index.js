@@ -12,6 +12,7 @@ import SelfEvaView from '../views/SelfEvaluate.vue'
 import PeerEvaView from '../views/PeerEvaluate.vue'
 import AdminPage from '../views/AdminPage.vue'
 import AdminHome from '../views/AdminHomePage.vue'
+import StudentHomePage from '../views/StudentHomePage.vue'
 
 const routes = [
   {
@@ -78,6 +79,11 @@ const routes = [
     path: '/AdminHome',
     name: 'AdminHome',
     component: AdminHome
+  },
+  {
+    path:'/home',
+    name: 'StudentHome',
+    component:StudentHomePage
   },
 
 
