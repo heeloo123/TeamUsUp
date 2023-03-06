@@ -243,7 +243,7 @@ export default {
 
     return this.profiles.sort(compare);
 
-  }
+  },
 
 };
 </script>
