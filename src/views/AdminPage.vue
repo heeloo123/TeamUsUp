@@ -319,8 +319,6 @@ export default {
   width: 100px;
   margin-top: -20px;
   font-size: 17px;
-  text-decoration: none;
-  color: inherit;
 }
 
 </style>
