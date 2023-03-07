@@ -53,8 +53,11 @@
             <p class="dropDownItem">
               <a style="text-decoration: none; color: inherit; font-weight: bold;" href="#">Sort by name</a>
             </p>
-            <p class="dropDownItem">
-              <a style="text-decoration: none; color: inherit;" href="#">Ascending</a>
+            <p class="dropDownItem"
+              v-for="(profiles) in sortProfilesName" :key="profiles.name"
+              @click="sortProfilesName(profiles)"> 
+              {{ profiles.firstName }} {{ profiles.lastName }}
+                <a style="text-decoration: none; color: inherit;" href="#">Ascending</a>
             </p>
             <p class="dropDownItem">
               <a style="text-decoration: none; color: inherit;" href="#">Descending</a>
@@ -188,7 +191,7 @@ export default {
       searchText: "",
       pageSize: 10,
       currentPage: 1,
-      sortProfiles: null,
+      sortProfilesName: null,
       showDropDownContent: false,
     };
   },
@@ -239,7 +242,7 @@ export default {
     },
   },
 
-  sortProfiles: function() {
+  sortProfilesName() {
     function compare (a,b) {
       if (a.firstName < b.firstName)
         return -1;
@@ -248,7 +251,7 @@ export default {
       return 0;
     }
 
-    return this.profiles.sort(compare);
+    return this.profilesName.sort(compare);
 
   },
 
