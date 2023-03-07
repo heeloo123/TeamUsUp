@@ -51,7 +51,7 @@
           </div>
           <div class="dropDownContent" v-show="showDropDownContent">
             <p class="dropDownItem">
-              <a style="text-decoration: none; color: inherit;" href="#">Sort by name</a>
+              <a style="text-decoration: none; color: inherit; font-weight: bold;" href="#">Sort by name</a>
             </p>
             <p class="dropDownItem">
               <a style="text-decoration: none; color: inherit;" href="#">Ascending</a>
@@ -60,7 +60,7 @@
               <a style="text-decoration: none; color: inherit;" href="#">Descending</a>
             </p>
             <p class="dropDownItem">
-              <a style="text-decoration: none; color: inherit;" href="#">Sort by major</a>
+              <a style="text-decoration: none; color: inherit; font-weight: bold" href="#">Sort by major</a>
             </p>
             <p class="dropDownItem">
               <a style="text-decoration: none; color: inherit;" href="#">Ascending</a>
@@ -317,15 +317,15 @@ export default {
 }
 .dropDownItem{
   border-style: solid;
-  width: 100px;
+  width: 115px;
   margin-top: -18px;
   font-size: 17px;
   position: relative;
   bottom: 560px;
-  left: 1640px;
+  left: 1635px;
   text-align: center;
   background-color: white;
-  border-width: 0.07cm;
+  border-width: 0.05cm;
 
 }
 
