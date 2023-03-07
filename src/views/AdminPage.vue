@@ -51,22 +51,22 @@
           </div>
           <div class="dropDownContent" v-show="showDropDownContent">
             <p class="dropDownItem">
-              <a href="#">Sort by name</a>
+              <a style="text-decoration: none; color: inherit;" href="#">Sort by name</a>
             </p>
             <p class="dropDownItem">
-              <a href="#">Ascending</a>
+              <a style="text-decoration: none; color: inherit;" href="#">Ascending</a>
             </p>
             <p class="dropDownItem">
-              <a href="#">Descending</a>
+              <a style="text-decoration: none; color: inherit;" href="#">Descending</a>
             </p>
             <p class="dropDownItem">
-              <a href="#">Sort by major</a>
+              <a style="text-decoration: none; color: inherit;" href="#">Sort by major</a>
             </p>
             <p class="dropDownItem">
-              <a href="#">Ascending</a>
+              <a style="text-decoration: none; color: inherit;" href="#">Ascending</a>
             </p>
             <p class="dropDownItem">
-              <a href="#">Descending</a>
+              <a style="text-decoration: none; color: inherit;" href="#">Descending</a>
             </p>
           </div>
         </div>
@@ -322,4 +322,5 @@ export default {
   text-decoration: none;
   color: inherit;
 }
+
 </style>
