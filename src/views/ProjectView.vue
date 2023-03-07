@@ -41,8 +41,6 @@
                   background: rgb(234, 231, 231);
                   border: transparent;
                   margin: 20px;
-                  
-                  
                 "
               >
                 <div class="profileImg">
@@ -62,46 +60,50 @@
                     >Role:<span>{{ role }}</span></label
                   >
                 </div>
-             
-              <div
-                style="margin-left:600px;margin-top:20px;font-size:25px;display: inline-grid;
-"
-              >
-                <div class="rating">
-                  <label>Teamwork :</label>
-                  
-                  <div class="star-rating">
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
+
+                <div
+                  style="
+                    margin-left: 600px;
+                    margin-top: 20px;
+                    font-size: 25px;
+                    display: inline-grid;
+                  "
+                >
+                  <div class="rating">
+                    <label>Teamwork :</label>
+
+                    <div class="star-rating">
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                    </div>
+                  </div>
+                  <div class="rating">
+                    <label>Skills:</label>
+
+                    <div class="star-rating">
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                    </div>
+                  </div>
+                  <div class="rating">
+                    <label>Communication :</label>
+                    <div class="star-rating">
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                      <span>&star;</span>
+                    </div>
                   </div>
                 </div>
-                <div class="rating">
-                  <label>Skills:</label>
-                  
-                  
-                  <div class="star-rating">
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
-                  </div>
-                </div>
-                <div class="rating">
-                  <label>Communication :</label>
-                  <div class="star-rating">
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
-                    <span>&star;</span>
-                  </div>
-                </div>
+              </div>
             </div>
-            </div> </div>
           </ul>
 
           <!---->
@@ -125,7 +127,15 @@ export default {
   name: "ProjectView",
   data() {
     return {
-      project: {},
+      project: {
+        projectName: "personal expense tracker",
+        projectDescription:
+          "The Personal Expense Tracker is a simple project designed to help individuals keep track of their daily expenses.",
+        nameRoleMap: {
+          Jane: "Project manager",
+          John: "Programmer",
+        },
+      },
     };
   },
   mounted() {
@@ -234,20 +244,15 @@ export default {
 .name-role span {
   margin-left: 10px;
 }
-.memberlist{
+.memberlist {
   margin-right: 30px;
 }
 .star-rating {
-  
-  margin-left: auto; 
+  margin-left: auto;
   color: gold;
-    
 }
 
 .rating {
   display: flex;
-  
 }
-
-
 </style>
