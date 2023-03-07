@@ -168,6 +168,7 @@ input[type="password"] {
   font-size: 20px;
   border-radius: 10px;
   padding-left: 20px;
-  background: transparent;
+  background: white
+
 }
 </style> 
