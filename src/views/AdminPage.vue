@@ -307,9 +307,9 @@ export default {
 .sortBtn{
   width: 50px;
   height: 50px;
-  margin-left: 1740px;
+  margin-left: 1700px;
   position: relative;
-  bottom: 570px;
+  bottom: 575px;
 
 }
 </style>
