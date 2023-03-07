@@ -47,25 +47,25 @@
         </div>
         <div class="sort">
           <div class="sortDropDown">
-            <img class="sortBtn" alt="sortBtn" src="../assets/sortBtn.png">
+            <img class="sortBtn" alt="sortBtn" src="../assets/sortBtn.png" @click="openDropDownContent">
           </div>
           <div class="dropDownContent" v-show="showDropDownContent">
-            <p>
+            <p class="dropDownItem">
               <a href="#">Sort by name</a>
             </p>
-            <p>
+            <p class="dropDownItem">
               <a href="#">Ascending</a>
             </p>
-            <p>
+            <p class="dropDownItem">
               <a href="#">Descending</a>
             </p>
-            <p>
+            <p class="dropDownItem">
               <a href="#">Sort by major</a>
             </p>
-            <p>
+            <p class="dropDownItem">
               <a href="#">Ascending</a>
             </p>
-            <p>
+            <p class="dropDownItem">
               <a href="#">Descending</a>
             </p>
           </div>
@@ -210,7 +210,9 @@ export default {
       return profiles.slice(start, end);
     },
 
-
+    openDropDownContent() {
+      this.showDropDownContent = true;
+    },
     
 
   },
@@ -311,5 +313,13 @@ export default {
   position: relative;
   bottom: 575px;
 
+}
+.dropDownItem{
+  border-style: solid;
+  width: 100px;
+  margin-top: -20px;
+  font-size: 17px;
+  text-decoration: none;
+  color: inherit;
 }
 </style>
