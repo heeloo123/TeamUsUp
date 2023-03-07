@@ -53,11 +53,8 @@
             <p class="dropDownItem">
               <a style="text-decoration: none; color: inherit; font-weight: bold;" href="#">Sort by name</a>
             </p>
-            <p class="dropDownItem"
-              v-for="(profiles) in sortProfilesName" :key="profiles.name"
-              @click="sortProfilesName(profiles)"> 
-              {{ profiles.firstName }} {{ profiles.lastName }}
-                <a style="text-decoration: none; color: inherit;" href="#">Ascending</a>
+            <p class="dropDownItem">
+                <a style="text-decoration: none; color: inherit;"  @click="sortProfilesName(profiles);" href="#">Ascending</a>
             </p>
             <p class="dropDownItem">
               <a style="text-decoration: none; color: inherit;" href="#">Descending</a>
