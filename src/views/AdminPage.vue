@@ -47,7 +47,7 @@
         </div>
         <div class="sort">
           <div class="sortDropDown">
-            <img class="sortBtn" alt="sortBtn" src="../assets/sortBtn.png" @click="openDropDownContent">
+            <img class="sortBtn" alt="sortBtn" src="../assets/sortBtn.png" @click="toggleDropDownContent">
           </div>
           <div class="dropDownContent" v-show="showDropDownContent">
             <p class="dropDownItem">
@@ -210,8 +210,9 @@ export default {
       return profiles.slice(start, end);
     },
 
-    openDropDownContent() {
-      this.showDropDownContent = true;
+    toggleDropDownContent() {
+      this.showDropDownContent = ! this.showDropDownContent
+      
     },
     
 
