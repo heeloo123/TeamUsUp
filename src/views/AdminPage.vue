@@ -317,8 +317,15 @@ export default {
 .dropDownItem{
   border-style: solid;
   width: 100px;
-  margin-top: -20px;
+  margin-top: -18px;
   font-size: 17px;
+  position: relative;
+  bottom: 560px;
+  left: 1640px;
+  text-align: center;
+  background-color: white;
+  border-width: 0.07cm;
+
 }
 
 </style>
