@@ -46,12 +46,7 @@
                 "
               >
                 <div class="profileImg">
-                  <div
-                    v-for="participant in project.projectParticipants"
-                    :key="participant.id"
-                  >
-                    <img :src="participant.profileImage" alt="profile picture" />
-                  </div>
+                    <img :src="role.profileImage" alt="profile picture" />
                 </div>
 
                 <div class="name-role">
@@ -59,7 +54,7 @@
                     Name: <span>{{ name }}</span></label
                   >
                   <label
-                    >Role:<span>{{ role }}</span></label
+                    >Role:<span>{{ role.projectRole }}</span></label
                   >
                 </div>
              
