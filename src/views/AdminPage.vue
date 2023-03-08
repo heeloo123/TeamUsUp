@@ -60,6 +60,35 @@
           <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>
           <!---->
         </div>
+        <div class="sort">
+          <div class="sortDropDown">
+            <img class="sortBtn" alt="sortBtn" src="../assets/sortBtn.png">
+          </div>
+          <div class="dropDownContent" v-show="showDropDownContent">
+            <p>
+              <a href="#">Sort by name</a>
+            </p>
+            <p>
+              <a href="#">Ascending</a>
+            </p>
+            <p>
+              <a href="#">Descending</a>
+            </p>
+            <p>
+              <a href="#">Sort by major</a>
+            </p>
+            <p>
+              <a href="#">Ascending</a>
+            </p>
+            <p>
+              <a href="#">Descending</a>
+            </p>
+          </div>
+        </div>
+          
+
+      
+      
       </div>
     </div>
   </div>
@@ -175,6 +204,8 @@ export default {
       searchText: "",
       pageSize: 10,
       currentPage: 1,
+      sortProfiles: null,
+      showDropDownContent: false,
     };
   },
 
@@ -200,18 +231,10 @@ export default {
       const end = start + this.pageSize;
       return profiles.slice(start, end);
     },
-    toggleDropdown() {
-      this.showDropdown = !this.showDropdown; //drop down
-    },
-    sort(field) {
-      if (field === "name") {
-        this.profiles.sort((a, b) =>
-          a.firstName.localeCompare(b.firstName)
-        );
-      } else if (field === "major") {
-        this.profiles.sort((a, b) => a.major.localeCompare(b.major));
-      }
-    },
+
+
+    
+
   },
   computed: {
     pageCount() {
@@ -236,6 +259,20 @@ export default {
       this.filteredProfiles;
     },
   },
+
+  sortProfiles: function() {
+    function compare (a,b) {
+      if (a.firstName < b.firstName)
+        return -1;
+      if (a.firstName > b.firstName)
+        return 1;
+      return 0;
+    }
+
+    return this.profiles.sort(compare);
+
+  },
+
 };
 </script>
 
@@ -335,6 +372,4 @@ export default {
 .toggle_img img {
   width: 35px;
 }
-
-/**-----------------------*/
 </style>
