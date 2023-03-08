@@ -29,14 +29,15 @@
         </div>
       </div>
      
-      <label style="float:right">
-        <button @click="hideButton" v-show="showButton" class="loginBtn">
-          <router-link class="link" to="/Login">Login</router-link>
+      <label style="float:right" >
+        <button class="loginBtn" v-if="showLoginBtn && !user" :disabled="buttonDisabled"> 
+          <router-link class="link" to="/Login" >Login</router-link>
         </button>
      
    </label >
       <!--when logger in-->
-      <label v-if="auth.isAuthenticated" class="userDropdown">
+      <!-- <label v-if="auth.isAuthenticated" class="userDropdown"> -->
+        <label v-if="user" class="userDropdown">
         {{ auth.currentUser }}
         
 
@@ -59,7 +60,8 @@ export default {
   },
   data() {
     return {
-      showButton: true,
+      buttonDisabled:false,
+      user:null,
       
     };
     
@@ -68,31 +70,40 @@ export default {
     auth() {
       return useAuthStore();
     },
-  },
-  methods: {
-    hideButton() {
-      this.showButton = false;
+    showLoginBtn(){
+      return this.$route.path !=="/Login" && this.user !=null;
+
     },
   },
-  watch: {
-    $route() {
-      if (this.$route.path === "/") {
-        this.showButton = !this.auth.isAuthenticated;
-      } else if (this.$route.path === "/login") {
-        this.showButton = false;
-      } else {
-        this.showButton = !this.auth.isAuthenticated;
-      }
-    },
-    "auth.isAuthenticated"() {
-      if (this.$route.path === "/login") {
-        this.showButton = false;
-      } else {
-        this.showButton = !this.auth.isAuthenticated;
-      }
-     console.log("message");
-    },
-    
+ 
+  
+  // watch: {
+  //   $route() {
+  //     if (this.$route.path === "/") {
+  //       this.showButton = !this.auth.isAuthenticated;
+  //     } else if (this.$route.path === "/login") {
+  //       this.showButton = false;
+  //     } else {
+  //       this.showButton = !this.auth.isAuthenticated;
+  //     }
+  //   },
+    // "auth.isAuthenticated"() {
+    //   if (this.$route.path === "/login") {
+    //     this.showButton = false;
+    //   } else {
+    //     this.showButton = !this.auth.isAuthenticated;
+    //   }
+    //  console.log("message");
+    // },
+    // }, 
+  mounted(){
+    let user = localStorage.getItem('user-info');
+    if(user){
+      this.user = JSON.parse(user);
+      this.buttonDisabled = true;
+      
+    }
+
   },
 
   immediate: true,
@@ -122,7 +133,7 @@ export default {
 
 .userDropdown {
   float:right;
-  margin-right:60px
+  margin-right:80px
 }
 .loginBtn {
   background: #e12744;
@@ -130,5 +141,9 @@ export default {
   font-size: 25px;
   font-family: -webkit-body;
   margin: 10px;
+  
 }
+
+
+
 </style>

@@ -135,7 +135,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://49.245.48.28:8080/project/Proj6", {
+      .get("http://49.245.48.28:8080/api/project/Proj6", {
         headers: {
           Authorization: "Basic " + btoa("sparklechus@gmail.com:feelseveman"),
         },

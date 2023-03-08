@@ -70,15 +70,19 @@ export default {
 }
 
 .dropdown ul {
-  display: block;
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 0;
-  top: 41px;
-  left: -17px;
-  box-shadow: 0 2px 5px rgb(0 0 0 / 20%);
+    display: block;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0;
+    top: 37px;
+    left: -34px;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 20%);
+    width: 118px;
+    text-align: center;
+    font-size: 20px;
+    font-family: math;
 }
 
 .dropdown ul li {

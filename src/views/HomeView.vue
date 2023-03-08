@@ -10,7 +10,8 @@
         <router-link to="/Project">Project</router-link> |
         <router-link to="/EditProject"> Edit Project</router-link>|
         
-        <router-link to="/AdminPage"> admin page</router-link>
+        <router-link to="/AdminPage"> admin page</router-link>|
+        <router-link to="/notification">notification page</router-link>|
         <router-link to="/About"> About</router-link>
       </div>
 
@@ -41,7 +42,7 @@
             </section>
           </div>
           <nav>
-            <button class="SignUpButton">
+            <button class="SignUpButton" v-if="!user" :disabled="buttonDisabled">
               <router-link class="link" to="/SignUp">Sign-Up Now</router-link>
             </button>
           </nav>
@@ -57,6 +58,19 @@
 
 export default {
   name: "HomeView",
+  data(){
+    return{
+    buttonDisabled: false,
+    user:null
+  }},
+  mounted(){
+    let user = localStorage.getItem('user-info');
+    if(user){
+      this.user = JSON.parse(user);
+      this.buttonDisabled = true;
+    }
+
+  }
 };
 </script>
 
@@ -72,6 +86,7 @@ export default {
   margin-left: 70px;
   width: 600px;
   text-align: justify;
+  margin-top:100px;
 }
 
 .T_logo {

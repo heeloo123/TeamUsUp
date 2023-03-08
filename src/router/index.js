@@ -14,6 +14,7 @@ import AdminPage from "../views/AdminPage.vue";
 import AdminHome from "../views/AdminHomePage.vue";
 import StudentHomePage from "../views/StudentHomePage.vue";
 import NavView from "../views/NavView.vue";
+import NotificationVue from "@/views/Notification.vue";
 
 const routes = [
   {
@@ -99,6 +100,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/notification",
+    name: "notificationView",
+    component: NotificationVue,
   },
 ];
 

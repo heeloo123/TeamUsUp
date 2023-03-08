@@ -66,7 +66,7 @@
       </div>
       <div style="font-size: 20px; padding: 10px">
         Have already an account?
-        <router-link to="/login">Login here!</router-link>
+        <router-link to="/Login">Login here!</router-link>
       </div>
     </div>
   </div>
@@ -107,7 +107,7 @@ export default {
         this.passwordError = "";
       }
     },
-    signUp() {
+    submit() {
       //verify that passwords match
       if (this.password !== this.passwordVerify) {
         Swal.fire({
@@ -115,10 +115,12 @@ export default {
           icon: "warning",
         });
       }
+      console.warn("signup",this.name,this.email,this.password)
     },
-    async Submit() {
+    async signUp() {
       try {
-        let result = await axios.post("http://49.245.48.28:8080/register", {
+        // let result = await axios.post("http://49.245.48.28:8080/register", {
+          let result = await axios.post("http://localhost:3000/users", {
           email: this.email,
           password: this.password,
           firstName: this.firstName,
@@ -131,8 +133,8 @@ export default {
             icon: "success",
           });
           
-
-          this.$router.push({ name: "CreateProfile" });
+          localStorage.setItem("user-info",JSON.stringify(result.data))
+          this.$router.push({ name: "home" });
         } else {
           Swal.fire({
             title: "Somethings wrong...",
@@ -147,6 +149,13 @@ export default {
       }
     },
   },
+  mounted(){
+    let user = localStorage.getItem('user-info');
+    if(user){
+      this.$router.push({ name: "home" });
+    }
+
+  }
 };
 </script>
 
