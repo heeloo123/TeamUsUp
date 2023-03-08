@@ -52,8 +52,8 @@
 </template>
 
 <script>
+import{useAuthStore} from '../stores/auth'
 
-import axios from "axios";
 const Swal = require("sweetalert2");
 
 export default {
@@ -68,44 +68,61 @@ export default {
       
     };
   },
-
   methods: {
     async submitLogin() {
       try {
         console.log(this.email);
         console.log(this.password)
-        // here you use withAuthentication instead. The endpoint doesnt receive a body
-          const response = await axios.post("http://49.245.48.28:8080/login", {},{
-            //following this, the next requests shud probably only need with credentials
-        headers: {
-          Authorization: "Basic " + btoa(this.email + ":" + this.password)}
-        });
-        if (response.status === 202) {
-          // Login successful
-          console.log(response.data); // The user object returned by the server
-          this.$router.push("/home");
+        await useAuthStore().login() // call the login action from your auth store
+        this.$router.push("/home");
           
-        } else {
-          // Login failed
-          console.log("login failed!")
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Invalid email or password!",
-          });
-        }
       } catch (error) {
-        //handle api request errors
-        if(error.response.status === 401){
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Invalid email or password!",
-          });
-        } else{
-        console.error(error);}
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Invalid email or password!",
+        });
       }
-    },
+    }
+  },
+  // methods: {
+  //   async submitLogin() {
+  //     try {
+  //       console.log(this.email);
+  //       console.log(this.password)
+  //       // here you use withAuthentication instead. The endpoint doesnt receive a body
+  //         const response = await axios.post("http://49.245.48.28:8080/login", {},{
+  //           //following this, the next requests shud probably only need with credentials
+  //       headers: {
+  //         Authorization: "Basic " + btoa(this.email + ":" + this.password)}
+  //       });
+  //       if (response.status === 202) {
+  //         // Login successful
+  //         console.log(response.data); // The user object returned by the server
+  //         this.$router.push("/home");
+          
+  //       } else {
+  //         // Login failed
+  //         console.log("login failed!")
+  //         Swal.fire({
+  //           icon: "error",
+  //           title: "Oops...",
+  //           text: "Invalid email or password!",
+  //         });
+  //       }
+  //     } catch (error) {
+  //       //handle api request errors
+  //       if(error.response.status === 401){
+  //         Swal.fire({
+  //           icon: "error",
+  //           title: "Oops...",
+  //           text: "Invalid email or password!",
+  //         });
+  //       } else{
+  //       console.error(error);}
+  //     }
+  //   },
     // /**mock test *********************************/
     // async submitLogin() {
     //   const mockResponse = {
@@ -130,8 +147,8 @@ export default {
     //   }
     // },
     // /*********end */
-  },
-};
+    }
+
 </script>
 
 <style scoped>
