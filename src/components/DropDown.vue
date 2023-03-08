@@ -6,13 +6,15 @@
     <ul v-if="showDropdown">
       <li ><a href="/Profile">Profile</a></li>
       <li ><a href="#">Settings</a></li>
-      <li ><a href="#" @click.prevent="logout">Logout</a></li>
+      <li ><a href="#" @click.prevent="handleLogout">Logout</a></li>
     </ul>
   </div>
 </template>
 
 <script>
-import { useUserStore } from "@/stores/auth";
+import { useAuthStore } from "@/stores/auth";
+import Swal from 'sweetalert2';
+
 export default {
   data() {
     return {
@@ -24,10 +26,24 @@ export default {
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
     },
-    logout() {
-      const userStore = useUserStore();
-      userStore.logout();
-      this.$router.push("/");
+    async handleLogout() {
+      const confirmResult = await Swal.fire({
+        title: 'Are you sure you want to log out?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel',
+      });
+      
+      if (confirmResult.isConfirmed) {
+        const authStore = useAuthStore();
+        await authStore.logout();
+        this.$router.push("/");
+        await Swal.fire({
+          title: 'Logged out successfully!',
+          icon: 'success',
+        });
+      }
     },
   },
 };

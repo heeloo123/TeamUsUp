@@ -28,7 +28,7 @@
           />
         </div>
       </div>
-      <!-- v-else-if="$route.path !== '/login'" -->
+     
       <label style="float:right">
         <button @click="hideButton" v-show="showButton" class="loginBtn">
           <router-link class="link" to="/Login">Login</router-link>
@@ -36,8 +36,8 @@
      
    </label >
       <!--when logger in-->
-      <label v-if="loggedIn" class="userDropdown">
-        {{ currentUser }}
+      <label v-if="auth.isAuthenticated" class="userDropdown">
+        {{ auth.currentUser }}
 
         <DropDown />
       </label>
@@ -50,6 +50,7 @@
 
 <script>
 import DropDown from "../components/DropDown.vue";
+import { useAuthStore } from "@/stores/auth";
 export default {
   name: "NavView",
   components: {
@@ -58,44 +59,38 @@ export default {
   data() {
     return {
       showButton: true,
-      loggedIn: false,
-      currentUser: null,
+      
     };
+    
+  },
+  computed: {
+    auth() {
+      return useAuthStore();
+    },
   },
   methods: {
     hideButton() {
       this.showButton = false;
     },
   },
-  showLogin() {
-    this.hideButton();
-    this.showButton = false;
-
-    // logic to show login modal
-  },
-  logout() {
-    // logic to log out the user
-    this.loggedIn = false;
-    this.currentUser = null;
-    this.showButton = true;
-  },
   watch: {
     $route() {
       if (this.$route.path === "/") {
-        this.showButton = !this.loggedIn;
+        this.showButton = !this.auth.isAuthenticated;
       } else if (this.$route.path === "/login") {
         this.showButton = false;
       } else {
-        this.showButton = !this.loggedIn;
+        this.showButton = !this.auth.isAuthenticated;
       }
     },
-    loggedIn() {
+    "auth.isAuthenticated"() {
       if (this.$route.path === "/login") {
         this.showButton = false;
       } else {
-        this.showbutton = !this.loggedIn;
+        this.showButton = !this.auth.isAuthenticated;
       }
     },
+    
   },
 
   immediate: true,
