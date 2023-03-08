@@ -38,6 +38,7 @@
       <!--when logger in-->
       <label v-if="auth.isAuthenticated" class="userDropdown">
         {{ auth.currentUser }}
+        
 
         <DropDown />
       </label>
@@ -89,11 +90,13 @@ export default {
       } else {
         this.showButton = !this.auth.isAuthenticated;
       }
+     console.log("message");
     },
     
   },
 
   immediate: true,
+  
 };
 </script>
 <style scoped>
