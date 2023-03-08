@@ -15,8 +15,8 @@
                         <div class="cell">message 9</div>
                         <div class="cell">message 10</div>
                     </div>
-                        <div>
-
+                        <div class="emailTimeStamp">
+                            {{ formatDate(currentTimeStamp()) }}
                         </div>
                 </div>
         </div>
@@ -56,36 +56,52 @@ export default {
                     time: "",
                     month: "",
                     year: "",
-                    fullDate: "",
                 }
             ],
             
             readNotification: false,
-            sentTimeStamp: null,
         };
     },
 
         methods: {
-            currentDate() {
-                // const currentDate = new Date();
-                // const date = `${current.getDate()}/${current.getMonth()+1}/${current.getYear()}`;
-                // return date;
+            currentTimeStamp() {
+                const current = new Date();
+                new Date() === `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}}`;
+                console.log (current);
+                return current;
             },
 
-        printDate(date) {
-            return new date().toLocaleDateString();
+            formatDate() {
+                const format = { day: 'numeric', month: 'long', year: 'numeric', time: 'numeric'};
+                return new Date().toLocaleDateString('en-US', format);
+            },
+
+
+        getDate() {
+            return new Date().toLocaleDateString();
         },
 
-        printTime(time) {
-            return new time().toLocaleTimeString();
+        getMonth() {
+            return new Date().getMonth();
         },
 
-        printFullDateTime(fullDate) {
-            return new fullDate()
-        }
-    }
+        getTime() {
+            return new Date().toLocaleTimeString();
+        },
 
-}
+        getYear() {
+            return new Date().getFullYear();
+        },
+    },
+
+    mounted() {
+       this.date === this.getDate();
+       this.time() === this.getTime();
+       this.year() === this.getYear();
+       this.month() === this.getMonth();
+    },
+
+};
     
 
 </script>

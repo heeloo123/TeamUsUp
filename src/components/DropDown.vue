@@ -1,51 +1,72 @@
 <template>
-  <div class="dropdown">
+  <div class="dropdown" >
     <span class="toggle_img">
       <img src="../assets/icons8-user-48.png" @click="toggleDropdown"
     /></span>
     <ul v-if="showDropdown">
-      <li ><a href="/Profile">Profile</a></li>
-      <li ><a href="#">Settings</a></li>
-      <li ><a href="#" @click.prevent="handleLogout">Logout</a></li>
+      <li><a href="/Profile">Profile</a></li>
+      <li><a href="#">Settings</a></li>
+      <li><a href="#" @click="logout">Logout</a></li>
     </ul>
   </div>
 </template>
 
 <script>
-import { useAuthStore } from "@/stores/auth";
-import Swal from 'sweetalert2';
+//import { useAuthStore } from "@/stores/auth";
+import Swal from "sweetalert2";
 
 export default {
   data() {
     return {
       showDropdown: false,
-      
     };
   },
   methods: {
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
     },
-    async handleLogout() {
+    // async handleLogout() {
+    //   const confirmResult = await Swal.fire({
+    //     title: 'Are you sure you want to log out?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonText: 'Yes',
+    //     cancelButtonText: 'Cancel',
+    //   });
+
+    //   if (confirmResult.isConfirmed) {
+    //     const authStore = useAuthStore();
+    //     await authStore.logout();
+    //     this.$router.push("/");
+    //     await Swal.fire({
+    //       title: 'Logged out successfully!',
+    //       icon: 'success',
+    //     });
+    //   }
+    // },
+    async logout() {
       const confirmResult = await Swal.fire({
-        title: 'Are you sure you want to log out?',
-        icon: 'warning',
+        title: "Are you sure you want to log out?",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'Cancel',
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
       });
-      
       if (confirmResult.isConfirmed) {
-        const authStore = useAuthStore();
-        await authStore.logout();
-        this.$router.push("/");
-        await Swal.fire({
-          title: 'Logged out successfully!',
-          icon: 'success',
-        });
+        localStorage.clear();
+        this.$router.push({ name: "/" });
       }
+      await Swal.fire({
+        title: "Logged out successfully!",
+        icon: "success",
+      });
     },
-  },
+  
+  
+      
+
+    },
+   
 };
 </script>
 
@@ -70,19 +91,19 @@ export default {
 }
 
 .dropdown ul {
-    display: block;
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 0;
-    top: 37px;
-    left: -34px;
-    box-shadow: 0 2px 5px rgb(0 0 0 / 20%);
-    width: 118px;
-    text-align: center;
-    font-size: 20px;
-    font-family: math;
+  display: block;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0;
+  top: 37px;
+  left: -34px;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 20%);
+  width: 118px;
+  text-align: center;
+  font-size: 20px;
+  font-family: math;
 }
 
 .dropdown ul li {
@@ -103,5 +124,4 @@ export default {
   background-color: rgb(225, 225, 230);
   color: white;
 }
-
 </style>

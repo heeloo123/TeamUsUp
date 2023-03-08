@@ -29,16 +29,16 @@
         </div>
       </div>
      
-      <label style="float:right" >
-        <button class="loginBtn" v-if="showLoginBtn && !user" :disabled="buttonDisabled"> 
+      <label style="float:right" v-if="showLoginBtn">
+        <button class="loginBtn"  :disabled="buttonDisabled"> 
           <router-link class="link" to="/Login" >Login</router-link>
         </button>
      
    </label >
       <!--when logger in-->
       <!-- <label v-if="auth.isAuthenticated" class="userDropdown"> -->
-        <label v-if="user" class="userDropdown">
-        {{ auth.currentUser }}
+        <label v-if="showDropDown" :disabled="buttonDisabled" class="userDropdown">
+        {{ $state.user.name }}
         
 
         <DropDown />
@@ -58,25 +58,45 @@ export default {
   components: {
     DropDown,
   },
-  data() {
-    return {
-      buttonDisabled:false,
-      user:null,
-      
-    };
-    
-  },
   computed: {
-    auth() {
+    $state() {
       return useAuthStore();
     },
-    showLoginBtn(){
-      return this.$route.path !=="/Login" && this.user !=null;
-
+    showLoginBtn() {
+      return (
+        this.$route.path !== "/Login" && !this.$state.isAuthenticated
+      );
+    },
+    showDropDown() {
+      return this.$state.isAuthenticated && this.$state.user != null;
+    },
+    buttonDisabled() {
+      return this.$state.isAuthenticated;
     },
   },
- 
-  
+};
+  // data() {
+  //   return {
+  //     buttonDisabled:false,
+  //     user:"",
+      
+  //   };
+    
+  // },
+  // computed: {
+  //   // auth() {
+  //   //   return useAuthStore();
+  //   // },
+  //   showLoginBtn(){
+  //     return this.$route.path !=="/Login" && this.user ==null;
+
+  //   },
+  //   showDropDown(){
+  //     return this.user !=null;
+
+  //   },
+  // },
+//************************ */
   // watch: {
   //   $route() {
   //     if (this.$route.path === "/") {
@@ -96,19 +116,20 @@ export default {
     //  console.log("message");
     // },
     // }, 
-  mounted(){
-    let user = localStorage.getItem('user-info');
-    if(user){
-      this.user = JSON.parse(user);
-      this.buttonDisabled = true;
+    //*************** */
+  // mounted(){
+  //   let user = localStorage.getItem('user-info');
+  //   if(user){
       
-    }
+  //     this.buttonDisabled = true;
+      
+  //   }
 
-  },
+  // },
 
-  immediate: true,
+  //  immediate: true,
   
-};
+
 </script>
 <style scoped>
 .container {
