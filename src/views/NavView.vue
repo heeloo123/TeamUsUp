@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       showButton: true,
-      loggedIn: true,
+      loggedIn: false,
       currentUser: null,
     };
   },

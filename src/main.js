@@ -1,25 +1,17 @@
-import Vue from'vue'
 import { createApp } from 'vue'
 import App from './App.vue'
-
-createApp(App).use(router).mount('#app')
-
-//import sweetalert
-import VueSweetaleart2 from 'vue-sweetalert2';
-
 import router from './router'
-Vue.use(VueSweetaleart2);
-
+import VueSweetaleart2 from 'vue-sweetalert2'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios);
+import { createPinia } from 'pinia'
 
-import{ MotionPlugin } from '@vueuse/motion'
-App.use(MotionPlugin)
+const app = createApp(App)
+const pinia = createPinia()
 
-import VueCookies from 'vue-cookies'
-VueCookies.set('auth_token')
+app.use(router)
+app.use(VueSweetaleart2)
+app.use(VueAxios, axios)
+app.use(pinia)
 
-import pinia from './modules/pinia';
-Vue.use(pinia)
-
+app.mount('#app')

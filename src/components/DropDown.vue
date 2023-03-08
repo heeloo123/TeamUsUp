@@ -6,12 +6,13 @@
     <ul v-if="showDropdown">
       <li ><a href="/Profile">Profile</a></li>
       <li ><a href="#">Settings</a></li>
-      <li ><a href="#">Logout</a></li>
+      <li ><a href="#" @click.prevent="logout">Logout</a></li>
     </ul>
   </div>
 </template>
 
 <script>
+import { useUserStore } from "@/stores/auth";
 export default {
   data() {
     return {
@@ -23,7 +24,11 @@ export default {
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
     },
-    
+    logout() {
+      const userStore = useUserStore();
+      userStore.logout();
+      this.$router.push("/");
+    },
   },
 };
 </script>
