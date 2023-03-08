@@ -5,7 +5,7 @@ import VueSweetaleart2 from 'vue-sweetalert2'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { createPinia } from 'pinia'
-
+import 'sweetalert2/dist/sweetalert2.min.css';
 const app = createApp(App)
 const pinia = createPinia()
 
