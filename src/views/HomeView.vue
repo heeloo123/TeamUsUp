@@ -55,22 +55,36 @@
 <script>
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
-
+import { useAuthStore } from "@/stores/auth";
 export default {
   name: "HomeView",
-  data(){
-    return{
-    buttonDisabled: false,
-    user:null
-  }},
-  mounted(){
-    let user = localStorage.getItem('user-info');
-    if(user){
-      this.user = JSON.parse(user);
-      this.buttonDisabled = true;
-    }
 
-  }
+  setup() {
+    const authStore = useAuthStore()
+
+    let user = localStorage.getItem('user-info');
+    const buttonDisabled = user !== null;
+
+    return {
+      user,
+      buttonDisabled,
+      authStore
+    }
+  },
+
+  // data(){
+  //   return{
+  //   buttonDisabled: false,
+  //   user:null
+  // }},
+  // mounted(){
+  //   let user = localStorage.getItem('user-info');
+  //   if(user){
+  //     this.user = JSON.parse(user);
+  //     this.buttonDisabled = true;
+  //   }
+
+  // }
 };
 </script>
 

@@ -48,8 +48,8 @@
 </template>
 
 <script>
-//import{useAuthStore} from '../stores/auth'
-import axios from "axios";
+import{useAuthStore} from '../stores/auth'
+//import axios from "axios";
 
 const Swal = require("sweetalert2");
 
@@ -64,45 +64,49 @@ export default {
     };
   },
   methods: {
-    // async submitLogin() {
-    //   try {
-    //     console.log(this.email);
-    //     console.log(this.password)
-    //     await useAuthStore().login() // call the login action from your auth store
-    //     this.$router.push("/home");
-
-    //   } catch (error) {
-    //     console.error(error);
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Oops...",
-    //       text: "Invalid email or password!",
-    //     });
-    //   }
-    // },
     async submitLogin() {
-      
-      let result = await axios.get(
-        `http://localhost:3000/users?email=${this.email}&password=${this.password}` //use backticks ` instead of '
-      )
-      console.warn(result)
-      if (result.status == 200 && result.data.length > 0) {
-        Swal.fire({
-          title: "Succesful log in",
-          icon: "success",
-        });
+      try {
+        console.log(this.email);
+        console.log(this.password)
+        await useAuthStore().login() // call the login action from  auth store
+        this.$router.push("/home");
 
-        localStorage.setItem("user-info", JSON.stringify(result.data[0]));
-        this.$router.push({ name: "home" });
-      } else {
+      } catch (error) {
+        console.error(error);
         Swal.fire({
-          title: "Somethings wrong...",
           icon: "error",
+          title: "Oops...",
+          text: "Invalid email or password!",
         });
       }
-    },
-  },
+    }
+  }
+  ///****************local storage**********************8 */
+  //   async submitLogin() {
+      
+  //     let result = await axios.get(
+  //       `http://localhost:3000/users?email=${this.email}&password=${this.password}` //use backticks ` instead of '
+  //     )
+  //     console.warn(result)
+  //     if (result.status == 200 && result.data.length > 0) {
+  //       Swal.fire({
+  //         title: "Succesful log in",
+  //         icon: "success",
+  //         timer:1000,
+  //         showConfirmButton:false,
+  //       });
 
+  //       localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+  //       this.$router.push({ name: "home" });
+  //     } else {
+  //       Swal.fire({
+  //         title: "Somethings wrong...",
+  //         icon: "error",
+  //       });
+  //     }
+  //   },
+  // },
+/*   local storage  end      */
   /*    previous    ---------------     */
   // methods: {
   //   async submitLogin() {
@@ -142,12 +146,12 @@ export default {
   //     }
   //   },
   /*-------------- end here -------*/
-  mounted() {
-    let user = localStorage.getItem("user-info");
-    if (user) {
-      this.$router.push({ name: "home" });
-    }
-  },
+  // mounted() {
+  //   let user = localStorage.getItem("user-info");
+  //   if (user) {
+  //     this.$router.push({ name: "home" });
+  //   }
+  // },
 };
 </script>
 
