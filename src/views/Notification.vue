@@ -67,9 +67,9 @@ export default {
 
         methods: {
             currentDate() {
-                const currentDate = new Date();
-                const date = `${current.getDate()}/${current.getMonth()+1}/${current.getYear()}`;
-                return date;
+                // const currentDate = new Date();
+                // const date = `${current.getDate()}/${current.getMonth()+1}/${current.getYear()}`;
+                // return date;
             },
 
         printDate(date) {
