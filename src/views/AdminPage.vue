@@ -21,8 +21,8 @@
                     <img src="../assets/sorting.png" @click="toggleDropdown"
                   /></span>
                   <ul v-if="showDropdown">
-                    <li><a @click="sort('name')">Sort by Major</a></li>
-                    <li><a @click="sort('major')">Sort by Name</a></li>
+                    <li><a @click="sort('name')">Sort by Name</a></li>
+                    <li><a @click="sort('major')">Sort by Major</a></li>
                   </ul>
                 </label>
               </label>
@@ -60,35 +60,6 @@
           <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>
           <!---->
         </div>
-        <div class="sort">
-          <div class="sortDropDown">
-            <img class="sortBtn" alt="sortBtn" src="../assets/sortBtn.png">
-          </div>
-          <div class="dropDownContent" v-show="showDropDownContent">
-            <p>
-              <a href="#">Sort by name</a>
-            </p>
-            <p>
-              <a href="#">Ascending</a>
-            </p>
-            <p>
-              <a href="#">Descending</a>
-            </p>
-            <p>
-              <a href="#">Sort by major</a>
-            </p>
-            <p>
-              <a href="#">Ascending</a>
-            </p>
-            <p>
-              <a href="#">Descending</a>
-            </p>
-          </div>
-        </div>
-          
-
-      
-      
       </div>
     </div>
   </div>
@@ -225,16 +196,25 @@ export default {
         this.currentPage += 1;
       }
     },
-    
+
     paginatedProfiles(profiles) {
       const start = (this.currentPage - 1) * this.pageSize;
       const end = start + this.pageSize;
       return profiles.slice(start, end);
     },
 
-
-    
-
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    },
+    sort(field) {
+      if (field === "name") {
+        this.profiles.sort((a, b) =>
+          a.firstName.localeCompare(b.firstName)
+        );
+      } else if (field === "major") {
+        this.profiles.sort((a, b) => a.major.localeCompare(b.major));
+      }
+    }
   },
   computed: {
     pageCount() {
@@ -250,8 +230,6 @@ export default {
         : this.profiles;
 
       return this.paginatedProfiles(filtered);
-
-      
     },
   },
   watch: {
@@ -259,20 +237,6 @@ export default {
       this.filteredProfiles;
     },
   },
-
-  sortProfiles: function() {
-    function compare (a,b) {
-      if (a.firstName < b.firstName)
-        return -1;
-      if (a.firstName > b.firstName)
-        return 1;
-      return 0;
-    }
-
-    return this.profiles.sort(compare);
-
-  },
-
 };
 </script>
 
