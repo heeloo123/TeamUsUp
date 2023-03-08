@@ -22,3 +22,4 @@ VueCookies.set('auth_token')
 
 import pinia from './modules/pinia';
 Vue.use(pinia)
+

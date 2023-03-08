@@ -12,10 +12,16 @@
     <button v-if="currentPage > 1" @click="prevPage">Prev</button>
     <button v-if="currentPage < pageCount" @click="nextPage">Next</button>
   </div>
+
+<DropDown/>
 </template>
 <script>
+import DropDown from "../components/AdminSort.vue";
 export default {
   name: "aboutPage",
+  components:{
+   DropDown
+  },
 
   data() {
     return {

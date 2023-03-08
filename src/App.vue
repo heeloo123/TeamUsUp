@@ -1,135 +1,31 @@
+<script setup>
+
+import NavView from "./views/NavView.vue";
+
+
+</script>
+
 <template>
-  <div class="header">
-    <nav>
-      <router-link to="/">
-        <img
-          class="TeamUsUp_logo"
-          alt="TeamUsUp logo"
-          src="./assets/TeamUsUp_logo.png"
-        />
-      </router-link>
-      <label style="float: left; margin-left: 20px">
-        <router-link to="/">
-          <img alt="TeamUsUp logo" src="./assets/homepageIcon.png" />
-        </router-link>
-      </label>
+   <main>
+   <NavView />
+   
+   </main>
 
-      <div style="display: inline-block">
-        <!--need to import db for search-->
-        <label class="SearchBtn" role="search">
-          <input
-            class="SearchInput"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </label>
-      </div>
-      <!--when logger in-->
-      <div v-if="loggedIn" class="userDropdown">
-        <span>{{ currentUser }}</span>
-        <div class="dropdownContent">
-          <a href="#">Notifications</a>
-          <a href="#" @click="logout">Log out</a>
-        </div>
-      </div>
 
-      <button v-else-if="$route.path !=='/login'" @click="hideButton" v-show="showButton" class="loginBtn">
-        <router-link class="link" to="/Login">Login</router-link>
-      </button>
-    </nav>
-
-    <router-view />
-  </div>
 </template>
 
 
-<!--hide the button when nav to login page-->
-<script>
-export default {
-  data() {
-    return {
-      showButton: true,
-      loggedIn: false,
-      currentUser: null,
-    };
-  },
-  methods: {
-    hideButton() {
-      this.showButton = false;
-    },
-  },
-  showLogin() {
-    this.hideButton();
-    this.showButton = false;
-
-    // logic to show login modal
-  },
-  logout() {
-    // logic to log out the user
-    this.loggedIn = false;
-    this.currentUser = null;
-    this.showButton = true;
-  },
-  watch: {
-    $route() {
-      if (this.$route.path === "/") {
-        this.showButton = !this.loggedIn;
-      } else if (this.$route.path ==="/login"){
-        this.showButton=false;
-      }else{
-        this.showButton =!this.loggedIn
-      }
-    },
-    loggedIn() {
-      if(this.$route.path ==="/login"){
-        this.showButton = false;
-      }else{
-      this.showbutton = !this.loggedIn;}
-    },
-  },
-
-  immediate: true,
-};
-</script>
-
-
 <style>
-.header {
-  background-color: black;
+.background {
+  background: rgb(207, 205, 205);
+  height: 100vh;
+  width: 100vw;
   margin: -10px;
-  height: 100px;
+  font-family: math;
 }
-
-.TeamUsUp_logo {
-  width: 300px;
-  float: left;
-  margin: -5px;
-  border-radius: 6px;
-}
-
-.SearchInput {
-  width: auto;
-  height: 50px;
-  border-radius: 40px;
-  font-size: 25px;
-  text-align: center;
-  min-width: 400px;
-}
-.SearchBtn {
-  float: center;
-}
-.loginBtn {
-  float: right;
-  background: #e12744;
-  border-radius: 10px;
-  font-size: 30px;
-  font-family: -webkit-body;
-}
-
 nav {
-  padding: 30px;
-  text-align: center;
+ padding:10px
+
 }
 
 nav a {
@@ -139,6 +35,7 @@ nav a {
 nav a.router-link-exact-active {
   color: #feffff;
 }
+
 
 .defaultBtn {
   height: 60px;

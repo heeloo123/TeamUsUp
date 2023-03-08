@@ -65,7 +65,7 @@ export default {
   background: rgb(224, 216, 216);
   height: 100vh;
   width: 100vw;
-  margin: -10px;
+ 
   font-family: math;
 }
 .text {
