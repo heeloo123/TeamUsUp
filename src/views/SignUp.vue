@@ -115,13 +115,18 @@ export default {
           icon: "warning",
         });
       }
-      console.warn("signup",this.name,this.email,this.password)
+      console.warn("signup", this.name, this.email, this.password);
     },
     async signUp() {
       try {
-        //http://localhost:3000/users
-        // let result = await axios.post("http://49.245.48.28:8080/register", {
-          let result = await axios.post("http://49.245.48.28:8080/api/register", {
+        const loading = Swal.fire({
+          title: "Signing up...",
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        let result = await axios.post("http://49.245.48.28:8080/api/register", {
           email: this.email,
           password: this.password,
           firstName: this.firstName,
@@ -129,24 +134,26 @@ export default {
         });
         console.warn(result);
         if (result.status == 201) {
+          loading.close();
           Swal.fire({
-            title: "Sign-up done!",
+            title: "Welcome",
             icon: "success",
+            timer: 1000,
+            showConfirmButton: false,
           });
-          
+
           // localStorage.setItem("user-info",JSON.stringify(result.data))
           this.$router.push({ name: "home" });
 
           //auto log in user
-          const authStore = useAuthStore()
+          const authStore = useAuthStore();
           await authStore.login({
-           
-            email:this.email,
-            password:this.password,
-            
-          })
-           console.log(this.email,this.password)
+            email: this.email,
+            password: this.password,
+          });
+          console.log(this.email, this.password);
         } else {
+          loading.close();
           Swal.fire({
             title: "Somethings wrong...",
             icon: "error",
@@ -178,9 +185,11 @@ export default {
   margin: -10px;
   font-family: math;
 }
+
 .Title {
   float: left;
 }
+
 .registration {
   margin: 10px;
 }

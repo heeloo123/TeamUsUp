@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
 import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
 import { ref } from 'vue';
@@ -19,6 +20,8 @@ export default {
   setup() {
     const showDropdown = ref(false)
     const authStore = useAuthStore()
+    const router = useRouter();
+
 
     const toggleDropdown = () => {
       showDropdown.value = !showDropdown.value
@@ -44,7 +47,7 @@ export default {
           icon: 'success',
         
         })
-        this.$router.push({ name: 'home' })
+       router.push({ name: 'home' })
         console.log('Logged out successfully!')
       }
     }
