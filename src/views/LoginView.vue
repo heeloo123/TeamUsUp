@@ -68,8 +68,9 @@ export default {
       try {
         console.log(this.email);
         console.log(this.password)
-        await useAuthStore().login() // call the login action from  auth store
-        this.$router.push("/home");
+        const authStore = useAuthStore();
+        await authStore.login({email:this.email,password:this.password}) ;// call the login action from  auth store
+        this.$router.push({ name: "home" });
 
       } catch (error) {
         console.error(error);

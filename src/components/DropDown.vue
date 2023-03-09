@@ -12,62 +12,68 @@
 </template>
 
 <script>
-//import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
-
+import { ref } from 'vue';
 export default {
-  data() {
-    return {
-      showDropdown: false,
-    };
-  },
-  methods: {
-    toggleDropdown() {
-      this.showDropdown = !this.showDropdown;
-    },
-    // async handleLogout() {
-    //   const confirmResult = await Swal.fire({
-    //     title: 'Are you sure you want to log out?',
-    //     icon: 'warning',
-    //     showCancelButton: true,
-    //     confirmButtonText: 'Yes',
-    //     cancelButtonText: 'Cancel',
-    //   });
+  setup() {
+    const showDropdown = ref(false)
+    const authStore = useAuthStore()
 
-    //   if (confirmResult.isConfirmed) {
-    //     const authStore = useAuthStore();
-    //     await authStore.logout();
-    //     this.$router.push("/");
-    //     await Swal.fire({
-    //       title: 'Logged out successfully!',
-    //       icon: 'success',
-    //     });
-    //   }
-    // },
-    async logout() {
+    const toggleDropdown = () => {
+      showDropdown.value = !showDropdown.value
+    }
+
+    const logout = async () => {
+      console.log('logout(called)')
       const confirmResult = await Swal.fire({
-        title: "Are you sure you want to log out?",
-        icon: "warning",
+        title: 'Are you sure you want to log out?',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "Cancel",
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel',
       });
+
       if (confirmResult.isConfirmed) {
-        localStorage.clear();
-        this.$router.push({ name: "/" });
+        authStore.logout()
+        console.log('authStore.logout() called')
+        await Swal.fire({
+          title: 'Logged out successfully!',
+          icon: 'success',
+        })
+        console.log('Logged out successfully!')
       }
-      await Swal.fire({
-        title: "Logged out successfully!",
-        icon: "success",
-      });
-    },
+    }
+
+    return {
+      showDropdown,
+      toggleDropdown,
+      logout
+    }
+  }
+}
+
+    //local storage-----------------------------//
+    // async logout() {
+    //   const confirmResult = await Swal.fire({
+    //     title: "Are you sure you want to log out?",
+    //     icon: "warning",
+    //     showCancelButton: true,
+    //     confirmButtonText: "Yes",
+    //     cancelButtonText: "Cancel",
+    //   });
+    //   if (confirmResult.isConfirmed) {
+    //     localStorage.clear();
+    //     this.$router.push({ name: "/" });
+    //   }
+    //   await Swal.fire({
+    //     title: "Logged out successfully!",
+    //     icon: "success",
+    //   });
+    // },
   
   
       
-
-    },
-   
-};
 </script>
 
 <style scoped>

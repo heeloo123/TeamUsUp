@@ -42,7 +42,7 @@
             </section>
           </div>
           <nav>
-            <button class="SignUpButton" v-if="!user" :disabled="buttonDisabled">
+            <button class="SignUpButton" v-if="showSignUp" :disabled="buttonDisabled">
               <router-link class="link" to="/SignUp">Sign-Up Now</router-link>
             </button>
           </nav>
@@ -59,17 +59,19 @@ import { useAuthStore } from "@/stores/auth";
 export default {
   name: "HomeView",
 
-  setup() {
-    const authStore = useAuthStore()
-
-    let user = localStorage.getItem('user-info');
-    const buttonDisabled = user !== null;
-
-    return {
-      user,
-      buttonDisabled,
-      authStore
-    }
+  computed: {
+    $state() {
+      return useAuthStore();
+    },
+    showSignUp() {
+      return (
+        !this.$state.isAuthenticated
+      );
+    },
+    
+    buttonDisabled() {
+      return this.$state.isAuthenticated;
+    },
   },
 
   // data(){
