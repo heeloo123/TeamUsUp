@@ -74,9 +74,10 @@ export default {
                 return current;
             },
 
-            formatDate() {
-               const format = {day: 'numeric', month: 'long', year: 'numeric', time: 'numeric'};
-                return new Date().toLocaleDateString('en', format);
+            formatDate(date) {
+               const options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}
+               return new Date(date).toLocaleDateString('en-us', options);
+                
             },
 
 
