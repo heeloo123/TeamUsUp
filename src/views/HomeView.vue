@@ -56,21 +56,21 @@
 import { useAuthStore } from "@/stores/auth";
 export default {
   name: "HomeView",
-  data(){
-    return{
-      user:null,
-    }
-  },
+
 
   computed: {
     $state() {
       return useAuthStore();
     },
     showSignUp() {
-      return !this.$state.isAuthenticated && this.user == null;
+      console.log('showsignup button',!this.$state.isAuthenticated)
+      console.log(this.$state.user)
+      return !this.$state.isAuthenticated
+      
     },
 
     buttonDisabled() {
+      console.log('button disable',this.$state.isAuthenticated)
       return this.$state.isAuthenticated;
     },
   },
@@ -96,12 +96,12 @@ export default {
   //   buttonDisabled: false,
   //   user:null
   // }},
-  mounted() {
-    let user = localStorage.getItem("user-info");
-    if (user) {
-      this.user = JSON.parse(user);
-    }
-  },
+//   mounted() {
+//     let user = localStorage.getItem("user-info");
+//     if (user) {
+//       this.user = JSON.parse(user);
+//     }
+//   },
 };
 </script>
 

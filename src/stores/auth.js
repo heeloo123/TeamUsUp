@@ -41,41 +41,48 @@
 
 
 //mock test**********************
-import { defineStore} from "pinia";
+import { defineStore } from "pinia";
 
 import axios from "axios"
 
-//const API_URL ="http://49.245.48.28:8080/api";
+const API_URL = "http://49.245.48.28:8080/api";
 
 export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
+
     isAuthenticated: false,
-    user:'',
-   
-    
+    user: {},
+
+
   }),
   actions: {
     async login(user) {
       try {
         // Make an API request to the server to authenticate the user
-       let result = await axios.get(
-                `http://http://49.245.48.28:8080/api/login?email=${user.email}&password=${user.password}` //use backticks ` instead of '
-              )
+        let result = await axios.post(
+          API_URL + '/login', {}, {
+          headers: {
+            Authorization: 'Basic ' + btoa(user.email + ':' + user.password)
+          }
+          
+        }
+        )
 
-        if (result.status === 200 && result.data.length > 0) {
+        if (result.status === 202) {
           // Login successful
           console.log(result.data); // The user object returned by the server
           this.isAuthenticated = true;
           user = this.user;
           console.log(this.isAuthenticated)
           console.log("Login successful")
-          localStorage.setItem("user-info", JSON.stringify(result.data[0]));
-          
+          this.user = result.data;
+          // localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+
         } else {
           // Login failed
           this.isAuthenticated = false;
-          
+
           console.log("login failed!")
         }
       } catch (error) {
@@ -84,12 +91,13 @@ export const useAuthStore = defineStore({
     },
     logout() {
       // perform logout logic and set isAuthenticated to false
-      this.$router.push({ name: 'home' })
+      
       localStorage.clear();
       console.log("succesful log out");
       this.isAuthenticated = false;
-      this.user='';
-      
+      this.user = '';
+
+
     },
   },
   watch: {

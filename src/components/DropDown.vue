@@ -37,13 +37,14 @@ export default {
       if (confirmResult.isConfirmed) {
         authStore.logout()
         console.log('authStore.logout() called')
+        
        
         await Swal.fire({
           title: 'Logged out successfully!',
           icon: 'success',
         
         })
-        
+        this.$router.push({ name: 'home' })
         console.log('Logged out successfully!')
       }
     }

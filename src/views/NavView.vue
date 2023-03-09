@@ -68,8 +68,6 @@ export default {
     return {
       firstName: "",
       lastName: "",
-      user: null,
-      
     };
   },
   computed: {
@@ -77,16 +75,15 @@ export default {
       return useAuthStore();
     },
     showLoginBtn() {
-      return (
-        this.$route.path !== "/Login" && !this.$state.isAuthenticated && this.user == null
-      );
+      console.log("showlogin", !this.$state.isAuthenticated);
+      return this.$route.path !== "/Login" && !this.$state.isAuthenticated;
     },
     showDropDown() {
-      console.log(!this.isAuthenticated,this.user)
-      return this.$state.isAuthenticated && this.user !== null;
+      console.log("showdropdown", this.$state.isAuthenticated);
+      return this.$state.isAuthenticated;
     },
     buttonDisabled() {
-      return this.isAuthenticated;
+      return this.$state.isAuthenticated;
     },
   },
 
@@ -132,18 +129,16 @@ export default {
   // },
   // },
   //*************** */
-  mounted() {
-    let user = localStorage.getItem("user-info");
-    console.log(localStorage);
-    console.log(user);
+  // mounted() {
+  //   let user = localStorage.getItem("user-info");
 
-    if (user) {
-      this.user = JSON.parse(user);
-      this.firstName = JSON.parse(user).firstName;
-      this.lastName = JSON.parse(user).lastName;
-      console.log(this.firstName, this.lastName);
-    }
-  },
+  //   if (user) {
+  //     this.user = JSON.parse(user);
+  //     this.firstName = JSON.parse(user).firstName;
+  //     this.lastName = JSON.parse(user).lastName;
+  //     console.log(this.firstName, this.lastName);
+  //   }
+  // },
   immediate: true,
 };
 </script>
