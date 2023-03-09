@@ -51,26 +51,30 @@ export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
     isAuthenticated: false,
-    user:null,
+    user:'',
+   
+    
   }),
   actions: {
     async login(user) {
       try {
         // Make an API request to the server to authenticate the user
-        const response = await axios.get(
-                `http://localhost:3000/users?email=${this.email}&password=${this.password}` //use backticks ` instead of '
+       let result = await axios.get(
+                `http://localhost:3000/users?email=${user.email}&password=${user.password}` //use backticks ` instead of '
               )
 
-        if (response.status === 202) {
+        if (result.status === 200 && result.data.length > 0) {
           // Login successful
-          console.log(response.data); // The user object returned by the server
+          console.log(result.data); // The user object returned by the server
           this.isAuthenticated = true;
-          this.user = user;
+          
           console.log("Login successful")
+          localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+          
         } else {
           // Login failed
           this.isAuthenticated = false;
-          this.user = null;
+          
           console.log("login failed!")
         }
       } catch (error) {
@@ -79,7 +83,8 @@ export const useAuthStore = defineStore({
     },
     logout() {
       // perform logout logic and set isAuthenticated to false
-      
+      localStorage.clear();
+      console.log("succesful log out")
       this.isAuthenticated = false
     },
   },
