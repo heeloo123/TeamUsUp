@@ -1,86 +1,81 @@
 <template>
-  <div class="dropdown" >
+  <div class="dropdown">
     <span class="toggle_img">
       <img src="../assets/icons8-user-48.png" @click="toggleDropdown"
     /></span>
     <ul v-if="showDropdown">
       <li><a href="/Profile">Profile</a></li>
-      <li><a href="#">Settings</a></li>
+      <li><a href="/AdminPage" v-if="authStore.getIsAdmin">Admin Page</a></li>
       <li><a href="#" @click="logout">Logout</a></li>
     </ul>
   </div>
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
-import { ref } from 'vue';
+import { ref } from "vue";
 export default {
   setup() {
-    const showDropdown = ref(false)
-    const authStore = useAuthStore()
+    const showDropdown = ref(false);
+    const authStore = useAuthStore();
     const router = useRouter();
 
-
     const toggleDropdown = () => {
-      showDropdown.value = !showDropdown.value
-    }
+      showDropdown.value = !showDropdown.value;
+    };
 
     const logout = async () => {
-      console.log('logout(called)')
+      console.log("logout(called)");
       const confirmResult = await Swal.fire({
-        title: 'Are you sure you want to log out?',
-        icon: 'warning',
+        title: "Are you sure you want to log out?",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'Cancel',
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
       });
 
       if (confirmResult.isConfirmed) {
-        authStore.logout()
-        console.log('authStore.logout() called')
-        
-       
+        authStore.logout();
+        console.log("authStore.logout() called");
+
         await Swal.fire({
-          title: 'Logged out successfully!',
-          icon: 'success',
-        
-        })
-       router.push({ name: 'home' })
-        console.log('Logged out successfully!')
+          title: "Logged out successfully!",
+          icon: "success",
+        });
+        router.push({ name: "home" });
+        console.log("Logged out successfully!");
       }
     }
 
     return {
       showDropdown,
       toggleDropdown,
-      logout
-    }
-  }
-}
+      logout,
+      authStore
+    };
+  },
+};
 
-    //local storage-----------------------------//
-    // async logout() {
-    //   const confirmResult = await Swal.fire({
-    //     title: "Are you sure you want to log out?",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonText: "Yes",
-    //     cancelButtonText: "Cancel",
-    //   });
-    //   if (confirmResult.isConfirmed) {
-    //     localStorage.clear();
-    //     this.$router.push({ name: "/" });
-    //   }
-    //   await Swal.fire({
-    //     title: "Logged out successfully!",
-    //     icon: "success",
-    //   });
-    // },
-  
-  
-      
+//local storage-----------------------------//
+// async logout() {
+//   const confirmResult = await Swal.fire({
+//     title: "Are you sure you want to log out?",
+//     icon: "warning",
+//     showCancelButton: true,
+//     confirmButtonText: "Yes",
+//     cancelButtonText: "Cancel",
+//   });
+//   if (confirmResult.isConfirmed) {
+//     localStorage.clear();
+//     this.$router.push({ name: "/" });
+//   }
+//   await Swal.fire({
+//     title: "Logged out successfully!",
+//     icon: "success",
+//   });
+// },
 </script>
 
 <style scoped>
@@ -113,7 +108,7 @@ export default {
   top: 37px;
   left: -34px;
   box-shadow: 0 2px 5px rgb(0 0 0 / 20%);
-  width: 118px;
+  width: max-content;
   text-align: center;
   font-size: 20px;
   font-family: math;

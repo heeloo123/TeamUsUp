@@ -6,13 +6,13 @@
           Forgot Your Password?
         </h1>
         <div class="text">
-          <p>
-            To recover your account, please enter your email address. The system
-            will send a recovery link to your email shortly. You can click on
-            the link to recover your account. For locked account, please contact
-            the administrator at
-            <a href="mailto:admin1234@gmail.com">admin1234@gmail.com</a>.
+          <p style="font-size:22px">
+            
+            For <span style="text-decoration-line: underline;">locked account</span>, please contact the administrator at
+            <a href="mailto:admin1234@gmail.com" style="text-decoration: none;">admin1234@gmail.com</a>.
+            
           </p>
+          <p>Enter the email address associated with your account.We will email you a link to reset your password.</p>
         </div>
 
         <form @submit.prevent="submitEmail" class="email">
@@ -53,7 +53,7 @@ export default {
       if (isEmailValid) {
         Swal.fire({
           title: "Success!",
-          text: "An email has been sent to your address. Please check your inbox and follow the instructions to reset your password.",
+          text: "Email sent! Please check your inbox and follow the instructions to reset your password.",
           icon: "success",
           confirmButtonText: "OK",
         });
@@ -102,6 +102,7 @@ export default {
   font-family: math;
   margin: 20px;
   text-align: justify;
+  color:rgb(98, 97, 97)
 }
 
 form.email input[type="email"] {

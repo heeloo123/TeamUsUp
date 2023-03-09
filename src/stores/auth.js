@@ -52,6 +52,7 @@ export const useAuthStore = defineStore({
   state: () => ({
 
     isAuthenticated: false,
+    isAdmin:false,
     user: {},
 
 
@@ -77,7 +78,11 @@ export const useAuthStore = defineStore({
           console.log(this.isAuthenticated)
           console.log("Login successful")
           this.user = result.data;
-          // localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+          
+          //set authentication status based on user role
+          if(this.user.roles === 'Admin' && this.user.roles === 'Student'){
+            this.isAdmin = true;
+          }
 
         } else {
           // Login failed
@@ -100,6 +105,8 @@ export const useAuthStore = defineStore({
 
     },
   },
+  
+  
   watch: {
     isAuthenticated(newVal) {
       if (newVal) {
