@@ -37,16 +37,19 @@ export default {
                 {
                     notificationID: "1",
                     content: "You have deactivated your account.",
+                    currentTimeStamp: "",
                 },
 
                 {
                     notificationID: "2",
                     content: "Joe Doe has evaluate you for project Y.",
+                    currentTimeStamp: "",
                 },
 
                 {
                     notificationID: "3",
                     content: "Joe Doe added you to project X.",
+                    currentTimeStamp: "",
                 },
             ],
 
@@ -72,8 +75,8 @@ export default {
             },
 
             formatDate() {
-                const format = { day: 'numeric', month: 'long', year: 'numeric', time: 'numeric'};
-                return new Date().toLocaleDateString('en-US', format);
+               const format = {day: 'numeric', month: 'long', year: 'numeric', time: 'numeric'};
+                return new Date().toLocaleDateString('en', format);
             },
 
 
