@@ -3,29 +3,16 @@
     <nav>
       <div style="display: inline-flex">
         <router-link to="/">
-          <img
-            class="TeamUsUp_logo"
-            alt="TeamUsUp logo"
-            src="../assets/TeamUsUp_logo.png"
-          />
+          <img class="TeamUsUp_logo" alt="TeamUsUp logo" src="../assets/TeamUsUp_logo.png" />
         </router-link>
 
         <router-link to="/">
-          <img
-            style="width: 40px; margin-top: 10px"
-            alt="TeamUsUp logo"
-            src="../assets/homepageIcon.png"
-          />
+          <img style="width: 40px; margin-top: 10px" alt="TeamUsUp logo" src="../assets/homepageIcon.png" />
         </router-link>
 
         <!--need to import db for search-->
         <div style="display: block; margin-top: 10px; margin-left: 200px">
-          <input
-            class="SearchInput"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
+          <input class="SearchInput" type="search" placeholder="Search" aria-label="Search" />
         </div>
       </div>
 
@@ -38,16 +25,13 @@
       <!-- <label v-if="auth.isAuthenticated" class="userDropdown"> -->
 
       <label v-if="showDropDown" class="userDropdown">
-        <label
-          style="
-            color: white;
-            margin: 10px;
-            display: inline-block;
-            font-family: initial;
-            font-size: 20px;
-          "
-          >{{ firstName }} {{ lastName }}</label
-        >
+        <label style="
+              color: white;
+              margin: 10px;
+              display: inline-block;
+              font-family: initial;
+              font-size: 20px;
+            ">{{ $state.user.firstName }} {{ $state.user.lastName }}</label>
         <DropDown />
       </label>
     </nav>
@@ -150,6 +134,7 @@ export default {
   margin-right: -10px;
   width: -webkit-fill-available;
 }
+
 .TeamUsUp_logo {
   width: 180px;
   margin: 10px;
@@ -167,6 +152,7 @@ export default {
   float: right;
   margin-right: 80px;
 }
+
 .loginBtn {
   background: #e12744;
   border-radius: 10px;
