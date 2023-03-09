@@ -119,8 +119,9 @@ export default {
     },
     async signUp() {
       try {
+        //http://localhost:3000/users
         // let result = await axios.post("http://49.245.48.28:8080/register", {
-          let result = await axios.post("http://localhost:3000/users", {
+          let result = await axios.post("http://49.245.48.28:8080/api/register", {
           email: this.email,
           password: this.password,
           firstName: this.firstName,

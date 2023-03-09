@@ -16,21 +16,37 @@ import StudentHomePage from "../views/StudentHomePage.vue";
 import NavView from "../views/NavView.vue";
 import NotificationVue from "@/views/Notification.vue";
 
+import { useAuthStore } from "@/stores/auth"; 
+
+
+
+const authGuard = (to, from, next) => {
+  const authStore = useAuthStore()
+
+  if (authStore.isAuthenticated && (to.name === 'LoginView' || to.name === 'SignUpPage')) {
+    // If the user is authenticated and they're trying to access the login page,
+    // redirect them to the home page
+    next({ name: 'home' })
+  } else {
+    // Otherwise, allow them to access the page
+    next()
+  }
+}
+
 const routes = [
-  {
-    path: "/",
-    name: "home",
-    component: HomeView,
-  },
+ 
   {
     path: "/signup",
     name: "SignUpPage",
     component: SignUpView,
-  },
+    beforeEnter: authGuard
+    },
+  
   {
     path: "/Login",
     name: "LoginView",
     component: LoginView,
+    beforeEnter: authGuard
   },
   {
     path: "/ForgetPassword",
@@ -106,11 +122,18 @@ const routes = [
     name: "notificationView",
     component: NotificationVue,
   },
+  {
+    path: "/",
+    name: "home",
+    component: HomeView,
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+
 
 export default router;

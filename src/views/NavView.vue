@@ -28,22 +28,28 @@
           />
         </div>
       </div>
-     
-      <label style="float:right" v-if="showLoginBtn">
-        <button class="loginBtn"  :disabled="buttonDisabled"> 
-          <router-link class="link" to="/Login" >Login</router-link>
+
+      <label style="float: right">
+        <button class="loginBtn" v-if="showLoginBtn" :disabled="buttonDisabled">
+          <router-link class="link" to="/Login">Login</router-link>
         </button>
-     
-   </label >
+      </label>
       <!--when logger in-->
       <!-- <label v-if="auth.isAuthenticated" class="userDropdown"> -->
-        <label v-if="showDropDown" :disabled="buttonDisabled" class="userDropdown">
-        {{ $state.user.name }}
-        
 
+      <label v-if="showDropDown" class="userDropdown">
+        <label
+          style="
+            color: white;
+            margin: 10px;
+            display: inline-block;
+            font-family: initial;
+            font-size: 20px;
+          "
+          >{{ firstName }} {{ lastName }}</label
+        >
         <DropDown />
       </label>
-   
     </nav>
   </div>
 
@@ -58,30 +64,39 @@ export default {
   components: {
     DropDown,
   },
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      user: null,
+      
+    };
+  },
   computed: {
     $state() {
       return useAuthStore();
     },
     showLoginBtn() {
       return (
-        this.$route.path !== "/Login" && !this.$state.isAuthenticated
+        this.$route.path !== "/Login" && !this.$state.isAuthenticated && this.user == null
       );
     },
     showDropDown() {
-      return this.$state.isAuthenticated && this.$state.user != null;
+      console.log(!this.isAuthenticated,this.user)
+      return this.$state.isAuthenticated && this.user !== null;
     },
     buttonDisabled() {
-      return this.$state.isAuthenticated;
+      return this.isAuthenticated;
     },
   },
-};
+
   // data() {
   //   return {
   //     buttonDisabled:false,
   //     user:"",
-      
+
   //   };
-    
+
   // },
   // computed: {
   //   // auth() {
@@ -96,7 +111,7 @@ export default {
 
   //   },
   // },
-//************************ */
+  //************************ */
   // watch: {
   //   $route() {
   //     if (this.$route.path === "/") {
@@ -107,29 +122,30 @@ export default {
   //       this.showButton = !this.auth.isAuthenticated;
   //     }
   //   },
-    // "auth.isAuthenticated"() {
-    //   if (this.$route.path === "/login") {
-    //     this.showButton = false;
-    //   } else {
-    //     this.showButton = !this.auth.isAuthenticated;
-    //   }
-    //  console.log("message");
-    // },
-    // }, 
-    //*************** */
-  // mounted(){
-  //   let user = localStorage.getItem('user-info');
-  //   if(user){
-      
-  //     this.buttonDisabled = true;
-      
+  // "auth.isAuthenticated"() {
+  //   if (this.$route.path === "/login") {
+  //     this.showButton = false;
+  //   } else {
+  //     this.showButton = !this.auth.isAuthenticated;
   //   }
-
+  //  console.log("message");
   // },
+  // },
+  //*************** */
+  mounted() {
+    let user = localStorage.getItem("user-info");
+    console.log(localStorage);
+    console.log(user);
 
-  //  immediate: true,
-  
-
+    if (user) {
+      this.user = JSON.parse(user);
+      this.firstName = JSON.parse(user).firstName;
+      this.lastName = JSON.parse(user).lastName;
+      console.log(this.firstName, this.lastName);
+    }
+  },
+  immediate: true,
+};
 </script>
 <style scoped>
 .container {
@@ -153,8 +169,8 @@ export default {
 }
 
 .userDropdown {
-  float:right;
-  margin-right:80px
+  float: right;
+  margin-right: 80px;
 }
 .loginBtn {
   background: #e12744;
@@ -162,9 +178,5 @@ export default {
   font-size: 25px;
   font-family: -webkit-body;
   margin: 10px;
-  
 }
-
-
-
 </style>

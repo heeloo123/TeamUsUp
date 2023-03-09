@@ -48,112 +48,116 @@
 </template>
 
 <script>
-import{useAuthStore} from '../stores/auth'
+import { useAuthStore } from "../stores/auth";
 //import axios from "axios";
+
 
 const Swal = require("sweetalert2");
 
 export default {
-  component: {
-    name: "LoginView",
-  },
+  name: 'LoginView',
   data() {
     return {
-      email: "",
-      password: "",
-    };
+      email: '',
+      password: '',
+    }
   },
+  // mounted() {
+  //   const authStore = useAuthStore()
+  //   if (authStore.isAuthenticated) {
+  //     this.$router.push({ name: 'home' })
+  //   }
+  // },
   methods: {
     async submitLogin() {
       try {
-        console.log(this.email);
-        console.log(this.password)
-        const authStore = useAuthStore();
-        await authStore.login({email:this.email,password:this.password}) ;// call the login action from  auth store
-        this.$router.push({ name: "home" });
-
+        const authStore = useAuthStore()
+        await authStore.login({ email: this.email, password: this.password })
+        this.$router.push({ name: 'home' })
       } catch (error) {
-        console.error(error);
+        console.error(error)
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Invalid email or password!",
-        });
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Invalid email or password!',
+        })
       }
+    },
+  },
+
+///****************local storage**********************8 */
+//   async submitLogin() {
+
+//     let result = await axios.get(
+//       `http://localhost:3000/users?email=${this.email}&password=${this.password}` //use backticks ` instead of '
+//     )
+//     console.warn(result)
+//     if (result.status == 200 && result.data.length > 0) {
+//       Swal.fire({
+//         title: "Succesful log in",
+//         icon: "success",
+//         timer:1000,
+//         showConfirmButton:false,
+//       });
+
+//       localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+//       this.$router.push({ name: "home" });
+//     } else {
+//       Swal.fire({
+//         title: "Somethings wrong...",
+//         icon: "error",
+//       });
+//     }
+//   },
+// },
+/*   local storage  end      */
+/*    previous    ---------------     */
+// methods: {
+//   async submitLogin() {
+//     try {
+//       console.log(this.email);
+//       console.log(this.password)
+//       // here you use withAuthentication instead. The endpoint doesnt receive a body
+//         const response = await axios.post("http://49.245.48.28:8080/login", {},{
+//           //following this, the next requests shud probably only need with credentials
+//       headers: {
+//         Authorization: "Basic " + btoa(this.email + ":" + this.password)}
+//       });
+//       if (response.status === 202) {
+//         // Login successful
+//         console.log(response.data); // The user object returned by the server
+//         this.$router.push("/home");
+
+//       } else {
+//         // Login failed
+//         console.log("login failed!")
+//         Swal.fire({
+//           icon: "error",
+//           title: "Oops...",
+//           text: "Invalid email or password!",
+//         });
+//       }
+//     } catch (error) {
+//       //handle api request errors
+//       if(error.response.status === 401){
+//         Swal.fire({
+//           icon: "error",
+//           title: "Oops...",
+//           text: "Invalid email or password!",
+//         });
+//       } else{
+//       console.error(error);}
+//     }
+//   },
+/*-------------- end here -------*/
+  mounted() {
+    let user = localStorage.getItem("user-info");
+    if (user) {
+      this.$router.push({ name: "home" });
     }
   }
-  ///****************local storage**********************8 */
-  //   async submitLogin() {
-      
-  //     let result = await axios.get(
-  //       `http://localhost:3000/users?email=${this.email}&password=${this.password}` //use backticks ` instead of '
-  //     )
-  //     console.warn(result)
-  //     if (result.status == 200 && result.data.length > 0) {
-  //       Swal.fire({
-  //         title: "Succesful log in",
-  //         icon: "success",
-  //         timer:1000,
-  //         showConfirmButton:false,
-  //       });
+}
 
-  //       localStorage.setItem("user-info", JSON.stringify(result.data[0]));
-  //       this.$router.push({ name: "home" });
-  //     } else {
-  //       Swal.fire({
-  //         title: "Somethings wrong...",
-  //         icon: "error",
-  //       });
-  //     }
-  //   },
-  // },
-/*   local storage  end      */
-  /*    previous    ---------------     */
-  // methods: {
-  //   async submitLogin() {
-  //     try {
-  //       console.log(this.email);
-  //       console.log(this.password)
-  //       // here you use withAuthentication instead. The endpoint doesnt receive a body
-  //         const response = await axios.post("http://49.245.48.28:8080/login", {},{
-  //           //following this, the next requests shud probably only need with credentials
-  //       headers: {
-  //         Authorization: "Basic " + btoa(this.email + ":" + this.password)}
-  //       });
-  //       if (response.status === 202) {
-  //         // Login successful
-  //         console.log(response.data); // The user object returned by the server
-  //         this.$router.push("/home");
-
-  //       } else {
-  //         // Login failed
-  //         console.log("login failed!")
-  //         Swal.fire({
-  //           icon: "error",
-  //           title: "Oops...",
-  //           text: "Invalid email or password!",
-  //         });
-  //       }
-  //     } catch (error) {
-  //       //handle api request errors
-  //       if(error.response.status === 401){
-  //         Swal.fire({
-  //           icon: "error",
-  //           title: "Oops...",
-  //           text: "Invalid email or password!",
-  //         });
-  //       } else{
-  //       console.error(error);}
-  //     }
-  //   },
-  /*-------------- end here -------*/
-  // mounted() {
-  //   let user = localStorage.getItem("user-info");
-  //   if (user) {
-  //     this.$router.push({ name: "home" });
-  //   }
-  // },
-};
 </script>
 
 <style scoped>

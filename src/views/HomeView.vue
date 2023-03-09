@@ -9,7 +9,7 @@
         <router-link to="/Profile">Profile</router-link> |
         <router-link to="/Project">Project</router-link> |
         <router-link to="/EditProject"> Edit Project</router-link>|
-        
+
         <router-link to="/AdminPage"> admin page</router-link>|
         <router-link to="/notification">notification page</router-link>|
         <router-link to="/About"> About</router-link>
@@ -23,11 +23,9 @@
           </div>
         </div>
 
-        <form style=" display:inline-grid">
+        <form style="display: inline-grid">
           <div>
             <section class="text">
-              
-
               <h1 style="font-size: 45px">Description</h1>
 
               <p>
@@ -58,35 +56,52 @@
 import { useAuthStore } from "@/stores/auth";
 export default {
   name: "HomeView",
+  data(){
+    return{
+      user:null,
+    }
+  },
 
   computed: {
     $state() {
       return useAuthStore();
     },
     showSignUp() {
-      return (
-        !this.$state.isAuthenticated
-      );
+      return !this.$state.isAuthenticated && this.user == null;
     },
-    
+
     buttonDisabled() {
       return this.$state.isAuthenticated;
     },
   },
+  created(){
+    this.$forceUpdate
+
+  },
+  watch:{
+    $route() {
+      // Re-compute the showSignUp computed property when the route changes
+      this.$forceUpdate();
+    },
+  },
+
+  //   "$state.isAuthenticated"(newVal) {
+  //   if (!newVal) {
+  //     localStorage.removeItem("user-info");
+  //   }
+  // },
 
   // data(){
   //   return{
   //   buttonDisabled: false,
   //   user:null
   // }},
-  // mounted(){
-  //   let user = localStorage.getItem('user-info');
-  //   if(user){
-  //     this.user = JSON.parse(user);
-  //     this.buttonDisabled = true;
-  //   }
-
-  // }
+  mounted() {
+    let user = localStorage.getItem("user-info");
+    if (user) {
+      this.user = JSON.parse(user);
+    }
+  },
 };
 </script>
 
@@ -95,14 +110,14 @@ export default {
   background: rgb(224, 216, 216);
   height: 100vh;
   width: 100vw;
- 
+
   font-family: math;
 }
 .text {
   margin-left: 70px;
   width: 600px;
   text-align: justify;
-  margin-top:100px;
+  margin-top: 100px;
 }
 
 .T_logo {
