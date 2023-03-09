@@ -5,7 +5,7 @@
         <div class="item">
           <h1 style="font-size: 40px; margin-left: -1200px">Create a project!</h1>
 
-          <form class="detail" @submit.prevent="CreateProject">
+          <form class="detail" @submit.prevent="createProject">
             <div>
               <div class="profile-pic">
                 <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
@@ -15,25 +15,43 @@
               </div>
               <p></p>
               <div class="searchU">
-                <input v-model="search" type="text" placeholder="Search users..." @keydown.enter="addUser" />
+                <input
+                  v-model="search"
+                  type="text"
+                  placeholder="Search users..."
+                  @keydown.enter="addUser"
+                />
                 <div>
-                  <button class="addBtn" @click="addUser" v-if="search && !userList.includes(search)">
+                  <button
+                    class="addBtn"
+                    @click="addUser"
+                    v-if="search && !userList.includes(search)"
+                  >
                     Add
                   </button>
                 </div>
 
-                <div style="
-                      height: 210px;
-                      overflow-y: auto;
-                      margin-top: 30px;
-                      background: rgb(239, 232, 232);
-                      border-radius:10px
-                    ">
+                <div
+                  style="
+                    height: 210px;
+                    overflow-y: auto;
+                    margin-top: 30px;
+                    background: rgb(239, 232, 232);
+                    border-radius: 10px;
+                  "
+                >
                   <ul>
                     <li v-for="(user, index) in userList" :key="index">
                       {{ user }}
-                      <button style="background: transparent; border: transparent" @click="deleteUser(index)">
-                        <img style="width: 20px; height: 20px" src="../assets/delete.png" alt="delete icon" />
+                      <button
+                        style="background: transparent; border: transparent"
+                        @click="deleteUser(index)"
+                      >
+                        <img
+                          style="width: 20px; height: 20px"
+                          src="../assets/delete.png"
+                          alt="delete icon"
+                        />
                       </button>
                     </li>
                   </ul>
@@ -44,18 +62,30 @@
             <div style="display: block; margin-left: 20px">
               <p></p>
               <span style="font-size: 30px">Project name:</span>
-              <input placeholder="Enter your Project name" type="text" id="major" v-model="major" required />
+              <input
+                placeholder="Enter your Project name"
+                type="text"
+                id="major"
+                v-model="major"
+                required
+              />
               <p></p>
               <div style="font-size: 30px">Project description:</div>
 
-              <textarea placeholder="Enter project discription here" v-model="bio" required></textarea>
+              <textarea
+                placeholder="Enter project discription here"
+                v-model="bio"
+                required
+              ></textarea>
 
-              <label style="
-                    display: flex;
-                    justify-content: space-between;
-                    margin-left: -300px;
-                    margin-top: 100px;
-                  ">
+              <label
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-left: -300px;
+                  margin-top: 100px;
+                "
+              >
                 <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
                 <button class="defaultBtn" type="submit">Create</button>
               </label>
@@ -69,7 +99,7 @@
 
 <script>
 const Swal = require("sweetalert2");
-import axios from 'axios';
+import axios from "axios";
 export default {
   name: "CreateProjectView",
   data() {
@@ -92,69 +122,76 @@ export default {
       };
       reader.readAsDataURL(this.file);
     },
-    addUser() {
-      if (this.search && !this.userList.includes(this.search)) {
-        this.userList.push(this.search);
-        this.search = "";
-      }
-    },
-    deleteUser(index) {
-      this.userList.splice(index, 1);
-    },
-    createProject() {
-      const invalidinput = /[~`!#$%^&*|\\:<>]/; // regular expression pattern
-      if (
-        this.projectName &&
-        !invalidinput.test(this.projectName) &&
-        this.projectName.trim() !== "" &&
-        this.projectDescription &&
-        !invalidinput.test(this.projectDescription) &&
-        this.projectDescription.trim() !== ""
-      ) {
-        Swal.fire({
-          icon: "success",
-
-          text: "Project has been created!",
-        });
-
-        // Navigate to projectpage
-        this.$router.push({ path: "/Project" });
-      } else {
-        Swal.fire({
-          icon: "warning",
-
-          text: "The text should not include~`!#$%^&*|\\:<>",
-        });
-      }
-    },
-    async CreateProfile() {
+    async searchUsers() {
       try {
-      
-        let formData = new FormData();
-    formData.append("biography", this.bio);
-    formData.append("profile_pic", this.projectPic);
-    formData.append("majors", JSON.stringify(this.selectedMajors));
-    await axios.post(
-      "http://49.245.48.28:8080/api/project/createProject",
-      formData,
-      {
+        const response = await axios.get(
+          `http://49.245.48.28:8080/api/project/search?q=${this.search}`
+        );
+        return response.data; // assuming the API returns an array of users
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+  async addUser() {
+    if (this.search && !this.userList.includes(this.search)) {
+      const searchResults = await this.searchUsers();
+      const user = searchResults.find((result) => result.name === this.search);
+      if (user) {
+        this.userList.push(user);
+      }
+      this.search = "";
+    }
+  },
+  deleteUser(index) {
+    this.userList.splice(index, 1);
+  },
+  createProject() {
+    const invalidinput = /[~`!#$%^&*|\\:<>]/; // regular expression pattern
+    if (
+      this.projectName &&
+      !invalidinput.test(this.projectName) &&
+      this.projectName.trim() !== "" &&
+      this.projectDescription &&
+      !invalidinput.test(this.projectDescription) &&
+      this.projectDescription.trim() !== ""
+    ) {
+      Swal.fire({
+        icon: "success",
+
+        text: "Project has been created!",
+      });
+
+      // Navigate to projectpage
+      this.$router.push({ path: "/Project" });
+    } else {
+      Swal.fire({
+        icon: "warning",
+
+        text: "The text should not include~`!#$%^&*|\\:<>",
+      });
+    }
+  },
+  async CreateProfile() {
+    try {
+      let formData = new FormData();
+      formData.append("biography", this.bio);
+      formData.append("profile_pic", this.projectPic);
+      formData.append("majors", JSON.stringify(this.selectedMajors)); //selected user
+      await axios.post("http://49.245.48.28:8080/api/project/createProject", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
-    );
-        //get project id ...if projectid == then push
+      });
+      //get project id ...if projectid == then push
 
-          this.$router.push({ name: "Project" });
-        }
-        
-       catch (error) {
-        Swal.fire({
-          title: "Something went wrong",
-          icon: "error",
-        });
-      }
-    },
+      this.$router.push({ name: "Project" });
+    } catch (error) {
+      Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+      });
+    }
   },
 };
 </script>

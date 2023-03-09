@@ -10,7 +10,7 @@
         <router-link to="/EditProfile"> Edit Profile</router-link>|
         <router-link to="/Project">Project</router-link> |
         <router-link to="/EditProject"> Edit Project</router-link>|
-
+        <router-link to="/home"> student homee page</router-link>|
         <router-link to="/AdminPage"> admin page</router-link>|
         <router-link to="/notification">notification page</router-link>|
         <router-link to="/About"> About</router-link>
