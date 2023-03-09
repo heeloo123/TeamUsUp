@@ -5,7 +5,7 @@
     /></span>
     <ul v-if="showDropdown">
       <li><a href="/Profile">Profile</a></li>
-      <li><a href="/AdminPage" v-if="authStore.getIsAdmin">Admin Page</a></li>
+      <li v-if="authStore.isAdmin"><a href="/AdminPage">Admin Page</a></li>
       <li><a href="#" @click="logout">Logout</a></li>
     </ul>
   </div>
@@ -25,7 +25,7 @@ export default {
     const toggleDropdown = () => {
       showDropdown.value = !showDropdown.value;
     };
-
+ 
     const logout = async () => {
       console.log("logout(called)");
       const confirmResult = await Swal.fire({
@@ -47,13 +47,14 @@ export default {
         router.push({ name: "home" });
         console.log("Logged out successfully!");
       }
-    }
+    };
 
     return {
       showDropdown,
       toggleDropdown,
       logout,
       authStore
+      
     };
   },
 };

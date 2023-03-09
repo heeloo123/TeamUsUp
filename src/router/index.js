@@ -8,6 +8,7 @@ import CreateProjectView from "../views/CreateProjectView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import ProjectView from "../views/ProjectView.vue";
 import EditProjectView from "../views/EditProjectView.vue";
+import EditProfileView from "../views/EditProfileView.vue";
 import SelfEvaView from "../views/SelfEvaluate.vue";
 import PeerEvaView from "../views/PeerEvaluate.vue";
 import AdminPage from "../views/AdminPage.vue";
@@ -16,7 +17,8 @@ import StudentHomePage from "../views/StudentHomePage.vue";
 import NavView from "../views/NavView.vue";
 import NotificationVue from "@/views/Notification.vue";
 
-import { useAuthStore } from "@/stores/auth"; 
+
+import { useAuthStore } from "@/stores/auth";
 
 
 
@@ -33,15 +35,36 @@ const authGuard = (to, from, next) => {
   }
 }
 
+const adminGuard = (to, from, next) => {
+  const authStore = useAuthStore()
+  const Swal = require("sweetalert2");
+
+  if (authStore.isAuthenticated && authStore.isAdmin) {
+    // If the user is authenticated and has the Admin role, allow them to access the page
+    next()
+  } else {
+    // Otherwise, redirect them to the home page
+    Swal.fire({
+      icon: 'warning',
+
+      text: 'You are not authorized to access this page!',
+    })
+
+    next({ name: 'home' })
+  }
+}
+
+
+
 const routes = [
- 
+
   {
     path: "/signup",
     name: "SignUpPage",
     component: SignUpView,
     beforeEnter: authGuard
-    },
-  
+  },
+
   {
     path: "/Login",
     name: "LoginView",
@@ -92,6 +115,7 @@ const routes = [
     path: "/AdminPage",
     name: "AdminPage",
     component: AdminPage,
+    beforeEnter: adminGuard
   },
   {
     path: "/AdminHome",
@@ -126,6 +150,11 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/EditProfile",
+    name: "EditProfile",
+    component: EditProfileView,
   },
 ];
 

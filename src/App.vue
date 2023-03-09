@@ -56,4 +56,18 @@ nav a.router-link-exact-active {
   text-decoration: none;
   color: white;
 }
+.profile-pic {
+  width: 250px;
+  height: 250px;
+  margin: 10px;
+  background: rgb(234, 229, 229);
+  overflow: hidden;
+  border-radius: 20px;
+}
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 </style>

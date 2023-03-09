@@ -155,9 +155,7 @@ export default {
   float: right;
   margin-right: 80px;
 }
-.image{
- 
-}
+
 .image img{
   width:25px;
    margin-bottom:-8px;

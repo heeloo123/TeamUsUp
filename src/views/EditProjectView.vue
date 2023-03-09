@@ -220,8 +220,7 @@ textarea {
   height: 300px;
   border-radius: 20px;
 }
-.searchU {
-}
+
 .searchU input {
   padding: 15px;
   min-width: 300px;

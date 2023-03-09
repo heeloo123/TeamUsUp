@@ -7,6 +7,7 @@
         <router-link to="/CreateProfile">Create Profile</router-link> |
         <router-link to="/CreateProject">Create Project</router-link> |
         <router-link to="/Profile">Profile</router-link> |
+        <router-link to="/EditProfile"> Edit Profile</router-link>|
         <router-link to="/Project">Project</router-link> |
         <router-link to="/EditProject"> Edit Project</router-link>|
 

@@ -5,68 +5,61 @@
         <div class="item">
           <h1 style="font-size: 40px; margin-left: -1200px">Create a project!</h1>
 
-          <form class="detail">
+          <form class="detail" @submit.prevent="CreateProject">
             <div>
               <div class="profile-pic">
-                <input type="file" id="profilePic" />
+                <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
+              </div>
+              <div style="margin-left: 20px">
+                <input type="file" id="projectPic" @change="handleFileSelect" />
               </div>
               <p></p>
               <div class="searchU">
-                <input
-                  v-model="search"
-                  type="text"
-                  placeholder="Search users..."
-                  @keydown.enter="addUser"
-                />
+                <input v-model="search" type="text" placeholder="Search users..." @keydown.enter="addUser" />
                 <div>
-                <button
-                  class="addBtn"
-                  @click="addUser"
-                  v-if="search && !userList.includes(search)"
-                >
-                  Add
-                </button></div>
-                <ul>
-                  <li v-for="(user, index) in userList" :key="index">
-                    {{ user }}
-                    <button
-                      style="background: transparent; border: transparent"
-                      @click="deleteUser(index)"
-                    >
-                      <img
-                        style="width: 20px; height: 20px"
-                        src="../assets/delete.png"
-                        alt="delete icon"
-                      />
-                    </button>
-                  </li>
-                </ul>
+                  <button class="addBtn" @click="addUser" v-if="search && !userList.includes(search)">
+                    Add
+                  </button>
+                </div>
+
+                <div style="
+                      height: 210px;
+                      overflow-y: auto;
+                      margin-top: 30px;
+                      background: rgb(239, 232, 232);
+                      border-radius:10px
+                    ">
+                  <ul>
+                    <li v-for="(user, index) in userList" :key="index">
+                      {{ user }}
+                      <button style="background: transparent; border: transparent" @click="deleteUser(index)">
+                        <img style="width: 20px; height: 20px" src="../assets/delete.png" alt="delete icon" />
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
+
             <div style="display: block; margin-left: 20px">
               <p></p>
               <span style="font-size: 30px">Project name:</span>
-              <input
-                placeholder="Enter your major here"
-                type="text"
-                id="major"
-                v-model="major"
-                required
-              />
+              <input placeholder="Enter your Project name" type="text" id="major" v-model="major" required />
               <p></p>
               <div style="font-size: 30px">Project description:</div>
 
-              <textarea
-                placeholder="Enter your biography here"
-                v-model="bio"
-                required
-              ></textarea>
-            </div>
-          </form>
+              <textarea placeholder="Enter project discription here" v-model="bio" required></textarea>
 
-          <form style="display: flex; justify-content: space-between">
-            <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
-            <button class="defaultBtn" type="submit">Create</button>
+              <label style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-left: -300px;
+                    margin-top: 100px;
+                  ">
+                <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
+                <button class="defaultBtn" type="submit">Create</button>
+              </label>
+            </div>
           </form>
         </div>
       </div>
@@ -76,18 +69,29 @@
 
 <script>
 const Swal = require("sweetalert2");
+import axios from 'axios';
 export default {
   name: "CreateProjectView",
   data() {
     return {
       search: "",
-      userList: ["John", "Jane", "jackson"],
+      userList: ["John", "Jane", "jackson", "hello", "yes", "hihi"],
       projectName: "",
       projectDescription: "",
-      projectPic: null,
+      projectPic: "",
+      file: null,
+      imagePreview: null,
     };
   },
   methods: {
+    handleFileSelect(event) {
+      this.file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(this.file);
+    },
     addUser() {
       if (this.search && !this.userList.includes(this.search)) {
         this.userList.push(this.search);
@@ -105,8 +109,7 @@ export default {
         this.projectName.trim() !== "" &&
         this.projectDescription &&
         !invalidinput.test(this.projectDescription) &&
-        this.projectDescription.trim() !== "" 
-        
+        this.projectDescription.trim() !== ""
       ) {
         Swal.fire({
           icon: "success",
@@ -124,6 +127,34 @@ export default {
         });
       }
     },
+    async CreateProfile() {
+      try {
+      
+        let formData = new FormData();
+    formData.append("biography", this.bio);
+    formData.append("profile_pic", this.projectPic);
+    formData.append("majors", JSON.stringify(this.selectedMajors));
+    await axios.post(
+      "http://49.245.48.28:8080/api/project/createProject",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+        //get project id ...if projectid == then push
+
+          this.$router.push({ name: "Project" });
+        }
+        
+       catch (error) {
+        Swal.fire({
+          title: "Something went wrong",
+          icon: "error",
+        });
+      }
+    },
   },
 };
 </script>
@@ -131,7 +162,7 @@ export default {
 <style scoped>
 .background {
   background: rgb(207, 205, 205);
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   margin: -10px;
   font-family: math;
@@ -155,7 +186,7 @@ export default {
   padding: 20px;
   text-align: left;
 
-  margin-left: 60px;
+  margin-left: 10px;
 }
 
 input[type="text"] {
@@ -184,8 +215,7 @@ textarea {
   height: 300px;
   border-radius: 20px;
 }
-.searchU {
-}
+
 .searchU input {
   padding: 15px;
   min-width: 300px;
@@ -195,13 +225,6 @@ textarea {
 }
 
 .searchU ul {
-  background: rgb(239, 232, 232);
-  display: content;
-  width: 300px;
-  min-height: 200px;
-  height: auto;
-
-  border-radius: 20px;
   padding: 20px;
 }
 
@@ -213,9 +236,13 @@ textarea {
 
 .addBtn {
   border-radius: 30px;
-    color: black;
-    display: flex;
-    margin-left: 280px;
-    margin-top: -30px;
+  color: black;
+  display: flex;
+  margin-left: 280px;
+  margin-top: -30px;
+}
+
+.searchU option {
+  font-size: 25px;
 }
 </style>

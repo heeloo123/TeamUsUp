@@ -3,21 +3,17 @@
         <div class="background">
             <div style="font-size: 40px; padding: 20px">Notification page</div>
                 <div class="container">
-                    <div class="messageTable">
-                        <div class="cell">message 1</div> 
-                        <div class="cell">message 2</div>
-                        <div class="cell">message 3</div>
-                        <div class="cell">message 4</div>
-                        <div class="cell">message 5</div>
-                        <div class="cell">message 6</div>
-                        <div class="cell">message 7</div>
-                        <div class="cell">message 8</div>
-                        <div class="cell">message 9</div>
-                        <div class="cell">message 10</div>
-                    </div>
-                        <div class="emailTimeStamp">
-                            {{ formatDate(currentTimeStamp()) }}
+                    <div class="messageTable" v-for="(notification, index) in notifications" :key="index" @click="markAsRead(notifications)">
+                        <div class="cell" :timeCreated="notification.timeCreated">{{ notificationsMessage }}
+                            <div class="emailTimeStamp">
+                                {{ formatDate(currentTimeStamp()) }}
+                            </div>
+                                <div class="readflag" v-show="notification.isClicked"> 
+                                    Read
+                                </div>
                         </div>
+                            
+                    </div>          
                 </div>
         </div>
     </div>
@@ -27,33 +23,40 @@
 
 
 <script>
+import axios from 'axios';
 export default {
   name: "notificationView",
   component: {},
 
     data() {
         return {
-            message: [
+            notifications: [
                 {
-                    notificationID: "1",
-                    content: "You have deactivated your account.",
-                    currentTimeStamp: "",
+                    message: "",
+                    notificationID: "",
+                    timeCreated: this.formatDate(),
+                    markAsRead: false, 
+                    isClicked: false
                 },
 
                 {
-                    notificationID: "2",
-                    content: "Joe Doe has evaluate you for project Y.",
-                    currentTimeStamp: "",
+                    message: "",
+                    notificationID: "",
+                    timeCreated: this.formatDate(),
+                    markAsRead: false, 
+                    isClicked: false,
                 },
 
                 {
-                    notificationID: "3",
-                    content: "Joe Doe added you to project X.",
-                    currentTimeStamp: "",
+                    message: "",
+                    notificationID: "",
+                    timeCreated: this.formatDate(),
+                    markAsRead: false,
+                    isClicked: false
                 },
             ],
 
-            emailSentTime: [
+            emailTimeCreated: [
                 {
                     date: "",
                     time: "",
@@ -61,8 +64,10 @@ export default {
                     year: "",
                 }
             ],
+
+            isClicked: false,
+            action: null,
             
-            readNotification: false,
         };
     },
 
@@ -79,29 +84,74 @@ export default {
                return new Date(date).toLocaleDateString('en-gb', options);
             },
 
+            getDate() {
+                return new Date().toLocaleDateString();
+            },
 
-        getDate() {
-            return new Date().toLocaleDateString();
-        },
+            getMonth() {
+                return new Date().getMonth();
+            },
 
-        getMonth() {
-            return new Date().getMonth();
-        },
+            getTime() {
+                return new Date().toLocaleTimeString();
+            },
 
-        getTime() {
-            return new Date().toLocaleTimeString();
-        },
+            getYear() {
+                return new Date().getFullYear();
+            },
 
-        getYear() {
-            return new Date().getFullYear();
+            async fetchNewNotifications() {
+                try {
+                    const response = await axios.get("http://49.245.48.28:8080/api/retrieveNew");
+                    this.notifications = response.data;
+                }
+                 catch(error) {
+                    console.error(error);
+                    }
+            },
+
+            async fetchAnyNotifications() {
+                try {
+                    const response = await axios.get("http://49.245.48.28:8080/api/retrieveAny");
+                    this.notifications = response.data;
+                }
+                  catch(error) {
+                    console.error(error);
+                  }
+            },
+
+            async markAsRead(notification) {
+                if (!notification.read) {
+                try {
+                    await axios.post("http://49.245.48.28:8080/api/markAsRead/${notificationID}", {readFlag: true});
+                    notification.read = true;
+                    this.$emit('read');
+                }
+                  catch(error) {
+                    console.error(error);
+                  }    
+                }
+                
+            },
+
+            handleClickEvent() {
+                this.isClicked = true;
+            },
+
+            handleMarkAsRead(index) {
+                if (this.notifications[index].isClicked) {
+                    this.notification[index].markAsRead = true;
+                }
+            },
         },
-    },
 
     mounted() {
        this.date === this.getDate();
        this.time() === this.getTime();
        this.year() === this.getYear();
        this.month() === this.getMonth();
+       this.fetchNewNotifications();
+       this.fecthAnyNotifications();
     },
 
 };
@@ -122,9 +172,6 @@ export default {
   margin-top: -10px;
 }
 
-
-
-
 .cell {
   flex: 1;
   border: 1px solid #000000;
@@ -132,8 +179,17 @@ export default {
   margin: 1px;
   padding: 10px;
   flex-direction: row;
+  height: 30px;
 }
 
+.emailTimeStamp {
+    text-align: right;
+}
 
+.readflag {
+    text-align: right;
+    margin-right: 165px;
+    margin-top: -18px;
+}
 
 </style>

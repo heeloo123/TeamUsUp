@@ -52,7 +52,7 @@ export const useAuthStore = defineStore({
   state: () => ({
 
     isAuthenticated: false,
-    isAdmin:false,
+    
     user: {},
 
 
@@ -60,17 +60,20 @@ export const useAuthStore = defineStore({
   actions: {
     async login(user) {
       try {
-        // Make an API request to the server to authenticate the user
+        
         let result = await axios.post(
           API_URL + '/login', {}, {
           headers: {
             Authorization: 'Basic ' + btoa(user.email + ':' + user.password)
           }
-          
+
         }
         )
+       
 
-        if (result.status === 202) {
+        
+
+        if (result.status === 202 ||result.status === 200 ) {
           // Login successful
           console.log(result.data); // The user object returned by the server
           this.isAuthenticated = true;
@@ -78,11 +81,9 @@ export const useAuthStore = defineStore({
           console.log(this.isAuthenticated)
           console.log("Login successful")
           this.user = result.data;
-          
-          //set authentication status based on user role
-          if(this.user.roles === 'Admin' && this.user.roles === 'Student'){
-            this.isAdmin = true;
-          }
+
+
+
 
         } else {
           // Login failed
@@ -96,7 +97,7 @@ export const useAuthStore = defineStore({
     },
     logout() {
       // perform logout logic and set isAuthenticated to false
-      
+
       localStorage.clear();
       console.log("succesful log out");
       this.isAuthenticated = false;
@@ -105,13 +106,23 @@ export const useAuthStore = defineStore({
 
     },
   },
-  
-  
+  getters: {
+    isAdmin() {
+      console.log(this.user.authorities)
+      if (this.user && this.user.authorities) {
+        return this.user.authorities.some((auth) => auth.authority === "Admin");
+      }
+      return false;
+     
+    },
+  },
+
   watch: {
     isAuthenticated(newVal) {
       if (newVal) {
         this.$router.push({ name: 'home' });
       }
     },
+   
   },
 })

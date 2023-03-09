@@ -3,18 +3,16 @@
     <div class="background">
       <div class="container">
         <div class="item">
-          <h1 style="font-size: 40px; margin-left: -1300px">Create your profile</h1>
+          <h1 style="font-size: 40px; margin-left: -1300px">Edit profile</h1>
           <form class="detail" @submit.prevent="CreateProfile">
             <div class="profile-pic">
-              
-              <img v-if="imagePreview" :src="imagePreview" alt="Image Preview">
-              
+              <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
             </div>
-            
+
             <div style="padding: 15px; margin: 15px">
               <div style="font-size: 40px; margin-top: -10px">
-                <span> fname {{$state.user.firstName}} </span>
-                <span> lname {{$state.user.lastName}}  </span>
+                <span> fname {{ $state.user.firstName }} </span>
+                <span> lname {{ $state.user.lastName }} </span>
               </div>
               <p></p>
               <div v-if="selectedMajors.length > 0" style="margin-bottom: 10px">
@@ -59,10 +57,11 @@
                 v-model="bio"
                 required
               ></textarea>
-            
-          
-           <div style="margin-left:-250px"> <input type="file" id="profilePic" @change="handleFileSelect" /></div> 
-           </div>
+
+              <div style="margin-left: -250px">
+                <input type="file" id="profilePic" @change="handleFileSelect" />
+              </div>
+            </div>
           </form>
 
           <div style="display: flex; justify-content: space-between">
@@ -80,11 +79,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuthStore } from "@/stores/auth";
 export default {
-  name: "CreateProfileView",
+  name: "EditProfileView",
   data() {
     return {
-      file:null,
-      imagePreview:null,
+      file: null,
+      imagePreview: null,
       majors: [],
       bio: "",
       selectedMajors: [],
@@ -123,53 +122,43 @@ export default {
     },
     selectMajor(majorName) {
       if (this.selectedMajors.length < 2 && !this.selectedMajors.includes(majorName)) {
-  this.selectedMajors.push(majorName);
-}
-
-      
+        this.selectedMajors.push(majorName);
+      }
     },
-    deselectMajor (majorName) {
+    deselectMajor(majorName) {
       this.selectedMajors = this.selectedMajors.filter((m) => m !== majorName);
     },
-   
-      handleFileSelect(event) {
-    this.file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result;
-    };
-    reader.readAsDataURL(this.file);
-  },
+
+    handleFileSelect(event) {
+      this.file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(this.file);
     },
-    async CreateProfile() {
-      try {
-      
-        let formData = new FormData();
-    formData.append("biography", this.bio);
-    formData.append("profile_pic", this.profilePic);
-    formData.append("majors", JSON.stringify(this.selectedMajors));
-    await axios.post(
-      "http://49.245.48.28:8080/api/profile/createProfile",
-      formData,
-      {
+  },
+  async CreateProfile() {
+    try {
+      let formData = new FormData();
+      formData.append("biography", this.bio);
+      formData.append("profile_pic", this.profilePic);
+      formData.append("majors", JSON.stringify(this.selectedMajors));
+      await axios.patch("http://49.245.48.28:8080/api/profile/editProfile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
-    );
-        
+      });
 
-          this.$router.push({ name: "StudentHome" });
-        }
-        
-       catch (error) {
-        Swal.fire({
-          title: "Something went wrong",
-          icon: "error",
-        });
-      }
-    },
-  
+      this.$router.push({ name: "StudentHome" });
+    } catch (error) {
+      Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+      });
+    }
+  },
+
   computed: {
     // filter the list of majors based on the current input value
     filteredMajors: function () {
@@ -233,7 +222,6 @@ textarea {
   height: auto;
   background: rgb(234, 229, 229);
 }
-
 
 .majorSelect {
   font-size: 20px;

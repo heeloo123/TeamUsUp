@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; text-align: -webkit-center">
+  <div style="display: flex; text-align: -webkit-center;">
     <div class="background">
       <div class="container">
         <div class="item">
