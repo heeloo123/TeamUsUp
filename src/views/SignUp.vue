@@ -75,7 +75,7 @@
 <script>
 import axios from "axios";
 const Swal = require("sweetalert2");
-
+import { useAuthStore } from "@/stores/auth";
 //import PageHeader from './Header.vue'
 export default {
   componenets: {
@@ -134,8 +134,18 @@ export default {
             icon: "success",
           });
           
-          localStorage.setItem("user-info",JSON.stringify(result.data))
+          // localStorage.setItem("user-info",JSON.stringify(result.data))
           this.$router.push({ name: "home" });
+
+          //auto log in user
+          const authStore = useAuthStore()
+          await authStore.login({
+           
+            email:this.email,
+            password:this.password,
+            
+          })
+           console.log(this.email,this.password)
         } else {
           Swal.fire({
             title: "Somethings wrong...",
@@ -150,13 +160,13 @@ export default {
       }
     },
   },
-  mounted(){
-    let user = localStorage.getItem('user-info');
-    if(user){
-      this.$router.push({ name: "home" });
-    }
+  // mounted(){
+  //   let user = localStorage.getItem('user-info');
+  //   if(user){
+  //     this.$router.push({ name: "home" });
+  //   }
 
-  }
+  // }
 };
 </script>
 
