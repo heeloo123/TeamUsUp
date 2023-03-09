@@ -25,6 +25,9 @@
       <!-- <label v-if="auth.isAuthenticated" class="userDropdown"> -->
 
       <label v-if="showDropDown" class="userDropdown">
+      <label class="image">
+      <RouterLink to="/notification"><img src="../assets/notification.png"/></RouterLink>
+        </label>
         <label style="
               color: white;
               margin: 10px;
@@ -152,7 +155,16 @@ export default {
   float: right;
   margin-right: 80px;
 }
+.image{
+ 
+}
+.image img{
+  width:25px;
+   margin-bottom:-8px;
+   margin-right: 5px
 
+  
+}
 .loginBtn {
   background: #e12744;
   border-radius: 10px;

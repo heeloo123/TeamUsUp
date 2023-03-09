@@ -11,7 +11,7 @@
         <router-link to="/EditProject"> Edit Project</router-link>|
 
         <router-link to="/AdminPage"> admin page</router-link>|
-        <router-link to="/notification">notification page</router-link>|
+        
         <router-link to="/About"> About</router-link>
       </div>
 
