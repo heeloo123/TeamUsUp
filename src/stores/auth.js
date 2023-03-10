@@ -39,90 +39,91 @@
 //   },
 // })
 
-
 //mock test**********************
 import { defineStore } from "pinia";
 
-import axios from "axios"
+import axios from "axios";
 
 const API_URL = "http://49.245.48.28:8080/api";
 
 export const useAuthStore = defineStore({
-  id: 'auth',
+  id: "auth",
   state: () => ({
-
     isAuthenticated: false,
-    
+
     user: {},
-
-
   }),
   actions: {
     async login(user) {
       try {
-        
         let result = await axios.post(
-          API_URL + '/login', {}, {
-          headers: {
-            Authorization: 'Basic ' + btoa(user.email + ':' + user.password)
+          API_URL + "/login",
+          {},
+          {
+            headers: {
+              Authorization: "Basic " + btoa(user.email + ":" + user.password),
+            },
           }
+        );
 
-        }
-        )
-       
-
-        
-
-        if (result.status === 202 ||result.status === 200 ) {
+        if (result.status === 202 || result.status === 200) {
           // Login successful
           console.log(result.data); // The user object returned by the server
           this.isAuthenticated = true;
           user = this.user;
-          console.log(this.isAuthenticated)
-          console.log("Login successful")
+          console.log(this.isAuthenticated);
+          console.log("Login successful");
           this.user = result.data;
-
-
-
-
         } else {
           // Login failed
           this.isAuthenticated = false;
 
-          console.log("login failed!")
+          console.log("login failed!");
         }
       } catch (error) {
         console.error(error);
       }
     },
-    logout() {
+     async logout() {
       // perform logout logic and set isAuthenticated to false
 
       localStorage.clear();
       console.log("succesful log out");
       this.isAuthenticated = false;
-      this.user = '';
-
-
+      this.user = "";
+    },
+    async fetchUserProfile() {
+      try {
+        const response = await axios.get(`${API_URL}/profile/userProfile`);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async fetchProject(projID) {
+      try {
+        const response = await this.axiosInstance.get(`/project/${projID}`);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   getters: {
     isAdmin() {
-      console.log(this.user.authorities)
+      console.log(this.user.authorities);
       if (this.user && this.user.authorities) {
         return this.user.authorities.some((auth) => auth.authority === "Admin");
       }
       return false;
-     
     },
   },
 
   watch: {
     isAuthenticated(newVal) {
       if (newVal) {
-        this.$router.push({ name: 'home' });
+        this.$router.push({ name: "home" });
       }
     },
-   
   },
-})
+});

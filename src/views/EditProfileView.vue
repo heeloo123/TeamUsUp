@@ -4,7 +4,7 @@
       <div class="container">
         <div class="item">
           <h1 style="font-size: 40px; margin-left: -1300px">Edit profile</h1>
-          <form class="detail" @submit.prevent="CreateProfile">
+          <form class="detail" @submit.prevent="EditProfile">
             <div class="profile-pic">
               <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
             </div>
@@ -61,13 +61,15 @@
               <div style="margin-left: -250px">
                 <input type="file" id="profilePic" @change="handleFileSelect" />
               </div>
-            </div>
-          </form>
+           
+          <div style="margin-left:-300px;margin-top:50px">
 
-          <div style="display: flex; justify-content: space-between">
-            <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
-            <button class="defaultBtn" type="submit">Create</button>
+          <label style="display: flex; justify-content: space-between;">
+            <button class="defaultBtn"><router-link to="/Profile" @click="CancelAlert">Cancel</router-link></button>
+            <button class="defaultBtn" type="submit" @click="Save">Save</button>
+          </label></div>
           </div>
+          </form>
         </div>
       </div>
     </div>
@@ -106,20 +108,37 @@ export default {
   methods: {
     CancelAlert() {
       Swal.fire({
-        title: "Are you sure?",
-        text: "It is good to create a profile to let people find you!",
+        title: "Unsaved Changes",
+        text: "Do you want to discard unsaved changes?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "yes",
-        cancelButtonText: "No,stay on this page",
+        confirmButtonText: "Discard",
+        cancelButtonText: "Cancel",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push({ name: "home" });
+          this.$router.push({ name: "Profile" });
         } else {
-          this.$router.push({ name: "CreateProfile" });
+          history.back();
         }
       });
     },
+    Save() {
+      Swal.fire({
+        
+        text: "Satisfed your changes?",
+        
+        showCancelButton: true,
+        confirmButtonText: "yes",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.push({ name: "Profile" });
+        } else {
+          history.back();
+        }
+      });
+    },
+
     selectMajor(majorName) {
       if (this.selectedMajors.length < 2 && !this.selectedMajors.includes(majorName)) {
         this.selectedMajors.push(majorName);
@@ -137,12 +156,12 @@ export default {
       };
       reader.readAsDataURL(this.file);
     },
-  },
-  async CreateProfile() {
+  
+  async EditProfile() {
     try {
       let formData = new FormData();
       formData.append("biography", this.bio);
-      formData.append("profile_pic", this.profilePic);
+      formData.append("profile_pic", this.file);
       formData.append("majors", JSON.stringify(this.selectedMajors));
       await axios.patch("http://49.245.48.28:8080/api/profile/editProfile", formData, {
         headers: {
@@ -156,7 +175,7 @@ export default {
         title: "Something went wrong",
         icon: "error",
       });
-    }
+    }},
   },
 
   computed: {

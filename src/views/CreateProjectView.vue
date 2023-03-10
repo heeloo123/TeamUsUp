@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       search: "",
-      userList: ["John", "Jane", "jackson", "hello", "yes", "hihi"],
+      userList: ["john", "jane",],
       projectName: "",
       projectDescription: "",
       projectPic: "",
