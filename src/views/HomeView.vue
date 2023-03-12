@@ -17,6 +17,7 @@
         <router-link to="/StudentProfile">StudentProfile</router-link>|
         <router-link to="/StudentProject"> StudentProject</router-link>
         <router-link to="/SearchPage"> serachPage</router-link>
+        <router-link to="/ownPView"> own project</router-link>
       </div>
 
       <form style="display: inline-flex; text-align: -webkit-center; margin: 50px">

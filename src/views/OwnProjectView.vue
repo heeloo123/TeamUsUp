@@ -1,85 +1,97 @@
 <template>
-  <!-- this page is able access even not authenticate -->
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="container">
         <div class="item">
+          <!---->
           <form class="detail">
-            <div class="profile-pic">
-              <img :src="profileImageSrc" />
+            <div class="project-pic">
+              <img :src="projectImageSrc" alt="Project img" />
             </div>
-            <div style="padding: 15px; margin: 15px">
-              <div style="font-size: 40px; margin-top: -10px">
-                <span>{{ profile.firstName }} </span>
-                <span>{{ profile.lastName }} </span>
-              </div>
-              <p></p>
-              <span style="font-size: 30px">Major: </span>
-              <label
-                style="
-                  border-radius: 20px;
-                  font-size: 20px;
-                  padding: 10px;
-                  border: transparent;
-                  background: rgb(234, 229, 229);
-                  width: 500px;
-                "
-                v-for="major in profile.majors"
-                :key="major.majorCode"
-              >
-                {{ major.majorName }}
-              </label>
-              <p></p>
+            <p></p>
 
-              <div style="font-size: 30px">Biography:</div>
-              <div
-                style="
-                  border-radius: 20px;
-                  font-size: 20px;
-                  padding: 10px;
-                  border: transparent;
-                  width: 1200px;
-                  min-height: 100px;
-                  height: auto;
-                  background: rgb(234, 229, 229);
-                "
-              >
-                {{ profile.biography }}
-              </div>
-             
-              <div class="Project-container">
-              <div>
-              Recent Project
-                <div style="display: flex; margin-bottom: 10px; margin-left: 20px">
-                  <div style="width: 200px">Project ID</div>
-                  <div style="flex: 1">Project Name</div>
-                  <div style="flex: 2">Project Description</div>
-                </div>
-                <div>
-                  <ul
-                    v-for="project in projects"
-                    :key="project.projectID"
-                    style="
-                      margin: 10px;
-                      background: white;
-
-                      display: flex;
-                      width: 1400px;
-                      border-radius: 10px;
-                      padding: 10px;
-                    "
-                  >
-                    <span style="width: 200px">{{ project.projectID }}</span>
-                    <span style="flex: 1">{{ project.projectName }}</span>
-                    <span style="flex: 2"
-                      ><div style="font-size: 18px">{{ project.descriptor }}</div></span
-                    >
-                  </ul>
-                </div>
-                </div>
+            <div class="text" style="display: block; margin-left: 20px">
+              <span style="font-size: 30px">Project name: </span>
+              <label>{{ project.projectName }}</label>
+              <div style="margin-top: 50px">
+                <div style="font-size: 30px">Project description:</div>
+                <p>{{ project.projectDescription }}</p>
               </div>
             </div>
           </form>
+
+          <h2 style="margin-left: -1300px; font-size: 40px; margin-top: -20px">
+            Project members
+          </h2>
+
+          <div class="memberlist">
+            <RouterLink
+              :to="{ name: 'StudentProfile', params: { reference: role.id.profileID } }"
+              v-for="(role, name) in project.nameRoleMap"
+              :key="name"
+            >
+              <div
+                style="
+                  border-radius: 20px;
+                  display: flex;
+                  background: rgb(234, 231, 231);
+                  border: transparent;
+                  margin: 20px;
+                "
+              >
+                <div class="profileImg">
+                  <img :src="role.profileImage" alt="profile picture" />
+                </div>
+
+                <div class="name-role">
+                  <label>
+                    Name: <span>{{ name }}</span></label
+                  >
+                  <label
+                    >Role:<span>{{ role.projectRole }}</span></label
+                  >
+                </div>
+
+                <div
+                  style="
+                    margin-left: 600px;
+                    margin-top: 20px;
+                    font-size: 20px;
+                    display: inline-grid;
+                  "
+                  v-if="evaluateeIDs[role.id.profileID]"
+                >
+                  <p>
+                    Teamwork:
+                    {{
+                      teamworkSums[role.id.profileID] / evaluateeIDs[role.id.profileID]
+                    }}
+                  </p>
+                  <p>
+                    Skill :
+                    {{ skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
+                  </p>
+                  <p>
+                    Communication :
+                    {{
+                      communicationSums[role.id.profileID] /
+                      evaluateeIDs[role.id.profileID]
+                    }}
+                  </p>
+                </div>
+              </div>
+            </RouterLink>
+          </div>
+
+          <!---->
+
+          <div style="margin-left: 1500px; display: flex">
+            <nav>
+              <button class="defaultBtn">
+                <router-link to="/EditProject"> Edit Project</router-link>
+              </button>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
@@ -88,55 +100,86 @@
 
 <script>
 import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
+const API_URL = "http://49.245.48.28:8080/api";
 
 export default {
+  name: "ProjectView",
   data() {
     return {
-      responseData: null,
-      status: null,
-      showLogin: true,
-      profile: {},
-      projectsParticipated: [],
-      projects: [],
+      project: {},
+      evaluations: [],
+      teamworkSums: {},
+      skillSums: {},
+      communicationSums: {},
     };
   },
   mounted() {
-    axios
-      .get(
-        `http://49.245.48.28:8080/api/profile/viewProfile/${this.$route.params.reference}`
-      )
-      .then((response) => {
-        this.responseData = response.data;
-        this.status = response.status;
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log("Error response:", error.response);
-        if (error.response.status === 302) {
-          const redirectUrl = error.response.data.redirectUrl;
-          this.profile = error.response.data;
-          this.projectsParticipated = error.response.data.projectsParticipated;
-          this.projectsParticipated.forEach((project) => {
-            axios
-              .get(`http://49.245.48.28:8080/api/project/${project.id.projectID}`)
-              .then((response) => {
-                this.projects.push(response.data);
-              })
-              .catch((error) => {
-                console.log("Error response 3:", error.response);
-                console.error(error);
-              });
+    const auth = useAuthStore();
+    if (auth.isAuthenticated) {
+      const headers = {
+        "session-ID": auth.jsessionID,
+      };
+      axios
+        .get(`${API_URL}/project/proj6`, { headers })
+
+        .then((response) => {
+          this.project = response.data;
+          console.log(response);
+          const evaluateeIDs = {};
+          const teamworkSums = {};
+          const skillSums = {};
+          const communicationSums = {};
+
+          response.data.evaluations.forEach((evaluation) => {
+            const evaluateeID = evaluation.id.evaluateeID;
+            const teamwork = evaluation.teamwork;
+            const skill = evaluation.skill;
+            const communication = evaluation.communication;
+
+            console.log(
+              "Communicate",
+              evaluation.communication,
+              "Skill",
+              evaluation.skill,
+              "Teamwork",
+              evaluation.teamwork,
+              "id",
+              evaluation.id.evaluateeID
+            );
+
+            if (!evaluateeIDs[evaluateeID]) {
+              evaluateeIDs[evaluateeID] = 1;
+              teamworkSums[evaluateeID] = teamwork;
+              skillSums[evaluateeID] = skill;
+              communicationSums[evaluateeID] = communication;
+            } else {
+              evaluateeIDs[evaluateeID]++;
+              teamworkSums[evaluateeID] += teamwork;
+              skillSums[evaluateeID] += skill;
+              communicationSums[evaluateeID] += communication;
+            }
           });
-          console.log("Redirecting to:", redirectUrl);
-        } else {
-          console.error(error);
-        }
-      });
+          console.log("evaluateeIDs", evaluateeIDs);
+          console.log("teamwork", teamworkSums);
+          console.log("skill", skillSums);
+          console.log("communication", communicationSums);
+
+          this.evaluations = response.data.evaluations;
+          this.teamworkSums = teamworkSums;
+          this.skillSums = skillSums;
+          this.communicationSums = communicationSums;
+          this.evaluateeIDs = evaluateeIDs;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
   computed: {
-    profileImageSrc() {
+    projectImageSrc() {
       const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/profile/image/${this.profile.profileID}`;
+      const imagePath = `/api/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
     },
   },
@@ -144,6 +187,14 @@ export default {
 </script>
 
 <style scoped>
+.background {
+  background: rgb(207, 205, 205);
+  height: 100%;
+  width: 100vw;
+  margin: -0px;
+  font-family: math;
+}
+
 .container {
   background: rgb(255, 255, 255);
   border-radius: 20px;
@@ -152,25 +203,91 @@ export default {
   width: auto;
   margin: 50px;
 }
+.item {
+  display: inline-table;
+}
+
 .detail {
   display: flex;
   padding: 20px;
   text-align: left;
-  margin: 20px;
+
   margin-left: 60px;
 }
-.item {
-  display: inline-table;
-}
-.Project-container {
-  margin: 50px;
-  margin-left: -324px;
+.project-pic {
   background: rgb(234, 231, 231);
-  display: block;
-  min-width: 1500px;
-  width: auto;
+  width: 320px;
+  height: 300px;
+  border-radius: 30px;
+  margin-top: 45px;
+  overflow: hidden;
+}
+.project-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profileImg {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  background: rgb(254, 254, 254);
+  overflow: hidden;
+  border-radius: 100px;
+}
+.profileImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text {
+  font-size: 25px;
+  padding: 20px;
+}
+.text p {
+  background: rgb(239, 232, 232);
+  display: content;
+  width: 1200px;
+  min-height: 150px;
+  height: auto;
   border-radius: 20px;
   padding: 20px;
+}
+
+.text label {
+  background: rgb(239, 232, 232);
+  display: content;
+  width: 200px;
+  height: auto;
+  border-radius: 20px;
+  padding: 20px;
+}
+.name-role {
+  margin: 30px;
+  display: inline-grid;
   font-size: 25px;
+  padding: 10px;
+  max-width: 400px;
+  flex: 1;
+}
+.name-role label {
+  display: flex;
+  font-weight: bold;
+}
+.name-role span {
+  margin-left: 10px;
+}
+.memberlist {
+  margin-right: 30px;
+}
+.memberlist a {
+  text-decoration: none;
+  color: black;
+}
+
+.memberlist :hover {
+  background-color: rgb(225, 225, 230);
+  color: rgb(8, 0, 255);
 }
 </style>

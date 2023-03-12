@@ -6,7 +6,7 @@
     <h1>Project name: {{ project.projectName }}</h1>
     <p>description: {{ project.projectDescription }}</p>
 
-    <div v-for="(role, name) in project.nameRoleMap" :key="name">
+    <RouterLink to="StudentProfile" v-for="(role, name) in project.nameRoleMap" :key="name">
       <div class="profileImg">
         <img :src="role.profileImage" alt="profile picture" />
       </div>
@@ -19,7 +19,7 @@
           margin: 20px;
         "
       >
-        <div class="name-role">
+        <div class="name-role" >
           <label>
             Name: <span>{{ name }}</span></label
           >
@@ -43,7 +43,7 @@
           </p>
         </div>
       </div>
-    </div>
+    </RouterLink>
   </div>
 </template>
 

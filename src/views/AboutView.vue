@@ -1,39 +1,68 @@
 <!--no need do this-->
+
 <template>
-  <div>
-    <h1>API Response</h1>
-    <div v-if="response">{{ response }}</div>
-    <div v-else>Loading...</div>
-  </div>
+  {{ majors }}
+
+
+<select
+class="majorSelect"
+
+>
+<option value="" disabled>Select your major</option>
+<option
+  v-for="major in majors"
+  :key="major.majorCode"
+  :value="major.majorName"
+  :disabled="
+    selectedMajors.includes(major.majorName) && selectedMajors.length >= 2
+  "
+>
+  {{ major.majorName }}
+</option>
+</select>
 </template>
-
 <script>
+
 import axios from "axios";
+//import Swal from "sweetalert2";
 import { useAuthStore } from "@/stores/auth";
-
-const API_URL = "http://49.245.48.28:8080/api";
-
 export default {
-  name: "ExamplePage",
+  name: "CreateProfileView",
   data() {
     return {
-      response: null,
+      file: null,
+      imagePreview: null,
+      majors: [],
+      bio: "",
+      selectedMajors: [],
+      selectedMajor: null,
+      profilePic: "",
     };
   },
-  async created() {
+
+
+async mounted() {
+    // make an axios GET request to retrieve the list of majors
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      try {
-        const headers = {
-          Authorization: `Bearer ${auth.token}`,
-          Cookie: `JSESSIONID=${auth.jsessionID}`,
-        };
-        const { data } = await axios.get(`${API_URL}/profile/userProfile`, { headers });
-        this.response = data;
-      } catch (error) {
-        console.error(error);
-      }
+      const headers = {
+        "session-ID": auth.jsessionID,
+      };
+
+      axios
+        .get("http://49.245.48.28:8080/api/profile/majors", { headers })
+
+        .then((response) => {
+          // store the list of majors in the data object
+          this.majors = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  },
-};
+  }
+}
+
+
+
 </script>

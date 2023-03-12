@@ -3,57 +3,10 @@
     <div class="background">
       <div class="container">
         <div class="item">
-          <form class="detail">
-            <div class="profile-pic">
-              <img
-                class="img"
-                :src="profileImageSrc"
-                alt="Profile Picture"
-                @error="setDefaultImage"
-              />
-            </div>
-
-            <div style="padding: 15px; margin: 15px">
-              <div style="font-size: 40px; margin-top: -10px">
-                <span>{{ profile.firstName }} </span>
-                <span>{{ profile.lastName }} </span>
-              </div>
-              <p></p>
-              <span style="font-size: 30px">Major: </span>
-              <label
-                style="
-                  border-radius: 20px;
-                  font-size: 20px;
-                  padding: 10px;
-                  border: transparent;
-                  background: rgb(234, 229, 229);
-                  width: 500px;
-                "
-                ><span v-for="major in majors" :key="major.majorCode">
-                  {{ major.majorName }}
-                </span>
-              </label>
-              <p></p>
-              <div style="font-size: 30px">Biography:</div>
-
-              <div
-                style="
-                  border-radius: 20px;
-                  font-size: 20px;
-                  padding: 10px;
-                  border: transparent;
-                  width: 1200px;
-                  min-height: 100px;
-                  height: auto;
-                  background: rgb(234, 229, 229);
-                "
-              >
-                {{ profile.biography }}
-              </div>
-
+<span style="font-size:50px; "> Recent Project</span>
               <div class="Project-container">
                 <div>
-                  <span style="margin-bottom: 20px"> Recent Project</span>
+                  
                   <div style="display: flex; margin-bottom: 10px; margin-left: 20px">
                     <div style="width: 200px">Project ID</div>
                     <div style="flex: 1">Project Name</div>
@@ -90,21 +43,23 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </form>
+           
+    
 
-          <form style="display: flex; justify-content: space-between">
+          <div style="display: flex; justify-content: space-between">
             <button class="defaultBtn" type="submit">Deactivate account</button>
             <button class="defaultBtn">
               <router-link to="/createProject" class="link"
                 >Create another project here</router-link
               >
             </button>
-          </form>
+          </div>
+ </div>
+
         </div>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -115,7 +70,7 @@ import Swal from "sweetalert2";
 const API_URL = "http://49.245.48.28:8080/api";
 
 export default {
-  name: "ProfileView",
+  name: "ownProject",
   props: ["profileID"],
   data() {
     return {
@@ -125,7 +80,7 @@ export default {
     };
   },
 
- async mounted() {
+  mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
       Swal.showLoading();
@@ -177,13 +132,7 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background: rgb(207, 205, 205);
-  height: 100%;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
-}
+
 
 .container {
   background: rgb(255, 255, 255);
@@ -198,25 +147,11 @@ export default {
   display: inline-table;
 }
 
-.detail {
-  display: flex;
-  padding: 20px;
-  text-align: left;
-  margin: 20px;
-  margin-left: 60px;
-}
-
-.profile-pic {
-  background: rgb(234, 231, 231);
-  width: 300px;
-  height: 300px;
-  border-radius: 20px;
-}
 
 .Project-container {
-  margin: 50px;
-  margin-left: -324px;
-  background: rgb(234, 231, 231);
+  margin: 20px;
+  
+  background: rgb(237, 233, 233);
   display: inline-flex;
   width: 1500px;
   min-height: 277px;
