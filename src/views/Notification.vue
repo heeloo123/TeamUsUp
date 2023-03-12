@@ -23,10 +23,15 @@
 
 
 <script>
-//import axios from 'axios';
-//import { useNotificationStore } from '@/stores/notification';
+import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
+import Swal from 'sweetalert2';
+
+const API_URL ="http://49.245.48.28:8080/api"
+
 export default {
   name: "notificationView",
+  props: ["notificationID, email"],
   component: {},
 
     data() {
@@ -34,27 +39,11 @@ export default {
             notifications: [
                 {
                     message: "",
-                    notificationID: "",
                     timeCreated: this.formatDate(),
                     markAsRead: false, 
                     isClicked: false
                 },
             
-                {
-                    message: "",
-                    notificationID: "",
-                    timeCreated: this.formatDate(),
-                    markAsRead: false, 
-                    isClicked: false,
-                },
-            
-                {
-                    message: "",
-                    notificationID: "",
-                    timeCreated: this.formatDate(),
-                    markAsRead: false,
-                    isClicked: false
-                },
             ],
 
             emailTimeCreated: [
@@ -120,8 +109,22 @@ export default {
        this.time() === this.getTime();
        this.year() === this.getYear();
        this.month() === this.getMonth();
-       this.fetchNewNotifications();
-       this.fetchAnyNotifications();
+
+       const auth = useAuthStore();
+       if (auth.isAuthenticated) {
+        Swal.showLoading();
+        
+        const newNotification = {
+            newNotification: `{email}`
+        }
+        
+
+        axios
+          .get(`${API_URL}/retrieveNew`, { newNotification })
+
+
+
+       }
     },
 
 };
