@@ -61,7 +61,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://49.245.48.28:8080/api/project/`)
+      .get(`http://49.245.48.28:8080/api/project/${this.$route.params.reference}`)
       .then((response) => {
         this.project = response.data;
         this.status = response.status;
