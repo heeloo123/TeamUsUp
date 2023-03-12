@@ -20,7 +20,7 @@ import StudentProfileView from "../views/StudentProfileView.vue";
 import StudentProjectView from "@/views/StudentProjectView.vue";
 import searchPage from "@/views/searchPage.vue";
 import { useAuthStore } from "@/stores/auth";
-
+import ownPView from "@/views/OwnProjectList.vue";
 
 
 const authGuard = (to, from, next) => {
@@ -171,6 +171,11 @@ const routes = [
     path: "/searchPage",
     name: "searchPage",
     component: searchPage,
+  },
+  {
+    path: "/ownPView",
+    name: "ownPView",
+    component: ownPView,
   }
 ];
 

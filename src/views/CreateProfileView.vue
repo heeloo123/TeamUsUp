@@ -9,6 +9,11 @@
               <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
             </div>
 
+           
+
+
+
+
             <div style="padding: 15px; margin: 15px">
               <div style="font-size: 40px; margin-top: -10px">
                 <span> {{ $state.user.firstName }} </span>
@@ -16,30 +21,29 @@
               </div>
               <p></p>
               <div v-if="selectedMajors.length > 0" style="margin-bottom: 10px">
-                <div class="selectedmajor">
-                  {{ selectedMajors.join(" ") }}
+                <ul class="selectedmajor">
+                  <span v-for="major in selectedMajors" :key="major">{{ major }}
                   <button
-                    v-for="major in selectedMajors"
-                    :key="major"
+                   
                     @click="deselectMajor(major)"
                     style="color: red; background: none; border: none; cursor: pointer"
                   >
-                    <img style="width: 20px" src="../assets/delete.png" />
-                  </button>
-                </div>
+                 <img style="width: 20px" src="../assets/delete.png" />
+                  </button></span>
+                </ul>
               </div>
 
               <span style="font-size: 30px">Major:</span>
 
               <select
                 class="majorSelect"
-                v-if="filteredMajors.length > 0"
+               
                 v-model="selectedMajor"
                 @change="selectMajor(selectedMajor)"
               >
                 <option value="" disabled>Select your major</option>
                 <option
-                  v-for="major in filteredMajors"
+                  v-for="major in majors"
                   :key="major.majorCode"
                   :value="major.majorName"
                   :disabled="
@@ -61,13 +65,16 @@
               <div style="margin-left: -250px">
                 <input type="file" id="profilePic" @change="handleFileSelect" />
               </div>
-            </div>
-          </form>
-
-          <div style="display: flex; justify-content: space-between">
+              <div style="display: flex; justify-content: space-between; margin-left:-350px;margin-top:80px">
             <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
             <button class="defaultBtn" type="submit">Create</button>
           </div>
+
+            </div>
+        
+
+         
+            </form>
         </div>
       </div>
     </div>
@@ -91,36 +98,25 @@ export default {
       profilePic: "",
     };
   },
- async mounted() {
+  async mounted() {
     // make an axios GET request to retrieve the list of majors
-    const $state = useAuthStore();
-    axios.get("http://49.245.48.28:8080/api/profile/majors",
-      {},
-      {
-        headers: {
-          Authorization: "Basic " + btoa($state.email + ":" + $state.password),
-        },
-        withCredentials: true,
-      })
+    const auth = useAuthStore();
+    if (auth.isAuthenticated) {
+      const headers = {
+        "session-ID": auth.jsessionID,
+      };
 
-      .then((response) => {
+      axios
+        .get("http://49.245.48.28:8080/api/profile/majors", { headers })
+
+        .then((response) => {
           // store the list of majors in the data object
           this.majors = response.data;
         })
-      .catch((error) => {
+        .catch((error) => {
           console.log(error);
         });
-    
-    $state.hasProfile().then((hasProfile) => {
-      if (hasProfile) {
-        console.log("proflie", this.hasProfile);
-        Swal.fire({
-          title: "You already have a profile!",
-          showConfirmButton: false,
-        });
-        this.$router.push({ name: "StudentHome" });
-      }
-    });
+    }
   },
   methods: {
     CancelAlert() {
@@ -159,19 +155,25 @@ export default {
 
     async CreateProfile() {
       try {
-        const $state = useAuthStore();
-        await axios.post(
-          "http://49.245.48.28:8080/api/profile/createProfile",
-          {
-            headers: {
-              Authorization: "Basic " + btoa($state.email + ":" + $state.password),
-            },
-            withCredentials: true,
-          },
-          { biography: this.bio, major: this.selectedMajors, profile_pic: this.file }
-        );
+        const auth = useAuthStore();
+        if (auth.isAuthenticated) {
+          const headers = {
+            "session-ID": auth.jsessionID,
+          };
 
-        this.$router.push({ name: "StudentHome" });
+          await axios.post(
+            "http://49.245.48.28:8080/api/profile/createProfile",
+
+            { biography: this.bio, major: this.selectedMajors, profile_pic: this.file },
+            {
+              headers,
+            }
+          );
+          Swal.fire({ icon: "success" });
+          console.log(this.bio,this.selectMajor,this.file)
+
+          this.$router.push({ name: "StudentHome" });
+        }
       } catch (error) {
         Swal.fire({
           title: "Something went wrong",
@@ -182,11 +184,7 @@ export default {
   },
   computed: {
     // filter the list of majors based on the current input value
-    filteredMajors: function () {
-      return this.majors.filter((major) => {
-        return major.majorName.toLowerCase().includes(this.selectedMajor.toLowerCase());
-      });
-    },
+
     $state() {
       return useAuthStore();
     },
@@ -253,6 +251,14 @@ textarea {
   padding: 5px;
 }
 .selectedmajor {
+  display: flex;
+}
+
+.selectedmajor span{
   background: rgb(234, 229, 229);
+  margin: 10px;
+    border-radius: 20px;
+    padding: 5px;
+    font-size: 17px;
 }
 </style>

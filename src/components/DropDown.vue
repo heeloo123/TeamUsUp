@@ -4,8 +4,9 @@
       <img src="../assets/icons8-user-48.png" @click="toggleDropdown"
     /></span>
     <ul v-if="showDropdown">
-      <li><a href="/Profile">Profile</a></li>
+      <li><RouterLink to="/Profile">Profile</RouterLink></li>
       <li v-if="authStore.isAdmin"><a href="/AdminPage">Admin Page</a></li>
+      <li><RouterLink to="/ownPView">Project</RouterLink></li>
       <li><a href="#" @click="logout">Logout</a></li>
     </ul>
   </div>
@@ -39,13 +40,15 @@ export default {
       if (confirmResult.isConfirmed) {
         authStore.logout();
         console.log("authStore.logout() called");
-        window.location.reload();
+        
         await Swal.fire({
           title: "Logged out successfully!",
           icon: "success",
         });
         router.push({ name: "home" });
+        location.replace("/");
         console.log("Logged out successfully!");
+        
       }
     };
 

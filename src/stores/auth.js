@@ -16,6 +16,7 @@ export const useAuthStore = defineStore({
     isAuthenticated: false,
     user:  {},
     jsessionID: "",
+    hasProfile:false,
   }),
   actions: {
     async login(user) {
@@ -51,6 +52,27 @@ export const useAuthStore = defineStore({
       } catch (error) {
         console.error(error);
       }
+    }, async fetchUserProfile() {
+      try {
+        const result = await axios.get(`${API_URL}/profile/userProfile`, {
+          headers: {
+            "session-ID": this.jsessionID,
+          },
+          withCredentials: true,
+        });
+
+        if (result.status === 200) {
+          // User has a profile, navigate to home page
+          this.hasProfile = true
+          
+        } else {
+          // User does not have a profile, show error message
+          this.hasProfile = false
+          this.profileError = true;
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
     async logout() {
       try {
@@ -61,6 +83,7 @@ export const useAuthStore = defineStore({
           withCredentials: true
         });
         console.log("Logout successful");
+        this.$router.push({ name: "home" });
         this.isAuthenticated = false;
         this.user = {};
         this.jsessionID = "";
