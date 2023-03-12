@@ -1,5 +1,5 @@
 <template>
-  <div class="background">
+ 
     <div class="container">
       <form @submit.prevent="search" class="search">
         <label for="query">Search: </label>
@@ -18,34 +18,40 @@
         </label>
 
         <button type="submit">Submit</button>
-       </form>
-      <div> 
+      </form>
+      <div style="margin: 20px">
         <ul v-if="results.length">
-  <li v-for="(result, index) in results" :key="index">
-    <router-link
-      v-if="result.resultType === 'Project'"
-      :to="{ name: 'StudentProject', params: { reference: result.reference } }"
-    >
-      {{ result.header }}
-    </router-link>
-    <router-link
-      v-else
-      :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
-    >
-      {{ result.header }}
-    </router-link>
-    <p>Reference: {{ result.reference }}</p>
-    <p>Descriptor: {{ result.descriptor }}</p>
-    <p>Result Type: {{ result.resultType }}</p>
+          <li v-for="(result, index) in results" :key="index">
+            <div v-if="result.resultType === 'Project'">
+              <router-link
+                :to="{ name: 'StudentProject', params: { reference: result.reference } }"
+              >
+                {{ result.header }}
+              </router-link>
+              <p>Project ID: {{ result.reference }}</p>
+              <p>Discription: {{ result.descriptor }}</p>
+              <p>Result Type: {{ result.resultType }}</p>
 
-  </li>
-</ul>
+
+            </div>
+            <div v-else>
+              <router-link
+                :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
+              >
+                {{ result.header }}
+              </router-link>
+            
+            <p>Profile ID: {{ result.reference }}</p>
+            <p>Major: {{ result.descriptor }}</p>
+            <p>Result Type: {{ result.resultType }}</p>
+          </div>
+          </li>
+        </ul>
 
         <p v-else class="result">No results found.</p>
-      </div>  
-     
+      </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -81,35 +87,33 @@ export default {
           console.error(error);
         });
     },
-
   },
 };
 </script>
 
 <style scoped>
 .background {
-  background: rgb(224, 216, 216);
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   font-family: sans-serif;
   display: flex;
 }
 
 .container {
-  background: rgb(255, 255, 255);
+  background: rgb(225, 224, 224);
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   max-width: 1700px;
   width: 100%;
-  display: flex;
+  display: block;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 50px;
+  margin: 20px;
 }
 
 .search {
-  display: flex;
+  display: contents;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
@@ -125,7 +129,7 @@ export default {
   padding: 5px;
   border-radius: 5px;
   border: none;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   font-size: 16px;
 }
 
@@ -140,25 +144,26 @@ export default {
 }
 
 ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: auto;
 }
 
 li {
-  margin-bottom: 20px;
+  margin-bottom: 1px;
+  background: whitesmoke;
 }
 
+
 li p {
-  margin: 5px 0;
+  margin: 10px 0;
+  padding-left: 20px;
 }
 
 li a {
   display: inline-block;
   margin-top: 5px;
-  font-size: 14px;
-  color: blue;
-  text-decoration: underline;
+  font-size: 20px;
+  color: rgb(25, 0, 255);
+  padding-left: 20px;
 }
 
 li a:hover {
