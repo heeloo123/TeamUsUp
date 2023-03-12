@@ -5,7 +5,12 @@
         <div class="item">
           <form class="detail">
             <div class="profile-pic">
-              <img class="img" :src="profile.image" alt="Profile Picture" />
+              <img
+                class="img"
+                :src="profileImageSrc"
+                alt="Profile Picture"
+                @error="setDefaultImage"
+              />
             </div>
 
             <div style="padding: 15px; margin: 15px">
@@ -14,7 +19,7 @@
                 <span>{{ profile.lastName }} </span>
               </div>
               <p></p>
-              <span style="font-size: 30px">Major:</span>
+              <span style="font-size: 30px">Major: </span>
               <label
                 style="
                   border-radius: 20px;
@@ -24,8 +29,10 @@
                   background: rgb(234, 229, 229);
                   width: 500px;
                 "
-                >{{ profile.major }}</label
-              >
+                ><span v-for="major in majors" :key="major.majorCode">
+                  {{ major.majorName }}
+                </span>
+              </label>
               <p></p>
               <div style="font-size: 30px">Biography:</div>
 
@@ -46,45 +53,47 @@
 
               <div class="Project-container">
                 <div>
-                  Recent Project
-                  <div v-for="project in projects" :key="project.id">
-                    <div
+                <span >  Recent Project</span>
+                  <div
+                    style="
+                      display: flex;
+                      margin-bottom: 10px;
+                      margin-left: 20px;
+                    "
+                  >
+                    <div style="width: 200px">Project ID</div>
+                    <div style="flex: 1">Project Name</div>
+                    <div style="flex: 2">Project Description</div>
+                  </div>
+
+                  <div>
+                    <router-link
+                      v-for="project in projects"
+                      :key="project.projectID"
+                      :to="{
+                        name: 'StudentProject',
+                        params: { reference: project.reference },
+                      }"
+                      
                       style="
-                        margin: 20px;
+                        margin: 10px;
                         background: white;
-                        filter: brightness(0.8);
+                        text-decoration: none;
                         display: flex;
                         width: 1400px;
-                        border-radius: 20px;
+                        border-radius: 10px;
                         padding: 10px;
+                        color:black;
                       "
                     >
-                      <div style="width: 300px">{{ project.name }}</div>
-                      <div
-                        style="
-                          display: flex;
-                          width: 800px;
-                          padding-left: 10px;
-                          min-height: 200px;
-                          height: auto;
-                          text-align: justify;
-                        "
+                      <span style="width: 200px">{{ project.reference }}</span>
+                      <span style="flex: 1">{{ project.header }}</span>
+                      <span style="flex: 2"
+                        ><div style="font-size: 18px">
+                          {{ project.descriptor }}
+                        </div></span
                       >
-                        <label
-                          >Project description
-                          <div style="font-size: 18px">
-                            {{ project.description }}
-                          </div>
-                        </label>
-                      </div>
-                      <label style="display: block; margin-left: 20px">
-                        <p>Skills: {{ project.skillsRating.skills }} of 5</p>
-                        <p>Teamwork: {{ project.skillsRating.teamwork }} of 5</p>
-                        <p>
-                          Communication: {{ project.skillsRating.communication }} of 5
-                        </p>
-                      </label>
-                    </div>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -119,6 +128,7 @@ export default {
     return {
       profile: {},
       projects: [],
+      majors: [],
     };
   },
 
@@ -128,16 +138,27 @@ export default {
       Swal.showLoading();
 
       const headers = {
-       
-        Cookie: `JSESSIONID=${auth.jsessionID}`,
+        "session-ID": auth.jsessionID,
       };
 
       axios
         .get(`${API_URL}/profile/userProfile`, { headers })
         .then((response) => {
           console.log(response.data);
-          this.profile = response.data.profile;
-          this.projects = response.data.projects;
+          console.log("project", response.data.projects);
+          this.profile = response.data;
+          this.majors = response.data.majors;
+          this.projects = response.data.projects.map((project) => {
+            const projID = project.reference;
+            console.log(project.reference);
+            axios
+              .get(`${API_URL}/api/project/${projID}`, { headers })
+
+              .catch((error) => {
+                console.error(error);
+              });
+            return project;
+          });
         })
         .catch((error) => {
           console.error(error);
@@ -147,9 +168,20 @@ export default {
         });
     }
   },
+  computed: {
+    profileImageSrc() {
+      const baseUrl = "http://49.245.48.28:8080";
+      const imagePath = `/api/profile/image/${this.profile.profileID}`;
+      return baseUrl + imagePath;
+    },
+  },
+  methods: {
+    setDefaultImage(event) {
+      event.target.src = require("../assets/icons8-user-64.png");
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 .background {
@@ -200,4 +232,6 @@ export default {
   padding: 20px;
   font-size: 25px;
 }
+
+
 </style>
