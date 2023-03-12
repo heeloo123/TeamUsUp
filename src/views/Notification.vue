@@ -65,63 +65,69 @@ export default {
 
 
 
-        methods: {
-            currentTimeStamp() {
-                const current = new Date();
-                new Date() === `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}}`;
-                console.log (current);
-                return current;
-            },
+methods: {
+    currentTimeStamp() {
+        const current = new Date();
+        new Date() === `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}}`;
+        console.log (current);
+        return current;
+    },
 
-            formatDate(date) {
-               const options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}
-               return new Date(date).toLocaleDateString('en-gb', options);
-            },
+    formatDate(date) {
+        const options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}
+        return new Date(date).toLocaleDateString('en-gb', options);
+    },
 
-            getDate() {
-                return new Date().toLocaleDateString();
-            },
+    getDate() {
+        return new Date().toLocaleDateString();
+    },
 
-            getMonth() {
-                return new Date().getMonth();
-            },
+    getMonth() {
+        return new Date().getMonth();
+    },
 
-            getTime() {
-                return new Date().toLocaleTimeString();
-            },
+    getTime() {
+        return new Date().toLocaleTimeString();
+    },
 
-            getYear() {
-                return new Date().getFullYear();
-            },
+    getYear() {
+        return new Date().getFullYear();
+    },
             
 
-            handleClickEvent() {
-                this.isClicked = true;
-            },
+    handleClickEvent() {
+        this.isClicked = true;
+    },
 
-            handleMarkAsRead(index) {
-                if (this.notifications[index].isClicked) {
-                    this.notification[index].markAsRead = true;
-                }
-            },
+    handleMarkAsRead(index) {
+        if (this.notifications[index].isClicked) {
+            this.notification[index].markAsRead = true;
+        }
+    },
 
-            selectNotification(notification) {
-                this.selectedNotification = notification;
-                console.log(this.selectNotification);
-            },
+    selectNotification(notification) {
+        this.selectedNotification = notification;
+        console.log(this.selectNotification);
+    },
 
-            prevPage() {
-                if (this.currentPage > 1) {
-                this.currentPage -= 1;
-                }
-            },
+    prevPage() {
+        if (this.currentPage > 1) {
+        this.currentPage -= 1;
+        }
+    },
 
-            nextPage() {
-                if (this.currentPage < this.pageCount) {
-                this.currentPage += 1;
-                }
-            },
+    nextPage() {
+        if (this.currentPage < this.pageCount) {
+        this.currentPage += 1;
+        }
+    },
+
+    paginatedNotifications(notifications) {
+        const start = (this.currentPage - 1) * this.pageSize;
+        const end = start + this.pageSize;
+        return notifications.slice(start, end);
         },
+    },
 
     mounted() {
        this.date === this.getDate();
