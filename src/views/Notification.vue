@@ -148,7 +148,7 @@ export default {
 
         if (markAsRead === false && this.isClicked === true) {
             axios
-              .post(`${API_URL}/markAsRead`, { markAsRead })
+              .post(`${API_URL}/markAsRead`, { markAsRead }, {readflag: true})
               .then((response) => {
               console.log(response.data),
               this.notifications = response.data.notification.markAsRead;
