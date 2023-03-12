@@ -10,10 +10,12 @@
                             </div>
                                 <div class="readflag" v-show="notification.isClicked"> 
                                     Read
-                                </div>
-                        </div>
-                            
-                    </div>          
+                                </div>    
+                        </div>       
+                    </div>
+                    <div style="margin-left: auto">Page {{ currentPage }} of {{ pageCount }}</div>
+                    <button class="B" v-if="currentPage > 1" @click="prevPage">Prev</button>
+                    <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>         
                 </div>
         </div>
     </div>
