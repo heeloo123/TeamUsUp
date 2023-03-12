@@ -1,38 +1,47 @@
 <template>
   <div class="background">
-    <div class="container"> 
-    <form @submit.prevent="search" class="search">
-      <label for="query">Search: </label>
-      <input id="query" v-model="query" type="text" required />
+    <div class="container">
+      <div @submit.prevent="search" class="search">
+        <label for="query">Search: </label>
+        <input id="query" v-model="query" type="text" required />
 
-      <input id="all" type="radio" v-model="searchType" value="" checked />
-      <label for="all">All</label>
-      <div>
-        <input type="radio" id="profile" value="profile" v-model="searchType" />
-        <label for="profile">Profile</label>
-      </div>
+        <input id="all" type="radio" v-model="searchType" value="" checked />
+        <label for="all">All</label>
+        <dlabel>
+          <input type="radio" id="profile" value="profile" v-model="searchType" />
+          <label for="profile">Profile</label>
+        </dlabel>
 
-      <div>
-        <input type="radio" id="project" value="project" v-model="searchType" />
-        <label for="project">Project</label>
-      </div>
+        <label>
+          <input type="radio" id="project" value="project" v-model="searchType" />
+          <label for="project">Project</label>
+        </label>
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit">Submit</button>
+       </div>
+      <div> 
+        <ul v-if="results.length">
+          <li v-for="(result, index) in results" :key="index">
+            <router-link
+              :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
+            >
+              {{ result.header }}
+            </router-link>
+            <p>Reference: {{ result.reference }}</p>
+            <p>Descriptor: {{ result.descriptor }}</p>
+            <p>Result Type: {{ result.resultType }}</p>
+            <a
+              v-if="result.resultType === 'StudentProfile'"
+              href="#"
+              @click="viewProfile(result.reference)"
+              >View profile</a
+            >
+          </li>
+        </ul>
 
-    <ul v-if="results.length">
-      <li v-for="(result, index) in results" :key="index">
-        <router-link :to="{ name: 'StudentProfile', params: { reference: result.reference } }">
-  {{ result.header }}
-</router-link>
-        <p>Reference: {{ result.reference }}</p>
-        <p>Descriptor: {{ result.descriptor }}</p>
-        <p>Result Type: {{ result.resultType }}</p>
-        <a v-if="result.resultType === 'StudentProfile'" href="#" @click="viewProfile(result.reference)">View profile</a>
-      </li>
-    </ul>
-
-      <p v-else class="result">No results found.</p>
+        <p v-else class="result">No results found.</p>
+      </div>  
+     
     </div>
   </div>
 </template>
@@ -86,55 +95,77 @@ export default {
   background: rgb(224, 216, 216);
   height: 100vh;
   width: 100vw;
-  font-family: math;
-  text-align: -webkit-center;
+  font-family: sans-serif;
+  display: flex;
 }
 
 .container {
   background: rgb(255, 255, 255);
   border-radius: 20px;
-  display: block;
-  width: 800px;
-  position: relative;
-  top: 200px;
-  height: 235px;
-  
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  max-width: 1700px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 50px;
 }
 
 .search {
-  display: block;
-  position: relative;
-  top: 25px;
-  font-size: 25px;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search label {
+  margin-right: 10px;
+}
+
+.search input[type="text"] {
+  width: 60%;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
+
+.search input[type="radio"] {
+  margin-right: 5px;
 }
 
 .result {
-  position: relative;
-  top: 25px;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
 }
 
-input[id="query"] {
-  border-radius: 10px;
-  padding-left: 20px;
-  height: 20px;
-  margin: auto;
-  width: 200px;
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-button[type="submit"] {
-  background: black;
-  border-radius: 20px;
-  color: white;
-  height: 35px;
-  font-size: 20px;
-  font: bolder;
-  margin: 10px;
-  width: auto;
-  margin-left: 20px;
-
+li {
+  margin-bottom: 20px;
 }
 
+li p {
+  margin: 5px 0;
+}
 
+li a {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: blue;
+  text-decoration: underline;
+}
+
+li a:hover {
+  color: darkblue;
+}
 </style>

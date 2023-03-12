@@ -64,38 +64,29 @@
                     display: inline-grid;
                   "
                 >
-                  <div class="rating">
-                    <label>Teamwork :</label>
 
-                    <div class="star-rating">
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                    </div>
-                  </div>
-                  <div class="rating">
-                    <label>Skills:</label>
-
-                    <div class="star-rating">
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                    </div>
-                  </div>
-                  <div class="rating">
-                    <label>Communication :</label>
-                    <div class="star-rating">
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                      <span>&star;</span>
-                    </div>
-                  </div>
+                  <div v-for="(evaluation, index) in evaluations" :key="index">
+        <p>
+          Teamwork:
+          {{
+            teamworkSums[evaluation.id.evaluateeID] /
+            evaluateeIDs[evaluation.id.evaluateeID]
+          }}
+        </p>
+        <p>
+          Skill :
+          {{
+            skillSums[evaluation.id.evaluateeID] / evaluateeIDs[evaluation.id.evaluateeID]
+          }}
+        </p>
+        <p>
+          Communication :
+          {{
+            communicationSums[evaluation.id.evaluateeID] /
+            evaluateeIDs[evaluation.id.evaluateeID]
+          }}
+        </p>
+      </div>
                 </div>
               </div>
             </div>
@@ -145,6 +136,50 @@ export default {
       .then((response) => {
         this.project = response.data;
         console.log(response);
+         const evaluateeIDs = {};
+        const teamworkSums = {};
+        const skillSums = {};
+        const communicationSums = {};
+
+        response.data.evaluations.forEach((evaluation) => {
+          const evaluateeID = evaluation.id.evaluateeID;
+          const teamwork = evaluation.teamwork;
+          const skill = evaluation.skill;
+          const communication = evaluation.communication;
+
+          console.log(
+            "Communicate",
+            evaluation.communication,
+            "Skill",
+            evaluation.skill,
+            "Teamwork",
+            evaluation.teamwork,
+            "id",
+            evaluation.id.evaluateeID
+          );
+
+          if (!evaluateeIDs[evaluateeID]) {
+            evaluateeIDs[evaluateeID] = 1;
+            teamworkSums[evaluateeID] = teamwork;
+            skillSums[evaluateeID] = skill;
+            communicationSums[evaluateeID] = communication;
+          } else {
+            evaluateeIDs[evaluateeID]++;
+            teamworkSums[evaluateeID] += teamwork;
+            skillSums[evaluateeID] += skill;
+            communicationSums[evaluateeID] += communication;
+          }
+        });
+        console.log("evaluateeIDs", evaluateeIDs);
+        console.log("teamwork", teamworkSums);
+        console.log("skill", skillSums);
+        console.log("communication", communicationSums);
+
+        this.evaluations = response.data.evaluations;
+        this.teamworkSums = teamworkSums;
+        this.skillSums = skillSums;
+        this.communicationSums = communicationSums;
+        this.evaluateeIDs = evaluateeIDs;
       })
       .catch((error) => {
         console.log(error);

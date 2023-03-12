@@ -49,7 +49,7 @@
 
 <script>
 import { useAuthStore } from "../stores/auth";
-import axios from "axios";
+
 //import axios from "axios";
 
 
@@ -84,7 +84,7 @@ export default {
         })
       }
     },
-  }
+  },
     // async checkEmailRegistered(email) {
     //   try {
     //     const response = await axios.post("http://49.245.48.28:8080/api/login)", {

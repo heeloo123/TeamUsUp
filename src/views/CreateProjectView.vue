@@ -100,12 +100,13 @@
 <script>
 const Swal = require("sweetalert2");
 import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
 export default {
   name: "CreateProjectView",
   data() {
     return {
       search: "",
-      userList: ["john", "jane",],
+      userList: ["john", "jane"],
       projectName: "",
       projectDescription: "",
       projectPic: "",
@@ -146,7 +147,7 @@ export default {
   deleteUser(index) {
     this.userList.splice(index, 1);
   },
-  createProject() {
+  async createProject() {
     const invalidinput = /[~`!#$%^&*|\\:<>]/; // regular expression pattern
     if (
       this.projectName &&
@@ -156,40 +157,42 @@ export default {
       !invalidinput.test(this.projectDescription) &&
       this.projectDescription.trim() !== ""
     ) {
-      Swal.fire({
-        icon: "success",
-
-        text: "Project has been created!",
-      });
-
-      // Navigate to projectpage
-      this.$router.push({ path: "/Project" });
+      try {
+        const $state = useAuthStore();
+        let formData = new FormData();
+        formData.append("name", this.projectName);
+        formData.append("description", this.projectDescription);
+        formData.append("image", this.projectPic);
+        formData.append("users", JSON.stringify(this.userList));
+        const response = await axios.post(
+          "http://49.245.48.28:8080/api/project/createProject",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: "Basic " + btoa($state.email + ":" + $state.password),
+            },
+            withCredentials: true,
+          }
+        );
+        console.log(response);
+        Swal.fire({
+          icon: "success",
+          text: "Project has been created!",
+        });
+        // Navigate to project page
+        this.$router.push({ name: "Project" });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          text: "Something went wrong. Please try again later.",
+        });
+        console.error(error);
+      }
     } else {
       Swal.fire({
         icon: "warning",
-
         text: "The text should not include~`!#$%^&*|\\:<>",
-      });
-    }
-  },
-  async CreateProfile() {
-    try {
-      let formData = new FormData();
-      formData.append("biography", this.bio);
-      formData.append("profile_pic", this.projectPic);
-      formData.append("majors", JSON.stringify(this.selectedMajors)); //selected user
-      await axios.post("http://49.245.48.28:8080/api/project/createProject", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      //get project id ...if projectid == then push
-
-      this.$router.push({ name: "Project" });
-    } catch (error) {
-      Swal.fire({
-        title: "Something went wrong",
-        icon: "error",
       });
     }
   },

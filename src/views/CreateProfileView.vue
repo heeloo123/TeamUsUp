@@ -6,15 +6,13 @@
           <h1 style="font-size: 40px; margin-left: -1200px">Create your profile</h1>
           <form class="detail" @submit.prevent="CreateProfile">
             <div class="profile-pic">
-              
-              <img v-if="imagePreview" :src="imagePreview" alt="Image Preview">
-              
+              <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
             </div>
-            
+
             <div style="padding: 15px; margin: 15px">
               <div style="font-size: 40px; margin-top: -10px">
-                <span> {{$state.user.firstName}} </span>
-                <span> {{$state.user.lastName}}  </span>
+                <span> {{ $state.user.firstName }} </span>
+                <span> {{ $state.user.lastName }} </span>
               </div>
               <p></p>
               <div v-if="selectedMajors.length > 0" style="margin-bottom: 10px">
@@ -59,10 +57,11 @@
                 v-model="bio"
                 required
               ></textarea>
-            
-          
-           <div style="margin-left:-250px"> <input type="file" id="profilePic" @change="handleFileSelect" /></div> 
-           </div>
+
+              <div style="margin-left: -250px">
+                <input type="file" id="profilePic" @change="handleFileSelect" />
+              </div>
+            </div>
           </form>
 
           <div style="display: flex; justify-content: space-between">
@@ -83,8 +82,8 @@ export default {
   name: "CreateProfileView",
   data() {
     return {
-      file:null,
-      imagePreview:null,
+      file: null,
+      imagePreview: null,
       majors: [],
       bio: "",
       selectedMajors: [],
@@ -92,34 +91,33 @@ export default {
       profilePic: "",
     };
   },
-  mounted() {
+ async mounted() {
     // make an axios GET request to retrieve the list of majors
-    axios
-      .get("http://49.245.48.28:8080/api/profile/majors"),
+    const $state = useAuthStore();
+    axios.get("http://49.245.48.28:8080/api/profile/majors",
       {},
-          {
-            headers: {
-              Authorization: "Basic " + btoa($state.email + ":" + $state.password),
-            
-            },
-            withCredentials: true,
-          }
+      {
+        headers: {
+          Authorization: "Basic " + btoa($state.email + ":" + $state.password),
+        },
+        withCredentials: true,
+      })
 
       .then((response) => {
-        // store the list of majors in the data object
-        this.majors = response.data;
-      })
+          // store the list of majors in the data object
+          this.majors = response.data;
+        })
       .catch((error) => {
-        console.log(error);
-      });
-    const $state = useAuthStore();
+          console.log(error);
+        });
+    
     $state.hasProfile().then((hasProfile) => {
       if (hasProfile) {
-        console.log('proflie',this.hasProfile)
+        console.log("proflie", this.hasProfile);
         Swal.fire({
-          title:"You already have a profile!",
-          showConfirmButton:false,
-        })
+          title: "You already have a profile!",
+          showConfirmButton: false,
+        });
         this.$router.push({ name: "StudentHome" });
       }
     });
@@ -143,41 +141,38 @@ export default {
     },
     selectMajor(majorName) {
       if (this.selectedMajors.length < 2 && !this.selectedMajors.includes(majorName)) {
-  this.selectedMajors.push(majorName);
-}
-
-      
+        this.selectedMajors.push(majorName);
+      }
     },
-    deselectMajor (majorName) {
+    deselectMajor(majorName) {
       this.selectedMajors = this.selectedMajors.filter((m) => m !== majorName);
     },
-   
-      handleFileSelect(event) {
-    this.file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result;
-    };
-    reader.readAsDataURL(this.file);
-  },
-    
+
+    handleFileSelect(event) {
+      this.file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(this.file);
+    },
+
     async CreateProfile() {
       try {
-    
-    await axios.post(
-      "http://49.245.48.28:8080/api/profile/createProfile",
-   {biography:this.bio,
-    major:this.selectedMajors,
-    profile_pic:this.file,
+        const $state = useAuthStore();
+        await axios.post(
+          "http://49.245.48.28:8080/api/profile/createProfile",
+          {
+            headers: {
+              Authorization: "Basic " + btoa($state.email + ":" + $state.password),
+            },
+            withCredentials: true,
+          },
+          { biography: this.bio, major: this.selectedMajors, profile_pic: this.file }
+        );
 
-} 
-    );
-        
-
-          this.$router.push({ name: "StudentHome" });
-        }
-        
-       catch (error) {
+        this.$router.push({ name: "StudentHome" });
+      } catch (error) {
         Swal.fire({
           title: "Something went wrong",
           icon: "error",
@@ -248,7 +243,6 @@ textarea {
   height: auto;
   background: rgb(234, 229, 229);
 }
-
 
 .majorSelect {
   font-size: 20px;

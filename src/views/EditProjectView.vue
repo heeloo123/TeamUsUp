@@ -77,7 +77,7 @@
 
           <form style="display: flex; justify-content: space-between">
             <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
-            <button class="defaultBtn" type="submit">Create</button>
+            <button class="defaultBtn" type="submit">Save</button>
           </form>
         </div>
       </div>
