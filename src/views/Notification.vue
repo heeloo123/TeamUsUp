@@ -131,6 +131,12 @@ methods: {
         },
     },
 
+    computed: {
+    pageCount() {
+      return Math.ceil(this.profiles.length / this.pageSize);
+    },
+  },
+
     mounted() {
        this.date === this.getDate();
        this.time() === this.getTime();
@@ -199,8 +205,8 @@ methods: {
             .catch((error) => {
             console.error(error);
         })
+      }
     }
-  }
 };
     
 
