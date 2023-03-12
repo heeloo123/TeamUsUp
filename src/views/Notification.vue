@@ -118,11 +118,29 @@ export default {
             newNotification: `{email}`
         }
         
+        const anyNotification = {
+            anyNotification: `{email}`
+        }
 
         axios
           .get(`${API_URL}/retrieveNew`, { newNotification })
+          .then((response) => {
+            console.log(response.data)
+            this.newNotification = response.data.newNotification;
+        })
+        .catch((error) => {
+            console.error(error);
+        })
 
-
+        axios
+          .get(`${API_URL}/retrieveAny`, { anyNotification })
+          .then((response) => {
+            console.log(response.data)
+            this.anyNotification = response.data.anyNotification;
+        })
+          .catch((error) => {
+            console.error(error);
+        })
 
        }
     },
