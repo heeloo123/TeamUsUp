@@ -57,6 +57,8 @@ export default {
 
             isClicked: false,
             action: null,
+            pageSize: 10,
+            currentPage: 1,
             
         };
     },
@@ -100,6 +102,18 @@ export default {
             handleMarkAsRead(index) {
                 if (this.notifications[index].isClicked) {
                     this.notification[index].markAsRead = true;
+                }
+            },
+
+            prevPage() {
+                if (this.currentPage > 1) {
+                this.currentPage -= 1;
+                }
+            },
+
+            nextPage() {
+                if (this.currentPage < this.pageCount) {
+                this.currentPage += 1;
                 }
             },
         },
