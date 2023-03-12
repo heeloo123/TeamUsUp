@@ -5,7 +5,6 @@ import axios from 'axios'
 export const useProjectStore = defineStore({
   id:'projectnEva', 
   state: () => ({
-    project: {},
     evaluations: [],
     teamworkSums: {},
     skillSums: {},

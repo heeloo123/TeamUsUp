@@ -48,9 +48,14 @@ const API_URL = "http://49.245.48.28:8080/api";
 
 export const useAuthStore = defineStore({
   id: "auth",
+  mutations: {
+    setJSessionID(state, jsessionID) {
+      state.jsessionID = jsessionID;
+    },
+  },
   state: () => ({
     isAuthenticated: false,
-    user: JSON.parse(localStorage.getItem('userCredentials')) || {},
+    user: JSON.parse(localStorage.getItem('userCredentials')) || {}, jsessionID: null,
   }),
   actions: {
     async login(user) {
@@ -76,7 +81,10 @@ export const useAuthStore = defineStore({
 
           console.log("Login successful");
           this.user = result.data;
-
+        
+          const jsessionID = result.data.authorities.jsessionID;
+          this.$store.commit('setJSessionID', jsessionID);
+          
        
         } else {
           // Login failed
