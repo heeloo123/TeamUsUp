@@ -1,7 +1,7 @@
 <template>
   <div class="background">
     <div class="container">
-      <div @submit.prevent="search" class="search">
+      <form @submit.prevent="search" class="search">
         <label for="query">Search: </label>
         <input id="query" v-model="query" type="text" required />
 
@@ -18,26 +18,28 @@
         </label>
 
         <button type="submit">Submit</button>
-       </div>
+       </form>
       <div> 
         <ul v-if="results.length">
-          <li v-for="(result, index) in results" :key="index">
-            <router-link
-              :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
-            >
-              {{ result.header }}
-            </router-link>
-            <p>Reference: {{ result.reference }}</p>
-            <p>Descriptor: {{ result.descriptor }}</p>
-            <p>Result Type: {{ result.resultType }}</p>
-            <a
-              v-if="result.resultType === 'StudentProfile'"
-              href="#"
-              @click="viewProfile(result.reference)"
-              >View profile</a
-            >
-          </li>
-        </ul>
+  <li v-for="(result, index) in results" :key="index">
+    <router-link
+      v-if="result.resultType === 'Project'"
+      :to="{ name: 'StudentProject', params: { reference: result.reference } }"
+    >
+      {{ result.header }}
+    </router-link>
+    <router-link
+      v-else
+      :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
+    >
+      {{ result.header }}
+    </router-link>
+    <p>Reference: {{ result.reference }}</p>
+    <p>Descriptor: {{ result.descriptor }}</p>
+    <p>Result Type: {{ result.resultType }}</p>
+
+  </li>
+</ul>
 
         <p v-else class="result">No results found.</p>
       </div>  
@@ -79,13 +81,7 @@ export default {
           console.error(error);
         });
     },
-    viewProfile(reference) {
-      if (this.searchType === "profile") {
-        this.$router.push(`/profile?reference=${reference}`);
-      } else {
-        window.location.href = `http://49.245.48.28:8080/api/profile/viewProfile/${reference}`;
-      }
-    },
+
   },
 };
 </script>

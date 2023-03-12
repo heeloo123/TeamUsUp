@@ -163,7 +163,7 @@ const routes = [
     component: StudentProfileView,
   },
   {
-    path: "/StudentProject",
+    path: "/StudentProject/:reference",
     name: "StudentProject",
     component: StudentProjectView,
   },
