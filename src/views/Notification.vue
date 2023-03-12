@@ -122,6 +122,10 @@ export default {
             anyNotification: `{email}`
         }
 
+        const markAsRead = {
+            markAsRead: `{notificationID}`
+        }
+
         axios
           .get(`${API_URL}/retrieveNew`, { newNotification })
           .then((response) => {
@@ -142,9 +146,14 @@ export default {
             console.error(error);
         })
 
-       }
-    },
-
+        if (markAsRead === false && this.isClicked === true) {
+            axios
+              .post(``)
+        }
+                
+            
+    }
+  }
 };
     
 
