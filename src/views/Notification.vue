@@ -31,7 +31,7 @@ const API_URL ="http://49.245.48.28:8080/api"
 
 export default {
   name: "notificationView",
-  props: ["notificationID, email"],
+  props: ["notificationID, email, action"],
   component: {},
 
     data() {
@@ -126,6 +126,10 @@ export default {
             markAsRead: `{notificationID}`
         }
 
+        const processAction = {
+            processAction: `{notificationID, action}`
+        }
+
         axios
           .get(`${API_URL}/retrieveNew`, { newNotification })
           .then((response) => {
@@ -150,15 +154,20 @@ export default {
             axios
               .post(`${API_URL}/markAsRead`, { markAsRead }, {readflag: true})
               .then((response) => {
-              console.log(response.data),
+              console.log(response.data)
               this.notifications = response.data.notification.markAsRead;
-        })
+          })
               .catch((error) => {
               console.error(error);
           })
 
         }
-                
+
+        axios
+          .post(`${API_URL}/processAction`, { processAction })
+          .then((response) => {
+          console.log(response.data)
+          this.processAction = response.data.notiification.action; })
             
     }
   }
