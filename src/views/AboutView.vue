@@ -1,25 +1,39 @@
 <!--no need do this-->
 <template>
   <div>
-    <p>JSessionID: {{ computedJSessionID }}</p>
+    <h1>API Response</h1>
+    <div v-if="response">{{ response }}</div>
+    <div v-else>Loading...</div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
-import { computed } from "vue";
+
+const API_URL = "http://49.245.48.28:8080/api";
 
 export default {
-  setup() {
-    const authStore = useAuthStore();
-
-    const computedJSessionID = computed(() => {
-      return authStore.jsessionID ? authStore.jsessionID : "Loading...";
-    });
-
+  name: "ExamplePage",
+  data() {
     return {
-      computedJSessionID,
+      response: null,
     };
+  },
+  async created() {
+    const auth = useAuthStore();
+    if (auth.isAuthenticated) {
+      try {
+        const headers = {
+          Authorization: `Bearer ${auth.token}`,
+          Cookie: `JSESSIONID=${auth.jsessionID}`,
+        };
+        const { data } = await axios.get(`${API_URL}/profile/userProfile`, { headers });
+        this.response = data;
+      } catch (error) {
+        console.error(error);
+      }
+    }
   },
 };
 </script>

@@ -3,21 +3,39 @@
     <nav>
       <div style="display: inline-flex">
         <router-link to="/">
-          <img class="TeamUsUp_logo" alt="TeamUsUp logo" src="../assets/TeamUsUp_logo.png" />
+          <img
+            class="TeamUsUp_logo"
+            alt="TeamUsUp logo"
+            src="../assets/TeamUsUp_logo.png"
+          />
         </router-link>
 
         <router-link to="/">
-          <img style="width: 40px; margin-top: 10px" alt="TeamUsUp logo" src="../assets/homepageIcon.png" />
+          <img
+            style="width: 40px; margin-top: 10px"
+            alt="TeamUsUp logo"
+            src="../assets/homepageIcon.png"
+          />
         </router-link>
 
         <!--need to import db for search-->
         <div style="display: block; margin-top: 10px; margin-left: 200px">
-          <input class="SearchInput" type="search" placeholder="Search" aria-label="Search" />
+          <input
+            class="SearchInput"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
         </div>
       </div>
 
       <label style="float: right">
-        <button class="loginBtn" v-if="showLoginBtn" :disabled="buttonDisabled">
+        <button
+          class="loginBtn"
+          v-if="showLoginBtn"
+          :disabled="buttonDisabled"
+          :key="$state.isAuthenticated"
+        >
           <router-link class="link" to="/Login">Login</router-link>
         </button>
       </label>
@@ -25,16 +43,21 @@
       <!-- <label v-if="auth.isAuthenticated" class="userDropdown"> -->
 
       <label v-if="showDropDown" class="userDropdown">
-      <label class="image">
-      <RouterLink to="/notification"><img src="../assets/notification.png"/></RouterLink>
+        <label class="image">
+          <RouterLink to="/notification"
+            ><img src="../assets/notification.png"
+          /></RouterLink>
         </label>
-        <label style="
-              color: white;
-              margin: 10px;
-              display: inline-block;
-              font-family: initial;
-              font-size: 20px;
-            ">{{ $state.user.firstName }} {{ $state.user.lastName }}</label>
+        <label
+          style="
+            color: white;
+            margin: 10px;
+            display: inline-block;
+            font-family: initial;
+            font-size: 20px;
+          "
+          >{{ $state.user.firstName }} {{ $state.user.lastName }}</label
+        >
         <DropDown />
       </label>
     </nav>
@@ -73,59 +96,19 @@ export default {
       return this.$state.isAuthenticated;
     },
   },
-
-  // data() {
-  //   return {
-  //     buttonDisabled:false,
-  //     user:"",
-
-  //   };
-
-  // },
-  // computed: {
-  //   // auth() {
-  //   //   return useAuthStore();
-  //   // },
-  //   showLoginBtn(){
-  //     return this.$route.path !=="/Login" && this.user ==null;
-
-  //   },
-  //   showDropDown(){
-  //     return this.user !=null;
-
-  //   },
-  // },
-  //************************ */
-  // watch: {
-  //   $route() {
-  //     if (this.$route.path === "/") {
-  //       this.showButton = !this.auth.isAuthenticated;
-  //     } else if (this.$route.path === "/login") {
-  //       this.showButton = false;
-  //     } else {
-  //       this.showButton = !this.auth.isAuthenticated;
-  //     }
-  //   },
-  // "auth.isAuthenticated"() {
-  //   if (this.$route.path === "/login") {
-  //     this.showButton = false;
-  //   } else {
-  //     this.showButton = !this.auth.isAuthenticated;
-  //   }
-  //  console.log("message");
-  // },
-  // },
-  //*************** */
-  // mounted() {
-  //   let user = localStorage.getItem("user-info");
-
-  //   if (user) {
-  //     this.user = JSON.parse(user);
-  //     this.firstName = JSON.parse(user).firstName;
-  //     this.lastName = JSON.parse(user).lastName;
-  //     console.log(this.firstName, this.lastName);
-  //   }
-  // },
+  watch: {
+    "$state.isAuthenticated"(newValue) {
+      this.$nextTick(() => {
+        console.log("showlogin updated", !newValue);
+      });
+    },
+  },
+  methods: {
+    logout() {
+      this.$state.logout();
+      window.location.reload();
+    },
+  },
   immediate: true,
 };
 </script>
@@ -156,12 +139,10 @@ export default {
   margin-right: 80px;
 }
 
-.image img{
-  width:25px;
-   margin-bottom:-8px;
-   margin-right: 5px
-
-  
+.image img {
+  width: 25px;
+  margin-bottom: -8px;
+  margin-right: 5px;
 }
 .loginBtn {
   background: #e12744;

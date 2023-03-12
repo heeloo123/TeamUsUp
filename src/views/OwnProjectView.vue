@@ -1,106 +1,85 @@
 <template>
+  <!-- this page is able access even not authenticate -->
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="container">
         <div class="item">
-          <!---->
           <form class="detail">
-            <div class="project-pic">
-              <img :src="projectImageSrc" alt="Project img" />
+            <div class="profile-pic">
+              <img :src="profileImageSrc" />
             </div>
-            <p></p>
-
-            <div class="text" style="display: block; margin-left: 20px">
-              <span style="font-size: 30px">Project name: </span>
-              <label>{{ project.projectName }}</label>
-              <div style="margin-top: 50px">
-                <div style="font-size: 30px">Project description:</div>
-                <p>{{ project.projectDescription }}</p>
+            <div style="padding: 15px; margin: 15px">
+              <div style="font-size: 40px; margin-top: -10px">
+                <span>{{ profile.firstName }} </span>
+                <span>{{ profile.lastName }} </span>
               </div>
-            </div>
-          </form>
+              <p></p>
+              <span style="font-size: 30px">Major: </span>
+              <label
+                style="
+                  border-radius: 20px;
+                  font-size: 20px;
+                  padding: 10px;
+                  border: transparent;
+                  background: rgb(234, 229, 229);
+                  width: 500px;
+                "
+                v-for="major in profile.majors"
+                :key="major.majorCode"
+              >
+                {{ major.majorName }}
+              </label>
+              <p></p>
 
-          <!-- <div class="member">
-            <ul>
-              <li v-for="(role, name) in project.nameRoleMap" :key="name">
-                {{ name }} - {{ role }}
-              </li>
-            </ul>
-          </div> -->
-          <!---->
-          <h2 style="margin-left: -1300px; font-size: 40px; margin-top: -20px">
-            Project members
-          </h2>
-
-          <ul class="memberlist">
-            <div v-for="(role, name) in project.nameRoleMap" :key="name">
+              <div style="font-size: 30px">Biography:</div>
               <div
                 style="
                   border-radius: 20px;
-                  display: flex;
-                  background: rgb(234, 231, 231);
+                  font-size: 20px;
+                  padding: 10px;
                   border: transparent;
-                  margin: 20px;
+                  width: 1200px;
+                  min-height: 100px;
+                  height: auto;
+                  background: rgb(234, 229, 229);
                 "
               >
-                <div class="profileImg">
-                    <img :src="role.profileImage" alt="profile picture" />
+                {{ profile.biography }}
+              </div>
+             
+              <div class="Project-container">
+              <div>
+              Recent Project
+                <div style="display: flex; margin-bottom: 10px; margin-left: 20px">
+                  <div style="width: 200px">Project ID</div>
+                  <div style="flex: 1">Project Name</div>
+                  <div style="flex: 2">Project Description</div>
                 </div>
+                <div>
+                  <ul
+                    v-for="project in projects"
+                    :key="project.projectID"
+                    style="
+                      margin: 10px;
+                      background: white;
 
-                <div class="name-role">
-                  <label>
-                    Name: <span>{{ name }}</span></label
+                      display: flex;
+                      width: 1400px;
+                      border-radius: 10px;
+                      padding: 10px;
+                    "
                   >
-                  <label
-                    >Role:<span>{{ role.projectRole }}</span></label
-                  >
+                    <span style="width: 200px">{{ project.projectID }}</span>
+                    <span style="flex: 1">{{ project.projectName }}</span>
+                    <span style="flex: 2"
+                      ><div style="font-size: 18px">{{ project.descriptor }}</div></span
+                    >
+                  </ul>
                 </div>
-
-                <div
-                  style="
-                    margin-left: 600px;
-                    margin-top: 20px;
-                    font-size: 25px;
-                    display: inline-grid;
-                  "
-                >
-
-                  <div v-for="(evaluation, index) in evaluations" :key="index">
-        <p>
-          Teamwork:
-          {{
-            teamworkSums[evaluation.id.evaluateeID] /
-            evaluateeIDs[evaluation.id.evaluateeID]
-          }}
-        </p>
-        <p>
-          Skill :
-          {{
-            skillSums[evaluation.id.evaluateeID] / evaluateeIDs[evaluation.id.evaluateeID]
-          }}
-        </p>
-        <p>
-          Communication :
-          {{
-            communicationSums[evaluation.id.evaluateeID] /
-            evaluateeIDs[evaluation.id.evaluateeID]
-          }}
-        </p>
-      </div>
                 </div>
               </div>
             </div>
-          </ul>
-
-          <!---->
-
-          <div style="margin-left: 1500px; display: flex">
-            <nav>
-              <button class="defaultBtn">
-                <router-link to="/EditProject"> Edit Project</router-link>
-              </button>
-            </nav>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -109,102 +88,62 @@
 
 <script>
 import axios from "axios";
+
 export default {
-  name: "ProjectView",
   data() {
     return {
-      project: {
-        projectName: "personal expense tracker",
-        projectDescription:
-          "The Personal Expense Tracker is a simple project designed to help individuals keep track of their daily expenses.",
-        nameRoleMap: {
-          Jane: "Project manager",
-          John: "Programmer",
-        },
-      },
+      responseData: null,
+      status: null,
+      showLogin: true,
+      profile: {},
+      projectsParticipated: [],
+      projects: [],
     };
   },
   mounted() {
     axios
-      .get("http://49.245.48.28:8080/api/project/Proj6", {
-        headers: {
-          Authorization: "Basic " + btoa("sparklechus@gmail.com:feelseveman"),
-        },
-        withCredentials: true,
-      })
-
+      .get(
+        `http://49.245.48.28:8080/api/profile/viewProfile/${this.$route.params.reference}`
+      )
       .then((response) => {
-        this.project = response.data;
-        console.log(response);
-         const evaluateeIDs = {};
-        const teamworkSums = {};
-        const skillSums = {};
-        const communicationSums = {};
-
-        response.data.evaluations.forEach((evaluation) => {
-          const evaluateeID = evaluation.id.evaluateeID;
-          const teamwork = evaluation.teamwork;
-          const skill = evaluation.skill;
-          const communication = evaluation.communication;
-
-          console.log(
-            "Communicate",
-            evaluation.communication,
-            "Skill",
-            evaluation.skill,
-            "Teamwork",
-            evaluation.teamwork,
-            "id",
-            evaluation.id.evaluateeID
-          );
-
-          if (!evaluateeIDs[evaluateeID]) {
-            evaluateeIDs[evaluateeID] = 1;
-            teamworkSums[evaluateeID] = teamwork;
-            skillSums[evaluateeID] = skill;
-            communicationSums[evaluateeID] = communication;
-          } else {
-            evaluateeIDs[evaluateeID]++;
-            teamworkSums[evaluateeID] += teamwork;
-            skillSums[evaluateeID] += skill;
-            communicationSums[evaluateeID] += communication;
-          }
-        });
-        console.log("evaluateeIDs", evaluateeIDs);
-        console.log("teamwork", teamworkSums);
-        console.log("skill", skillSums);
-        console.log("communication", communicationSums);
-
-        this.evaluations = response.data.evaluations;
-        this.teamworkSums = teamworkSums;
-        this.skillSums = skillSums;
-        this.communicationSums = communicationSums;
-        this.evaluateeIDs = evaluateeIDs;
+        this.responseData = response.data;
+        this.status = response.status;
+        console.log(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Error response:", error.response);
+        if (error.response.status === 302) {
+          const redirectUrl = error.response.data.redirectUrl;
+          this.profile = error.response.data;
+          this.projectsParticipated = error.response.data.projectsParticipated;
+          this.projectsParticipated.forEach((project) => {
+            axios
+              .get(`http://49.245.48.28:8080/api/project/${project.id.projectID}`)
+              .then((response) => {
+                this.projects.push(response.data);
+              })
+              .catch((error) => {
+                console.log("Error response 3:", error.response);
+                console.error(error);
+              });
+          });
+          console.log("Redirecting to:", redirectUrl);
+        } else {
+          console.error(error);
+        }
       });
   },
   computed: {
-    projectImageSrc() {
+    profileImageSrc() {
       const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/project/image/${this.project.projectID}`;
+      const imagePath = `/api/profile/image/${this.profile.profileID}`;
       return baseUrl + imagePath;
-    }
- 
-},
+    },
+  },
 };
 </script>
 
 <style scoped>
-.background {
-  background: rgb(207, 205, 205);
-  height: 100%;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
-}
-
 .container {
   background: rgb(255, 255, 255);
   border-radius: 20px;
@@ -213,84 +152,25 @@ export default {
   width: auto;
   margin: 50px;
 }
-.item {
-  display: inline-table;
-}
-
 .detail {
   display: flex;
   padding: 20px;
   text-align: left;
-
+  margin: 20px;
   margin-left: 60px;
 }
-.project-pic {
+.item {
+  display: inline-table;
+}
+.Project-container {
+  margin: 50px;
+  margin-left: -324px;
   background: rgb(234, 231, 231);
-  width: 320px;
-  height: 300px;
+  display: block;
+  min-width: 1500px;
+  width: auto;
   border-radius: 20px;
-  margin-top: 45px;
-}
-.profileImg {
-  width: 100px;
-  height: 100px;
-  margin: 20px;
-  background: rgb(254, 254, 254);
-  overflow: hidden;
-  border-radius: 100px;
-}
-.profileImg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.text {
+  padding: 20px;
   font-size: 25px;
-  padding: 20px;
-}
-.text p {
-  background: rgb(239, 232, 232);
-  display: content;
-  width: 1200px;
-  min-height: 150px;
-  height: auto;
-  border-radius: 20px;
-  padding: 20px;
-}
-
-.text label {
-  background: rgb(239, 232, 232);
-  display: content;
-  width: 200px;
-  height: auto;
-  border-radius: 20px;
-  padding: 20px;
-}
-.name-role {
-  margin: 30px;
-  display: inline-grid;
-  font-size: 25px;
-  padding: 20px;
-  max-width: 400px;
-  flex: 1;
-}
-.name-role label {
-  display: flex;
-  font-weight: bold;
-}
-.name-role span {
-  margin-left: 10px;
-}
-.memberlist {
-  margin-right: 30px;
-}
-.star-rating {
-  margin-left: auto;
-  color: gold;
-}
-
-.rating {
-  display: flex;
 }
 </style>
