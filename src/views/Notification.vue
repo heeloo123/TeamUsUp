@@ -135,7 +135,7 @@ methods: {
 
     computed: {
     pageCount() {
-      return Math.ceil(this.profiles.length / this.pageSize);
+      return Math.ceil(this.notifications.length / this.pageSize);
     },
   },
 
