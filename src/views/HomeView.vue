@@ -14,6 +14,9 @@
         <router-link to="/AdminPage"> admin page</router-link>|
         <router-link to="/notification">notification page</router-link>|
         <router-link to="/About"> About</router-link>
+        <router-link to="/StudentProfile">StudentProfile</router-link>|
+        <router-link to="/StudentProject"> StudentProject</router-link>
+        <router-link to="/SearchPage"> serachPage</router-link>
       </div>
 
       <form style="display: inline-flex; text-align: -webkit-center; margin: 50px">

@@ -15,7 +15,7 @@
           <p>Enter the email address associated with your account.We will email you a link to reset your password.</p>
         </div>
 
-        <form @submit.prevent="submitEmail" class="email">
+        <form @submit.prevent="submitEmail" @submit="checkEmailRegistered" class="email">
           <input
             type="email"
             id="email"
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import axios from "axios";
 const Swal = require("sweetalert2");
 export default {
   name: "ForgetPaswordView",
@@ -67,6 +68,43 @@ export default {
       }
     },
 
+    //onSubmitCheck() {
+    //  this.checkEmailRegistered(this.email);
+    //},
+
+    async checkEmailRegistered(email) {
+      try {
+        const response = await axios.get("http://49.245.48.28:8080/api/login)", {
+          params: {email},
+        })
+        
+        if (!response.data.exist) {
+          Swal.fire({
+            title: "Error!",
+            text: "User email is not registered.",
+            icon: "error",
+            confirmButtonText: "OK",
+          })
+        } 
+      }
+        catch(error) {
+          if (error.response && error.response.status === 401) {
+            Swal.fire({
+              title: "Error!",
+              text: "Unauthorised email",
+              icon: "error",
+              confirmButtonText: "OK",
+            }); 
+          }
+            else {
+              console.error(error)
+            }
+          }
+          
+        }
+      },
+    
+
     validateEmail() {
       // Regular expression to validate email has following pattern 'username@domain.com'
       //the type:email is done for this part,so <<< this need to link to db to check>>>
@@ -75,8 +113,8 @@ export default {
       // Return true if the email is valid, otherwise return false
       return emailCheck.test(this.email);
     },
-  },
-};
+  }
+
 </script>
 
 <style scoped>

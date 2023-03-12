@@ -6,7 +6,7 @@
           <!---->
           <form class="detail">
             <div class="project-pic">
-              <img :src="project.projectImage" alt="Project img" />
+              <img :src="profileImageSrc" alt="Project img" />
             </div>
             <p></p>
 
@@ -150,6 +150,14 @@ export default {
         console.log(error);
       });
   },
+  computed: {
+    profileImageSrc() {
+      const baseUrl = "http://49.245.48.28:8080";
+      const imagePath = `/api/project/image/${this.project.projectID}`;
+      return baseUrl + imagePath;
+    }
+ 
+},
 };
 </script>
 

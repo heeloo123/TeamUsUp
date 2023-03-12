@@ -122,14 +122,15 @@ export default {
   mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      this.$nextTick(() => {
+      
       Swal.showLoading();
       auth
         .fetchUserProfile()
         .then((response) => {
-          this.profile = response.data;
-          this.profile.image = "http://49.245.48.28:8080" + this.profile.image;
-          this.fetchProjects();
+          this.bio = response.data.bio;
+          this.selectedMajors = response.data.major;
+          this.profile.image = `http://49.245.48.28:8080/image/${response.data.id}`
+          // this.fetchProjects();
         })
         .catch((error) => {
           console.error(error);
@@ -137,23 +138,23 @@ export default {
         .finally(() => {
           Swal.hideLoading();
         });
-      });
+      
     }
   },
-  methods: {
-    fetchProjects() {
-      const auth = useAuthStore();
-      const projectId = this.profileID; 
+  // methods: {
+  //   fetchProjects() {
+  //     const auth = useAuthStore();
+  //     const projectId = this.profileID; 
 
-      auth.fetchProject(projectId)
-        .then((response) => {
-          this.projects = response.data;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-  },
+  //     auth.fetchProject(projectId)
+  //       .then((response) => {
+  //         this.projects = response.data;
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   },
+  // },
 };
 </script>
 <style scoped>

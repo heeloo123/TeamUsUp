@@ -50,8 +50,7 @@ export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
     isAuthenticated: false,
-
-    user: {},
+    user: JSON.parse(localStorage.getItem('userCredentials')) || {},
   }),
   actions: {
     async login(user) {
@@ -62,7 +61,9 @@ export const useAuthStore = defineStore({
           {
             headers: {
               Authorization: "Basic " + btoa(user.email + ":" + user.password),
+            
             },
+            withCredentials: true,
           }
         );
 
@@ -70,44 +71,31 @@ export const useAuthStore = defineStore({
           // Login successful
           console.log(result.data); // The user object returned by the server
           this.isAuthenticated = true;
-          user = this.user;
-          console.log(this.isAuthenticated);
+          localStorage.setItem('userCredentials', JSON.stringify(user));
+          console.log("isAuthenticated", this.isAuthenticated);
+
           console.log("Login successful");
           this.user = result.data;
+
+       
         } else {
           // Login failed
+         
           this.isAuthenticated = false;
-
           console.log("login failed!");
         }
       } catch (error) {
         console.error(error);
       }
     },
-     async logout() {
+    async logout() {
       // perform logout logic and set isAuthenticated to false
 
-      localStorage.clear();
       console.log("succesful log out");
       this.isAuthenticated = false;
-      this.user = "";
+      
     },
-    async fetchUserProfile() {
-      try {
-        const response = await axios.get(`${API_URL}/profile/userProfile`);
-        return response.data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    async fetchProject(projID) {
-      try {
-        const response = await this.axiosInstance.get(`/project/${projID}`);
-        return response.data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
+
   },
   getters: {
     isAdmin() {

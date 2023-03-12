@@ -4,7 +4,7 @@
             <div style="font-size: 40px; padding: 20px">Notification page</div>
                 <div class="container">
                     <div class="messageTable" v-for="(notification, index) in notifications" :key="index" @click="markAsRead(notifications)">
-                        <div class="cell" :timeCreated="notification.timeCreated">{{ notificationsMessage }}
+                        <div class="cell" :timeCreated="notification.timeCreated">{{ notifications.message }}
                             <div class="emailTimeStamp">
                                 {{ formatDate(currentTimeStamp()) }}
                             </div>
@@ -23,7 +23,8 @@
 
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
+//import { useNotificationStore } from '@/stores/notification';
 export default {
   name: "notificationView",
   component: {},
@@ -38,7 +39,7 @@ export default {
                     markAsRead: false, 
                     isClicked: false
                 },
-
+            
                 {
                     message: "",
                     notificationID: "",
@@ -46,7 +47,7 @@ export default {
                     markAsRead: false, 
                     isClicked: false,
                 },
-
+            
                 {
                     message: "",
                     notificationID: "",
@@ -70,6 +71,8 @@ export default {
             
         };
     },
+
+
 
         methods: {
             currentTimeStamp() {
@@ -99,40 +102,7 @@ export default {
             getYear() {
                 return new Date().getFullYear();
             },
-
-            async fetchNewNotifications() {
-                try {
-                    const response = await axios.get("http://49.245.48.28:8080/api/retrieveNew");
-                    this.notifications = response.data;
-                }
-                 catch(error) {
-                    console.error(error);
-                    }
-            },
-
-            async fetchAnyNotifications() {
-                try {
-                    const response = await axios.get("http://49.245.48.28:8080/api/retrieveAny");
-                    this.notifications = response.data;
-                }
-                  catch(error) {
-                    console.error(error);
-                  }
-            },
-
-            async markAsRead(notification) {
-                if (!notification.read) {
-                try {
-                    await axios.post("http://49.245.48.28:8080/api/markAsRead/${notificationID}", {readFlag: true});
-                    notification.read = true;
-                    this.$emit('read');
-                }
-                  catch(error) {
-                    console.error(error);
-                  }    
-                }
-                
-            },
+            
 
             handleClickEvent() {
                 this.isClicked = true;
@@ -151,7 +121,7 @@ export default {
        this.year() === this.getYear();
        this.month() === this.getMonth();
        this.fetchNewNotifications();
-       this.fecthAnyNotifications();
+       this.fetchAnyNotifications();
     },
 
 };

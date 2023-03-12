@@ -16,8 +16,9 @@ import AdminHome from "../views/AdminHomePage.vue";
 import StudentHomePage from "../views/StudentHomePage.vue";
 import NavView from "../views/NavView.vue";
 import NotificationVue from "@/views/Notification.vue";
-
-
+import StudentProfileView from "../views/StudentProfileView.vue";
+import StudentProjectView from "@/views/StudentProjectView.vue";
+import searchPage from "@/views/searchPage.vue";
 import { useAuthStore } from "@/stores/auth";
 
 
@@ -156,6 +157,21 @@ const routes = [
     name: "EditProfile",
     component: EditProfileView,
   },
+  {
+    path: "/StudentProfile/:reference",
+    name: "StudentProfile",
+    component: StudentProfileView,
+  },
+  {
+    path: "/StudentProject",
+    name: "StudentProject",
+    component: StudentProjectView,
+  },
+  {
+    path: "/searchPage",
+    name: "searchPage",
+    component: searchPage,
+  }
 ];
 
 const router = createRouter({
