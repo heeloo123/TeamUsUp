@@ -167,8 +167,11 @@ export default {
           .post(`${API_URL}/processAction`, { processAction })
           .then((response) => {
           console.log(response.data)
-          this.processAction = response.data.notiification.action; })
-            
+          this.processAction = response.data.notiification.action; 
+        })
+            .catch((error) => {
+            console.error(error);
+        })
     }
   }
 };
