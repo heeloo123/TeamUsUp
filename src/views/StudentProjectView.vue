@@ -1,16 +1,15 @@
 <template>
   <div>
     <div class="project-pic">
-              <img :src="profileImageSrc" alt="Project img" />
-            </div>
+      <img :src="projectImageSrc" alt="Project img" />
+    </div>
     <h1>Project name: {{ project.projectName }}</h1>
     <p>description: {{ project.projectDescription }}</p>
 
     <div v-for="(role, name) in project.nameRoleMap" :key="name">
-
-        <div class="profileImg">
-                    <img :src="role.profileImage" alt="profile picture" />
-                </div>
+      <div class="profileImg">
+        <img :src="role.profileImage" alt="profile picture" />
+      </div>
       <div
         style="
           border-radius: 20px;
@@ -27,30 +26,22 @@
           <label
             >Role:<span>{{ role.projectRole }}</span></label
           >
+          {{ role.id.profileID }}
         </div>
-      </div>
-
-      <div v-for="(evaluation, index) in evaluations" :key="index">
-        <p>
-          Teamwork:
-          {{
-            teamworkSums[evaluation.id.evaluateeID] /
-            evaluateeIDs[evaluation.id.evaluateeID]
-          }}
-        </p>
-        <p>
-          Skill :
-          {{
-            skillSums[evaluation.id.evaluateeID] / evaluateeIDs[evaluation.id.evaluateeID]
-          }}
-        </p>
-        <p>
-          Communication :
-          {{
-            communicationSums[evaluation.id.evaluateeID] /
-            evaluateeIDs[evaluation.id.evaluateeID]
-          }}
-        </p>
+        <div v-if="evaluateeIDs[role.id.profileID]">
+          <p>
+            Teamwork:
+            {{ teamworkSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
+          </p>
+          <p>
+            Skill :
+            {{ skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
+          </p>
+          <p>
+            Communication :
+            {{ communicationSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -70,7 +61,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://49.245.48.28:8080/api/project/proj6`)
+      .get(`http://49.245.48.28:8080/api/project/`)
       .then((response) => {
         this.project = response.data;
         this.status = response.status;
@@ -126,5 +117,13 @@ export default {
         console.error(error);
       });
   },
+  computed: {
+    projectImageSrc() {
+      const baseUrl = "http://49.245.48.28:8080";
+      const imagePath = `/api/project/image/${this.project.projectID}`;
+      return baseUrl + imagePath;
+    }
+ 
+},
 };
 </script>
