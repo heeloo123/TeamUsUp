@@ -49,6 +49,7 @@
 
 <script>
 import { useAuthStore } from "../stores/auth";
+import axios from "axios";
 //import axios from "axios";
 
 
@@ -83,7 +84,39 @@ export default {
         })
       }
     },
-  },
+  }
+    // async checkEmailRegistered(email) {
+    //   try {
+    //     const response = await axios.post("http://49.245.48.28:8080/api/login)", {
+    //       params: {email},
+    //     })
+        
+    //     if (!response.data.exist) {
+    //       Swal.fire({
+    //         title: "Error!",
+    //         text: "User email is not registered.",
+    //         icon: "error",
+    //         confirmButtonText: "OK",
+    //       })
+    //     } 
+    //   }
+    //     catch(error) {
+    //       if (error.response && error.response.status === 401) {
+    //         Swal.fire({
+    //           title: "Error!",
+    //           text: "Unauthorised email",
+    //           icon: "error",
+    //           confirmButtonText: "OK",
+    //         }); 
+    //       }
+    //         else {
+    //           console.error(error)
+    //         }
+    //       }
+          
+    //     }
+    //   },
+
 
 ///****************local storage**********************8 */
 //   async submitLogin() {

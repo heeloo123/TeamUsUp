@@ -18,3 +18,10 @@ app.use(pinia)
 app.use(Multiselect)
 
 app.mount('#app')
+
+
+import Cookies from 'js-cookie';
+Cookies.set('userCredentials', {
+    email: this.email,
+    password: this.password,
+  });

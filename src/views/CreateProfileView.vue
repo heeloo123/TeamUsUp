@@ -3,7 +3,7 @@
     <div class="background">
       <div class="container">
         <div class="item">
-          <h1 style="font-size: 40px; margin-left: -1300px">Create your profile</h1>
+          <h1 style="font-size: 40px; margin-left: -1200px">Create your profile</h1>
           <form class="detail" @submit.prevent="CreateProfile">
             <div class="profile-pic">
               
@@ -13,8 +13,8 @@
             
             <div style="padding: 15px; margin: 15px">
               <div style="font-size: 40px; margin-top: -10px">
-                <span> fname {{$state.user.firstName}} </span>
-                <span> lname {{$state.user.lastName}}  </span>
+                <span> {{$state.user.firstName}} </span>
+                <span> {{$state.user.lastName}}  </span>
               </div>
               <p></p>
               <div v-if="selectedMajors.length > 0" style="margin-bottom: 10px">
@@ -95,7 +95,16 @@ export default {
   mounted() {
     // make an axios GET request to retrieve the list of majors
     axios
-      .get("http://49.245.48.28:8080/api/profile/majors")
+      .get("http://49.245.48.28:8080/api/profile/majors"),
+      {},
+          {
+            headers: {
+              Authorization: "Basic " + btoa($state.email + ":" + $state.password),
+            
+            },
+            withCredentials: true,
+          }
+
       .then((response) => {
         // store the list of majors in the data object
         this.majors = response.data;
@@ -103,6 +112,17 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+    const $state = useAuthStore();
+    $state.hasProfile().then((hasProfile) => {
+      if (hasProfile) {
+        console.log('proflie',this.hasProfile)
+        Swal.fire({
+          title:"You already have a profile!",
+          showConfirmButton:false,
+        })
+        this.$router.push({ name: "StudentHome" });
+      }
+    });
   },
   methods: {
     CancelAlert() {
@@ -140,22 +160,17 @@ export default {
     };
     reader.readAsDataURL(this.file);
   },
-    },
+    
     async CreateProfile() {
       try {
-      
-        let formData = new FormData();
-    formData.append("biography", this.bio);
-    formData.append("profile_pic", this.profilePic);
-    formData.append("majors", JSON.stringify(this.selectedMajors));
+    
     await axios.post(
       "http://49.245.48.28:8080/api/profile/createProfile",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+   {biography:this.bio,
+    major:this.selectedMajors,
+    profile_pic:this.file,
+
+} 
     );
         
 
@@ -169,12 +184,12 @@ export default {
         });
       }
     },
-  
+  },
   computed: {
     // filter the list of majors based on the current input value
     filteredMajors: function () {
       return this.majors.filter((major) => {
-        return major.majorName.toLowerCase().includes(this.major.toLowerCase());
+        return major.majorName.toLowerCase().includes(this.selectedMajor.toLowerCase());
       });
     },
     $state() {
