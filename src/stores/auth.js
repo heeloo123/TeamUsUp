@@ -1,45 +1,4 @@
-// import { defineStore} from "pinia";
 
-// import axios from "axios"
-
-// const API_URL ="http://49.245.48.28:8080/api";
-
-// export const useAuthStore = defineStore({
-//   id: 'auth',
-//   state: () => ({
-//     isAuthenticated: false,
-//   }),
-//   actions: {
-//     async login(email, password) {
-//       try {
-//         // Make an API request to the server to authenticate the user
-//         const response = await axios.post(`${API_URL}/login`, {}, {
-//           headers: {
-//             Authorization: "Basic " + btoa(email + ":" + password)
-//           }
-//         });
-
-//         if (response.status === 202) {
-//           // Login successful
-//           console.log(response.data); // The user object returned by the server
-//           this.isAuthenticated = true;
-//           console.log("Login successful")
-//         } else {
-//           // Login failed
-//           console.log("login failed!")
-//         }
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//     logout() {
-//       // perform logout logic and set isAuthenticated to false
-//       this.isAuthenticated = false
-//     },
-//   },
-// })
-
-//mock test**********************
 import { defineStore } from "pinia";
 
 import axios from "axios";
@@ -55,7 +14,8 @@ export const useAuthStore = defineStore({
   },
   state: () => ({
     isAuthenticated: false,
-    user: JSON.parse(localStorage.getItem('userCredentials')) || {}, jsessionID: null,
+    user:  {},
+    jsessionID: "",
   }),
   actions: {
     async login(user) {
@@ -66,7 +26,6 @@ export const useAuthStore = defineStore({
           {
             headers: {
               Authorization: "Basic " + btoa(user.email + ":" + user.password),
-            
             },
             withCredentials: true,
           }
@@ -76,19 +35,16 @@ export const useAuthStore = defineStore({
           // Login successful
           console.log(result.data); // The user object returned by the server
           this.isAuthenticated = true;
-          localStorage.setItem('userCredentials', JSON.stringify(user));
+          this.user = result.data;
           console.log("isAuthenticated", this.isAuthenticated);
 
           console.log("Login successful");
-          this.user = result.data;
-        
-          const jsessionID = result.data.authorities.jsessionID;
-          this.$store.commit('setJSessionID', jsessionID);
           
-       
+
+          this.jsessionID = result.data.jsessionID;
         } else {
           // Login failed
-         
+
           this.isAuthenticated = false;
           console.log("login failed!");
         }
@@ -97,13 +53,22 @@ export const useAuthStore = defineStore({
       }
     },
     async logout() {
-      // perform logout logic and set isAuthenticated to false
-
-      console.log("succesful log out");
-      this.isAuthenticated = false;
-      
+      try {
+        await axios.post(API_URL + "/logout", {}, {
+          headers: {
+            "session-ID": this.jsessionID
+          },
+          withCredentials: true
+        });
+        console.log("Logout successful");
+        this.isAuthenticated = false;
+        this.user = {};
+        this.jsessionID = "";
+        this.$forceUpdate();
+      } catch (error) {
+        console.error(error);
+      }
     },
-
   },
   getters: {
     isAdmin() {
