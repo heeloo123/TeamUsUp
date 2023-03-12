@@ -148,7 +148,15 @@ export default {
 
         if (markAsRead === false && this.isClicked === true) {
             axios
-              .post(``)
+              .post(`${API_URL}/markAsRead`, { markAsRead })
+              .then((response) => {
+              console.log(response.data),
+              this.notifications = response.data.notification.markAsRead;
+        })
+              .catch((error) => {
+              console.error(error);
+          })
+
         }
                 
             
