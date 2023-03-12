@@ -105,6 +105,11 @@ export default {
                 }
             },
 
+            selectNotification(notification) {
+                this.selectedNotification = notification;
+                console.log(this.selectNotification);
+            },
+
             prevPage() {
                 if (this.currentPage > 1) {
                 this.currentPage -= 1;
