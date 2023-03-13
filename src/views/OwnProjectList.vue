@@ -47,7 +47,7 @@
     
 
           <div style="display: flex; justify-content: space-between">
-            <button class="defaultBtn" type="submit">Deactivate account</button>
+           
             <button class="defaultBtn">
               <router-link to="/createProject" class="link"
                 >Create another project here</router-link
