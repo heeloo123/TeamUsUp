@@ -158,30 +158,31 @@ export default {
       this.projectDescription.trim() !== ""
     ) {
       try {
-        const $state = useAuthStore();
-        let formData = new FormData();
-        formData.append("name", this.projectName);
-        formData.append("description", this.projectDescription);
-        formData.append("image", this.projectPic);
-        formData.append("users", JSON.stringify(this.userList));
-        const response = await axios.post(
-          "http://49.245.48.28:8080/api/project/createProject",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: "Basic " + btoa($state.email + ":" + $state.password),
-            },
-            withCredentials: true,
-          }
-        );
-        console.log(response);
-        Swal.fire({
-          icon: "success",
-          text: "Project has been created!",
-        });
-        // Navigate to project page
-        this.$router.push({ name: "Project" });
+        const auth = useAuthStore();
+        if (auth.isAuthenticated) {
+          const headers = {
+            "session-ID": auth.jsessionID,
+          };
+
+          let formData = new FormData();
+          formData.append("name", this.projectName);
+          formData.append("description", this.projectDescription);
+          formData.append("image", this.projectPic);
+          formData.append("users", JSON.stringify(this.userList));
+          const response = await axios.post(
+            "http://49.245.48.28:8080/api/project/createProject",
+            formData,
+            { headers }
+          );
+
+          console.log(response);
+          Swal.fire({
+            icon: "success",
+            text: "Project has been created!",
+          });
+          // Navigate to project page
+          this.$router.push({ name: "Project" });
+        }
       } catch (error) {
         Swal.fire({
           icon: "error",
