@@ -106,7 +106,7 @@ export default {
   data() {
     return {
       search: "",
-      userList: ["john", "jane"],
+      userList: [],
       projectName: "",
       projectDescription: "",
       projectPic: "",
@@ -124,26 +124,42 @@ export default {
       reader.readAsDataURL(this.file);
     },
     async searchUsers() {
-      try {
-        const response = await axios.get(
-          `http://49.245.48.28:8080/api/project/search?q=${this.search}`
-        );
-        return response.data; // assuming the API returns an array of users
-      } catch (error) {
-        console.error(error);
-      }
+      const url = `http://49.245.48.28:8080/api/search?query=${this.query}`;
+      axios
+        .get(url)
+        .then((response) => {
+          if (this.searchType === "") {
+            this.results = response.data;
+          } else {
+            this.results = response.data.filter(
+              (result) => result.resultType === this.searchType.capitalize()
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
+
   },
   async addUser() {
-    if (this.search && !this.userList.includes(this.search)) {
-      const searchResults = await this.searchUsers();
+  if (this.search && !this.userList.includes(this.search)) {
+    const searchResults = await this.searchUsers();
+    if (searchResults.length === 0) {
+      // show message here using sweetalert2
+      Swal.fire({
+        icon: "error",
+        text: "No users found!",
+      });
+    } else {
       const user = searchResults.find((result) => result.name === this.search);
       if (user) {
         this.userList.push(user);
       }
-      this.search = "";
     }
-  },
+    this.search = "";
+  }
+},
   deleteUser(index) {
     this.userList.splice(index, 1);
   },

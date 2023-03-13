@@ -18,15 +18,14 @@
           />
         </router-link>
 
-        <!--need to import db for search-->
-        <div style="display: block; margin-top: 10px; margin-left: 200px">
-          <input
-            class="SearchInput"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </div>
+      
+        
+   <router-link to="/SearchPage"> <img
+            style="width: 30px; margin-left:20px;margin-top:15px"
+            alt="TeamUsUp logo"
+            src="../assets/icons8-search-32.png"
+          /></router-link>
+        
       </div>
 
       <label style="float: right">

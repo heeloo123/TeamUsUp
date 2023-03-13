@@ -74,7 +74,7 @@ export default {
       try {
         const authStore = useAuthStore()
         await authStore.login({ email: this.email, password: this.password })
-        this.$router.push({ name: 'home' })
+        this.$router.push({ name: 'StudentHome' })
       } catch (error) {
         console.error(error)
         Swal.fire({

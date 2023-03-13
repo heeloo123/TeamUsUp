@@ -34,13 +34,21 @@
               <h1 style="font-size: 45px">Description</h1>
 
               <p>
-                They are designed to help students evaluate their potential teammates'
-                teamwork history and make informed decisions about future collaborations.
+                Welcome to TeamUsUp V2.0, the innovative web portal designed to empower
+                students to build their teamwork history and credentials for their future
+                professional life.
               </p>
 
               <p>
-                It allow students to create a profile and list their past projects,
-                including ratings and evaluations from other team memmbers.
+                TeamUsUp provides a unique opportunity for students to create their bio,
+                review their peers' teamwork skills, and self-evaluate their abilities as
+                team workers. By using this portal, you can build a verified teamwork
+                history with multiple individuals, which can be beneficial in a recruiting
+                scenario.
+              </p>
+              <p>
+                So, what are you waiting for? Join the TeamUsUp community today and start
+                building your teamwork history.
               </p>
             </section>
           </div>
@@ -62,28 +70,25 @@ import { useAuthStore } from "@/stores/auth";
 export default {
   name: "HomeView",
 
-
   computed: {
     $state() {
       return useAuthStore();
     },
     showSignUp() {
-      console.log('showsignup button',!this.$state.isAuthenticated)
-      console.log(this.$state.user)
-      return !this.$state.isAuthenticated
-      
+      console.log("showsignup button", !this.$state.isAuthenticated);
+      console.log(this.$state.user);
+      return !this.$state.isAuthenticated;
     },
 
     buttonDisabled() {
-      console.log('button disable',this.$state.isAuthenticated)
+      console.log("button disable", this.$state.isAuthenticated);
       return this.$state.isAuthenticated;
     },
   },
-  created(){
-    this.$forceUpdate
-
+  created() {
+    this.$forceUpdate;
   },
-  watch:{
+  watch: {
     $route() {
       // Re-compute the showSignUp computed property when the route changes
       this.$forceUpdate();
@@ -101,12 +106,12 @@ export default {
   //   buttonDisabled: false,
   //   user:null
   // }},
-//   mounted() {
-//     let user = localStorage.getItem("user-info");
-//     if (user) {
-//       this.user = JSON.parse(user);
-//     }
-//   },
+  //   mounted() {
+  //     let user = localStorage.getItem("user-info");
+  //     if (user) {
+  //       this.user = JSON.parse(user);
+  //     }
+  //   },
 };
 </script>
 
@@ -122,7 +127,7 @@ export default {
   margin-left: 70px;
   width: 600px;
   text-align: justify;
-  margin-top: 100px;
+  margin-top: 70px;
 }
 
 .T_logo {

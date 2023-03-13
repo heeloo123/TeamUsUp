@@ -1,55 +1,41 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
-      <!---->
-      <div>
-        ||||
-        <router-link to="/CreateProfile">Create Profile</router-link> |
-        <router-link to="/CreateProject">Create Project</router-link> |
-        <router-link to="/Profile">Profile</router-link> |
-        <router-link to="/EditProfile"> Edit Profile</router-link>|
-        <router-link to="/Project">Project</router-link> |
-        <router-link to="/EditProject"> Edit Project</router-link>|
-        <router-link to="/home"> student homee page</router-link>|
-        <router-link to="/AdminPage"> admin page</router-link>|
-        <router-link to="/notification">notification page</router-link>|
-        <router-link to="/About"> About</router-link>
-        <router-link to="/StudentProfile">StudentProfile</router-link>|
-        <router-link to="/StudentProject"> StudentProject</router-link>
-        <router-link to="/SearchPage"> serachPage</router-link>
+      <h1>Welcome to TeamUsUp portal!</h1>
+
+      <div v-if="showCreateProfile">
+        <h2 style="color: darkslategrey">
+          Ready to showcase your teamwork skills? Create a new project now and start
+          collaborating with others.
+        </h2>
+        <div style="background:white;margin:30px;padding:20px;border-radius:10px">
+        
+
+        <div class="router-container">
+          <img class="Tw" alt="Teamwork" src="../assets/teamwork.png" />
+
+          <router-link to="/CreateProject">
+            <div class="router">Ready to collaborate? Create your project now.</div>
+          </router-link>
+        </div>
+</div>
       </div>
 
-      <form style="display: inline-flex; text-align: -webkit-center; margin: 50px">
-        <div style="width: 700px; height: 700px">
-          <img class="T_logo" alt="TeamUsUp logo" src="../assets/Portal_logo.jpg" />
-          <div>
-            <img class="H_logo" alt="portal logo" src="../assets/Home_logo.png" />
-          </div>
+      <div v-else>
+        <h2>
+          Start building your teamwork history by creating your profile and project.
+        </h2>
+
+        <div class="router-container">
+          <router-link to="/CreateProfile">
+            <div class="router">Get started by creating your profile today.</div>
+          </router-link>
+
+          <router-link to="/CreateProject">
+            <div class="router">create project</div>
+          </router-link>
         </div>
-
-        <form style="display: inline-grid">
-          <div>
-            <section class="text">
-              <h1 style="font-size: 45px">Description</h1>
-
-              <p>
-                They are designed to help students evaluate their potential teammates'
-                teamwork history and make informed decisions about future collaborations.
-              </p>
-
-              <p>
-                It allow students to create a profile and list their past projects,
-                including ratings and evaluations from other team memmbers.
-              </p>
-            </section>
-          </div>
-          <nav>
-            <button class="SignUpButton" v-if="showSignUp" :disabled="buttonDisabled">
-              <router-link class="link" to="/SignUp">Sign-Up Now</router-link>
-            </button>
-          </nav>
-        </form>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -57,95 +43,81 @@
 <script>
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
+import axios from "axios";
+import Swal from "sweetalert2";
 import { useAuthStore } from "@/stores/auth";
+const API_URL = "http://49.245.48.28:8080/api";
+
 export default {
   name: "HomeView",
-
-
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      showCreateProfile: true,
+    };
+  },
   computed: {
     $state() {
       return useAuthStore();
     },
-    showSignUp() {
-      console.log('showsignup button',!this.$state.isAuthenticated)
-      console.log(this.$state.user)
-      return !this.$state.isAuthenticated
-      
-    },
-
-    buttonDisabled() {
-      console.log('button disable',this.$state.isAuthenticated)
-      return this.$state.isAuthenticated;
-    },
   },
-  created(){
-    this.$forceUpdate
+  async mounted() {
+    const auth = useAuthStore();
+    if (auth.isAuthenticated) {
+      Swal.showLoading();
 
+      const headers = {
+        "session-ID": auth.jsessionID,
+      };
+
+      try {
+        const response = await axios.get(`${API_URL}/profile/userProfile`, { headers });
+
+        if (response === 200) {
+          this.showCreafeProfile = true;
+        }
+      } catch (error) {
+        console.error(error);
+        this.showCreateProfile = false;
+      } finally {
+        Swal.close();
+      }
+    }
   },
-  watch:{
+
+  created() {
+    this.$forceUpdate;
+  },
+  watch: {
     $route() {
       // Re-compute the showSignUp computed property when the route changes
       this.$forceUpdate();
     },
   },
-
-  //   "$state.isAuthenticated"(newVal) {
-  //   if (!newVal) {
-  //     localStorage.removeItem("user-info");
-  //   }
-  // },
-
-  // data(){
-  //   return{
-  //   buttonDisabled: false,
-  //   user:null
-  // }},
-//   mounted() {
-//     let user = localStorage.getItem("user-info");
-//     if (user) {
-//       this.user = JSON.parse(user);
-//     }
-//   },
 };
 </script>
 
 <style scoped>
 .background {
-  background: rgb(224, 216, 216);
-  height: 100vh;
-  width: 100vw;
-
-  font-family: math;
+  background: rgb(238, 236, 236);
 }
-.text {
-  margin-left: 70px;
-  width: 600px;
-  text-align: justify;
-  margin-top: 100px;
+.router-container {
+  display: flex;
+  margin: 30px;
+  justify-content: space-evenly;
 }
 
-.T_logo {
-  width: -webkit-fill-available;
+.router {
+  width: 400px;
+  height: 500px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  background: rgb(248, 244, 244);
+  border-radius: 20px;
 }
 
-.H_logo {
-  width: -webkit-fill-available;
-}
-
-.text p {
-  font-size: 20px;
-  text-align: justify;
-}
-
-.SignUpButton {
-  height: 70px;
-  width: 170px;
-  background: #e12744;
-  border-radius: 40px;
-  color: white;
-  font-size: 25px;
-  border: transparent;
-  margin-left: 100px;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+.router:hover {
+  background: rgb(244, 240, 240);
 }
 </style>

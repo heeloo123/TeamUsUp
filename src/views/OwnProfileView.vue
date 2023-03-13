@@ -93,11 +93,17 @@
             </div>
           </form>
 
-          <form style="display: flex; justify-content: space-between">
+          <form style="display: flex; justify-content: space-between;margin-left:-40px;margin-right:30px">
             <button class="defaultBtn" type="submit">Deactivate account</button>
             <button class="defaultBtn">
+              <router-link to="/EditProject" class="link"
+                >Edit</router-link
+              >
+            </button>
+            
+            <button class="defaultBtn">
               <router-link to="/createProject" class="link"
-                >Create another project here</router-link
+                >Create another project </router-link
               >
             </button>
           </form>
