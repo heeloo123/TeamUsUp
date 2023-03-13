@@ -13,10 +13,12 @@
                                 </div>    
                         </div>       
                     </div>
-                    <div style="margin-left: auto">Page {{ currentPage }} of {{ pageCount }}</div>
-                    <button class="B" v-if="currentPage > 1" @click="prevPage">Prev</button>
-                    <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>         
-                </div>
+                    <div style="display: flex; margin: 20px">
+                        <div style="margin-left: auto">Page {{ currentPage }} of {{ pageCount }}</div>
+                        <button class="B" v-if="currentPage > 1" @click="prevPage">Prev</button>
+                        <button class="B" v-if="currentPage < pageCount" @click="nextPage">Next</button>
+                    </div>         
+            </div>
         </div>
     </div>
     
@@ -131,6 +133,12 @@ methods: {
         },
     },
 
+    computed: {
+    pageCount() {
+      return Math.ceil(this.notifications.length / this.pageSize);
+    },
+  },
+
     mounted() {
        this.date === this.getDate();
        this.time() === this.getTime();
@@ -199,8 +207,8 @@ methods: {
             .catch((error) => {
             console.error(error);
         })
+      }
     }
-  }
 };
     
 
