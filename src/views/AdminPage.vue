@@ -37,9 +37,9 @@
             :class="{ selected: selectedProfile === profile }"
           >
             <div class="trow">
-              <div class="cell">{{ profile.firstName }} {{ profile.lastName }}</div>
-              <div class="cell">{{ profile.major }}</div>
-              <div class="cell">{{ profile.accountStatus }}</div>
+              <div class="cell" v-for="name in profiles" :key="name.userID">{{ profile.firstName }} {{ profile.lastName }}</div>
+              <div class="cell" v-for="major in profiles" :key="major.majorCode">{{ profile.majorName }}</div>
+              <div class="cell" v-for="status in profiles" :key="status.userID">{{ profile.status }}</div>
 
               <div class="cell">
                 <form
@@ -66,111 +66,24 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
+import Swal from 'sweetalert2';
+
+const API_URL ="http://49.245.48.28:8080/api"
+
 export default {
   name: "AdminHome",
+  props: ["userID"],
   component: {},
 
   data() {
     return {
       showDropdown: false, //dropdown
-      profiles: [
-        {
-          firstName: "Joe",
-          lastName: "Doe",
-          major: "Computer Science",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Devin",
-          lastName: "Doe",
-          major: "Design",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Sean",
-          lastName: "Doe",
-          major: "Business",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Calvin",
-          lastName: "Doe",
-          major: "Design",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Harry",
-          lastName: "Doe",
-          major: "Computer Science",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Mary",
-          lastName: "Doe",
-          major: "Business",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Perry",
-          lastName: "Doe",
-          major: "Computer Science",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Zen",
-          lastName: "Doe",
-          major: "Design",
-          accountStatus: "Deactivated, Locked",
-        },
-        {
-          firstName: "Harry",
-          lastName: "Doe",
-          major: "Computer Science",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Mary",
-          lastName: "Doe",
-          major: "Business",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Perry",
-          lastName: "Doe",
-          major: "Computer Science",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Zen",
-          lastName: "Doe",
-          major: "Design",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Boob13",
-          lastName: "Doe",
-          major: "Computer Science",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "Takashi14",
-          lastName: "Doe",
-          major: "Design",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "yoshi15",
-          lastName: "Doe",
-          major: "Computer Science",
-          accountStatus: "Active, Unlocked",
-        },
-        {
-          firstName: "inoki14",
-          lastName: "Doe",
-          major: "Design",
-          accountStatus: "Active, Unlocked",
-        },
-      ],
+      profiles: [],
+      profilesStatus: [],
+      profilesMajors: [],
+
       selectedProfile: null,
       searchText: "",
       pageSize: 10,
@@ -237,6 +150,57 @@ export default {
       this.filteredProfiles;
     },
   },
+
+  mounted() {
+
+  const auth = useAuthStore();
+  if (auth.isAdmin) {
+    Swal.showLoading();
+
+    const headers= {
+      "session-ID": auth.jsessionID,
+    }
+
+    axios
+      .get(`${API_URL}/admin/userList`, {headers})
+      .then((response) => {
+        console.log(response.data);
+        this.profile = response.data;
+        console.log("profile", response.data.profiles);
+        this.firstName = response.data;
+        this.lastName = response.data;
+        this.major = response.data;
+        this.isAccountLocked = response.data;
+        this.isAccount
+      })
+        .catch((error) => {
+          console.error(error);
+        });
+
+
+    axios
+      .put(`${API_URL}/admin/archiveUserProfile`, {headers})
+      .then((response) => {
+        console.log("archiveUserProfile", response.data.archiveUserProfile);
+        this.archiveUserProfile = response.data.archiveUserProfile.map((user) => {
+          const userID = user.reference;
+          console.log(user.reference);
+          axios
+            .put(`${API_URL}/archiveUserProfile/${userID}`, { headers })
+
+            .catch((error) => {
+              console.error(error);
+            });
+          return user;
+        });
+      })
+      .finally(() => {
+        Swal.hideLoading();
+      });
+
+    }
+  }
+
 };
 </script>
 

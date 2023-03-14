@@ -4,15 +4,14 @@
       <div class="container">
         <div class="item">
           <h1 style="font-size: 40px; margin-left: -1200px">Edit profile</h1>
-          <form class="detail" @submit.prevent="submitForm">
+          <form class="detail" @submit.prevent="EditProfile">
             <div class="profile-pic">
-              <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
+              <img
+                v-if="imagePreview"
+                :src="imagePreview"
+                alt="Image Preview"
+              />
             </div>
-
-           
-
-
-
 
             <div style="padding: 15px; margin: 15px">
               <div style="font-size: 40px; margin-top: -10px">
@@ -22,14 +21,22 @@
               <p></p>
               <div v-if="selectedMajors.length > 0" style="margin-bottom: 10px">
                 <ul class="selectedmajor">
-                  <span v-for="major in selectedMajors" :key="major">{{ major }}
-                  <button
-                   
-                    @click="deselectMajor(major)"
-                    style="color: red; background: none; border: none; cursor: pointer"
-                  >
-                 <img style="width: 20px" src="../assets/delete.png" />
-                  </button></span>
+                  <span v-for="major in selectedMajors" :key="major"
+                    >{{ major.majorName }}
+                    <button
+                      @click="deselectMajor(major)"
+                      style="
+                        color: red;
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                      "
+                    >
+                      <img
+                        style="width: 20px"
+                        src="../assets/delete.png"
+                      /></button
+                  ></span>
                 </ul>
               </div>
 
@@ -37,7 +44,6 @@
 
               <select
                 class="majorSelect"
-               
                 v-model="selectedMajor"
                 @change="selectMajor(selectedMajor)"
               >
@@ -47,7 +53,8 @@
                   :key="major.majorCode"
                   :value="major.majorName"
                   :disabled="
-                    selectedMajors.includes(major.majorName) && selectedMajors.length >= 2
+                    selectedMajors.includes(major.majorName) &&
+                    selectedMajors.length >= 2
                   "
                 >
                   {{ major.majorName }}
@@ -63,18 +70,27 @@
               ></textarea>
 
               <div style="margin-left: -250px">
-                <input type="file" id="profilePic" @change="handleFileSelect" />
+                <input
+                  type="file"
+                  id="profilePic"
+                  v-on:change="handleFileSelect"
+                />
               </div>
-              <div style="display: flex; justify-content: space-between; margin-left:-350px;margin-top:80px">
-            <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
-            <button class="defaultBtn" type="submit">Save</button>
-          </div>
-
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-left: -350px;
+                  margin-top: 80px;
+                "
+              >
+                <button class="defaultBtn" @click.prevent="CancelAlert">
+                  Cancel
+                </button>
+                <button class="defaultBtn" type="submit">Save</button>
+              </div>
             </div>
-        
-
-         
-            </form>
+          </form>
         </div>
       </div>
     </div>
@@ -86,27 +102,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuthStore } from "@/stores/auth";
 export default {
-  name: "editProfile",
-  async created() {
-    const auth = useAuthStore();
-    if (auth.isAuthenticated) {
-      try {
-        const headers = {
-          "session-ID": auth.jsessionID,
-        };
-        const response = await axios.get("http://49.245.48.28:8080/api/profile/userProfile", { headers });
-        this.userProfile = response.data;
-        this.form = {
-          firstName: this.userProfile.firstName,
-          lastName: this.userProfile.lastName,
-          email: this.userProfile.email,
-          bio: this.userProfile.bio,
-        };
-      } catch (error) {
-        console.error('userProfile'.error);
-      }
-    }
-  },
+  name: "EditProfileView",
   data() {
     return {
       file: null,
@@ -116,15 +112,18 @@ export default {
       selectedMajors: [],
       selectedMajor: null,
       profilePic: "",
+      profileID: "",
     };
   },
   async mounted() {
     // make an axios GET request to retrieve the list of majors
+    console.log("mounted function");
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
       const headers = {
         "session-ID": auth.jsessionID,
       };
+
       axios
         .get("http://49.245.48.28:8080/api/profile/majors", { headers })
 
@@ -133,30 +132,46 @@ export default {
           this.majors = response.data;
         })
         .catch((error) => {
-          console.log('major',error);
+          console.log(error);
+        });
+      axios
+        .get("http://49.245.48.28:8080/api/profile/userProfile", {
+          headers: {
+            "session-ID": auth.jsessionID,
+          },
+        })
+        .then((res) => {
+          this.bio = res.data.biography;
+          this.selectedMajors = res.data.majors;
+          this.profileID = res.data.profileID;
         });
     }
   },
   methods: {
     CancelAlert() {
       Swal.fire({
-        title: "Leave site?",
-        text: "Any changes you made may not be saved.",
+        title: "Are you sure?",
+        text: "It is good to create a profile to let people find you!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Leave",
+        confirmButtonText: "yes",
         cancelButtonText: "No,stay on this page",
       }).then((result) => {
         if (result.isConfirmed) {
           this.$router.push({ name: "home" });
         } else {
-          this.$router.push({ name: "EditProfile" });
+          this.$router.push({ name: "CreateProfile" });
         }
       });
     },
     selectMajor(majorName) {
-      if (this.selectedMajors.length < 2 && !this.selectedMajors.includes(majorName)) {
-        this.selectedMajors.push(majorName);
+      if (
+        this.selectedMajors.length < 2 &&
+        !this.selectedMajors.includes(majorName)
+      ) {
+        this.selectedMajors.push(
+          this.majors.find((m) => m.majorName === majorName)
+        );
       }
     },
     deselectMajor(majorName) {
@@ -165,39 +180,75 @@ export default {
 
     handleFileSelect(event) {
       this.file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-      reader.readAsDataURL(this.file);
+      if (this.file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreview = reader.result;
+        };
+        reader.readAsDataURL(this.file);
+      }
     },
 
-    async submitForm() {
-      try {
-        const auth = useAuthStore();
-        if (auth.isAuthenticated) {
-          const headers = {
-            "session-ID": auth.jsessionID,
-          };
-
-          await axios.patch(
+    async EditProfile() {
+      const auth = useAuthStore();
+      if (auth.isAuthenticated) {
+        axios
+          .patch(
             "http://49.245.48.28:8080/api/profile/editProfile",
-
-            { biography: this.bio, major: this.selectedMajors, profile_pic: this.file },
             {
-              headers,
+              biography: this.bio,
+              majors: this.selectedMajors,
+              profileID: this.profileID,
+            },
+            {
+              headers: {
+                "session-ID": auth.jsessionID,
+              },
             }
-          );
-          Swal.fire({ icon: "success" });
-          console.log(this.bio,this.selectMajor,this.file)
+          )
+          .then((res) => {
+            if (res.status === 202) {
+              console.log("Profile post success");
+              if (this.file) {
+                const formData = new FormData();
+                formData.append("image", this.file);
 
-          this.$router.push({ name: "StudentHome" });
-        }
-      } catch (error) {
-        Swal.fire({
-          title: "Something went wrong",
-          icon: "error",
-        });
+                axios.post(
+                  "http://49.245.48.28:8080/api/profile/userProfile/image",
+                  formData,
+                  {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                      "session-ID": auth.jsessionID,
+                    },
+                  }
+                );
+              }
+
+              Swal.fire({
+                title: "Profile successfully edited",
+                icon: "success",
+                confirmButtonText: "OK",
+              }).then(() => {
+                this.$router.push({ name: "home" });
+              });
+            } else {
+              Swal.fire({
+                title: "Something went wrong during profile creation",
+                icon: "failure",
+                confirmButtonText: "OK",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire({
+              title: "Error",
+              text: "An error occurred while creating your profile. Please try again later.",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          });
       }
     },
   },
@@ -273,11 +324,11 @@ textarea {
   display: flex;
 }
 
-.selectedmajor span{
+.selectedmajor span {
   background: rgb(234, 229, 229);
   margin: 10px;
-    border-radius: 20px;
-    padding: 5px;
-    font-size: 17px;
+  border-radius: 20px;
+  padding: 5px;
+  font-size: 17px;
 }
 </style>

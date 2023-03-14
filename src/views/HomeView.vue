@@ -14,8 +14,7 @@
         <router-link to="/AdminPage"> admin page</router-link>|
         <router-link to="/notification">notification page</router-link>|
         <router-link to="/About"> About</router-link>
-        <router-link to="/StudentProfile">StudentProfile</router-link>|
-        <router-link to="/StudentProject"> StudentProject</router-link>
+        <router-link to="/EvaluationPage"> EP</router-link>   |
         <router-link to="/SearchPage"> serachPage</router-link>
         <router-link to="/ownPView"> own project</router-link>
       </div>

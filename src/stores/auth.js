@@ -64,6 +64,7 @@ export const useAuthStore = defineStore({
         if (result.status === 200) {
           // User has a profile, navigate to home page
           this.hasProfile = true
+          this.result = result.data
           
         } else {
           // User does not have a profile, show error message

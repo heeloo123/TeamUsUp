@@ -118,54 +118,50 @@ export default {
       console.warn("signup", this.name, this.email, this.password);
     },
     async signUp() {
-      try {
-        const loading = Swal.fire({
-          title: "Signing up...",
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-        });
-        let result = await axios.post("http://49.245.48.28:8080/api/register", {
-          email: this.email,
-          password: this.password,
-          firstName: this.firstName,
-          lastName: this.lastName,
-        });
-        console.warn(result);
-        if (result.status == 201) {
-          loading.close();
-          Swal.fire({
-            title: "Welcome",
-            icon: "success",
-            timer: 1000,
-            showConfirmButton: false,
-          });
+  try {
+    const loading = Swal.fire({
+      title: "Signing up...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    let result = await axios.post("http://49.245.48.28:8080/api/register", {
+      email: this.email,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName,
+    });
+    console.warn(result);
+    loading.close();
 
-          // localStorage.setItem("user-info",JSON.stringify(result.data))
-          this.$router.push({ name: "home" });
+    if (result.status == 201) {
+      Swal.fire({
+        title: "Welcome",
+        icon: "success",
+        timer: 1000,
+        showConfirmButton: false,
+      });
+     
 
-          //auto log in user
-          const authStore = useAuthStore();
-          await authStore.login({
-            email: this.email,
-            password: this.password,
-          });
-          console.log(this.email, this.password);
-        } else {
-          loading.close();
-          Swal.fire({
-            title: "Somethings wrong...",
-            icon: "error",
-          });
-        }
-      } catch (error) {
-        Swal.fire({
-          title: "Something went wrong",
-          icon: "error",
-        });
-      }
-    },
+      //auto log in user
+      const authStore = useAuthStore();
+      await authStore.login({
+        email: this.email,
+        password: this.password,
+      });
+      this.$router.push({ name: "StudentHome" });
+      console.log(this.email, this.password);
+    }  
+  } catch (error) {
+    Swal.fire({
+        title: "Email already exists",
+        icon: "error",
+        timer: 1000,
+        showConfirmButton: false,
+      });
+  }
+},
   },
   // mounted(){
   //   let user = localStorage.getItem('user-info');

@@ -3,14 +3,18 @@
         <div class="background">
             <div style="font-size: 40px; padding: 20px">Notification page</div>
                 <div class="container">
-                    <div class="messageTable" v-for="(notification, index) in notifications" :key="index" @click="markAsRead(notifications)">
-                        <div class="cell" :timeCreated="notification.timeCreated">{{ notifications.message }}
-                            <div class="emailTimeStamp">
-                                {{ formatDate(currentTimeStamp()) }}
-                            </div>
-                                <div class="readflag" v-show="notification.isClicked"> 
+                    <div class="messageTable" v-for="(notification, index) in notifications" :key="index" 
+                    @click="openNotification" :class="{ 'read': markAsRead }">
+                        <div class="cell" :timeCreated="notification.timeCreated">{{ notification.message }}
+                            <div v-if="showFullMessage">
+                                {{  notification.fullMessage }}
+                            </div> 
+                                <div class="emailTimeStamp">
+                                    {{ formatDate(currentTimeStamp()) }}
+                                </div>
+                                <div class="readflag" v-if="markAsRead"> 
                                     Read
-                                </div>    
+                                </div>
                         </div>       
                     </div>
                     <div style="display: flex; margin: 20px">
@@ -42,10 +46,10 @@ export default {
         return {
             notifications: [
                 {
-                    message: "",
-                    timeCreated: this.formatDate(),
-                    markAsRead: false, 
-                    isClicked: false
+                    message: "John doe has added you to project Y",
+                    fullMessage: "John doe has added you to project Y. Please verify your participation in project Y. Yes or No.",
+                    action: Boolean,
+                    timeCreated: "",
                 },
             
             ],
@@ -60,9 +64,11 @@ export default {
             ],
 
             isClicked: false,
+            markAsRead: false,
             action: null,
             pageSize: 10,
             currentPage: 1,
+            showFullMessage: false,
             
         };
     },
@@ -81,6 +87,8 @@ methods: {
         const options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}
         return new Date(date).toLocaleDateString('en-gb', options);
     },
+
+   
 
     getDate() {
         return new Date().toLocaleDateString();
@@ -109,9 +117,9 @@ methods: {
         }
     },
 
-    selectNotification(notification) {
-        this.selectedNotification = notification;
-        console.log(this.selectNotification);
+    openNotification() {
+        this.markAsRead = true;
+        this.showFullMessage = !this.showFullMessage;
     },
 
     prevPage() {
@@ -145,28 +153,17 @@ methods: {
        this.year() === this.getYear();
        this.month() === this.getMonth();
 
+
        const auth = useAuthStore();
        if (auth.isAuthenticated) {
         Swal.showLoading();
         
-        const newNotification = {
-            newNotification: `{email}`
-        }
-        
-        const anyNotification = {
-            anyNotification: `{email}`
-        }
-
-        const markAsRead = {
-            markAsRead: `{notificationID}`
-        }
-
-        const processAction = {
-            processAction: `{notificationID, action}`
+        const headers = {
+            "session-ID": auth.jsessionID,
         }
 
         axios
-          .get(`${API_URL}/retrieveNew`, { newNotification })
+          .get(`${API_URL}/notification/retrieveNew`, { headers })
           .then((response) => {
             console.log(response.data)
             this.newNotification = response.data.newNotification;
@@ -176,7 +173,7 @@ methods: {
         })
 
         axios
-          .get(`${API_URL}/retrieveAny`, { anyNotification })
+          .get(`${API_URL}/notification/retrieveAny`, { headers })
           .then((response) => {
             console.log(response.data)
             this.anyNotification = response.data.anyNotification;
@@ -185,9 +182,9 @@ methods: {
             console.error(error);
         })
 
-        if (markAsRead === false && this.isClicked === true) {
+        if (this.markAsRead === false && this.isClicked === true) {
             axios
-              .post(`${API_URL}/markAsRead`, { markAsRead }, {readflag: true})
+              .post(`${API_URL}/notification/markAsRead/`, { headers }, {readflag: true})
               .then((response) => {
               console.log(response.data)
               this.notifications = response.data.notification.markAsRead;
@@ -199,7 +196,7 @@ methods: {
         }
 
         axios
-          .post(`${API_URL}/processAction`, { processAction })
+          .post(`${API_URL}/notification/processAction`, { headers })
           .then((response) => {
           console.log(response.data)
           this.processAction = response.data.notiification.action; 
@@ -207,6 +204,11 @@ methods: {
             .catch((error) => {
             console.error(error);
         })
+
+        .finally(() => {
+            Swal.hideLoading();
+        });
+
       }
     }
 };
@@ -245,6 +247,13 @@ methods: {
     text-align: right;
     margin-right: 165px;
     margin-top: -18px;
+}
+
+.fullMessage {
+    background: rgb(255, 255, 255);
+    width: auto;
+    height: auto;
+    text-align: center;
 }
 
 </style>

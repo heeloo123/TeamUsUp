@@ -13,6 +13,25 @@
             <div class="text" style="display: block; margin-left: 20px">
               <span style="font-size: 30px">Project name: </span>
               <label>{{ project.projectName }}</label>
+              <span style="float: right">
+                <label>
+                  <RouterLink
+                    :to="{
+                      name: 'SelfEva',
+                      params: {
+                        reference: $route.params.reference,
+                        
+                      },
+                    }"
+                  >
+                    self evaluation
+                  </RouterLink>
+                </label>
+                <label>
+                  <button @click.prevent="showUserList">Peer Evaluation</button>
+                </label>
+              </span>
+
               <div style="margin-top: 50px">
                 <div style="font-size: 30px">Project description:</div>
                 <p>{{ project.projectDescription }}</p>
@@ -26,7 +45,10 @@
 
           <div class="memberlist">
             <RouterLink
-              :to="{ name: 'StudentProfile', params: { reference: role.id.profileID } }"
+              :to="{
+                name: 'StudentProfile',
+                params: { reference: role.id.profileID },
+              }"
               v-for="(role, name) in project.nameRoleMap"
               :key="name"
             >
@@ -88,7 +110,14 @@
           <div style="margin-left: 1500px; display: flex">
             <nav>
               <button class="defaultBtn">
-                <router-link to="/EditProject"> Edit Project</router-link>
+                <router-link
+                  :to="{
+                    name: 'EditProjectView',
+                    params: { reference: $route.params.reference},
+                  }"
+                >
+                  Edit Project</router-link
+                >
               </button>
             </nav>
           </div>
@@ -101,7 +130,9 @@
 <script>
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
+
 const API_URL = "http://49.245.48.28:8080/api";
+import Swal from "sweetalert2";
 
 export default {
   name: "ProjectView",
@@ -114,6 +145,49 @@ export default {
       communicationSums: {},
     };
   },
+  methods: {
+    async showUserList() {
+      const options = [];
+      const role = []
+      for (const [name, user] of Object.entries(this.project.nameRoleMap)) {
+        console.log(name);
+        console.log(user);
+        options.push(name);
+        role.push(user);
+      }
+      console.log("Options : " + options);
+      try {
+        await new Promise((resolve) => {
+          Swal.fire({
+            title: "Select a role",
+            input: "select",
+            inputOptions: options,
+            inputLabel: "Role",
+            showCancelButton: true,
+            cancelButtonText: "Cancel",
+            confirmButtonText: "Select",
+            preConfirm: (value) => {
+              resolve(value);
+            },
+          });
+        }).then((res) => {
+          console.log(res)
+          const selectedRole = role[res]
+          this.$router.push({
+            name: "PeerEva",
+            params: {
+              reference: this.$route.params.reference,
+              profileID: selectedRole.id,
+            },
+          });
+        });
+
+        // If the user clicked "Select", navigate to the PeerEva page with the selected role
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
   mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
@@ -121,11 +195,12 @@ export default {
         "session-ID": auth.jsessionID,
       };
       axios
-        .get(`${API_URL}/project/proj6`, { headers })
+        .get(`${API_URL}/project/${this.$route.params.reference}`, { headers })
 
         .then((response) => {
           this.project = response.data;
           console.log(response);
+
           const evaluateeIDs = {};
           const teamworkSums = {};
           const skillSums = {};
@@ -203,6 +278,7 @@ export default {
   width: auto;
   margin: 50px;
 }
+
 .item {
   display: inline-table;
 }
@@ -214,6 +290,7 @@ export default {
 
   margin-left: 60px;
 }
+
 .project-pic {
   background: rgb(234, 231, 231);
   width: 320px;
@@ -222,11 +299,13 @@ export default {
   margin-top: 45px;
   overflow: hidden;
 }
+
 .project-pic img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .profileImg {
   width: 100px;
   height: 100px;
@@ -235,6 +314,7 @@ export default {
   overflow: hidden;
   border-radius: 100px;
 }
+
 .profileImg img {
   width: 100%;
   height: 100%;
@@ -245,6 +325,7 @@ export default {
   font-size: 25px;
   padding: 20px;
 }
+
 .text p {
   background: rgb(239, 232, 232);
   display: content;
@@ -263,6 +344,7 @@ export default {
   border-radius: 20px;
   padding: 20px;
 }
+
 .name-role {
   margin: 30px;
   display: inline-grid;
@@ -271,16 +353,20 @@ export default {
   max-width: 400px;
   flex: 1;
 }
+
 .name-role label {
   display: flex;
   font-weight: bold;
 }
+
 .name-role span {
   margin-left: 10px;
 }
+
 .memberlist {
   margin-right: 30px;
 }
+
 .memberlist a {
   text-decoration: none;
   color: black;

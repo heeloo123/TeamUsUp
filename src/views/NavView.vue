@@ -10,7 +10,7 @@
           />
         </router-link>
 
-        <router-link to="/">
+        <router-link to="/home">
           <img
             style="width: 40px; margin-top: 10px"
             alt="TeamUsUp logo"

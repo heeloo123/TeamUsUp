@@ -9,11 +9,6 @@
               <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
             </div>
 
-           
-
-
-
-
             <div style="padding: 15px; margin: 15px">
               <div style="font-size: 40px; margin-top: -10px">
                 <span> {{ $state.user.firstName }} </span>
@@ -22,14 +17,14 @@
               <p></p>
               <div v-if="selectedMajors.length > 0" style="margin-bottom: 10px">
                 <ul class="selectedmajor">
-                  <span v-for="major in selectedMajors" :key="major">{{ major }}
-                  <button
-                   
-                    @click="deselectMajor(major)"
-                    style="color: red; background: none; border: none; cursor: pointer"
-                  >
-                 <img style="width: 20px" src="../assets/delete.png" />
-                  </button></span>
+                  <span v-for="major in selectedMajors" :key="major"
+                    >{{ major }}
+                    <button
+                      @click="deselectMajor(major)"
+                      style="color: red; background: none; border: none; cursor: pointer"
+                    >
+                      <img style="width: 20px" src="../assets/delete.png" /></button
+                  ></span>
                 </ul>
               </div>
 
@@ -37,7 +32,6 @@
 
               <select
                 class="majorSelect"
-               
                 v-model="selectedMajor"
                 @change="selectMajor(selectedMajor)"
               >
@@ -63,18 +57,21 @@
               ></textarea>
 
               <div style="margin-left: -250px">
-                <input type="file" id="profilePic" @change="handleFileSelect" />
+                <input type="file" id="profilePic" v-on:change="handleFileSelect" />
               </div>
-              <div style="display: flex; justify-content: space-between; margin-left:-350px;margin-top:80px">
-            <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
-            <button class="defaultBtn" type="submit">Create</button>
-          </div>
-
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-left: -350px;
+                  margin-top: 80px;
+                "
+              >
+                <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
+                <button class="defaultBtn" type="submit">Create</button>
+              </div>
             </div>
-        
-
-         
-            </form>
+          </form>
         </div>
       </div>
     </div>
@@ -129,7 +126,7 @@ export default {
         cancelButtonText: "No,stay on this page",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push({ name: "home" });
+          this.$router.push({ name: "StudentHome" });
         } else {
           this.$router.push({ name: "CreateProfile" });
         }
@@ -146,45 +143,80 @@ export default {
 
     handleFileSelect(event) {
       this.file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-      reader.readAsDataURL(this.file);
+      if (this.file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreview = reader.result;
+        };
+        reader.readAsDataURL(this.file);
+      }
     },
 
     async CreateProfile() {
-      try {
-        const auth = useAuthStore();
-        if (auth.isAuthenticated) {
-          const headers = {
-            "session-ID": auth.jsessionID,
-          };
-
-          await axios.post(
-            "http://49.245.48.28:8080/api/profile/createProfile",
-
-            { biography: this.bio, major: this.selectedMajors, profile_pic: this.file },
-            {
-              headers,
-            }
-          );
-          Swal.fire({ icon: "success" });
-          console.log(this.bio,this.selectMajor,this.file)
-
-          this.$router.push({ name: "StudentHome" });
-        }
-      } catch (error) {
-        Swal.fire({
-          title: "Something went wrong",
-          icon: "error",
+      const auth = useAuthStore();
+      if (auth.isAuthenticated) {
+        var foundMajor = [];
+        this.selectedMajors.forEach((major) => {
+          foundMajor.push(this.majors.find((m) => m.majorName === major));
         });
+        axios
+          .post(
+            "http://49.245.48.28:8080/api/profile/createProfile",
+            { biography: this.bio, majors: foundMajor },
+            {
+              headers: {
+                "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 201) {
+              console.log("Profile post success");
+              if (this.file) {
+                const formData = new FormData();
+                formData.append("image", this.file);
+
+                axios.post(
+                  "http://49.245.48.28:8080/api/profile/userProfile/image",
+                  formData,
+                  {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                      "session-ID": auth.jsessionID,
+                    },
+                  }
+                );
+              }
+
+              Swal.fire({
+                title: "Profile created",
+                icon: "success",
+                confirmButtonText: "OK",
+              }).then(() => {
+                this.$router.push({ name: "StudentHome" });
+              });
+            } else {
+              Swal.fire({
+                title: "Something went wrong during profile creation",
+                icon: "failure",
+                confirmButtonText: "OK",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire({
+              title: "Error",
+              text:
+                "An error occurred while creating your profile. Please try again later.",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          });
       }
     },
   },
   computed: {
-    // filter the list of majors based on the current input value
-
     $state() {
       return useAuthStore();
     },
@@ -254,11 +286,11 @@ textarea {
   display: flex;
 }
 
-.selectedmajor span{
+.selectedmajor span {
   background: rgb(234, 229, 229);
   margin: 10px;
-    border-radius: 20px;
-    padding: 5px;
-    font-size: 17px;
+  border-radius: 20px;
+  padding: 5px;
+  font-size: 17px;
 }
 </style>

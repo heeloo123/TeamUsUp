@@ -97,10 +97,10 @@ export default {
           this.profile = response.data;
           this.majors = response.data.majors;
           this.projects = response.data.projects.map((project) => {
-            const projID = project.reference;
+           
             console.log(project.reference);
             axios
-              .get(`${API_URL}/api/project/${projID}`, { headers })
+              .get(`${API_URL}/api/project/${this.$route.params.reference}`, { headers })
 
               .catch((error) => {
                 console.error(error);

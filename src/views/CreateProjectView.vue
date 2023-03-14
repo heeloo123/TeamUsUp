@@ -14,35 +14,22 @@
                 <input type="file" id="projectPic" @change="handleFileSelect" />
               </div>
               <p></p>
-              <div class="searchU">
-                <input
-                  v-model="search"
-                  type="text"
-                  placeholder="Search users..."
-                  @keydown.enter="addUser"
-                />
-                <div>
-                  <button
-                    class="addBtn"
-                    @click="addUser"
-                    v-if="search && !userList.includes(search)"
-                  >
-                    Add
-                  </button>
-                </div>
-
+              <span>Project participants: </span>
+              <div style="flex: 1">
                 <div
                   style="
-                    height: 210px;
+                    height: 300px;
                     overflow-y: auto;
-                    margin-top: 30px;
+                    margin-top: 5px;
                     background: rgb(239, 232, 232);
                     border-radius: 10px;
                   "
                 >
                   <ul>
                     <li v-for="(user, index) in userList" :key="index">
-                      {{ user }}
+                      <span>{{ user.name }} </span>
+                      <span>{{ "(" }}{{ user.projectRole }}{{ ")" }}</span>
+
                       <button
                         style="background: transparent; border: transparent"
                         @click="deleteUser(index)"
@@ -57,6 +44,11 @@
                   </ul>
                 </div>
               </div>
+              <div style="margin-top: 50px">
+                <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
+              </div>
+
+              <div class="searchU"></div>
             </div>
 
             <div style="display: block; margin-left: 20px">
@@ -66,29 +58,72 @@
                 placeholder="Enter your Project name"
                 type="text"
                 id="major"
-                v-model="major"
+                v-model="projectName"
                 required
               />
               <p></p>
               <div style="font-size: 30px">Project description:</div>
 
               <textarea
-                placeholder="Enter project discription here"
-                v-model="bio"
+                placeholder="Enter project discription here (words limit 200 )"
+                v-model="projectDescription"
                 required
               ></textarea>
+              <p></p>
+              <div style="display: flex; flex-direction: row">
+                <div style="flex: 1">
+                  <form @submit.prevent="search" class="search">
+                    <label for="query">Search: </label>
+                    <input id="query" v-model="query" type="text" required />
 
-              <label
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  margin-left: -300px;
-                  margin-top: 100px;
-                "
+                    <button type="submit">Submit</button>
+                  </form>
+                  <div
+                    class="result"
+                    style="
+                      margin-top: 20px;
+                      background: rgb(234, 229, 229);
+                      min-height: 170px;
+                      max-height: 170px;
+                      overflow-y: auto;
+                    "
+                  >
+                    <ul v-if="results.length">
+                      <li
+                        v-for="(result, index) in results"
+                        :key="index"
+                        style="font-size: 20px; font-weight: 500; margin-bottom: 10px"
+                      >
+                        <span v-if="result.resultType === 'Profile'">
+                          {{ result.header }} ({{ result.descriptor }})
+                          <input type="text" v-model="roleMap[index]" />
+                          <button
+                            v-if="result.addButton"
+                            @click.prevent="addUser(result, index)"
+                            style="
+                              flex: 1;
+                              margin-left: 20px;
+                              background-color: #3498db;
+                              color: #fff;
+                              padding: 5px 10px;
+                              border: none;
+                              border-radius: 3px;
+                              cursor: pointer;
+                            "
+                          >
+                            Add
+                          </button>
+                        </span>
+                      </li>
+                    </ul>
+
+                    <p v-else class="result" style="padding: 10px">No results found.</p>
+                  </div>
+                </div>
+              </div>
+              <span style="margin-left: 1000px">
+                <button class="defaultBtn" type="submit">Create</button></span
               >
-                <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
-                <button class="defaultBtn" type="submit">Create</button>
-              </label>
             </div>
           </form>
         </div>
@@ -101,17 +136,25 @@
 const Swal = require("sweetalert2");
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
+
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 export default {
   name: "CreateProjectView",
   data() {
     return {
-      search: "",
       userList: [],
       projectName: "",
       projectDescription: "",
       projectPic: "",
       file: null,
       imagePreview: null,
+      query: "",
+      results: [],
+      searchType: "",
+      roleMap: undefined,
     };
   },
   methods: {
@@ -123,82 +166,100 @@ export default {
       };
       reader.readAsDataURL(this.file);
     },
-    async searchUsers() {
+    async search() {
       const url = `http://49.245.48.28:8080/api/search?query=${this.query}`;
       axios
         .get(url)
         .then((response) => {
           if (this.searchType === "") {
             this.results = response.data;
+            this.roleMap = new Array();
+            this.results.forEach(() => {
+              this.roleMap.push("");
+            });
           } else {
             this.results = response.data.filter(
               (result) => result.resultType === this.searchType.capitalize()
             );
           }
+
+          // Add a button to each search result
+          this.results.forEach((result) => {
+            result.addButton = true;
+          });
         })
         .catch((error) => {
           console.error(error);
         });
     },
 
-  },
-  async addUser() {
-  if (this.search && !this.userList.includes(this.search)) {
-    const searchResults = await this.searchUsers();
-    if (searchResults.length === 0) {
-      // show message here using sweetalert2
-      Swal.fire({
-        icon: "error",
-        text: "No users found!",
-      });
-    } else {
-      const user = searchResults.find((result) => result.name === this.search);
-      if (user) {
-        this.userList.push(user);
+    addUser(result, index) {
+      const user = result;
+      if (user && !this.userList.includes(user)) {
+        this.userList.push({
+          id: {
+            profileID: user.reference,
+          },
+          projectRole: this.roleMap[index],
+          name: result.header,
+        });
       }
-    }
-    this.search = "";
-  }
-},
-  deleteUser(index) {
-    this.userList.splice(index, 1);
-  },
-  async createProject() {
-    const invalidinput = /[~`!#$%^&*|\\:<>]/; // regular expression pattern
-    if (
-      this.projectName &&
-      !invalidinput.test(this.projectName) &&
-      this.projectName.trim() !== "" &&
-      this.projectDescription &&
-      !invalidinput.test(this.projectDescription) &&
-      this.projectDescription.trim() !== ""
-    ) {
+      this.query = "";
+      this.results = [];
+    },
+    deleteUser(user) {
+      const index = this.userList.indexOf(user);
+      if (index !== -1) {
+        this.userList.splice(index, 1);
+      }
+    },
+    async createProject() {
       try {
         const auth = useAuthStore();
         if (auth.isAuthenticated) {
-          const headers = {
-            "session-ID": auth.jsessionID,
-          };
+          axios
+            .post(
+              "http://49.245.48.28:8080/api/project/createProject",
+              {
+                projectName: this.projectName,
+                projectDescription: this.projectDescription,
+                projectParticipants: this.userList,
+              },
+              {
+                headers: {
+                  "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
+                },
+              } 
+            )
+            .then((result) => {
+              if (result.status === 201) {
+                console.log("project post success");
+                if (this.profilePic) {
+                  const formData = new FormData();
+                  formData.append("image", this.projectPic);
 
-          let formData = new FormData();
-          formData.append("name", this.projectName);
-          formData.append("description", this.projectDescription);
-          formData.append("image", this.projectPic);
-          formData.append("users", JSON.stringify(this.userList));
-          const response = await axios.post(
-            "http://49.245.48.28:8080/api/project/createProject",
-            formData,
-            { headers }
-          );
-
-          console.log(response);
-          Swal.fire({
-            icon: "success",
-            text: "Project has been created!",
-          });
-          // Navigate to project page
-          this.$router.push({ name: "Project" });
-        }
+                  axios.post(
+                    "http://49.245.48.28:8080/api/project/image/" + result.data,
+                    formData,
+                    {
+                      headers: {
+                        "Content-Type": "multipart/form-data",
+                        "session-ID": auth.jsessionID,
+                      },
+                    }
+                  );
+                }
+                console.log(result);
+                Swal.fire({
+                  icon: "success",
+                  text: "Project has been created!",
+                  // Navigate to project page
+                }).then(() => {
+                  this.$router.push({ name: "ownPView" });
+                });
+              }
+            });
+        } 
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -206,12 +267,7 @@ export default {
         });
         console.error(error);
       }
-    } else {
-      Swal.fire({
-        icon: "warning",
-        text: "The text should not include~`!#$%^&*|\\:<>",
-      });
-    }
+    },
   },
 };
 </script>
@@ -261,7 +317,7 @@ textarea {
   padding: 10px;
   border: transparent;
   width: 1200px;
-  min-height: 500px;
+  min-height: 150px;
   height: auto;
   background: rgb(234, 229, 229);
 }
@@ -291,15 +347,15 @@ textarea {
   padding: 10px;
 }
 
-.addBtn {
-  border-radius: 30px;
-  color: black;
-  display: flex;
-  margin-left: 280px;
-  margin-top: -30px;
-}
-
 .searchU option {
   font-size: 25px;
+}
+
+.result {
+  font-size: 18px;
+}
+
+.result span:hover {
+  background: rgb(255, 255, 255);
 }
 </style>

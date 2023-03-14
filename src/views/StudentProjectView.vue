@@ -1,49 +1,89 @@
 <template>
-  <div>
-    <div class="project-pic">
-      <img :src="projectImageSrc" alt="Project img" />
-    </div>
-    <h1>Project name: {{ project.projectName }}</h1>
-    <p>description: {{ project.projectDescription }}</p>
+  <div style="display: flex; text-align: -webkit-center">
+    <div class="background">
+      <div class="container">
+      <div calss="item">
+        <form class="detail">
+          <div class="project-pic">
+            <img :src="projectImageSrc" alt="Project img" />
 
-    <RouterLink to="StudentProfile" v-for="(role, name) in project.nameRoleMap" :key="name">
-      <div class="profileImg">
-        <img :src="role.profileImage" alt="profile picture" />
-      </div>
-      <div
-        style="
-          border-radius: 20px;
-          display: flex;
-          background: rgb(234, 231, 231);
-          border: transparent;
-          margin: 20px;
-        "
-      >
-        <div class="name-role" >
-          <label>
-            Name: <span>{{ name }}</span></label
+          </div >
+          <p></p>
+          <div class="text" style="display: block; margin-left: 20px">
+          <span style="font-size: 30px" >Project name: </span>
+        <label>  {{ project.projectName }}</label>
+
+         <div style="margin-top: 50px">
+                <div style="font-size: 30px">Project description:</div>
+                <p>{{ project.projectDescription }}</p>
+              </div>
+          </div>
+        </form>
+
+        <h2 style="margin-left: -1300px; font-size: 40px; margin-top: -20px">
+          Project members
+        </h2>
+        <div class="memberlist">
+          <RouterLink
+            :to="{
+              name: 'StudentProfile',
+              params: { reference: role.id.profileID },
+            }"
+            v-for="(role, name) in project.nameRoleMap"
+            :key="name"
           >
-          <label
-            >Role:<span>{{ role.projectRole }}</span></label
-          >
-          {{ role.id.profileID }}
-        </div>
-        <div v-if="evaluateeIDs[role.id.profileID]">
-          <p>
-            Teamwork:
-            {{ teamworkSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
-          </p>
-          <p>
-            Skill :
-            {{ skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
-          </p>
-          <p>
-            Communication :
-            {{ communicationSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
-          </p>
+            <div
+              style="
+                border-radius: 20px;
+                display: flex;
+                background: rgb(234, 231, 231);
+                border: transparent;
+                margin: 20px;
+              "
+            >
+              <div class="profileImg">
+                <img :src="role.profileImage" alt="profile picture" />
+              </div>
+
+              <div class="name-role">
+                <label>
+                  Name: <span>{{ name }}</span></label
+                >
+               
+                <label
+                  >Role:<span>{{ role.projectRole }}</span></label
+                >
+              <label> ProfileID :<span>{{ role.id.profileID }}</span> </label>
+              </div>
+
+
+              <div   style="
+                    margin-left: 600px;
+                    margin-top: 20px;
+                    font-size: 20px;
+                    display: inline-grid;
+                  "  v-if="evaluateeIDs[role.id.profileID]">
+                <p>
+                  Teamwork:
+                  {{ teamworkSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
+                </p>
+                <p>
+                  Skill :
+                  {{ skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
+                </p>
+                <p>
+                  Communication :
+                  {{
+                    communicationSums[role.id.profileID] / evaluateeIDs[role.id.profileID]
+                  }}
+                </p>
+              </div>
+            </div>
+          </RouterLink>
         </div>
       </div>
-    </RouterLink>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -122,8 +162,130 @@ export default {
       const baseUrl = "http://49.245.48.28:8080";
       const imagePath = `/api/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
-    }
- 
-},
+    },
+  },
 };
 </script>
+
+<style scoped>
+.background {
+  background: rgb(207, 205, 205);
+  height: 100%;
+  width: 100vw;
+  margin: -0px;
+  font-family: math;
+}
+
+.container {
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  margin: 20px;
+  width: auto;
+  margin: 50px;
+}
+
+.item {
+  display: inline-table;
+}
+
+.detail {
+  display: flex;
+  padding: 20px;
+  text-align: left;
+
+  margin-left: 60px;
+}
+
+.project-pic {
+  background: rgb(234, 231, 231);
+  width: 320px;
+  height: 300px;
+  border-radius: 30px;
+  margin-top: 45px;
+  overflow: hidden;
+}
+
+.project-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileImg {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  background: rgb(254, 254, 254);
+  overflow: hidden;
+  border-radius: 100px;
+}
+
+.profileImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text {
+  font-size: 25px;
+  padding: 20px;
+}
+
+.text p {
+  background: rgb(239, 232, 232);
+  display: content;
+  width: 1200px;
+  min-height: 150px;
+  height: auto;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.text label {
+  background: rgb(239, 232, 232);
+  display: content;
+  width: 200px;
+  height: auto;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.name-role {
+  margin: 30px;
+  display: inline-grid;
+  font-size: 25px;
+  padding: 10px;
+  max-width: 400px;
+  flex: 1;
+  color:black;
+  
+}
+
+.name-role label {
+  display: flex;
+  font-weight: bold;
+  
+}
+
+.name-role span {
+  margin-left: 10px;
+ 
+}
+
+.memberlist {
+  margin-right: 30px;
+}
+
+.memberlist a {
+  text-decoration: none;
+  color: black;
+}
+
+.memberlist :hover {
+  background-color: rgb(225, 225, 230);
+  color: rgb(8, 0, 255);
+}
+
+
+</style>

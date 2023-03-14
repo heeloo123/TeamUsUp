@@ -21,7 +21,7 @@ import StudentProjectView from "@/views/StudentProjectView.vue";
 import searchPage from "@/views/searchPage.vue";
 import { useAuthStore } from "@/stores/auth";
 import ownPView from "@/views/OwnProjectList.vue";
-
+import EvaluationPage from "@/views/EvaluationPage.vue";
 
 const authGuard = (to, from, next) => {
   const authStore = useAuthStore()
@@ -36,24 +36,24 @@ const authGuard = (to, from, next) => {
   }
 }
 
-const adminGuard = (to, from, next) => {
-  const authStore = useAuthStore()
-  const Swal = require("sweetalert2");
+// const adminGuard = (to, from, next) => {
+//   const authStore = useAuthStore()
+//   const Swal = require("sweetalert2");
 
-  if (authStore.isAuthenticated && authStore.isAdmin) {
-    // If the user is authenticated and has the Admin role, allow them to access the page
-    next()
-  } else {
-    // Otherwise, redirect them to the home page
-    Swal.fire({
-      icon: 'warning',
+//   if (authStore.isAuthenticated && authStore.isAdmin) {
+//     // If the user is authenticated and has the Admin role, allow them to access the page
+//     next()
+//   } else {
+//     // Otherwise, redirect them to the home page
+//     Swal.fire({
+//       icon: 'warning',
 
-      text: 'You are not authorized to access this page!',
-    })
+//       text: 'You are not authorized to access this page!',
+//     })
 
-    next({ name: 'home' })
-  }
-}
+//     next({ name: 'home' })
+//   }
+// }
 
 
 
@@ -93,22 +93,28 @@ const routes = [
     component: ProfileView,
   },
   {
-    path: "/Project",
+    path: "/Project/:reference",
     name: "Project",
     component: ProjectView,
   },
   {
-    path: "/Editproject",
+    path: "/Editproject/:reference",
     name: "EditProjectView",
     component: EditProjectView,
   },
   {
-    path: "/SelfEva",
-    name: "SelfEva",
-    component: SelfEvaView,
+    path: "/EditProfile",
+    name: "EditProfile",
+    component: EditProfileView,
   },
   {
-    path: "/PeerEva/:userName",
+    path: "/SelfEva/:reference",
+    name: "SelfEva",
+    component: SelfEvaView,
+    
+  },
+  {
+    path: "/PeerEva/:reference/:profileID",
     name: "PeerEva",
     component: PeerEvaView,
   },
@@ -116,7 +122,7 @@ const routes = [
     path: "/AdminPage",
     name: "AdminPage",
     component: AdminPage,
-    beforeEnter: adminGuard
+    //beforeEnter: adminGuard
   },
   {
     path: "/AdminHome",
@@ -153,11 +159,6 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/EditProfile",
-    name: "EditProfile",
-    component: EditProfileView,
-  },
-  {
     path: "/StudentProfile/:reference",
     name: "StudentProfile",
     component: StudentProfileView,
@@ -176,6 +177,11 @@ const routes = [
     path: "/ownPView",
     name: "ownPView",
     component: ownPView,
+  },
+  {
+    path: "/EvaluationPage",
+    name: "EvaluationPage",
+    component: EvaluationPage,
   }
 ];
 

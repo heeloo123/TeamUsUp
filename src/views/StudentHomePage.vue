@@ -14,8 +14,11 @@
         <div class="router-container">
           <img class="Tw" alt="Teamwork" src="../assets/teamwork.png" />
 
-          <router-link to="/CreateProject">
-            <div class="router">Ready to collaborate? Create your project now.</div>
+          <router-link to="/CreateProject" class="link">
+            <div class="router">
+            <h3>Ready to collaborate? Create your project now.</h3>
+            <img class="CP" alt="Create" src="../assets/icons8-create-100.png" />
+            </div>
           </router-link>
         </div>
 </div>
@@ -27,12 +30,22 @@
         </h2>
 
         <div class="router-container">
-          <router-link to="/CreateProfile">
-            <div class="router">Get started by creating your profile today.</div>
+          
+          <router-link to="/CreateProfile" class="link">
+            <div class="router">
+            <h3>Get started by creating your profile today.</h3>
+            <img class="CP" alt="Createprofile" src="../assets/icons8-add-user-male-100.png" />
+            
+            </div>
           </router-link>
 
-          <router-link to="/CreateProject">
-            <div class="router">create project</div>
+          <router-link to="/CreateProject " class="link">
+            <div class="router">
+            <h3>create project</h3>
+            <img class="CP" alt="Create" src="../assets/icons8-create-100.png" />
+            
+            
+            </div>
           </router-link>
         </div>
       </div>
@@ -83,6 +96,8 @@ export default {
       } finally {
         Swal.close();
       }
+    } else{
+      this.$router.push("/")
     }
   },
 
@@ -115,9 +130,23 @@ export default {
   padding: 20px;
   background: rgb(248, 244, 244);
   border-radius: 20px;
+  font-size: 25px;
+  padding-top: 50px;
+
 }
 
 .router:hover {
   background: rgb(244, 240, 240);
+}
+
+.link{
+  text-decoration: none;
+  color: black;
+  
+}
+
+.CP{
+  width: 200px;
+  margin-top:30px
 }
 </style>

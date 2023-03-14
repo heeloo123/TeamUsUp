@@ -93,18 +93,23 @@
             </div>
           </form>
 
-          <form style="display: flex; justify-content: space-between;margin-left:-40px;margin-right:30px">
+          <form
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-left: -40px;
+              margin-right: 30px;
+            "
+          >
             <button class="defaultBtn" type="submit">Deactivate account</button>
             <button class="defaultBtn">
-              <router-link to="/EditProject" class="link"
-                >Edit</router-link
-              >
+              <router-link to="/EditProfile" class="link">Edit</router-link>
             </button>
-            
+
             <button class="defaultBtn">
               <router-link to="/createProject" class="link"
-                >Create another project </router-link
-              >
+                >Create another project
+              </router-link>
             </button>
           </form>
         </div>
@@ -131,7 +136,7 @@ export default {
     };
   },
 
- async mounted() {
+  async mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
       Swal.showLoading();
@@ -151,7 +156,7 @@ export default {
             const projID = project.reference;
             console.log(project.reference);
             axios
-              .get(`${API_URL}/api/project/${projID}`, { headers })
+              .get(`${API_URL}/project/${projID}`, { headers })
 
               .catch((error) => {
                 console.error(error);
