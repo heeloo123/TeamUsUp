@@ -157,9 +157,9 @@ export default {
   if (auth.isAdmin) {
     Swal.showLoading();
 
-    const headers= {
-      "session-ID": auth.jsessionID,
-    }
+    //const headers= {
+    // "session-ID": auth.jsessionID,
+    //}
 
     axios
       .get(`${API_URL}/admin/userList?pageNo=1`, {headers: {
