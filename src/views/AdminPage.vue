@@ -31,16 +31,15 @@
           </div>
 
           <div
-            v-for="(profile, index) in filteredProfiles"
-            :key="index"
+            v-for="profile in filteredProfiles"
+            :key="profile.email"
             @click="selectProfile(profile)"
             :class="{ selected: selectedProfile === profile }"
           >
             <div class="trow">
-              <div class="cell" v-for="name in profiles" :key="name.userID">{{ profile.firstName }} {{ profile.lastName }}</div>
-              <div class="cell" v-for="major in profiles" :key="major.majorCode">{{ profile.majorName }}</div>
-              <div class="cell" v-for="status in profiles" :key="status.userID">{{ profile.status }}</div>
-
+              <div class="cell">{{ profile.firstName }} {{ profile.lastName }}</div>
+              <div class = "cell"></div>
+              <div>{{ profile.enabled }}</div>
               <div class="cell">
                 <form
                   style="display: inline-grid"
@@ -162,16 +161,13 @@ export default {
     }
 
     axios
-      .get(`${API_URL}/admin/userList`, {headers})
+      .get(`${API_URL}/admin/userList?pageNo=0`, {headers:{
+        'session-ID':auth.jsessionID
+      }})
       .then((response) => {
         console.log(response.data);
-        this.profile = response.data;
-        console.log("profile", response.data.profiles);
-        this.firstName = response.data;
-        this.lastName = response.data;
-        this.major = response.data;
-        this.isAccountLocked = response.data;
-        this.isAccount
+        this.profiles = response.data;
+        
       })
         .catch((error) => {
           console.error(error);

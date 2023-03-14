@@ -5,7 +5,7 @@
         <div class="item">
           <h1 style="font-size: 40px; margin-left: -1200px">Edit project!</h1>
 
-          <form class="detail" @submit.prevent="EditProject">
+          <div class="detail" @submit.prevent="EditProject">
             <div>
               <div class="profile-pic">
                 <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
@@ -26,13 +26,32 @@
                   "
                 >
                   <ul class="userlist">
-                    <li v-for="(user, index) in userList" :key="index">
-                      <span>{{ index }} </span>
-                      <span>{{ "(" }}{{ user.projectRole }}{{ ")" }}</span>
+                    <li v-for="(value, key) in userList" :key="key">
+                      <span>{{key}} </span>
 
                       <button
                         style="background: transparent; border: transparent"
-                        @click="deleteUser(index)"
+                        @click="deleteUser(key)"
+                      >
+                        <img
+                          style="width: 20px; height: 20px"
+                          src="../assets/delete.png"
+                          alt="delete icon"
+                        />
+                      </button>
+
+                      <input
+                        type="text"
+                        v-model="value.projectRole"
+                        placeholder="Enter role"
+                      />
+                    </li>
+                    <li v-for="(user, index) in addedList" :key="index">
+                      <span>{{ user.name }} </span>
+
+                      <button
+                        style="background: transparent; border: transparent"
+                        @click="deleteUser(user)"
                       >
                         <img
                           style="width: 20px; height: 20px"
@@ -45,7 +64,6 @@
                         type="text"
                         v-model="user.projectRole"
                         placeholder="Enter role"
-                        @blur="updateUserRole(user, user.projectRole)"
                       />
                     </li>
                   </ul>
@@ -103,7 +121,7 @@
                           <input type="text" v-model="roleMap[index]" />
                           <button
                             v-if="result.addButton"
-                            @click.prevent="addUser(result, index)"
+                            @click.prevent="addUser(result, result.header)"
                             style="
                               flex: 1;
                               margin-left: 20px;
@@ -132,7 +150,7 @@
                 <span> <button class="defaultBtn" type="submit">Save</button></span>
               </span>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -149,7 +167,7 @@ String.prototype.capitalize = function () {
 };
 
 export default {
-  name: "CreateProjectView",
+  name: "editProjectView",
   data() {
     return {
       userList: [],
@@ -162,6 +180,10 @@ export default {
       results: [],
       searchType: "",
       roleMap: {},
+      initialList: [],
+      addedList: [],
+      finalList: [],
+      removedList: [],
     };
   },
   async mounted() {
@@ -179,6 +201,10 @@ export default {
           this.projectName = response.data.projectName;
           this.projectDescription = response.data.projectDescription;
           this.userList = response.data.nameRoleMap;
+          // eslint-disable-next-line no-unused-vars
+          for (const [name, value] of Object.entries(this.userList)) {
+            this.initialList.push(value);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -186,7 +212,7 @@ export default {
     }
   },
   methods: {
-    CancelAlert(){
+    CancelAlert() {
       Swal.fire({
         title: "Leave site?",
         text: "Changes you made may not be saved",
@@ -197,7 +223,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$router.push({ name: "StudentHome" });
-        } 
+        }
       });
     },
     updateUserRole(user, newRole) {
@@ -241,14 +267,16 @@ export default {
         });
     },
 
-    addUser(result, index) {
+    addUser(result,index) {
       const user = result;
-      if (user && !this.userList.includes(user)) {
-        this.userList.push({
+      console.log(result);
+      console.log(index)
+      if (user && !this.userList[index] != undefined) {
+        this.addedList.push({
           id: {
             profileID: user.reference,
           },
-          projectRole: this.roleMap[index],
+          projectRole: "",
           name: result.header,
         });
       }
@@ -256,9 +284,12 @@ export default {
       this.results = [];
     },
     deleteUser(user) {
-      const index = this.userList.indexOf(user);
-      if (index !== -1) {
-        this.userList.splice(index, 1);
+      console.log(user)
+      if (this.initialList.includes(user)) {
+        this.removedList.push(user);
+        delete this.userList[user]
+      } else if (this.addedList.includes(user)) {
+        this.addedList.splice(this.addedList.indexOf(user), 1);
       }
     },
     async EditProject() {

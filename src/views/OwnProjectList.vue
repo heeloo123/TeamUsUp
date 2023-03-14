@@ -96,17 +96,19 @@ export default {
           console.log("project", response.data.projects);
           this.profile = response.data;
           this.majors = response.data.majors;
+          
           this.projects = response.data.projects.map((project) => {
            
             console.log(project.reference);
             axios
-              .get(`${API_URL}/api/project/${this.$route.params.reference}`, { headers })
+              .get(`${API_URL}/project/`+project.reference, { headers })
 
               .catch((error) => {
                 console.error(error);
               });
             return project;
           });
+          this.projects.sort((a, b) => a.projectID - b.projectID);
         })
         .catch((error) => {
           console.error(error);
@@ -119,7 +121,7 @@ export default {
   computed: {
     profileImageSrc() {
       const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/profile/image/${this.profile.profileID}`;
+      const imagePath = `/profile/image/${this.profile.profileID}`;
       return baseUrl + imagePath;
     },
   },

@@ -11,7 +11,7 @@
                 <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
               </div>
               <div style="margin-left: 20px">
-                <input type="file" id="projectPic" @change="handleFileSelect" />
+                <input type="file" id="projectPic" v-on:change="handleFileSelect" />
               </div>
               <p></p>
               <span>Project participants: </span>
@@ -160,12 +160,13 @@ export default {
   methods: {
     handleFileSelect(event) {
       this.file = event.target.files[0];
+      if(this.file){
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result;
       };
       reader.readAsDataURL(this.file);
-    },
+  }  },
     async search() {
       const url = `http://49.245.48.28:8080/api/search?query=${this.query}`;
       axios
@@ -229,14 +230,14 @@ export default {
                 headers: {
                   "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
                 },
-              } 
+              }
             )
             .then((result) => {
               if (result.status === 201) {
                 console.log("project post success");
-                if (this.profilePic) {
+                if (this.file) {
                   const formData = new FormData();
-                  formData.append("image", this.projectPic);
+                  formData.append("image", this.file);
 
                   axios.post(
                     "http://49.245.48.28:8080/api/project/image/" + result.data,
@@ -259,7 +260,7 @@ export default {
                 });
               }
             });
-        } 
+        }
       } catch (error) {
         Swal.fire({
           icon: "error",

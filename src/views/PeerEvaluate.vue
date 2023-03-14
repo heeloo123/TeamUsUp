@@ -163,12 +163,12 @@ export default {
       const auth = useAuthStore()   
       if (auth.isAuthenticated) {
         axios.post(
-          `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=`+this.evaluateeId,
+          `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=${this.$route.params.profileID}`,
           {
             comments: this.comment,
             communication: this.communication,
             teamwork: this.teamwork,
-            skills: this.skills,
+            skill: this.skills,
           }, 
           {
             headers: {
