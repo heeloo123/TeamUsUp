@@ -4,7 +4,7 @@
       <div class="container">
         <div class="item">
           <!---->
-          <form class="detail">
+          <div class="detail">
             <div class="project-pic">
               <img :src="projectImageSrc" alt="Project img" />
             </div>
@@ -37,7 +37,7 @@
                 <p>{{ project.projectDescription }}</p>
               </div>
             </div>
-          </form>
+          </div>
 
           <h2 style="margin-left: -1300px; font-size: 40px; margin-top: -20px">
             Project members
@@ -177,7 +177,7 @@ export default {
             name: "PeerEva",
             params: {
               reference: this.$route.params.reference,
-              profileID: selectedRole.id,
+              profileID: selectedRole.id.profileID,
             },
           });
         });
@@ -254,7 +254,7 @@ export default {
   computed: {
     projectImageSrc() {
       const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/project/image/${this.project.projectID}`;
+      const imagePath = `api/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
     },
   },
