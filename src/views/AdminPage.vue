@@ -167,7 +167,7 @@ export default {
       }})
       .then((response) => {
         console.log(response.data);
-        this.profile = response.data;
+        this.profiles = response.data;
       })
         .catch((error) => {
           console.error(error);
