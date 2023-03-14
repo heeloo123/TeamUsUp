@@ -162,7 +162,7 @@ export default {
     }
 
     axios
-      .get(`${API_URL}/admin/userList`, {headers})
+      .get(`${API_URL}/admin/userList?pageNo=1`, {headers})
       .then((response) => {
         console.log(response.data);
         this.profile = response.data;
