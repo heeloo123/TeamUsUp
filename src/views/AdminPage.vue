@@ -37,9 +37,9 @@
             :class="{ selected: selectedProfile === profile }"
           >
             <div class="trow">
-              <div class="cell" v-for="name in profiles" :key="name.userID">{{ profile.firstName }} {{ profile.lastName }}</div>
-              <div class="cell" v-for="major in profiles" :key="major.majorCode">{{ profile.majorName }}</div>
-              <div class="cell" v-for="status in profiles" :key="status.userID">{{ profile.status }}</div>
+              <div class="cell">{{ profile.firstName }} {{ profile.lastName }}</div>
+              <div class="cell">{{ profile.majorName }}</div>
+              <div class="cell">{{ profile.status }}</div>
 
               <div class="cell">
                 <form
