@@ -162,7 +162,9 @@ export default {
     }
 
     axios
-      .get(`${API_URL}/admin/userList?pageNo=1`, {headers})
+      .get(`${API_URL}/admin/userList?pageNo=1`, {headers: {
+        "session-ID": auth.jsessionID
+      }})
       .then((response) => {
         console.log(response.data);
         this.profile = response.data;
