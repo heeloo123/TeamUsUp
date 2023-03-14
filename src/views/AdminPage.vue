@@ -171,7 +171,6 @@ export default {
         this.lastName = response.data;
         this.major = response.data;
         this.isAccountLocked = response.data;
-        this.isAccount
       })
         .catch((error) => {
           console.error(error);
