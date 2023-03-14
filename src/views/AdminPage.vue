@@ -175,14 +175,18 @@ export default {
 
 
     axios
-      .put(`${API_URL}/admin/archiveUserProfile`, {headers})
+      .put(`${API_URL}/admin/archiveUserProfile`, {headers: {
+        "session-ID": auth.jsessionID
+      }})
       .then((response) => {
         console.log("archiveUserProfile", response.data.archiveUserProfile);
         this.archiveUserProfile = response.data.archiveUserProfile.map((user) => {
           const userID = user.reference;
           console.log(user.reference);
           axios
-            .put(`${API_URL}/archiveUserProfile/${userID}`, { headers })
+            .put(`${API_URL}/archiveUserProfile/${userID}`, { headers: {
+              "session-ID": auth.jsessionID
+            } })
 
             .catch((error) => {
               console.error(error);
