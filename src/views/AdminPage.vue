@@ -166,11 +166,6 @@ export default {
       .then((response) => {
         console.log(response.data);
         this.profile = response.data;
-        console.log("profile", response.data.profiles);
-        this.firstName = response.data;
-        this.lastName = response.data;
-        this.major = response.data;
-        this.isAccountLocked = response.data;
       })
         .catch((error) => {
           console.error(error);
