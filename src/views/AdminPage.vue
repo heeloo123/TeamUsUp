@@ -81,8 +81,8 @@ export default {
     return {
       showDropdown: false, //dropdown
       profiles: [],
-      status: [],
-      majors: [],
+      profilesStatus: [],
+      profilesMajors: [],
 
       selectedProfile: null,
       searchText: "",
