@@ -158,7 +158,7 @@ export default {
     Swal.showLoading();
 
     axios
-      .get(`${API_URL}/admin/userList?pageNo=0`, {headers: {
+      .get(`${API_URL}/admin/userList?pageNo=0`, {headers:{
         'session-ID': auth.jsessionID
       }})
       .then((response) => {
@@ -171,7 +171,7 @@ export default {
 
 
     axios
-      .put(`${API_URL}/admin/archiveUserProfile`, {headers: {
+      .put(`${API_URL}/admin/archiveUserProfile`, {headers:{
         "session-ID": auth.jsessionID
       }})
       .then((response) => {
@@ -180,7 +180,7 @@ export default {
           const userID = user.reference;
           console.log(user.reference);
           axios
-            .put(`${API_URL}/archiveUserProfile/${userID}`, { headers: {
+            .put(`${API_URL}/archiveUserProfile/${userID}`, {headers:{
               "session-ID": auth.jsessionID
             } })
 
