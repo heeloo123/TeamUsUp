@@ -38,8 +38,9 @@
           >
             <div class="trow">
               <div class="cell">{{ profile.firstName }} {{ profile.lastName }}</div>
-              <div class = "cell"></div>
-              <div>{{ profile.enabled }}</div>
+              <div class="cell">{{ profile.majorName }}</div>
+              <div class="cell">{{ profile.status }}</div>
+
               <div class="cell">
                 <form
                   style="display: inline-grid"
@@ -156,18 +157,17 @@ export default {
   if (auth.isAdmin) {
     Swal.showLoading();
 
-    const headers= {
-      "session-ID": auth.jsessionID,
-    }
-
     axios
-      .get(`${API_URL}/admin/userList?pageNo=0`, {headers:{
-        'session-ID':auth.jsessionID
-      }})
+      .get(`${API_URL}/admin/userList`, {headers})
       .then((response) => {
         console.log(response.data);
-        this.profiles = response.data;
-        
+        this.profile = response.data;
+        console.log("profile", response.data.profiles);
+        this.firstName = response.data;
+        this.lastName = response.data;
+        this.major = response.data;
+        this.isAccountLocked = response.data;
+        this.isAccount
       })
         .catch((error) => {
           console.error(error);
@@ -175,14 +175,18 @@ export default {
 
 
     axios
-      .put(`${API_URL}/admin/archiveUserProfile`, {headers})
+      .put(`${API_URL}/admin/archiveUserProfile`, {headers:{
+        "session-ID": auth.jsessionID
+      }})
       .then((response) => {
         console.log("archiveUserProfile", response.data.archiveUserProfile);
         this.archiveUserProfile = response.data.archiveUserProfile.map((user) => {
           const userID = user.reference;
           console.log(user.reference);
           axios
-            .put(`${API_URL}/archiveUserProfile/${userID}`, { headers })
+            .put(`${API_URL}/archiveUserProfile/${userID}`, {headers:{
+              "session-ID": auth.jsessionID
+            } })
 
             .catch((error) => {
               console.error(error);
