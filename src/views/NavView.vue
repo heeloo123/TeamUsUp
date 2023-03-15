@@ -12,7 +12,7 @@
 
         <router-link to="/home">
           <img
-            style="width: 40px; margin-top: 10px"
+            style="width: 30px; margin-top: 10px"
             alt="TeamUsUp logo"
             src="../assets/homepageIcon.png"
           />
@@ -21,7 +21,7 @@
       
         
    <router-link to="/SearchPage"> <img
-            style="width: 30px; margin-left:20px;margin-top:15px"
+            style="width: 20px; margin-left:20px;margin-top:15px"
             alt="TeamUsUp logo"
             src="../assets/icons8-search-32.png"
           /></router-link>
@@ -53,7 +53,7 @@
             margin: 10px;
             display: inline-block;
             font-family: initial;
-            font-size: 20px;
+            font-size: 18px;
           "
           >{{ $state.user.firstName }} {{ $state.user.lastName }}</label
         >
@@ -121,7 +121,7 @@ export default {
 }
 
 .TeamUsUp_logo {
-  width: 180px;
+  width: 150px;
   margin: 10px;
   border-radius: 6px;
 }
@@ -139,14 +139,14 @@ export default {
 }
 
 .image img {
-  width: 25px;
-  margin-bottom: -8px;
+  width: 20px;
+  margin-bottom: -3px;
   margin-right: 5px;
 }
 .loginBtn {
   background: #e12744;
   border-radius: 10px;
-  font-size: 25px;
+  font-size: 20px;
   font-family: -webkit-body;
   margin: 10px;
 }

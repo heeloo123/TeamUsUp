@@ -5,20 +5,17 @@
       <div class="container">
         <div
           class="messageTable"
-          v-for="(notification, index) in notifications"
-          :key="index"
+          v-for="notification in notifications"
+          :key="notification.notificationID"
           @click="openNotification"
           :class="{ read: markAsRead }"
         >
-          <div class="cell" :timeCreated="notification.timeCreated">
+          <div class="cell">
             {{ notification.message }}
-            <div v-if="showFullMessage">
-              {{ notification.fullMessage }}
-            </div>
             <div class="emailTimeStamp">
               {{ formatDate(currentTimeStamp()) }}
             </div>
-            <div class="readflag" v-if="markAsRead">Read</div>
+            <div class="readflag" v-bind="markRead(notification.notificationID)">Read</div>
           </div>
         </div>
         <div style="display: flex; margin: 20px">
@@ -40,20 +37,21 @@ const API_URL = "http://49.245.48.28:8080/api";
 
 export default {
   name: "notificationView",
-  props: ["notificationID, email, action"],
+  props: [],
   component: {},
 
   data() {
     return {
-      notifications: [
-        {
-          message: "John doe has added you to project Y",
-          fullMessage:
-            "John doe has added you to project Y. Please verify your participation in project Y. Yes or No.",
-          action: Boolean,
-          timeCreated: "",
-        },
-      ],
+      notificationID: [],
+      notifications: [],
+      message: [],
+      actions: [],
+      actionRequired: [],
+      timeCreated: [],
+      timeActionPerf: [],
+      projectID: [],
+      profileID: [],
+      read: [],
 
       emailTimeCreated: [
         {
@@ -66,10 +64,8 @@ export default {
 
       isClicked: false,
       markAsRead: false,
-      action: null,
       pageSize: 10,
       currentPage: 1,
-      showFullMessage: false,
     };
   },
 
@@ -119,11 +115,6 @@ export default {
       }
     },
 
-    openNotification() {
-      this.markAsRead = true;
-      this.showFullMessage = !this.showFullMessage;
-    },
-
     prevPage() {
       if (this.currentPage > 1) {
         this.currentPage -= 1;
@@ -141,7 +132,51 @@ export default {
       const end = start + this.pageSize;
       return notifications.slice(start, end);
     },
+
+    async processMessageAction(notificationID, action, actionRequired, projectID, profileID) {
+      const auth = useAuthStore
+      axios.post(`${API_URL}/notification/processAction/` +notificationID,{},+action,{},+actionRequired,{},+projectID,{},+profileID,{},{headers:{
+        "session-ID": auth.jsessionID
+      }})
+        .then((response) => {
+          console.log(response.state)
+          console.log(response.status)
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    },
+
+    async markRead(notificationID) {
+      const auth= useAuthStore
+      axios.post(`${API_URL}/notification/markAsRead/` +notificationID, {}, {headers:{
+        "session-ID": auth.jsessionID
+    }})
+      .then((response) => {
+        console.log(response.readStatus)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+
+    },
+
+  setProjectParticipation(action) {
+    var state = action? "Accept" : "Reject"
+    return state
   },
+
+  isActionRequired(actionRequired) {
+    var status = actionRequired? "Yes" : "No"
+    return status
+  },
+
+  messageRead(read) {
+    var readStatus = read? "Read" : "Unread"
+    return readStatus
+  },
+
+},
 
   computed: {
     pageCount() {
@@ -159,47 +194,29 @@ export default {
     if (auth.isAuthenticated) {
       Swal.showLoading();
 
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
-
       axios
-        .get(`${API_URL}/notification/retrieveNew`, { headers })
+        .get(`${API_URL}/notification/retrieveNew?email=${auth.email}`, { headers:{
+          "session-ID": auth.jsessionID
+        }})
         .then((response) => {
           console.log(response.data);
-          this.newNotification = response.data.newNotification;
+          this.newNotifications = response.data.newNotification;
+          this.messages = response.data.message;
+          this.timeCreated = response.data.timeCreated;
         })
         .catch((error) => {
           console.error(error);
         });
 
       axios
-        .get(`${API_URL}/notification/retrieveAny`, { headers })
+        .get(`${API_URL}/notification/retrieveAny?email=${auth.email}`, { headers:{
+          "session-ID": auth.jsessionID
+        } })
         .then((response) => {
           console.log(response.data);
-          this.anyNotification = response.data.anyNotification;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
-      if (this.markAsRead === false && this.isClicked === true) {
-        axios
-          .post(`${API_URL}/notification/markAsRead/`, { headers }, { readflag: true })
-          .then((response) => {
-            console.log(response.data);
-            this.notifications = response.data.notification.markAsRead;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-
-      axios
-        .post(`${API_URL}/notification/processAction`, { headers })
-        .then((response) => {
-          console.log(response.data);
-          this.processAction = response.data.notiification.action;
+          this.anyNotifications = response.data.anyNotification;
+          this.messages = response.data.message;
+          this.timeCreated = response.data.timeCreated;
         })
         .catch((error) => {
           console.error(error);
@@ -209,6 +226,7 @@ export default {
           Swal.hideLoading();
         });
     }
+    
   },
 };
 </script>

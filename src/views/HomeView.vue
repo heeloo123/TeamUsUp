@@ -16,10 +16,11 @@
        
         <router-link to="/SearchPage"> serachPage</router-link>
         <router-link to="/ownPView"> own project</router-link>
+        <router-link to="/test">test</router-link>
       </div>
 
       <form style="display: inline-flex; text-align: -webkit-center; margin: 50px">
-        <div style="width: 700px; height: 700px">
+        <div style="width: 500px; height: 500px">
           <img class="T_logo" alt="TeamUsUp logo" src="../assets/Portal_logo.jpg" />
           <div>
             <img class="H_logo" alt="portal logo" src="../assets/Home_logo.png" />
@@ -29,7 +30,7 @@
         <form style="display: inline-grid">
           <div>
             <section class="text">
-              <h1 style="font-size: 45px">Description</h1>
+              <h1 style="font-size: 35px">Description</h1>
 
               <p>
                 Welcome to TeamUsUp V2.0, the innovative web portal designed to empower
@@ -114,18 +115,12 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background: rgb(224, 216, 216);
-  height: 100vh;
-  width: 100vw;
 
-  font-family: math;
-}
 .text {
   margin-left: 70px;
   width: 600px;
   text-align: justify;
-  margin-top: 70px;
+  margin-top: 40px;
 }
 
 .T_logo {
@@ -137,7 +132,7 @@ export default {
 }
 
 .text p {
-  font-size: 20px;
+  font-size: 18px;
   text-align: justify;
 }
 

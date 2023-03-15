@@ -1,57 +1,56 @@
 <template>
- 
-    <div class="container">
-      <form @submit.prevent="search" class="search">
-        <label for="query">Search: </label>
-        <input id="query" v-model="query" type="text" required />
+  <div class="container">
+    <form @submit.prevent="search" class="search">
+      <label for="query">Search: </label>
+      <input id="query" v-model="query" type="text" required />
 
-        <input id="all" type="radio" v-model="searchType" value="" checked />
-        <label for="all">All</label>
-        <dlabel>
-          <input type="radio" id="profile" value="profile" v-model="searchType" />
-          <label for="profile">Profile</label>
-        </dlabel>
+      <input id="all" type="radio" v-model="searchType" value="" checked />
+      <label for="all">All</label>
+      <dlabel>
+        <input type="radio" id="profile" value="profile" v-model="searchType" />
+        <label for="profile">Profile</label>
+      </dlabel>
 
-        <label>
-          <input type="radio" id="project" value="project" v-model="searchType" />
-          <label for="project">Project</label>
-        </label>
+      <label>
+        <input type="radio" id="project" value="project" v-model="searchType" />
+        <label for="project">Project</label>
+      </label>
 
-        <button type="submit">Submit</button>
-      </form>
-      <div style="margin: 20px">
-        <ul v-if="results.length">
-          <li v-for="(result, index) in results" :key="index">
-            <div v-if="result.resultType === 'Project'">
-              <router-link
-                :to="{ name: 'StudentProject', params: { reference: result.reference } }"
-              >
-                {{ result.header }}
-              </router-link>
-              <p>Project ID: {{ result.reference }}</p>
-              <p>Discription: {{ result.descriptor }}</p>
-              <p>Result Type: {{ result.resultType }}</p>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 
+  <div style="margin: 20px; border-top: solid 1px; padding: 10px">
+    <ul v-if="results.length">
+      <li v-for="(result, index) in results" :key="index">
+        <div v-if="result.resultType === 'Project'" >
+          <router-link style="text-decoration: none;"
+            :to="{ name: 'StudentProject', params: { reference: result.reference } }"
+            class="nameP" >
+          <div >
+          {{ result.reference }} | <span style="margin-left:15px;"> {{ result.header }}</span>
 
-            </div>
-            <div v-else>
-              <router-link
-                :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
-              >
-                {{ result.header }}
-              </router-link>
-            
-            <p>Profile ID: {{ result.reference }}</p>
-            <p>Major: {{ result.descriptor }}</p>
-            <p>Result Type: {{ result.resultType }}</p>
+          <span style="float:right;margin-right:20px">{{ result.resultType }}</span>
+           <p> Discription: {{ result.descriptor }}</p>
           </div>
-          </li>
-        </ul>
+          </router-link>
+        </div>
+        <div v-else >
+          <router-link style="text-decoration: none;"
+            :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
+            class="nameP" >
+          <div >
+          {{ result.reference }} | <span style="margin-left:15px;"> {{ result.header }}</span>
+          <span style="float:right;margin-right:20px">{{ result.resultType }}</span>
+         <p>Major: {{ result.descriptor }}</p> 
+         </div>
+          </router-link>
+        </div>
+      </li>
+    </ul>
 
-        <p v-else class="result">No results found.</p>
-      </div>
-    </div>
-
+    <p v-else class="result">No results found.</p>
+  </div>
 </template>
 
 <script>
@@ -100,11 +99,10 @@ export default {
 }
 
 .container {
-  background: rgb(225, 224, 224);
+  background: rgb(233, 230, 230);
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  max-width: 1700px;
+  max-width: -webkit-fill-available;
   width: 100%;
   display: block;
   justify-content: flex-start;
@@ -141,17 +139,17 @@ export default {
   font-size: 18px;
   font-weight: bold;
   margin-top: 20px;
+  width: -webkit-fill-available;
 }
 
 ul {
-  list-style: auto;
+  width: -webkit-fill-available;
 }
 
 li {
-  margin-bottom: 1px;
+  margin-bottom: 5px;
   background: whitesmoke;
 }
-
 
 li p {
   margin: 10px 0;
@@ -160,13 +158,17 @@ li p {
 
 li a {
   display: inline-block;
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 20px;
-  color: rgb(25, 0, 255);
+  color: rgb(0, 0, 0);
   padding-left: 20px;
+  font-family: math;
 }
-
-li a:hover {
-  color: darkblue;
+.nameP{
+  width: -webkit-fill-available;
+  
+}
+.nameP:hover{
+  background:rgb(178, 173, 173)
 }
 </style>

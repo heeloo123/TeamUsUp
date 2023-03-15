@@ -1,16 +1,21 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>
+          Student Info | <router-link to="/Profile">Profile</router-link> |
+          <router-link to="/ownPView">Recent Project</router-link> | Create project
+        </p>
+      </div>
       <div class="container">
         <div class="item">
-          <h1 style="font-size: 40px; margin-left: -1200px">Create a project!</h1>
-
           <form class="detail" @submit.prevent="createProject">
             <div>
-              <div class="profile-pic">
+              <div class="project-pic">
                 <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
               </div>
-              <div style="margin-left: 20px">
+              <div style="margin-left: 20px; margin-top: 10px">
                 <input type="file" id="projectPic" v-on:change="handleFileSelect" />
               </div>
               <p></p>
@@ -18,24 +23,25 @@
               <div style="flex: 1">
                 <div
                   style="
-                    height: 300px;
+                    height: 250px;
                     overflow-y: auto;
                     margin-top: 5px;
                     background: rgb(239, 232, 232);
                     border-radius: 10px;
+                    margin-right: 20px;
                   "
                 >
-                  <ul>
+                  <ul style="font-size:25px">
                     <li v-for="(user, index) in userList" :key="index">
                       <span>{{ user.name }} </span>
-                      <span>{{ "(" }}{{ user.projectRole }}{{ ")" }}</span>
+                      <span>{{ user.projectRole }}</span>
 
                       <button
                         style="background: transparent; border: transparent"
-                        @click="deleteUser(index)"
+                        @click="deleteUser(user)"
                       >
                         <img
-                          style="width: 20px; height: 20px"
+                          style="width: 15px; height: 15px;margin-top:10px;margin-left:10px"
                           src="../assets/delete.png"
                           alt="delete icon"
                         />
@@ -44,16 +50,11 @@
                   </ul>
                 </div>
               </div>
-              <div style="margin-top: 50px">
-                <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
-              </div>
-
-              <div class="searchU"></div>
             </div>
 
-            <div style="display: block; margin-left: 20px">
+            <div style="margin-left: 50px;width: -webkit-fill-available">
               <p></p>
-              <span style="font-size: 30px">Project name:</span>
+              <span style="font-size: 25px">Project name:</span>
               <input
                 placeholder="Enter your Project name"
                 type="text"
@@ -62,7 +63,7 @@
                 required
               />
               <p></p>
-              <div style="font-size: 30px">Project description:</div>
+              <div style="font-size: 25px">Project description:</div>
 
               <textarea
                 placeholder="Enter project discription here (words limit 200 )"
@@ -73,55 +74,59 @@
               <div style="display: flex; flex-direction: row">
                 <div style="flex: 1">
                   <form @submit.prevent="search" class="search">
-                    <label for="query">Search: </label>
+                    <label for="query">Search User: </label>
                     <input id="query" v-model="query" type="text" required />
 
-                    <button type="submit">Submit</button>
+                    <button style="margin-left: 10px" type="submit">Submit</button>
                   </form>
-                  <div
-                    class="result"
-                    style="
-                      margin-top: 20px;
-                      background: rgb(234, 229, 229);
-                      min-height: 170px;
-                      max-height: 170px;
-                      overflow-y: auto;
-                    "
-                  >
-                    <ul v-if="results.length">
-                      <li
-                        v-for="(result, index) in results"
-                        :key="index"
-                        style="font-size: 20px; font-weight: 500; margin-bottom: 10px"
-                      >
-                        <span v-if="result.resultType === 'Profile'">
-                          {{ result.header }} ({{ result.descriptor }})
-                          <input type="text" v-model="roleMap[index]" />
-                          <button
-                            v-if="result.addButton"
-                            @click.prevent="addUser(result, index)"
-                            style="
-                              flex: 1;
-                              margin-left: 20px;
-                              background-color: #3498db;
-                              color: #fff;
-                              padding: 5px 10px;
-                              border: none;
-                              border-radius: 3px;
-                              cursor: pointer;
-                            "
-                          >
-                            Add
-                          </button>
-                        </span>
-                      </li>
-                    </ul>
+                  <div class="searchU">
+                    <div
+                      class="result"
+                      style="
+                        margin-top: 20px;
+                        background: rgb(234, 229, 229);
+                        min-height: 170px;
+                        max-height: 170px;
+                        overflow-y: auto;
+                      "
+                    >
+                      <ul v-if="results.length">
+                        <li
+                          v-for="(result, index) in results"
+                          :key="index"
+                          style="font-size: 20px; font-weight: 500; margin-bottom: 5px"
+                        >
+                          <span v-if="result.resultType === 'Profile'">
+                            {{ result.header }} ({{ result.descriptor }})
+                            <input type="text" v-model="roleMap[index]" />
+                            <button
+                              v-if="result.addButton"
+                              @click.prevent="addUser(result, index)"
+                              style="
+                                background-color: #3498db;
+                                color: #fff;
+                                padding: 5px 10px;
+                                border: none;
+                                border-radius: 3px;
+                                cursor: pointer;
+                              "
+                            >
+                              Add
+                            </button>
+                          </span>
+                        </li>
+                      </ul>
 
-                    <p v-else class="result" style="padding: 10px">No results found.</p>
+                      <p v-else class="result" style="padding: 10px">No results found.</p>
+                    </div>
                   </div>
                 </div>
               </div>
-              <span style="margin-left: 1000px">
+              <span
+                style="margin-top: 20px; display: flex; justify-content: space-between"
+              >
+                <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
+
                 <button class="defaultBtn" type="submit">Create</button></span
               >
             </div>
@@ -158,15 +163,30 @@ export default {
     };
   },
   methods: {
+    CancelAlert() {
+      Swal.fire({
+        title: "Leave site?",
+        text: "Changes you made may not be saved",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Leave",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.push({ name: "StudentHome" });
+        }
+      });
+    },
     handleFileSelect(event) {
       this.file = event.target.files[0];
-      if(this.file){
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-      reader.readAsDataURL(this.file);
-  }  },
+      if (this.file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreview = reader.result;
+        };
+        reader.readAsDataURL(this.file);
+      }
+    },
     async search() {
       const url = `http://49.245.48.28:8080/api/search?query=${this.query}`;
       axios
@@ -275,11 +295,7 @@ export default {
 
 <style scoped>
 .background {
-  background: rgb(207, 205, 205);
-  height: 100%;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
+  height: 100;
 }
 
 .container {
@@ -288,19 +304,18 @@ export default {
   display: flex;
   margin: 20px;
   width: auto;
-  margin: 50px;
 }
 
 .item {
-  display: inline-table;
+  display: inline;
+  width: -webkit-fill-available;
 }
 
 .detail {
-  display: flex;
   padding: 20px;
   text-align: left;
-
-  margin-left: 10px;
+  display: flex;
+  width: -webkit-fill-available;
 }
 
 input[type="text"] {
@@ -317,16 +332,16 @@ textarea {
   font-size: 20px;
   padding: 10px;
   border: transparent;
-  width: 1200px;
-  min-height: 150px;
+  width: -webkit-fill-available;
+  min-height: 70px;
   height: auto;
   background: rgb(234, 229, 229);
 }
 
-.profile-pic {
+.project-pic {
   background: rgb(234, 231, 231);
-  width: 320px;
-  height: 300px;
+  width: 250px;
+  height: 200px;
   border-radius: 20px;
 }
 
@@ -335,25 +350,23 @@ textarea {
   min-width: 300px;
   width: auto;
   border-radius: 20px;
-  font-size: 15px;
+  font-size: 10px;
 }
 
 .searchU ul {
-  padding: 20px;
 }
 
 .searchU li {
-  font-size: 30px;
-  margin-left: 40px;
-  padding: 10px;
+  font-size: 15px;
+  margin-left: 0px;
 }
 
 .searchU option {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .result {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .result span:hover {

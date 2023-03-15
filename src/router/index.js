@@ -21,7 +21,8 @@ import StudentProjectView from "@/views/StudentProjectView.vue";
 import searchPage from "@/views/searchPage.vue";
 import { useAuthStore } from "@/stores/auth";
 import ownPView from "@/views/OwnProjectList.vue";
-import EvaluationPage from "@/views/EvaluationPage.vue";
+import testUse from "@/views/testUse.vue";
+
 
 const authGuard = (to, from, next) => {
   const authStore = useAuthStore()
@@ -179,9 +180,9 @@ const routes = [
     component: ownPView,
   },
   {
-    path: "/EvaluationPage",
-    name: "EvaluationPage",
-    component: EvaluationPage,
+    path: "/test",
+    name: "test",
+    component: testUse,
   }
 ];
 

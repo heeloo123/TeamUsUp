@@ -1,9 +1,17 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>
+          Student Info | <router-link to="/Profile">Profile</router-link> |
+          <router-link to="/ownPView">Recent Project</router-link> | Edit Project | {{ projectID }}
+          {{ projectName }}
+        </p>
+      </div>
       <div class="container">
         <div class="item">
-          <h1 style="font-size: 40px; margin-left: -1200px">Edit project!</h1>
+         
 
           <div class="detail" @submit.prevent="EditProject">
             <div>
@@ -18,35 +26,16 @@
               <div style="flex: 1">
                 <div
                   style="
-                    height: 300px;
+                  height: 250px;
                     overflow-y: auto;
                     margin-top: 5px;
                     background: rgb(239, 232, 232);
                     border-radius: 10px;
+                    margin-right: 20px;
                   "
                 >
                   <ul class="userlist">
-                    <li v-for="(value, key) in userList" :key="key">
-                      <span>{{key}} </span>
-
-                      <button
-                        style="background: transparent; border: transparent"
-                        @click="deleteUser(key)"
-                      >
-                        <img
-                          style="width: 20px; height: 20px"
-                          src="../assets/delete.png"
-                          alt="delete icon"
-                        />
-                      </button>
-
-                      <input
-                        type="text"
-                        v-model="value.projectRole"
-                        placeholder="Enter role"
-                      />
-                    </li>
-                    <li v-for="(user, index) in addedList" :key="index">
+                    <li v-for="user in userList" :key="user.role.id.profileID">
                       <span>{{ user.name }} </span>
 
                       <button
@@ -62,7 +51,27 @@
 
                       <input
                         type="text"
-                        v-model="user.projectRole"
+                        v-model="user.role.projectRole"
+                        placeholder="Enter role"
+                      />
+                    </li>
+                    <li v-for="user in addedList" :key="user.role.id.profileID">
+                      <span>{{ user.name }} </span>
+
+                      <button
+                        style="background: transparent; border: transparent"
+                        @click="deleteUser(user)"
+                      >
+                        <img
+                          style="width: 20px; height: 20px"
+                          src="../assets/delete.png"
+                          alt="delete icon"
+                        />
+                      </button>
+
+                      <input
+                        type="text"
+                        v-model="user.role.projectRole"
                         placeholder="Enter role"
                       />
                     </li>
@@ -72,9 +81,9 @@
             </div>
             <div class="searchU"></div>
 
-            <div style="display: block; margin-left: 20px">
+            <div style="margin-left: 50px;width: -webkit-fill-available">
               <p></p>
-              <span style="font-size: 30px">Project name:</span>
+              <span style="font-size: 25px">Project name:</span>
               <input
                 placeholder="Enter your Project name"
                 type="text"
@@ -83,7 +92,7 @@
                 required
               />
               <p></p>
-              <div style="font-size: 30px">Project description:</div>
+              <div style="font-size: 25px">Project description:</div>
 
               <textarea
                 placeholder="Enter project discription here (words limit 200 )"
@@ -93,16 +102,16 @@
               <p></p>
               <div style="display: flex; flex-direction: row">
                 <div style="flex: 1">
-                  <form @submit.prevent="search" class="search">
+                  <div class="search">
                     <label for="query">Search: </label>
                     <input id="query" v-model="query" type="text" required />
 
-                    <button type="submit">Submit</button>
-                  </form>
+                    <button type="submit" style="margin-left: 10px" @click="search">Submit</button>
+                  </div>
                   <div
                     class="result"
                     style="
-                      margin-top: 50px;
+                      margin-top: 20px;
                       background: rgb(234, 229, 229);
                       min-height: 170px;
                       max-height: 170px;
@@ -114,17 +123,16 @@
                       <li
                         v-for="(result, index) in results"
                         :key="index"
-                        style="font-size: 20px; font-weight: 500; margin-bottom: 10px"
+                        style="font-size: 20px; font-weight: 500; margin-bottom: 5px"
                       >
                         <span v-if="result.resultType === 'Profile'">
                           {{ result.header }} ({{ result.descriptor }})
-                          <input type="text" v-model="roleMap[index]" />
+                          <input type="text" v-model="result.projectRole" />
                           <button
                             v-if="result.addButton"
                             @click.prevent="addUser(result, result.header)"
                             style="
-                              flex: 1;
-                              margin-left: 20px;
+                              
                               background-color: #3498db;
                               color: #fff;
                               padding: 5px 10px;
@@ -144,10 +152,12 @@
                 </div>
               </div>
               <span
-                style="margin-top: 50px; display: flex; justify-content: space-between"
+                style="margin-top: 20px; display: flex; justify-content: space-between"
               >
                 <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
-                <span> <button class="defaultBtn" type="submit">Save</button></span>
+                <span>
+                  <button class="defaultBtn" @click="EditProject">Save</button></span
+                >
               </span>
             </div>
           </div>
@@ -182,8 +192,8 @@ export default {
       roleMap: {},
       initialList: [],
       addedList: [],
-      finalList: [],
       removedList: [],
+      projectID: "",
     };
   },
   async mounted() {
@@ -200,10 +210,13 @@ export default {
         .then((response) => {
           this.projectName = response.data.projectName;
           this.projectDescription = response.data.projectDescription;
-          this.userList = response.data.nameRoleMap;
+          this.projectID = response.data.projectID;
           // eslint-disable-next-line no-unused-vars
-          for (const [name, value] of Object.entries(this.userList)) {
-            this.initialList.push(value);
+          for (const [name, value] of Object.entries(response.data.nameRoleMap)) {
+            this.userList.push({ name: name, role: value });
+          }
+          for (var i = 0; i < this.userList.length; i++) {
+            this.initialList.push(this.userList[i]);
           }
         })
         .catch((error) => {
@@ -267,27 +280,44 @@ export default {
         });
     },
 
-    addUser(result,index) {
-      const user = result;
+    addUser(result, index) {
       console.log(result);
-      console.log(index)
-      if (user && !this.userList[index] != undefined) {
-        this.addedList.push({
+      const user = {
+        name: result.header,
+
+        role: {
           id: {
-            profileID: user.reference,
+            profileID: result.reference,
+            projectID: this.projectID,
           },
-          projectRole: "",
-          name: result.header,
+        },
+      };
+      console.log(index);
+      if (
+        !this.addedList.find((user) => {
+          user.role.id.profileID == user.role.id.profileID;
+        })
+      ) {
+        this.addedList.push(user);
+      } else if (
+        this.removedList.find((user) => {
+          user.role.id.profileID == user.role.id.profileID;
+        })
+      ) {
+        const found = this.removedList.find((user) => {
+          user.role.id.profileID == user.role.id.profileID;
         });
+        this.userList.push(found);
+        this.removedList.splice(this.removedList.indexOf(found), 1);
       }
       this.query = "";
       this.results = [];
     },
     deleteUser(user) {
-      console.log(user)
+      console.log(user);
       if (this.initialList.includes(user)) {
         this.removedList.push(user);
-        delete this.userList[user]
+        this.userList.splice(this.userList.indexOf(user), 1);
       } else if (this.addedList.includes(user)) {
         this.addedList.splice(this.addedList.indexOf(user), 1);
       }
@@ -303,6 +333,7 @@ export default {
                 projectName: this.projectName,
                 projectDescription: this.projectDescription,
                 projectParticipants: this.userList,
+                projectID: this.projectID,
               },
               {
                 headers: {
@@ -311,7 +342,7 @@ export default {
               }
             )
             .then((result) => {
-              if (result.status === 201) {
+              if (result.status === 202) {
                 console.log("project post success");
                 if (this.profilePic) {
                   const formData = new FormData();
@@ -331,11 +362,36 @@ export default {
                 console.log(result);
                 Swal.fire({
                   icon: "success",
-                  text: "Project has been created!",
+                  text: "Project has been edited!",
                   // Navigate to project page
-                }).then(() => {
-                  this.$router.push({ name: "ownPView" });
-                });
+                })
+                  .then(() => {
+                    this.addedList.forEach((user) => {
+                      axios.post(
+                        "http://49.245.48.28:8080/api/project/addParticipant",
+                        user.role,
+                        {
+                          headers: {
+                            "session-ID": auth.jsessionID,
+                          },
+                        }
+                      );
+                      this.removedList.forEach((user) => {
+                        axios.delete(
+                          "http://49.245.48.28:8080/api/project/removeParticipant",
+                          user.role,
+                          {
+                            headers: {
+                              "session-ID": auth.jsessionID,
+                            },
+                          }
+                        );
+                      });
+                    });
+                  })
+                  .then(() => {
+                    this.$router.push({ name: "ownPView" });
+                  });
               }
             });
         }
@@ -352,13 +408,6 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background: rgb(207, 205, 205);
-  height: 100%;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
-}
 
 .container {
   background: rgb(255, 255, 255);
@@ -366,19 +415,20 @@ export default {
   display: flex;
   margin: 20px;
   width: auto;
-  margin: 50px;
+  
 }
 
 .item {
-  display: inline-table;
+  display: inline;
+  width: -webkit-fill-available;
 }
 
 .detail {
   display: flex;
   padding: 20px;
   text-align: left;
-
-  margin-left: 10px;
+  width: -webkit-fill-available;
+  
 }
 
 input[type="text"] {
@@ -395,16 +445,16 @@ textarea {
   font-size: 20px;
   padding: 10px;
   border: transparent;
-  width: 1200px;
-  min-height: 150px;
+  width: -webkit-fill-available;
+  min-height: 70px;
   height: auto;
   background: rgb(234, 229, 229);
 }
 
 .profile-pic {
   background: rgb(234, 231, 231);
-  width: 320px;
-  height: 300px;
+  width: 250px;
+  height: 200px;
   border-radius: 20px;
 }
 
@@ -413,7 +463,7 @@ textarea {
   min-width: 300px;
   width: auto;
   border-radius: 20px;
-  font-size: 15px;
+  font-size: 10px;
 }
 
 .searchU ul {
@@ -421,26 +471,32 @@ textarea {
 }
 
 .searchU li {
-  font-size: 30px;
-  margin-left: 40px;
-  padding: 10px;
+  font-size: 15px;
+  margin-left: 0px;
+  
 }
 
 .searchU option {
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .result {
-  font-size: 18px;
+  font-size: 16px;
+  
 }
 
 .result span:hover {
   background: rgb(255, 255, 255);
 }
 .userlist {
-  font-size: 25px;
+  font-size: 20px;
 }
 .userlist input {
   width: auto;
+  background-color: rgb(255, 255, 255);
+  margin-left:-20px;
+  padding-left:10px;
+  font-size:15px;
+
 }
 </style>

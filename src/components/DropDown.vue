@@ -5,7 +5,7 @@
     /></span>
     <ul v-if="showDropdown">
       <li><RouterLink to="/Profile">Profile</RouterLink></li>
-      <li v-if="authStore.isAdmin"><a href="/AdminPage">Admin Page</a></li>
+      <li v-if="authStore.isAdmin"><RouterLink to="/AdminPage">Admin Page</RouterLink></li>
       <li><RouterLink to="/ownPView">Project</RouterLink></li>
       <li><a href="#" @click="logout">Logout</a></li>
     </ul>
@@ -92,7 +92,7 @@ export default {
   background: rgb(174, 170, 170);
   border-radius: 30px;
   padding: 4px;
-  width: 40px;
+  width: 30px;
 }
 
 .dropdown {
@@ -113,9 +113,10 @@ export default {
   top: 37px;
   left: -34px;
   box-shadow: 0 2px 5px rgb(0 0 0 / 20%);
+  min-width:100px;
   width: max-content;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   font-family: math;
 }
 

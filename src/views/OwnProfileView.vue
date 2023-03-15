@@ -1,117 +1,78 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
-      <div class="container">
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>Student Info | Profile</p>
+        <p><router-link to="/ownPView" class="Rp">Recent project </router-link></p>
+      </div>
+      <p v-if="isDeactivated === true" class="message">your account is deactivated!</p>
+      <div class="containerA">
         <div class="item">
           <form class="detail">
-            <div class="profile-pic">
+            <div class="profile">
               <img
-                class="img"
                 :src="profileImageSrc"
                 alt="Profile Picture"
                 @error="setDefaultImage"
               />
             </div>
 
-            <div style="padding: 15px; margin: 15px">
-              <div style="font-size: 40px; margin-top: -10px">
-                <span>{{ profile.firstName }} </span>
-                <span>{{ profile.lastName }} </span>
-              </div>
-              <p></p>
-              <span style="font-size: 30px">Major: </span>
-              <label
-                style="
-                  border-radius: 20px;
-                  font-size: 20px;
-                  padding: 10px;
-                  border: transparent;
-                  background: rgb(234, 229, 229);
-                  width: 500px;
-                "
-                ><span v-for="major in majors" :key="major.majorCode">
-                  {{ major.majorName }}
-                </span>
-              </label>
-              <p></p>
-              <div style="font-size: 30px">Biography:</div>
+            <div class="userinfo">
+              <div>
+                <div class="name">
+                  <span>{{ profile.firstName }} </span>
+                  <span>{{ profile.lastName }} </span>
+                  <label style="float: right"
+                    ><router-link to="/EditProfile" class="Ep">
+                      <img
+                        style="width: 25px"
+                        src="../assets/icons8-edit-48.png"
+                      /> </router-link
+                  ></label>
+                </div>
 
-              <div
-                style="
-                  border-radius: 20px;
-                  font-size: 20px;
-                  padding: 10px;
-                  border: transparent;
-                  width: 1200px;
-                  min-height: 100px;
-                  height: auto;
-                  background: rgb(234, 229, 229);
-                "
-              >
-                {{ profile.biography }}
-              </div>
+                <div class="infoD" style="display: flex">
+                  <div class="textH" style="flex: 1">Student email:</div>
+                  <div class="textB" style="flex: 2">{{ profile.email }}</div>
+                </div>
 
-              <div class="Project-container">
-                <div>
-                  <span style="margin-bottom: 20px"> Recent Project</span>
-                  <div style="display: flex; margin-bottom: 10px; margin-left: 20px">
-                    <div style="width: 200px">Project ID</div>
-                    <div style="flex: 1">Project Name</div>
-                    <div style="flex: 2">Project Description</div>
+                <div class="infoD" style="display: flex">
+                  <div class="textH" style="flex: 1">Student ID:</div>
+                  <div class="textB" style="flex: 2">{{ profile.profileID }}</div>
+                </div>
+
+                <div class="infoD" style="display: flex">
+                  <div class="textH" style="flex: 1">Major:</div>
+                  <div class="textB" style="flex: 2">
+                    <span v-for="major in majors" :key="major.majorCode">
+                      <li>{{ major.majorName }}</li>
+                    </span>
                   </div>
+                </div>
 
-                  <div>
-                    <router-link
-                      v-for="project in projects"
-                      :key="project.projectID"
-                      :to="{
-                        name: 'Project',
-                        params: { reference: project.reference },
-                      }"
-                      style="
-                        margin: 10px;
-                        background: white;
-                        text-decoration: none;
-                        display: flex;
-                        width: 1400px;
-                        border-radius: 10px;
-                        padding: 10px;
-                        color: black;
-                      "
-                    >
-                      <span style="width: 200px">{{ project.reference }}</span>
-                      <span style="flex: 1">{{ project.header }}</span>
-                      <span style="flex: 2"
-                        ><div style="font-size: 18px">
-                          {{ project.descriptor }}
-                        </div></span
-                      >
-                    </router-link>
-                  </div>
+                <div class="infoD" style="display: flex">
+                  <div class="textH" style="flex: 1">Biography:</div>
+                  <div class="textB" style="flex: 2">{{ profile.biography }}</div>
                 </div>
               </div>
             </div>
           </form>
-
-          <form
-            style="
-              display: flex;
-              justify-content: space-between;
-              margin-left: -40px;
-              margin-right: 30px;
-            "
-          >
-            <button class="defaultBtn" type="submit">Deactivate account</button>
-            <button class="defaultBtn">
-              <router-link to="/EditProfile" class="link">Edit</router-link>
+          <div style="float: right; margin: 20px; width: 300px; font-size: 10px">
+            <button
+              @click="toggleActiveStatus"
+              :class="{ 'ABtn active': isDeactivated, ABtn: !isDeactivated }"
+              :disabled="isDeactivated === true"
+            >
+              {{ !isDeactivated ? "Deactivate" : "Reactivate" }}
             </button>
-
-            <button class="defaultBtn">
-              <router-link to="/createProject" class="link"
-                >Create another project
-              </router-link>
-            </button>
-          </form>
+            <p v-if="isDeactivated === false"> your account is <span style="color:green; font:bolder; font-size:15px">active</span> .</p>
+            <p v-if="isDeactivated === true" class="message">
+              Your account has been <span style="color:brown;font-size:20px">deactivated</span>. It will need 1 hour to reactivate. If you
+              wish to immediate reactivate your account, please send an email to
+              admin@example.com with your request.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -131,8 +92,9 @@ export default {
   data() {
     return {
       profile: {},
-      projects: [],
       majors: [],
+      isDeactivated: false,
+      message: "",
     };
   },
 
@@ -150,19 +112,10 @@ export default {
         .then((response) => {
           console.log(response.data);
           console.log("project", response.data.projects);
+          console.log("status", response.data.deactivationFlag);
           this.profile = response.data;
           this.majors = response.data.majors;
-          this.projects = response.data.projects.map((project) => {
-            const projID = project.reference;
-            console.log(project.reference);
-            axios
-              .get(`${API_URL}/project/${projID}`, { headers })
-
-              .catch((error) => {
-                console.error(error);
-              });
-            return project;
-          });
+          this.isDeactivated = response.data.deactivationFlag;
         })
         .catch((error) => {
           console.error(error);
@@ -183,32 +136,96 @@ export default {
     setDefaultImage(event) {
       event.target.src = require("../assets/icons8-user-64.png");
     },
+    async toggleActiveStatus() {
+      const auth = useAuthStore();
+      const headers = {
+        "session-ID": auth.jsessionID,
+      };
+
+      const confirmation = await Swal.fire({
+        title: "Are you sure?",
+        text: `You are about to ${
+          !this.isDeactivated ? "deactivate" : "activate"
+        } your account`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, proceed",
+        cancelButtonText: "No, cancel",
+      });
+
+      if (confirmation.isConfirmed) {
+        try {
+          this.isDeactivated = !this.isDeactivated;
+          const response = await axios.patch(
+            `${API_URL}/profile/updateStatus?status=` + !this.isDeactivated,
+            {},
+            { headers }
+          );
+
+          console.log(response);
+        } catch (error) {
+          if (error.response && error.response.status === 403) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text:
+                "You need to wait 1 hour before deactivating/reactivating your account",
+            });
+            console.error(error);
+          }
+        }
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.background {
-  background: rgb(207, 205, 205);
-  height: 100%;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
+.ABtn {
+  transition: transform 0.3s ease;
+  padding: 6px;
+}
+.ABtn.active {
+  transform: translateX(100%);
+}
+.ABtn:not(.active) {
+  transform: translateX(0);
 }
 
-.container {
+.Rp {
+  margin-left: 1050px;
+  background: rgb(196, 193, 193);
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.Rp:hover {
+  background: white;
+}
+.containerA {
   background: rgb(255, 255, 255);
-  border-radius: 20px;
-  display: flex;
+  border-radius: 8px;
   margin: 20px;
   width: auto;
   margin: 50px;
+  display: -webkit-inline-box;
 }
 
 .item {
-  display: inline-table;
+  display: inline;
+  width: -webkit-fill-available;
 }
 
+.textH {
+  width: 500px;
+  border-right: outset 2px;
+}
+
+.textB {
+  padding-left: 30px;
+}
 .detail {
   display: flex;
   padding: 20px;
@@ -217,23 +234,38 @@ export default {
   margin-left: 60px;
 }
 
-.profile-pic {
-  background: rgb(234, 231, 231);
-  width: 300px;
-  height: 300px;
-  border-radius: 20px;
+.userinfo {
+  margin-left: 50px;
+  display: inline;
+  width: auto;
+}
+.infoD {
+  border: solid 1px grey;
+  padding: 10px;
+  margin: 1px;
+  width: 800px;
 }
 
-.Project-container {
-  margin: 50px;
-  margin-left: -324px;
-  background: rgb(234, 231, 231);
-  display: inline-flex;
-  width: 1500px;
-  min-height: 277px;
-  height: auto;
-  border-radius: 20px;
-  padding: 20px;
-  font-size: 25px;
+.profile {
+  width: 200px;
+  height: 200px;
+  margin-top: 10px;
+  background: rgb(234, 229, 229);
+  overflow: hidden;
+  border-radius: 10px;
+}
+.profile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.name {
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+.message {
+  text-align: center;
 }
 </style>

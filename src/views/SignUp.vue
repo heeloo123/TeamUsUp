@@ -3,10 +3,10 @@
     <div class="background">
       <div class="container">
         <div class="Title">
-          <h1 style="font-size: 40px; margin-left: -270px">Sign Up</h1>
-          <h2 style="margin-left: 50px; color: grey">
+          <h1 style="font-size: 30px; margin-left: -220px">Sign Up</h1>
+          <h3 style="margin-left: 30px; color: grey">
             Please fill in this form to create an account!
-          </h2>
+          </h3>
         </div>
         <div class="registration">
           <form @submit.prevent="signUp">
@@ -174,13 +174,7 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background: rgb(224, 216, 216);
-  height: 100vh;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
-}
+
 
 .Title {
   float: left;
@@ -192,11 +186,11 @@ export default {
 
 .registration input {
   width: 500px;
-  height: 50px;
+  height: 40px;
   padding-left: 30px;
   display: block;
   margin-bottom: 20px;
-  font-size: larger;
+  font-size: 15px;
   border-radius: 6px;
   position: inherit;
   border: transparent;
@@ -208,7 +202,7 @@ export default {
   border-radius: 20px;
   width: fit-content;
   display: block;
-
-  margin-top: 100px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  margin-top:30px ;
 }
 </style>

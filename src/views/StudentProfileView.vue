@@ -2,43 +2,49 @@
   <!-- this page is able access even not authenticate -->
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
+      <div class="header">
+        <p>
+          <router-link to="/searchPage">Search </router-link> | User Profile |
+          {{ profile.profileID }} {{ profile.firstName }} {{ profile.lastName }}
+        </p>
+      </div>
       <div class="container">
         <div class="item">
           <form class="detail">
             <div class="profile-pic">
               <img :src="profileImageSrc" />
             </div>
-            <div style="padding: 15px; margin: 15px">
+            <div
+              style="padding: 15px; margin: 15px; width: -webkit-fill-available"
+            >
               <div style="font-size: 40px; margin-top: -10px">
                 <span>{{ profile.firstName }} </span>
                 <span>{{ profile.lastName }} </span>
               </div>
               <p></p>
-              <span style="font-size: 30px">Major: </span>
+              <span style="font-size: 20px">Major: </span>
               <label
                 style="
                   border-radius: 20px;
                   font-size: 20px;
                   padding: 10px;
                   border: transparent;
-                  background: rgb(234, 229, 229);
-                  width: 500px;
                 "
                 v-for="major in profile.majors"
                 :key="major.majorCode"
               >
-                {{ major.majorName }}
+                {{ major.majorName }} <br />
               </label>
               <p></p>
 
-              <div style="font-size: 30px">Biography:</div>
+              <div style="font-size: 20px">Biography:</div>
               <div
                 style="
-                  border-radius: 20px;
+                  border-radius: 10px;
                   font-size: 20px;
                   padding: 10px;
                   border: transparent;
-                  width: 1200px;
+                  width: -webkit-fill-available;
                   min-height: 100px;
                   height: auto;
                   background: rgb(234, 229, 229);
@@ -46,40 +52,44 @@
               >
                 {{ profile.biography }}
               </div>
-             
-              <div class="Project-container">
-              <div>
-              Recent Project
-                <div style="display: flex; margin-bottom: 10px; margin-left: 20px">
-                  <div style="width: 200px">Project ID</div>
-                  <div style="flex: 1">Project Name</div>
-                  <div style="flex: 2">Project Description</div>
-                </div>
-                <div>
-                  <ul
-                    v-for="project in projects"
-                    :key="project.projectID"
-                    style="
-                      margin: 10px;
-                      background: white;
-
-                      display: flex;
-                      width: 1400px;
-                      border-radius: 10px;
-                      padding: 10px;
-                    "
-                  >
-                    <span style="width: 200px">{{ project.projectID }}</span>
-                    <span style="flex: 1">{{ project.projectName }}</span>
-                    <span style="flex: 2"
-                      ><div style="font-size: 18px">{{ project.descriptor }}</div></span
-                    >
-                  </ul>
-                </div>
-                </div>
-              </div>
             </div>
           </form>
+          <label style="margin-left: -800px; font-size: 25px"
+            >Recent Project</label
+          >
+          <div class="Project-container">
+            <div style="width: -webkit-fill-available">
+              <div style="display: flex; width: -webkit-fill-available">
+                <div style="width: 200px">Project ID</div>
+                <div style="flex: 1">Project Name</div>
+                <div style="flex: 2.2">Project Description</div>
+              </div>
+              <div>
+                <router-link
+                  v-for="project in projects"
+                  :key="project.projectID"
+                  :to="{
+                    name: 'StudentProject',
+                    params: { reference: project.projectID },
+                  }"
+                  class="proD"
+                  style="
+                    margin: 15px;
+                    text-decoration: none;
+                    display: flex;
+                    width: auto;
+                    padding: 5px;
+                    color: black;
+                    background: white;
+                  "
+                >
+                  <span style="width: 200px">{{ project.projectID }}</span>
+                  <span style="flex: 1">{{ project.projectName }}</span>
+                  <span style="flex: 2">{{ project.projectDescription }}</span>
+                </router-link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -118,15 +128,20 @@ export default {
           this.projectsParticipated = error.response.data.projectsParticipated;
           this.projectsParticipated.forEach((project) => {
             axios
-              .get(`http://49.245.48.28:8080/api/project/${project.id.projectID}`)
+              .get(
+                `http://49.245.48.28:8080/api/project/${project.id.projectID}`
+              )
               .then((response) => {
                 this.projects.push(response.data);
+                console.log(this.projects);
               })
+
               .catch((error) => {
                 console.log("Error response 3:", error.response);
                 console.error(error);
               });
           });
+
           console.log("Redirecting to:", redirectUrl);
         } else {
           console.error(error);
@@ -148,29 +163,26 @@ export default {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   display: flex;
+  width: -webkit-fill-available;
   margin: 20px;
-  width: auto;
-  margin: 50px;
 }
 .detail {
   display: flex;
-  padding: 20px;
+  padding: 10px;
   text-align: left;
-  margin: 20px;
-  margin-left: 60px;
 }
 .item {
-  display: inline-table;
+  display: inline;
+  width: -webkit-fill-available;
 }
 .Project-container {
-  margin: 50px;
-  margin-left: -324px;
+  margin: 10px;
   background: rgb(234, 231, 231);
-  display: block;
-  min-width: 1500px;
-  width: auto;
+  display: flex;
+  width: -webkit-fill-available;
   border-radius: 20px;
   padding: 20px;
-  font-size: 25px;
+  font-size: 20px;
+  text-align: left;
 }
 </style>

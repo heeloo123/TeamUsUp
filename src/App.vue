@@ -17,7 +17,7 @@ import NavView from "./views/NavView.vue";
 
 <style>
 .background {
-  background: rgb(207, 205, 205);
+  background: rgb(244, 243, 243);
   height: 100vh;
   width: 100vw;
   margin: -10px;
@@ -38,18 +38,19 @@ nav a.router-link-exact-active {
 
 
 .defaultBtn {
-  height: 60px;
   min-width: 120px;
   width: auto;
-  background: black;
-  border-radius: 20px;
-  margin-right: auto;
+  background: rgb(75, 74, 74);
+  border-radius: 10px;
+  
   color: white;
-  font-size: 20px;
+  font-size: 15px;
   font: bolder;
-  margin: 50px;
+  margin: 30px;
   position: relative;
-  bottom: 50px;
+  
+  padding:10px;
+  border:transparent
 }
 
 .link {
@@ -57,8 +58,8 @@ nav a.router-link-exact-active {
   color: white;
 }
 .profile-pic {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   margin: 10px;
   background: rgb(234, 229, 229);
   overflow: hidden;
@@ -68,6 +69,22 @@ nav a.router-link-exact-active {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.header {
+  border-bottom: ridge;
+  border-top: hidden;
+  display: flex;
+  padding-top: 10px;
+}
+.header img {
+  margin-top: 8px;
+  margin-left: 25px;
+}
+.header p {
+  margin-top: 20px;
+  margin-left: 10px;
+  text-align: left;
 }
 
 </style>

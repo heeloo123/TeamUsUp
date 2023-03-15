@@ -2,11 +2,15 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="container">
-        <h1 class style="font-size: 40px; padding: 20px">TEAMUSUP MEMBER LOGIN</h1>
+       
 
-        <form @submit.prevent="submitLogin">
+        <form @submit.prevent="submitLogin" style="width: -webkit-fill-available;">
+         <h1 class style="font-size: 25px; padding: 20px">TEAMUSUP MEMBER LOGIN</h1>
+          
           <div class="form-group">
+            <div class="G">
             <label for="email">Email address</label>
+            
             <input
               type="email"
               id="email"
@@ -14,9 +18,10 @@
               v-model="email"
               required
             />
-          </div>
-          <div class="form-group">
+         
+          <div style="margin-top:10px">
             <label for="password">Password</label>
+            
             <input
               style="font"
               type="password"
@@ -25,23 +30,25 @@
               v-model="password"
               required
             />
-          </div>
-          <div style="float: right; margin-top: 40px">
-            <button class="defaultBtn">Login</button>
-          </div>
-        </form>
+          </div> </div></div>
+         
+       
 
-        <p style="font-size: 20px; text-align: -webkit-left; margin-left: 40px">
+        <p style="font-size: 15px; text-align: -webkit-left; margin-left: 30px;margin-top:-20px">
           <router-link to="/ForgetPassword" class style="color: blue"
             >Forget my password</router-link
           >
         </p>
 
-        <form style="display: flex; justify-content: space-between">
-          <button class="defaultBtn">
+        <label style="display: flex; justify-content: space-between">
+        <button class="defaultBtn">
             <router-link to="/SignUp" class="link">Register an Account!</router-link>
           </button>
-        </form>
+       
+            <button class="defaultBtn">Login</button>
+          </label >
+         
+ </form>
       </div>
     </div>
   </div>
@@ -85,104 +92,7 @@ export default {
       }
     },
   },
-    // async checkEmailRegistered(email) {
-    //   try {
-    //     const response = await axios.post("http://49.245.48.28:8080/api/login)", {
-    //       params: {email},
-    //     })
-        
-    //     if (!response.data.exist) {
-    //       Swal.fire({
-    //         title: "Error!",
-    //         text: "User email is not registered.",
-    //         icon: "error",
-    //         confirmButtonText: "OK",
-    //       })
-    //     } 
-    //   }
-    //     catch(error) {
-    //       if (error.response && error.response.status === 401) {
-    //         Swal.fire({
-    //           title: "Error!",
-    //           text: "Unauthorised email",
-    //           icon: "error",
-    //           confirmButtonText: "OK",
-    //         }); 
-    //       }
-    //         else {
-    //           console.error(error)
-    //         }
-    //       }
-          
-    //     }
-    //   },
-
-
-///****************local storage**********************8 */
-//   async submitLogin() {
-
-//     let result = await axios.get(
-//       `http://localhost:3000/users?email=${this.email}&password=${this.password}` //use backticks ` instead of '
-//     )
-//     console.warn(result)
-//     if (result.status == 200 && result.data.length > 0) {
-//       Swal.fire({
-//         title: "Succesful log in",
-//         icon: "success",
-//         timer:1000,
-//         showConfirmButton:false,
-//       });
-
-//       localStorage.setItem("user-info", JSON.stringify(result.data[0]));
-//       this.$router.push({ name: "home" });
-//     } else {
-//       Swal.fire({
-//         title: "Somethings wrong...",
-//         icon: "error",
-//       });
-//     }
-//   },
-// },
-/*   local storage  end      */
-/*    previous    ---------------     */
-// methods: {
-//   async submitLogin() {
-//     try {
-//       console.log(this.email);
-//       console.log(this.password)
-//       // here you use withAuthentication instead. The endpoint doesnt receive a body
-//         const response = await axios.post("http://49.245.48.28:8080/login", {},{
-//           //following this, the next requests shud probably only need with credentials
-//       headers: {
-//         Authorization: "Basic " + btoa(this.email + ":" + this.password)}
-//       });
-//       if (response.status === 202) {
-//         // Login successful
-//         console.log(response.data); // The user object returned by the server
-//         this.$router.push("/home");
-
-//       } else {
-//         // Login failed
-//         console.log("login failed!")
-//         Swal.fire({
-//           icon: "error",
-//           title: "Oops...",
-//           text: "Invalid email or password!",
-//         });
-//       }
-//     } catch (error) {
-//       //handle api request errors
-//       if(error.response.status === 401){
-//         Swal.fire({
-//           icon: "error",
-//           title: "Oops...",
-//           text: "Invalid email or password!",
-//         });
-//       } else{
-//       console.error(error);}
-//     }
-//   },
-/*-------------- end here -------*/
+   
   mounted() {
     let user = localStorage.getItem("user-info");
     if (user) {
@@ -194,39 +104,41 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background: rgb(224, 216, 216);
-  height: 100vh;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
-}
 
 .container {
   background: rgb(255, 255, 255);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
-  display: block;
+  display: flex;
   margin: 20px;
-  width: 800px;
-  margin-top: 100px;
+  width:400px;
+  margin-top: 80px;
+  align-items: center;
 }
 
 .form-group {
-  display: block;
-  margin: 30px;
-  font-size: 32px;
-  text-align: -webkit-left;
+  display: inline;
+  font-size: 20px;
+  text-align: left;
   font-family: math;
+  
+  
 }
 
 input[type="email"],
 input[type="password"] {
-  width: 700px;
-  height: 40px;
-  margin: auto;
-  font-size: 20px;
+  width: -webkit-fill-available;;
+  height: 30px;
+  border:solid 1px;
+  font-size: 15px;
   border-radius: 10px;
   padding-left: 20px;
   background: white;
+  
+}
+
+.G{
+  margin:30px;
+  
 }
 </style>

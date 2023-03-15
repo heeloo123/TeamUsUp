@@ -1,15 +1,21 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>Student Info | <router-link to="/Profile" class="Rp">Profile</router-link> | Edit Profile</p>
+        
+      </div>
       <div class="container">
         <div class="item">
-          <h1 style="font-size: 40px; margin-left: -1200px">Edit profile</h1>
+          
           <form class="detail" @submit.prevent="EditProfile">
             <div class="profile-pic">
               <img
-                v-if="imagePreview"
-                :src="imagePreview"
+                v-if="imagePreview || profileImageSrc"
+                :src="imagePreview || profileImageSrc"
                 alt="Image Preview"
+                
               />
             </div>
 
@@ -40,7 +46,7 @@
                 </ul>
               </div>
 
-              <span style="font-size: 30px">Major:</span>
+              <span style="font-size: 25px">Major:</span>
 
               <select
                 class="majorSelect"
@@ -61,7 +67,7 @@
                 </option>
               </select>
 
-              <div style="font-size: 30px">Biography:</div>
+              <div style="font-size: 25px;margin-top:10px">Biography:</div>
 
               <textarea
                 placeholder="Enter your biography here"
@@ -69,7 +75,7 @@
                 required
               ></textarea>
 
-              <div style="margin-left: -250px">
+              <div style="margin-left: -250px;margin-top:-100px">
                 <input
                   type="file"
                   id="profilePic"
@@ -80,8 +86,8 @@
                 style="
                   display: flex;
                   justify-content: space-between;
-                  margin-left: -350px;
-                  margin-top: 80px;
+                  margin-left: -250px;
+                  margin-top: 60px;
                 "
               >
                 <button class="defaultBtn" @click.prevent="CancelAlert">
@@ -116,6 +122,7 @@ export default {
     };
   },
   async mounted() {
+
     // make an axios GET request to retrieve the list of majors
     console.log("mounted function");
     const auth = useAuthStore();
@@ -150,18 +157,16 @@ export default {
   methods: {
     CancelAlert() {
       Swal.fire({
-        title: "Are you sure?",
-        text: "It is good to create a profile to let people find you!",
+        title: "Leave site?",
+        text: "Changes you made may not be saved",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "yes",
-        cancelButtonText: "No,stay on this page",
+        confirmButtonText: "Leave",
+        cancelButtonText: "Cancel",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push({ name: "home" });
-        } else {
-          this.$router.push({ name: "CreateProfile" });
-        }
+          this.$router.push({ name: "Profile" });
+        } 
       });
     },
     selectMajor(majorName) {
@@ -191,6 +196,17 @@ export default {
 
     async EditProfile() {
       const auth = useAuthStore();
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Your profile information will be updated.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Update',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+
+      if(result.isConfirmed){
+
       if (auth.isAuthenticated) {
         axios
           .patch(
@@ -230,7 +246,7 @@ export default {
                 icon: "success",
                 confirmButtonText: "OK",
               }).then(() => {
-                this.$router.push({ name: "home" });
+                this.$router.push({ name: "Profile" });
               });
             } else {
               Swal.fire({
@@ -249,7 +265,7 @@ export default {
               confirmButtonText: "OK",
             });
           });
-      }
+      } }});
     },
   },
   computed: {
@@ -258,26 +274,27 @@ export default {
     $state() {
       return useAuthStore();
     },
+    profileImageSrc() {
+      const baseUrl = "http://49.245.48.28:8080";
+      const imagePath = `/api/profile/image/${this.profileID}`;
+      return baseUrl + imagePath;
+    },
   },
 };
 </script>
 
 <style scoped>
-.background {
-  background: rgb(207, 205, 205);
-  height: 100vh;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
+.background{
+  height:100%
 }
 
 .container {
   background: rgb(255, 255, 255);
-  border-radius: 20px;
-  display: flex;
+  border-radius: 8px;
   margin: 20px;
   width: auto;
   margin: 50px;
+  display: -webkit-inline-box;
 }
 
 .item {
@@ -288,7 +305,7 @@ export default {
   display: flex;
   padding: 20px;
   text-align: left;
-  margin: 20px;
+  margin: 10px;
   margin-left: 60px;
 }
 
@@ -297,7 +314,7 @@ input[type="text"] {
   font-size: 20px;
   padding: 10px;
   border: transparent;
-  background: rgb(234, 229, 229);
+  background: rgb(240, 237, 237);
   width: 500px;
 }
 
@@ -306,19 +323,20 @@ textarea {
   font-size: 20px;
   padding: 10px;
   border: transparent;
-  width: 1200px;
+ 
   min-height: 100px;
   height: auto;
-  background: rgb(234, 229, 229);
+  background: rgb(242, 240, 240);
+  width: -webkit-fill-available;
 }
 
 .majorSelect {
   font-size: 20px;
-  margin-left: 10px;
+  margin-left: 0px;
   font-size: 20px;
   margin-left: 10px;
   border-radius: 10px;
-  padding: 5px;
+  padding: 10px;
 }
 .selectedmajor {
   display: flex;
@@ -328,7 +346,11 @@ textarea {
   background: rgb(234, 229, 229);
   margin: 10px;
   border-radius: 20px;
-  padding: 5px;
+  padding: 10px;
   font-size: 17px;
+
+}
+.profile-pic{
+  margin-top:50px
 }
 </style>

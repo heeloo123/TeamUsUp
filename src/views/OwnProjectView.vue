@@ -1,6 +1,30 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>
+          Student Info | <router-link to="/ownPView"> Recent Project </router-link> |
+          {{ project.projectID }} {{ project.projectName }}
+        </p>
+        <p style="margin-left: 610px">
+          <button class="Rp">
+            <RouterLink
+              :to="{
+                name: 'SelfEva',
+                params: {
+                  reference: $route.params.reference,
+                },
+              }"
+              style="color: black; text-decoration: none"
+            >
+              self evaluation
+            </RouterLink>
+          </button>
+
+          <button class="Rp" @click.prevent="showUserList">Peer Evaluation</button>
+        </p>
+      </div>
       <div class="container">
         <div class="item">
           <!---->
@@ -8,119 +32,89 @@
             <div class="project-pic">
               <img :src="projectImageSrc" alt="Project img" />
             </div>
-            <p></p>
-
-            <div class="text" style="display: block; margin-left: 20px">
-              <span style="font-size: 30px">Project name: </span>
-              <label>{{ project.projectName }}</label>
-              <span style="float: right">
-                <label>
-                  <RouterLink
-                    :to="{
-                      name: 'SelfEva',
-                      params: {
-                        reference: $route.params.reference,
-                        
-                      },
-                    }"
-                  >
-                    self evaluation
-                  </RouterLink>
-                </label>
-                <label>
-                  <button @click.prevent="showUserList">Peer Evaluation</button>
-                </label>
-              </span>
-
-              <div style="margin-top: 50px">
-                <div style="font-size: 30px">Project description:</div>
-                <p>{{ project.projectDescription }}</p>
+            <div style="width: -webkit-fill-available">
+              <div class="text">
+                <span style="font-size: 20px">Project name: </span>
+                <label>{{ project.projectName }}</label>
+                <router-link
+                  :to="{
+                    name: 'EditProjectView',
+                    params: { reference: $route.params.reference },
+                  }"
+                  class="E"
+                >
+                  <img style="width:30px" src="../assets/icons8-edit-48.png" />
+                </router-link>
+                <div style="margin-top: 20px">
+                  <div style="font-size: 20px">Project description:</div>
+                  <p>{{ project.projectDescription }}</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <h2 style="margin-left: -1300px; font-size: 40px; margin-top: -20px">
-            Project members
+          <h2 style="float: left; font-size: 20px; margin-top: -30px; margin-left: 30px">
+            Project members &dtrif;
           </h2>
-
-          <div class="memberlist">
-            <RouterLink
-              :to="{
-                name: 'StudentProfile',
-                params: { reference: role.id.profileID },
-              }"
-              v-for="(role, name) in project.nameRoleMap"
-              :key="name"
-            >
-              <div
-                style="
-                  border-radius: 20px;
-                  display: flex;
-                  background: rgb(234, 231, 231);
-                  border: transparent;
-                  margin: 20px;
-                "
+          <div>
+            <div class="memberlist">
+              <RouterLink
+                :to="{
+                  name: 'StudentProfile',
+                  params: { reference: role.id.profileID },
+                }"
+                v-for="(role, name) in project.nameRoleMap"
+                :key="name"
               >
-                <div class="profileImg">
-                  <img :src="role.profileImage" alt="profile picture" />
-                </div>
+                <div class="ho" style="">
+                  <div class="profileImg">
+                    <img :src="role.profileImage" alt="profile picture" />
+                  </div>
 
-                <div class="name-role">
-                  <label>
-                    Name: <span>{{ name }}</span></label
-                  >
-                  <label
-                    >Role:<span>{{ role.projectRole }}</span></label
-                  >
-                </div>
+                  <div class="name-role">
+                    <label>
+                      Name: <span>{{ name }}</span></label
+                    >
+                    <label
+                      >Role:<span>{{ role.projectRole }}</span></label
+                    >
+                  </div>
 
-                <div
-                  style="
-                    margin-left: 600px;
-                    margin-top: 20px;
-                    font-size: 20px;
-                    display: inline-grid;
-                  "
-                  v-if="evaluateeIDs[role.id.profileID]"
-                >
-                  <p>
-                    Teamwork:
-                    {{
-                      teamworkSums[role.id.profileID] / evaluateeIDs[role.id.profileID]
-                    }}
-                  </p>
-                  <p>
-                    Skill :
-                    {{ skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
-                  </p>
-                  <p>
-                    Communication :
-                    {{
-                      communicationSums[role.id.profileID] /
-                      evaluateeIDs[role.id.profileID]
-                    }}
-                  </p>
+                  <div
+                    style="
+                      margin-left: 600px;
+                      margin-top: 20px;
+                      font-size: 20px;
+                      display: inline-grid;
+                    "
+                    v-if="evaluateeIDs[role.id.profileID]"
+                  >
+                    <p>
+                      Teamwork:
+                      {{
+                        teamworkSums[role.id.profileID] / evaluateeIDs[role.id.profileID]
+                      }}
+                    </p>
+                    <p>
+                      Skill :
+                      {{ skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
+                    </p>
+                    <p>
+                      Communication :
+                      {{
+                        communicationSums[role.id.profileID] /
+                        evaluateeIDs[role.id.profileID]
+                      }}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </RouterLink>
+              </RouterLink>
+            </div>
           </div>
 
           <!---->
 
-          <div style="margin-left: 1500px; display: flex">
-            <nav>
-              <button class="defaultBtn">
-                <router-link
-                  :to="{
-                    name: 'EditProjectView',
-                    params: { reference: $route.params.reference},
-                  }"
-                >
-                  Edit Project</router-link
-                >
-              </button>
-            </nav>
-          </div>
+          <div style="margin-left: px; display: flex"></div>
         </div>
       </div>
     </div>
@@ -148,7 +142,7 @@ export default {
   methods: {
     async showUserList() {
       const options = [];
-      const role = []
+      const role = [];
       for (const [name, user] of Object.entries(this.project.nameRoleMap)) {
         console.log(name);
         console.log(user);
@@ -171,8 +165,8 @@ export default {
             },
           });
         }).then((res) => {
-          console.log(res)
-          const selectedRole = role[res]
+          console.log(res);
+          const selectedRole = role[res];
           this.$router.push({
             name: "PeerEva",
             params: {
@@ -263,40 +257,46 @@ export default {
 
 <style scoped>
 .background {
-  background: rgb(207, 205, 205);
   height: 100%;
-  width: 100vw;
-  margin: -0px;
-  font-family: math;
 }
-
+.Rp {
+  margin-left: 20px;
+  background: rgb(196, 193, 193);
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+  border: transparent;
+}
+.Rp:hover {
+  background: white;
+}
 .container {
-  background: rgb(255, 255, 255);
-  border-radius: 20px;
+  background: white;
   display: flex;
-  margin: 20px;
+  margin: 30px;
   width: auto;
-  margin: 50px;
+  border-radius: 5px;
 }
 
 .item {
-  display: inline-table;
+  display: inline;
+  width: -webkit-fill-available;
 }
 
 .detail {
   display: flex;
   padding: 20px;
   text-align: left;
-
-  margin-left: 60px;
+  width: -webkit-fill-available;
 }
 
 .project-pic {
   background: rgb(234, 231, 231);
-  width: 320px;
-  height: 300px;
+  width: 250px;
+  height: 200px;
   border-radius: 30px;
-  margin-top: 45px;
+  margin-top: 20px;
   overflow: hidden;
 }
 
@@ -322,22 +322,21 @@ export default {
 }
 
 .text {
-  font-size: 25px;
-  padding: 20px;
+  font-size: 20px;
+  padding: 10px;
 }
 
 .text p {
-  background: rgb(239, 232, 232);
   display: content;
-  width: 1200px;
-  min-height: 150px;
+  min-height: 70px;
   height: auto;
-  border-radius: 20px;
-  padding: 20px;
+  border: solid 1px grey;
+  border-radius: 3px;
+  padding: 30px;
+  width: auto;
 }
 
 .text label {
-  background: rgb(239, 232, 232);
   display: content;
   width: 200px;
   height: auto;
@@ -369,11 +368,28 @@ export default {
 
 .memberlist a {
   text-decoration: none;
+}
+
+.ho {
+  border-radius: 20px;
+  display: flex;
+  background: rgb(234, 231, 231);
+  border: transparent;
+  margin: 20px;
   color: black;
 }
 
-.memberlist :hover {
-  background-color: rgb(225, 225, 230);
-  color: rgb(8, 0, 255);
+.ho:hover {
+  background: rgb(206, 200, 200);
+}
+
+.Eva {
+  border: transparent;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+}
+.E {
+  float: right;
 }
 </style>

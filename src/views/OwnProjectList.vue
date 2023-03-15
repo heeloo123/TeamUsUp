@@ -1,65 +1,66 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>
+          Student Info | <router-link to="/Profile">Profile</router-link> |Recent Project
+        </p>
+        <p><router-link to="/CreateProject" class="Rp">Create project</router-link></p>
+      </div>
+      
       <div class="container">
         <div class="item">
-<span style="font-size:50px; "> Recent Project</span>
-              <div class="Project-container">
-                <div>
-                  
-                  <div style="display: flex; margin-bottom: 10px; margin-left: 20px">
-                    <div style="width: 200px">Project ID</div>
-                    <div style="flex: 1">Project Name</div>
-                    <div style="flex: 2">Project Description</div>
-                  </div>
-
-                  <div>
-                    <router-link
-                      v-for="project in projects"
-                      :key="project.projectID"
-                      :to="{
-                        name: 'Project',
-                        params: { reference: project.reference },
-                      }"
-                      style="
-                        margin: 10px;
-                        background: white;
-                        text-decoration: none;
-                        display: flex;
-                        width: 1400px;
-                        border-radius: 10px;
-                        padding: 10px;
-                        color: black;
-                      "
-                    >
-                      <span style="width: 200px">{{ project.reference }}</span>
-                      <span style="flex: 1">{{ project.header }}</span>
-                      <span style="flex: 2"
-                        ><div style="font-size: 18px">
-                          {{ project.descriptor }}
-                        </div></span
-                      >
-                    </router-link>
-                  </div>
-                </div>
-              </div>
-           
-    
-
-          <div style="display: flex; justify-content: space-between">
-           
-            <button class="defaultBtn">
-              <router-link to="/createProject" class="link"
-                >Create another project here</router-link
+          <div class="Project-container">
+            <div>
+              <div
+                style="
+                  display: flex;
+                  margin-bottom: 10px;
+                  margin: 10px;
+                  padding:15px;
+                  background:lightgrey
+                "
               >
-            </button>
-          </div>
- </div>
+                <div style="width: 190px">Project ID</div>
+                <div style="flex: 1">Project Name</div>
+                <div style="flex: 2.2">Project Description</div>
+              </div>
 
+              <div>
+                <router-link
+                  v-for="project in projects"
+                  :key="project.projectID"
+                  :to="{
+                    name: 'Project',
+                    params: { reference: project.reference },
+                  }"
+                  class="proD"
+                  style="
+                    margin: 15px;
+                    text-decoration: none;
+                    display: flex;
+                    width: auto;
+                    padding: 5px;
+                    color: black;
+                    
+                  "
+                >
+                  <span style="width: 190px">{{ project.reference }}</span>
+                  <span style="flex: 1">{{ project.header }}</span>
+                  <span style="flex: 2"
+                    ><div>
+                      {{ project.descriptor }}
+                    </div></span
+                  >
+                </router-link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
+  </div>
 </template>
 
 <script>
@@ -96,19 +97,32 @@ export default {
           console.log("project", response.data.projects);
           this.profile = response.data;
           this.majors = response.data.majors;
-          
+
           this.projects = response.data.projects.map((project) => {
-           
             console.log(project.reference);
             axios
-              .get(`${API_URL}/project/`+project.reference, { headers })
+              .get(`${API_URL}/project/` + project.reference, { headers })
 
               .catch((error) => {
                 console.error(error);
               });
             return project;
           });
-          this.projects.sort((a, b) => a.projectID - b.projectID);
+          this.projects.sort((a, b) => {
+          // Extract the project numbers from the projectID strings
+          const aNum = parseInt(a.reference.slice(4));
+          const bNum = parseInt(b.reference.slice(4));
+
+          // Compare the project numbers as strings
+          if (aNum < bNum) {
+            return -1;
+          } else if (aNum > bNum) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        
         })
         .catch((error) => {
           console.error(error);
@@ -135,31 +149,42 @@ export default {
 
 <style scoped>
 
-
+.Rp {
+  margin-left: 950px;
+  background: rgb(196, 193, 193);
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.Rp:hover {
+  background: white;
+}
 .container {
-  background: rgb(255, 255, 255);
-  border-radius: 20px;
+  background: white;
   display: flex;
-  margin: 20px;
+  margin: 30px;
   width: auto;
-  margin: 50px;
+  
 }
 
 .item {
-  display: inline-table;
+  display: inline;
+  width: -webkit-fill-available;
 }
 
-
 .Project-container {
-  margin: 20px;
+  margin-top: 20px;
+  text-align: left;
+  display: inline;
+  width: auto;
+  font-size: 15px;
+}
+.proD {
+  border-bottom: solid 1px grey;
   
-  background: rgb(237, 233, 233);
-  display: inline-flex;
-  width: 1500px;
-  min-height: 277px;
-  height: auto;
-  border-radius: 20px;
-  padding: 20px;
-  font-size: 25px;
+}
+.proD:hover{
+  background:rgb(208, 201, 201)
 }
 </style>
