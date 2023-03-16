@@ -5,14 +5,16 @@
         <label><img src="../assets/icons8-user-32.png" /></label>
         <p>
           Student Info | <router-link to="/Profile">Profile</router-link> |
-          <router-link to="/ownPView">Recent Project</router-link> | Edit Project | {{ projectID }}
+          <router-link to="/ownPView">Recent Project</router-link> | Edit Project |
+          {{ projectID }}
           {{ projectName }}
         </p>
       </div>
+
+      {{ removedList }}
+      {{ addedList }}
       <div class="container">
         <div class="item">
-         
-
           <div class="detail" @submit.prevent="EditProject">
             <div>
               <div class="profile-pic">
@@ -26,7 +28,7 @@
               <div style="flex: 1">
                 <div
                   style="
-                  height: 250px;
+                    height: 250px;
                     overflow-y: auto;
                     margin-top: 5px;
                     background: rgb(239, 232, 232);
@@ -79,9 +81,9 @@
                 </div>
               </div>
             </div>
-            <div class="searchU"></div>
+           
 
-            <div style="margin-left: 50px;width: -webkit-fill-available">
+            <div style="margin-left: 50px; width: -webkit-fill-available">
               <p></p>
               <span style="font-size: 25px">Project name:</span>
               <input
@@ -95,7 +97,7 @@
               <div style="font-size: 25px">Project description:</div>
 
               <textarea
-                placeholder="Enter project discription here (words limit 200 )"
+                placeholder="Enter project description here (words limit 200 )"
                 v-model="projectDescription"
                 required
               ></textarea>
@@ -106,7 +108,9 @@
                     <label for="query">Search: </label>
                     <input id="query" v-model="query" type="text" required />
 
-                    <button type="submit" style="margin-left: 10px" @click="search">Submit</button>
+                    <button type="submit" style="margin-left: 10px" @click="search">
+                      Submit
+                    </button>
                   </div>
                   <div
                     class="result"
@@ -132,7 +136,6 @@
                             v-if="result.addButton"
                             @click.prevent="addUser(result, result.header)"
                             style="
-                              
                               background-color: #3498db;
                               color: #fff;
                               padding: 5px 10px;
@@ -359,26 +362,17 @@ export default {
                     }
                   );
                 }
-                console.log('img',result);
+                console.log("img", result);
                 Swal.fire({
                   icon: "success",
                   text: "Project has been edited!",
                   // Navigate to project page
                 })
                   .then(() => {
-                    this.addedList.forEach((user) => {
-                      axios.post(
-                        "http://49.245.48.28:8080/api/project/addParticipant",
-                        user.role,
-                        {
-                          headers: {
-                            "session-ID": auth.jsessionID,
-                          },
-                        }
-                      );
-                      this.removedList.forEach((user) => {
-                        axios.delete(
-                          "http://49.245.48.28:8080/api/project/removeParticipant",
+                    this.addedList
+                      .forEach((user) => {
+                        axios.post(
+                          "http://49.245.48.28:8080/api/project/addParticipant",
                           user.role,
                           {
                             headers: {
@@ -386,8 +380,18 @@ export default {
                             },
                           }
                         );
-                      });
-                    });
+                        this.removedList.forEach((user) => {
+                          axios.post(
+                            "http://49.245.48.28:8080/api/project/removeParticipant",
+                            user.role,
+                            {
+                              headers: {
+                                "session-ID": auth.jsessionID,
+                              },
+                            }
+                          );
+                        });
+                      })
                   })
                   .then(() => {
                     this.$router.push({ name: "ownPView" });
@@ -408,14 +412,12 @@ export default {
 </script>
 
 <style scoped>
-
 .container {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   display: flex;
   margin: 20px;
   width: auto;
-  
 }
 
 .item {
@@ -428,7 +430,6 @@ export default {
   padding: 20px;
   text-align: left;
   width: -webkit-fill-available;
-  
 }
 
 input[type="text"] {
@@ -473,7 +474,6 @@ textarea {
 .searchU li {
   font-size: 15px;
   margin-left: 0px;
-  
 }
 
 .searchU option {
@@ -482,21 +482,21 @@ textarea {
 
 .result {
   font-size: 16px;
-  
 }
 
 .result span:hover {
   background: rgb(255, 255, 255);
 }
+
 .userlist {
   font-size: 20px;
 }
+
 .userlist input {
   width: auto;
   background-color: rgb(255, 255, 255);
-  margin-left:-20px;
-  padding-left:10px;
-  font-size:15px;
-
+  margin-left: -20px;
+  padding-left: 10px;
+  font-size: 15px;
 }
 </style>
