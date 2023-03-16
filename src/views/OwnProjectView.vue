@@ -248,7 +248,7 @@ export default {
   computed: {
     projectImageSrc() {
       const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `api/project/image/${this.project.projectID}`;
+      const imagePath = `/api/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
     },
   },
