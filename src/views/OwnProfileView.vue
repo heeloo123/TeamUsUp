@@ -62,7 +62,6 @@
             <button
               @click="toggleActiveStatus"
               :class="{ 'ABtn active': isDeactivated, ABtn: !isDeactivated }"
-              :disabled="isDeactivated === true"
             >
               {{ !isDeactivated ? "Deactivate" : "Reactivate" }}
             </button>
@@ -157,7 +156,7 @@ export default {
         try {
           this.isDeactivated = !this.isDeactivated;
           const response = await axios.patch(
-            `${API_URL}/profile/updateStatus?status=` + !this.isDeactivated,
+            `${API_URL}/profile/updateStatus?status=` + this.isDeactivated,
             {},
             { headers }
           );
