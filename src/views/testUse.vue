@@ -59,13 +59,13 @@ export default {
     }
   },
   methods: {
-    async markAsRead(notificationId) {
+    async markAsRead(notification) {
       try {
         const auth = useAuthStore();
         if (auth.isAuthenticated) {
           axios
             .post(
-              `${API_URL}/notification/markAsRead?notificationID=${notificationId}`,
+              `${API_URL}/notification/markAsRead?notificationID=${notification.notificationId}`,
               {},
 
               {
@@ -76,6 +76,7 @@ export default {
             )
             .then((response) => {
               console.log(response);
+              notification.read = true;
             });
         }
       } catch (error) {

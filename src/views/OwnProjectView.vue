@@ -36,15 +36,18 @@
               <div class="text">
                 <span style="font-size: 20px">Project name: </span>
                 <label>{{ project.projectName }}</label>
+           
                 <router-link
                   :to="{
                     name: 'EditProjectView',
                     params: { reference: $route.params.reference },
                   }"
                   class="E"
+                  
                 >
-                  <img style="width:30px" src="../assets/icons8-edit-48.png" />
-                </router-link>
+                  <img style="width: 30px" src="../assets/icons8-edit-48.png" />
+               </router-link>
+
                 <div style="margin-top: 20px">
                   <div style="font-size: 20px">Project description:</div>
                   <p>{{ project.projectDescription }}</p>
@@ -140,6 +143,7 @@ export default {
     };
   },
   methods: {
+ 
     async showUserList() {
       const options = [];
       const role = [];
@@ -194,7 +198,7 @@ export default {
         .then((response) => {
           this.project = response.data;
           console.log(response);
-
+          
           const evaluateeIDs = {};
           const teamworkSums = {};
           const skillSums = {};
@@ -247,8 +251,8 @@ export default {
   },
   computed: {
     projectImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `api/project/image/${this.project.projectID}`;
+      const baseUrl = "http://49.245.48.28:8080/api";
+      const imagePath = `/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
     },
   },

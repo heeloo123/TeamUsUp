@@ -270,7 +270,7 @@ export default {
                     }
                   );
                 }
-                console.log(result);
+                console.log('pic',result);
                 Swal.fire({
                   icon: "success",
                   text: "Project has been created!",
@@ -343,6 +343,11 @@ textarea {
   width: 250px;
   height: 200px;
   border-radius: 20px;
+}
+.project-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .searchU input {

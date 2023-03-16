@@ -359,7 +359,7 @@ export default {
                     }
                   );
                 }
-                console.log(result);
+                console.log('img',result);
                 Swal.fire({
                   icon: "success",
                   text: "Project has been edited!",
