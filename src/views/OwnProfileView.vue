@@ -249,7 +249,7 @@ export default {
 .profile {
   width: 200px;
   height: 200px;
-  margin-top: 10px;
+  margin-top: 40px;
   background: rgb(234, 229, 229);
   overflow: hidden;
   border-radius: 10px;

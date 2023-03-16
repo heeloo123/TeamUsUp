@@ -8,7 +8,7 @@
           {{ project.projectID }} {{ project.projectName }}
         </p>
         <p style="margin-left: 610px">
-          <button class="Rp">
+          <!-- <button class="Rp">
             <RouterLink
               :to="{
                 name: 'SelfEva',
@@ -20,11 +20,12 @@
             >
               self evaluation
             </RouterLink>
-          </button>
+          </button> -->
 
-          <button class="Rp" @click.prevent="showUserList">Peer Evaluation</button>
+          <button class="Rp" @click.prevent="showUserList">Evaluation</button>
         </p>
       </div>
+      <p style="font-size:15px;margin-left:900px;border:transparent;"  v-if="profile.profileID != project.owner_id">Only project Owner are able to edit the project</p>
       <div class="container">
         <div class="item">
           <!---->
@@ -36,7 +37,7 @@
               <div class="text">
                 <span style="font-size: 20px">Project name: </span>
                 <label>{{ project.projectName }}</label>
-           <span v-if="isOwner">
+               
                 <router-link v-if="profile.profileID === project.owner_id"
                   :to="{
                     name: 'EditProjectView',
@@ -46,8 +47,8 @@
                   
                 >
                   <img style="width: 30px" src="../assets/icons8-edit-48.png" />
-               </router-link></span>
-
+               </router-link>
+              
                 <div style="margin-top: 20px">
                   <div style="font-size: 20px">Project description:</div>
                   <p>{{ project.projectDescription }}</p>
@@ -272,7 +273,7 @@ export default {
   height: 100%;
 }
 .Rp {
-  margin-left: 20px;
+  margin-left: 100px;
   background: rgb(196, 193, 193);
   padding: 10px;
   color: black;

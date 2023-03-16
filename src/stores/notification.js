@@ -32,7 +32,7 @@ export const useNotificationStore = defineStore ({
                         'session-ID':auth.jsessionID
                     }
                 });
-                this.notifications = response.data.map(notification => notification.message);
+                this.notifications = response.data;
             }
             catch(error) {
                 console.error(error);

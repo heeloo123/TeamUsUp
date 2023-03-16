@@ -6,16 +6,23 @@
         <div
           class="messageTable"
           v-for="notification in notifications"
-          :key="notification.notificationID"
-          @click="openNotification"
-          :class="{ read: markAsRead }"
+          :key="notification.notificationId"
+          @click="handleClickEvent(message)"
+          :class="{selected: selectedMessage === message}"
         >
           <div class="cell">
             {{ notification.message }}
             <div class="emailTimeStamp">
-              {{ formatDate(currentTimeStamp()) }}
+              {{ formatDate(notification.timeCreated) }}
             </div>
-            <div class="readflag" v-bind="markRead(notification.notificationID)">Read</div>
+            <div class="readflag" @click="markRead(notification.notificationId)">{{   notification.read ? "Read":"Unread" }}</div>
+            <div class="notificationBox" :message="selectedMessage">
+              <p>{{ notification.message }}</p>
+              <div @click="processMessageAction(notification.notificationID, notification.profileID, notification.projectID)">
+                <button class="actionBtn" @click="setProjectParticipation = true">Yes</button>
+                <button class="actionBtn" @click="setProjectParticipation = false">No</button>
+              </div>
+            </div>
           </div>
         </div>
         <div style="display: flex; margin: 20px">
@@ -43,8 +50,8 @@ export default {
 
   data() {
     return {
+      notifications:[ {
       notificationID: [],
-      notifications: [],
       message: [],
       actions: [],
       actionRequired: [],
@@ -53,6 +60,7 @@ export default {
       projectID: [],
       profileID: [],
       read: [],
+      }],
 
       emailTimeCreated: [
         {
@@ -63,21 +71,21 @@ export default {
         },
       ],
 
-      isClicked: false,
-      markAsRead: false,
+      showMessageBox: false,
+      selectedMessage: null,
       pageSize: 10,
       currentPage: 1,
     };
   },
 
   methods: {
-    currentTimeStamp() {
-      const current = new Date();
-      new Date() ===
-        `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}}`;
-      console.log(current);
-      return current;
-    },
+    //currentTimeStamp() {
+    //  const current = new Date();
+    //  new Date() ===
+    //    `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}}`;
+    //  console.log(current);
+    //  return current;
+    //},
 
     formatDate(date) {
       const options = {
@@ -90,31 +98,27 @@ export default {
       return new Date(date).toLocaleDateString("en-gb", options);
     },
 
-    getDate() {
-      return new Date().toLocaleDateString();
+    //getDate() {
+    //  return new Date().toLocaleDateString();
+    //},
+
+    //getMonth() {
+    //  return new Date().getMonth();
+    //},
+
+    //getTime() {
+    //  return new Date().toLocaleTimeString();
+    //},
+
+    //getYear() {
+    //  return new Date().getFullYear();
+    //},
+
+    handleClickEvent(message) {
+      this.selectedMessage = message;
+      this.showMessageBox =! this.showMessageBox;
     },
 
-    getMonth() {
-      return new Date().getMonth();
-    },
-
-    getTime() {
-      return new Date().toLocaleTimeString();
-    },
-
-    getYear() {
-      return new Date().getFullYear();
-    },
-
-    handleClickEvent() {
-      this.isClicked = true;
-    },
-
-    handleMarkAsRead(index) {
-      if (this.notifications[index].isClicked) {
-        this.notification[index].markAsRead = true;
-      }
-    },
 
     prevPage() {
       if (this.currentPage > 1) {
@@ -140,8 +144,8 @@ export default {
         "session-ID": auth.jsessionID
       }})
         .then((response) => {
-          console.log(response.state)
-          console.log(response.status)
+          console.log(response.actionState)
+          console.log(response.actionStatus)
         })
         .catch((error) => {
           console.error(error);
@@ -150,11 +154,15 @@ export default {
 
     async markRead(notificationID) {
       const auth= useAuthStore
-      axios.post(`${API_URL}/notification/markAsRead/` +notificationID, {}, {headers:{
+      axios.post(`${API_URL}/notification/markAsRead/?notificationID=` +notificationID, {}, {headers:{
         "session-ID": auth.jsessionID
-    }})
+    },})
       .then((response) => {
         console.log(response.readStatus)
+        const notification = this.notifications.find((notification) => notification.notificationId == notificationID)
+        notification.read = true;
+        var index = this.notifications.indexOf(notification)
+        this.notifications[index] = notification
       })
       .catch((error) => {
         console.error(error)
@@ -163,13 +171,13 @@ export default {
     },
 
   setProjectParticipation(action) {
-    var state = action? "Accept" : "Reject"
-    return state
+    var actionState = action? "Accept" : "Reject"
+    return actionState
   },
 
   isActionRequired(actionRequired) {
-    var status = actionRequired? "Yes" : "No"
-    return status
+    var actionStatus = actionRequired? "Yes" : "No"
+    return actionStatus
   },
 
   messageRead(read) {
@@ -191,8 +199,7 @@ export default {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
       Swal.showLoading();
-      notificationStore.fetchAnyNotification();
-      this.notifications = notificationStore.notifications
+      notificationStore.fetchAnyNotification().then(() => this.notifications = useNotificationStore().notifications);
 
       /*
       axios
@@ -262,14 +269,27 @@ export default {
 
 .readflag {
   text-align: right;
-  margin-right: 165px;
+  margin-right: 170px;
   margin-top: -18px;
 }
 
-.fullMessage {
-  background: rgb(255, 255, 255);
-  width: auto;
-  height: auto;
-  text-align: center;
+.notificationBox {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
 }
+
+.notificationBox {
+  width: 300px;
+  height: 180px;
+  margin-top: 150px;
+  margin-left: 340px;
+}
+
+.actionBtn {
+  margin: 60px;
+
+}
+
+
 </style>
