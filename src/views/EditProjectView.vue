@@ -344,12 +344,12 @@ export default {
             .then((result) => {
               if (result.status === 202) {
                 console.log("project post success");
-                if (this.profilePic) {
+                if (this.file) {
                   const formData = new FormData();
-                  formData.append("image", this.projectPic);
+                  formData.append("image", this.file);
 
                   axios.post(
-                    "http://49.245.48.28:8080/api/project/image/" + result.data,
+                    "http://49.245.48.28:8080/api/project/image/" + this.projectID,
                     formData,
                     {
                       headers: {
