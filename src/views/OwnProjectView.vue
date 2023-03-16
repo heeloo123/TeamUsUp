@@ -36,8 +36,8 @@
               <div class="text">
                 <span style="font-size: 20px">Project name: </span>
                 <label>{{ project.projectName }}</label>
-           
-                <router-link
+           <span v-if="isOwner">
+                <router-link v-if="profile.profileID === project.owner_id"
                   :to="{
                     name: 'EditProjectView',
                     params: { reference: $route.params.reference },
@@ -46,7 +46,7 @@
                   
                 >
                   <img style="width: 30px" src="../assets/icons8-edit-48.png" />
-               </router-link>
+               </router-link></span>
 
                 <div style="margin-top: 20px">
                   <div style="font-size: 20px">Project description:</div>
@@ -135,6 +135,7 @@ export default {
   name: "ProjectView",
   data() {
     return {
+      profile:{},
       project: {},
       evaluations: [],
       teamworkSums: {},
@@ -143,6 +144,7 @@ export default {
     };
   },
   methods: {
+   
  
     async showUserList() {
       const options = [];
@@ -192,12 +194,18 @@ export default {
       const headers = {
         "session-ID": auth.jsessionID,
       };
+      axios.get(`${API_URL}/profile/userProfile`, { headers })
+      .then((response) => {
+        console.log(response)
+        this.profile= response.data;
+      })
       axios
         .get(`${API_URL}/project/${this.$route.params.reference}`, { headers })
 
         .then((response) => {
           this.project = response.data;
           console.log(response);
+          console.log('role',response.data.owner_id)
           
           const evaluateeIDs = {};
           const teamworkSums = {};

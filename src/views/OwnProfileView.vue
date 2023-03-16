@@ -24,7 +24,8 @@
                   <span>{{ profile.firstName }} </span>
                   <span>{{ profile.lastName }} </span>
                   <label style="float: right"
-                    ><router-link to="/EditProfile" class="Ep">
+                    ><router-link to="/EditProfile" class="Ep" 
+                    >
                       <img
                         style="width: 25px"
                         src="../assets/icons8-edit-48.png"
