@@ -31,6 +31,7 @@
 <script>
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
+import {useNotificationStore} from "@/stores/notification";
 import Swal from "sweetalert2";
 
 const API_URL = "http://49.245.48.28:8080/api";
@@ -185,15 +186,15 @@ export default {
   },
 
   mounted() {
-    this.date === this.getDate();
-    this.time() === this.getTime();
-    this.year() === this.getYear();
-    this.month() === this.getMonth();
 
+    const notificationStore = useNotificationStore();
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
       Swal.showLoading();
+      notificationStore.fetchAnyNotification();
+      this.notifications = notificationStore.notifications
 
+      /*
       axios
         .get(`${API_URL}/notification/retrieveNew?email=${auth.email}`, { headers:{
           "session-ID": auth.jsessionID
@@ -225,6 +226,9 @@ export default {
         .finally(() => {
           Swal.hideLoading();
         });
+
+       */
+      Swal.hideLoading();
     }
     
   },

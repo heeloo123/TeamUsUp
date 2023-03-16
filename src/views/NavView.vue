@@ -44,7 +44,7 @@
       <label v-if="showDropDown" class="userDropdown">
         <label class="image">
           <RouterLink to="/notification"
-            ><img src="../assets/notification.png"
+            ><img src="../assets/notification.png" @mouseover="hoveringNotification = true" @mouseleave = "hoveringNotification = false"
           /></RouterLink>
         </label>
         <label
@@ -68,6 +68,8 @@
 <script>
 import DropDown from "../components/DropDown.vue";
 import { useAuthStore } from "@/stores/auth";
+import {useNotificationStore} from "@/stores/notification";
+
 export default {
   name: "NavView",
   components: {
@@ -77,6 +79,8 @@ export default {
     return {
       firstName: "",
       lastName: "",
+      notifications:[],
+      hoveringNotification:false
     };
   },
   computed: {
@@ -99,6 +103,9 @@ export default {
     "$state.isAuthenticated"(newValue) {
       this.$nextTick(() => {
         console.log("showlogin updated", !newValue);
+        const notificationStore = useNotificationStore();
+        notificationStore.fetchNewNotification();
+        this.notifications = notificationStore.notifications
       });
     },
   },
@@ -149,5 +156,11 @@ export default {
   font-size: 20px;
   font-family: -webkit-body;
   margin: 10px;
+}
+NotificationDropDown{
+  float: right;
+  margin-right: 80px;
+  width: 20%;
+  height: 20%;
 }
 </style>
