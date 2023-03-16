@@ -344,7 +344,7 @@ export default {
             .then((result) => {
               if (result.status === 202) {
                 console.log("project post success");
-                if (this.profilePic) {
+                if (this.file) {
                   const formData = new FormData();
                   formData.append("image", this.projectPic);
 
