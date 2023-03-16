@@ -8,7 +8,7 @@
           v-for="notification in notifications"
           :key="notification.notificationId"
           @click="handleClickEvent(message)"
-          :class="{selected: selectedMessage === message}"
+          :class="{ select: selectedMessage === message}"
         >
           <div class="cell">
             {{ notification.message }}
@@ -16,11 +16,16 @@
               {{ formatDate(notification.timeCreated) }}
             </div>
             <div class="readflag" @click="markRead(notification.notificationId)">{{   notification.read ? "Read":"Unread" }}</div>
-            <div class="notificationBox" :message="selectedMessage">
+            <div class="notificationBox" v-if="selectedMessage" :message="selectedMessage">
               <p>{{ notification.message }}</p>
               <div @click="processMessageAction(notification.notificationID, notification.profileID, notification.projectID)">
                 <button class="actionBtn" @click="setProjectParticipation = true">Yes</button>
                 <button class="actionBtn" @click="setProjectParticipation = false">No</button>
+              </div>
+              <div>
+                <button @click="handleCloseEvent(message)"> 
+                  <img style="width: 3px; height: 3px;" src="../assets/delete.png" alt="delete icon">
+                </button>
               </div>
             </div>
           </div>
@@ -114,9 +119,13 @@ export default {
     //  return new Date().getFullYear();
     //},
 
-    handleClickEvent(message) {
-      this.selectedMessage = message;
-      this.showMessageBox =! this.showMessageBox;
+    handleClickEvent(notificationID) {
+      this.selectedMessage = this.notifications.message.find(notification => notification.notificationID === notificationID);
+      this.showMessageBox = true;
+    },
+
+    handleCloseEvent() {
+      this.showMessageBox = false;
     },
 
 
