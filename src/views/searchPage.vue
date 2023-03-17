@@ -1,4 +1,9 @@
 <template>
+   <div class="header">
+        <p style="font-family: math;">
+          Search User Profile & Project  
+        </p>
+      </div>
   <div class="container">
     <form @submit.prevent="search" class="search">
       <label for="query">Search: </label>
@@ -140,6 +145,7 @@ export default {
   font-weight: bold;
   margin-top: 20px;
   width: -webkit-fill-available;
+  font-family: math;
 }
 
 ul {

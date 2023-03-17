@@ -3,20 +3,12 @@
     <div class="background">
       <!---->
       <div>
-        ||||
-        <router-link to="/CreateProfile">Create Profile</router-link> |
-        <router-link to="/CreateProject">Create Project</router-link> |
-        <router-link to="/Profile">Profile</router-link> |
-      
-        <router-link to="/Project">Project</router-link> |
-        <router-link to="/EditProject"> Edit Project</router-link>|
-        <router-link to="/home"> student homee page</router-link>|
+     
+ 
         <router-link to="/AdminPage"> admin page</router-link>|
         <router-link to="/notification">notification page</router-link>|
        
-        <router-link to="/SearchPage"> serachPage</router-link>
-        <router-link to="/ownPView"> own project</router-link>
-        <router-link to="/test">test</router-link>
+       
       </div>
 
       <form style="display: inline-flex; text-align: -webkit-center; margin: 50px">
