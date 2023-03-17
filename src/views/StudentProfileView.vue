@@ -64,7 +64,7 @@
                 <div style="flex: 1">Project Name</div>
                 <div style="flex: 2.2">Project Description</div>
               </div>
-              <div>
+              <div class="Pc">
                 <router-link
                   v-for="project in projects"
                   :key="project.projectID"
@@ -184,5 +184,9 @@ export default {
   padding: 20px;
   font-size: 20px;
   text-align: left;
+}
+
+.proD :hover{
+  background: rgb(205, 199, 199);
 }
 </style>
