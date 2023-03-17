@@ -21,13 +21,11 @@
 
           </div>
         </div>
-        <div class="notificationBox" v-if="showMessageBox" >
-          <p>{{ selectedMessage.message}}</p>
-          <div>
-            <button @click="handleCloseEvent(message)">
-              <img style="width: 3px; height: 3px;" src="../assets/delete.png" alt="delete icon">
+        <div class="notificationBox" v-if="showMessageBox">
+          <p style="margin-top: 30px; font-size: larger; text-align: center;">{{ selectedMessage.message }}</p>
+            <button style="background: transparent; border: transparent;" @click="handleCloseEvent(message)">
+              <img style="width: 20px; height: 20px; margin-left: 273px; position: relative; bottom: 90px;" src="../assets/delete.png" alt="delete icon">
             </button>
-          </div>
         </div>
         <div style="display: flex; margin: 20px">
           <div style="margin-left: auto">Page {{ currentPage }} of {{ pageCount }}</div>
@@ -298,7 +296,9 @@ export default {
 .notificationBox {
   border: 1px solid black;
   padding: 10px;
-  margin-bottom: 10px;
+  position: relative;
+  bottom: 30px;
+  left: 400px;
 }
 
 .notificationBox {
@@ -313,6 +313,8 @@ export default {
   margin-right: 20px;
 
 }
+
+
 
 
 </style>
