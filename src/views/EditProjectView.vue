@@ -293,6 +293,7 @@ export default {
             profileID: result.reference,
             projectID: this.projectID,
           },
+          projectRole: result.projectRole
         },
       };
       console.log(index);
@@ -328,6 +329,10 @@ export default {
     async EditProject() {
       try {
         const auth = useAuthStore();
+        const projectParticipants = []
+        for(const participant of this.userList){
+          projectParticipants.push(participant.role)
+        }
         if (auth.isAuthenticated) {
           axios
             .patch(
@@ -335,7 +340,7 @@ export default {
               {
                 projectName: this.projectName,
                 projectDescription: this.projectDescription,
-                projectParticipants: this.userList,
+                projectParticipants: projectParticipants,
                 projectID: this.projectID,
               },
               {
@@ -361,39 +366,32 @@ export default {
                       },
                     }
                   );
+
                 }
+                this.addedList.forEach((user) => {
+                  axios.post("http://49.245.48.28:8080/api/project/addParticipant"
+                      , user.role
+                      , {headers:{
+                          'session-ID':auth.jsessionID
+                        }})
+                });
+                this.removedList.forEach((user) => {
+                  console.log(user.role)
+                  axios.delete("http://49.245.48.28:8080/api/project/removeParticipant",
+                      {
+                        headers: {
+                          "session-ID": auth.jsessionID,
+                        },
+                        data: user.role
+                      }
+                  );
+                });
                 console.log("img", result);
                 Swal.fire({
                   icon: "success",
                   text: "Project has been edited!",
                   // Navigate to project page
-                })
-                  .then(() => {
-                    this.addedList
-                      .forEach((user) => {
-                        axios.post(
-                          "http://49.245.48.28:8080/api/project/addParticipant",
-                          user.role,
-                          {
-                            headers: {
-                              "session-ID": auth.jsessionID,
-                            },
-                          }
-                        );
-                        this.removedList.forEach((user) => {
-                          axios.post(
-                            "http://49.245.48.28:8080/api/project/removeParticipant",
-                            user.role,
-                            {
-                              headers: {
-                                "session-ID": auth.jsessionID,
-                              },
-                            }
-                          );
-                        });
-                      })
-                  })
-                  .then(() => {
+                }).then(() => {
                     this.$router.push({ name: "ownPView" });
                   });
               }
