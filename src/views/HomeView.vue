@@ -7,7 +7,7 @@
  
         <router-link to="/AdminPage"> admin page</router-link>|
         <router-link to="/notification">notification page</router-link>|
-       
+        <router-link to="/test">test</router-link>|
        
       </div>
 
