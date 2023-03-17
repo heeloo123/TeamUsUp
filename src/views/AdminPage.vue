@@ -38,7 +38,9 @@
           >
             <div class="trow">
               <div class="cell">{{ profile.firstName }} {{ profile.lastName }}</div>
-              <div class="cell">{{ profile.major }}</div>
+              <div class="cell">
+                <span v-for="major in profile.majors" :key="major.majorCode">{{major.majorName}}</span>
+              </div>
               <div class="cell">{{ archived(profile.archived)}}</div>
               <div class="cell">{{ accountLocked(profile.accountLock)}}</div>
               <div class="cell">
