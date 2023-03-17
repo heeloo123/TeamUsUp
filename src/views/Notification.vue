@@ -5,29 +5,28 @@
       <div class="container">
         <div
           class="messageTable"
-          v-for="notification in notifications"
-          :key="notification.notificationId"
-          @click="handleClickEvent(message)"
-          :class="{ select: selectedMessage === message}"
         >
-          <div class="cell">
+          <div class="cell"
+               v-for="notification in notifications"
+               :key="notification.notificationId"
+               @click="handleClickEvent(notification.notificationId)"
+               :class="{ select: selectedMessage === notification}">
             {{ notification.message }}
+              <button v-if="notification.actionRequired && notification.timeActionPerf === null" class="actionBtn" @click="processMessageAction(notification.notificationId, true)">Yes</button>
+              <button v-if="notification.actionRequired && notification.timeActionPerf === null" class="actionBtn" @click="processMessageAction(notification.notificationId, false)">No</button>
             <div class="emailTimeStamp">
               {{ formatDate(notification.timeCreated) }}
             </div>
             <div class="readflag" @click="markRead(notification.notificationId)">{{   notification.read ? "Read":"Unread" }}</div>
-            <div class="notificationBox" v-if="selectedMessage" :message="selectedMessage">
-              <p>{{ notification.message }}</p>
-              <div @click="processMessageAction(notification.notificationID, notification.profileID, notification.projectID)">
-                <button class="actionBtn" @click="setProjectParticipation = true">Yes</button>
-                <button class="actionBtn" @click="setProjectParticipation = false">No</button>
-              </div>
-              <div>
-                <button @click="handleCloseEvent(message)"> 
-                  <img style="width: 3px; height: 3px;" src="../assets/delete.png" alt="delete icon">
-                </button>
-              </div>
-            </div>
+
+          </div>
+        </div>
+        <div class="notificationBox" v-if="showMessageBox" >
+          <p>{{ selectedMessage.message}}</p>
+          <div>
+            <button @click="handleCloseEvent(message)">
+              <img style="width: 3px; height: 3px;" src="../assets/delete.png" alt="delete icon">
+            </button>
           </div>
         </div>
         <div style="display: flex; margin: 20px">
@@ -120,12 +119,14 @@ export default {
     //},
 
     handleClickEvent(notificationID) {
-      this.selectedMessage = this.notifications.message.find(notification => notification.notificationID === notificationID);
+      console.log("click even received with id ", notificationID)
+      this.selectedMessage = this.notifications.find(notification => notification.notificationId === notificationID);
       this.showMessageBox = true;
     },
 
     handleCloseEvent() {
       this.showMessageBox = false;
+      this.selectedMessage = null;
     },
 
 
@@ -147,14 +148,21 @@ export default {
       return notifications.slice(start, end);
     },
 
-    async processMessageAction(notificationID, action, actionRequired, projectID, profileID) {
+    async processMessageAction(notificationID, action) {
       const auth = useAuthStore
-      axios.post(`${API_URL}/notification/processAction/` +notificationID,{},+action,{},+actionRequired,{},+projectID,{},+profileID,{},{headers:{
+      axios.post(`${API_URL}/notification/processAction/`,{},{headers:{
         "session-ID": auth.jsessionID
-      }})
+      }, params:{
+          'notificationID': notificationID,
+          'action':action
+        }})
         .then((response) => {
-          console.log(response.actionState)
-          console.log(response.actionStatus)
+          if (response.status ==200){
+            Swal.fire({
+              text: action ? 'Successfully verified project participation':'Successfully declined project participation',
+              icon: "success",
+            }).then(() => this.$forceUpdate)
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -296,7 +304,8 @@ export default {
 }
 
 .actionBtn {
-  margin: 60px;
+  margin-left: 20px;
+  margin-right: 20px;
 
 }
 
