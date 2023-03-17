@@ -3,7 +3,7 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <p>
+        <p >
           <router-link to="/searchPage">Search </router-link> | User Profile |
           {{ profile.profileID }} {{ profile.firstName }} {{ profile.lastName }}
         </p>
