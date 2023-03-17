@@ -143,6 +143,19 @@ export default {
       }}).then((res) => {
         console.log(res.status);
       })
+      .then((response) => {
+        if (response.status === 200) {
+          Swal.fire({
+            text: "Successfully unlock user account",
+            icon: "success"
+          })
+        } else {
+          Swal.fire({
+            text: "Something went wrong, please try again later",
+            icon: "error"
+          })
+        }
+      })
       
     },
     async archive(profileID){
@@ -150,6 +163,19 @@ export default {
         axios.put(`${API_URL}/admin/archiveUserProfile/`+profileID, {}, {
           headers:{
             'session-ID':auth.jsessionID
+          }
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            Swal.fire({
+              text: "Successfully archive user profile",
+              icon: "success"
+            })
+          } else {
+            Swal.fire({
+              text: "Something went wrong, please try again later",
+              icon: "error"
+            })
           }
         })
       },

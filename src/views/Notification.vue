@@ -1,7 +1,12 @@
 <template>
   <div style="margin: inherit; text-align: -webkit-center">
     <div class="background">
-      <div style="font-size: 40px; padding: 20px">Notification page</div>
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>Student Info | Notification</p>
+        
+      </div>
+     
       <div class="container">
         <div
           class="messageTable"
@@ -217,10 +222,11 @@ export default {
 
     const notificationStore = useNotificationStore();
     const auth = useAuthStore();
+    
     if (auth.isAuthenticated) {
       Swal.showLoading();
       notificationStore.fetchAnyNotification().then(() => this.notifications = useNotificationStore().notifications);
-
+      
       /*
       axios
         .get(`${API_URL}/notification/retrieveNew?email=${auth.email}`, { headers:{
@@ -256,7 +262,7 @@ export default {
 
        */
       Swal.hideLoading();
-    }
+    }console.log(this.notifications)
     
   },
 };
@@ -270,7 +276,7 @@ export default {
   margin: 50px;
   text-align: left;
   padding: 20px;
-  margin-top: -10px;
+  margin-top: 20px;
 }
 
 .cell {
