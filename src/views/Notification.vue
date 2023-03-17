@@ -162,6 +162,11 @@ export default {
               text: action ? 'Successfully verified project participation':'Successfully declined project participation',
               icon: "success",
             }).then(() => this.$forceUpdate)
+          } else{
+            Swal.fire({
+              text:'Something went wrong, please try again later',
+              icon:'error'
+            })
           }
         })
         .catch((error) => {
