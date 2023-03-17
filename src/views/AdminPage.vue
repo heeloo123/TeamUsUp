@@ -49,7 +49,7 @@
                   v-if="selectedProfile && selectedProfile === profile"
                 >
                   <button class="showBtn" @click.prevent="unlock(profile.profileID)">Unlock Account</button>
-                  <button class="showBtn" @click.prevent = "archive(profile.email)">Archive</button>
+                  <button class="showBtn" @click.prevent = "archive(profile.profileID)">Archive</button>
                 </form>
               </div>
             </div>
