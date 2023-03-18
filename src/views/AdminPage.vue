@@ -11,8 +11,8 @@
         <div class="table">
           <div class="theader">
             <div class="cell">Student Name</div>
-            <div class="cell">Major</div>
-            <div class="cell">Account Status</div>
+            <div class="cell" style="margin-left: 90px;">Major</div>
+            <div class="cell" style="margin-right: 500px;">Account Status</div>
             <div class="cell">
               <!----drop down list ------------------------------------------------------------->
               <label style="float: right; margin-top: -18px; margin-right: 80px">
@@ -142,9 +142,8 @@ export default {
         'session-ID':auth.jsessionID
       }}).then((res) => {
         console.log(res.status);
-      })
-      .then((response) => {
-        if (response.status === 200) {
+      
+        if (res.status === 202) {
           Swal.fire({
             text: "Successfully unlock user account",
             icon: "success"
@@ -155,7 +154,7 @@ export default {
             icon: "error"
           })
         }
-      })
+      }) 
       
     },
     async archive(profileID){

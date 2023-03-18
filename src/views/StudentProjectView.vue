@@ -27,7 +27,7 @@
             </div>
           </form>
 
-          <h2 style="margin-left: -1000px; font-size: 30px; margin-top: -30px">
+          <h2 style="margin-left: -370px; font-size: 30px; margin-top: -30px; overflow: auto;">
             Project members
           </h2>
           <div class="memberlist">

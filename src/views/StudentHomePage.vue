@@ -20,7 +20,7 @@
             <img class="CP" alt="Create" src="../assets/icons8-create-100.png" />
             </div>
           </router-link>
-          <router-link to="/CreateProject" class="link">
+          <router-link to="/searchPage" class="link">
             <div class="router2">
             <h3>Search user&project</h3>
             <img class="CP" alt="Create" src="../assets/icons8-search-100.png" />
