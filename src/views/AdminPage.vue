@@ -49,7 +49,8 @@
                   v-if="selectedProfile && selectedProfile === profile"
                 >
                   <button class="showBtn" @click.prevent="unlock(profile.profileID)">Unlock Account</button>
-                  <button class="showBtn" @click.prevent = "archive(profile.profileID)">Archive</button>
+                  <button class="showBtn" @click.prevent = "archive(profile.profileID, true)">Archive</button>
+                  <button class="showBtn" @click.prevent="unarchive(profile.profileID, false)">Unarchive</button>
                 </form>
               </div>
             </div>
@@ -163,9 +164,9 @@ export default {
           headers:{
             'session-ID':auth.jsessionID
           }
-        })
-        .then((response) => {
-          if (response.status === 200) {
+        }).then((res) => {
+          console.log(res.state);
+          if (res.state === 200) {
             Swal.fire({
               text: "Successfully archive user profile",
               icon: "success"
@@ -176,16 +177,39 @@ export default {
               icon: "error"
             })
           }
-        })
+        })   
       },
+
+      async unarchive(profileID){
+      const auth = useAuthStore();
+        axios.put(`${API_URL}/admin/unarchiveUserProfile/`+profileID, {}, {
+          headers:{
+            'session-ID':auth.jsessionID
+          }
+        }).then((res) => {
+          console.log(res.state)
+          if (res.state === 202) {
+            Swal.fire({
+              text: "Successfully unarchive user profile",
+              icon: "success"
+            })
+          } else {
+            Swal.fire({
+              text: "Something went wrong, please try again later",
+              icon: "error"
+            })
+          }
+        })    
+      },
+
     accountLocked(accountlock) {
       var status = accountlock? 'Locked': 'Not Locked'
-    
       return status
-  
     },
+
     archived(isArchived) {
-      return isArchived ? "Archived" : "Active"
+      var state = isArchived ? "Archived" : "Active"
+      return state
     },
 
   },
