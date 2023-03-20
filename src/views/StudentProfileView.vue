@@ -5,7 +5,7 @@
       <div class="header">
         <p >
           <router-link to="/searchPage">Search </router-link> | User Profile |
-          {{ profile.profileID }} {{ profile.firstName }} {{ profile.lastName }}
+          {{ profile.firstName }} {{ profile.lastName }}
         </p>
       </div>
       <div class="container">
@@ -22,19 +22,22 @@
                 <span>{{ profile.lastName }} </span>
               </div>
               <p></p>
-              <span style="font-size: 20px">Major: </span>
-              <label
-                style="
+              <div style="font-size: 20px">Major: <span
+                  style="
                   border-radius: 20px;
                   font-size: 20px;
-                  padding: 10px;
+                  padding: 5px;
+                  margin-left: 2px;
+                  margin-right: 2px;
                   border: transparent;
+                  background-color:  rgb(234, 231, 231);
                 "
-                v-for="major in profile.majors"
-                :key="major.majorCode"
+                  v-for="major in profile.majors"
+                  :key="major.majorCode"
               >
-                {{ major.majorName }} <br />
-              </label>
+                {{ major.majorName }}
+              </span></div>
+
               <p></p>
 
               <div style="font-size: 20px">Biography:</div>
