@@ -10,9 +10,6 @@
           {{ projectName }}
         </p>
       </div>
-
-      {{ removedList }}
-      {{ addedList }}
       <div class="container">
         <div class="item">
           <div class="detail" @submit.prevent="EditProject">
@@ -50,7 +47,7 @@
                           alt="delete icon"
                         />
                       </button>
-
+                      <br>
                       <input
                         type="text"
                         v-model="user.role.projectRole"
@@ -70,7 +67,7 @@
                           alt="delete icon"
                         />
                       </button>
-
+                      <br>
                       <input
                         type="text"
                         v-model="user.role.projectRole"
