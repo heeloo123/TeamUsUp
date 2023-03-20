@@ -11,8 +11,8 @@
 
             <div style="padding: 15px; margin: 15px">
               <div style="font-size: 40px; margin-top: -10px">
-                <span> {{ $state.user.firstName }} </span>
-                <span> {{ $state.user.lastName }} </span>
+                <span style="margin-right: "> {{ $state.user.firstName }} </span>
+                <span> {{" "}}{{ $state.user.lastName }} </span>
               </div>
               <p></p>
               <div v-if="selectedMajors.length > 0" style="margin-bottom: 10px">

@@ -10,9 +10,6 @@
           {{ projectName }}
         </p>
       </div>
-
-      {{ removedList }}
-      {{ addedList }}
       <div class="container">
         <div class="item">
           <div class="detail" @submit.prevent="EditProject">
@@ -50,7 +47,7 @@
                           alt="delete icon"
                         />
                       </button>
-
+                      <br>
                       <input
                         type="text"
                         v-model="user.role.projectRole"
@@ -70,7 +67,7 @@
                           alt="delete icon"
                         />
                       </button>
-
+                      <br>
                       <input
                         type="text"
                         v-model="user.role.projectRole"
@@ -106,7 +103,7 @@
                 <div style="flex: 1">
                   <div class="search">
                     <label for="query">Search: </label>
-                    <input id="query" v-model="query" type="text" required />
+                    <input id="query" v-model="query" type="text" v-on:keydown.enter="search" required />
 
                     <button type="submit" style="margin-left: 10px" @click="search">
                       Submit
