@@ -33,7 +33,8 @@
           <div
             v-for="profile in profiles"
             :key="profile.email"
-            @click="selectProfile(profile)"
+            @mouseover ="selectProfile(profile)"
+            @mouseleave = "selectProfile(null)"
             :class="{ selected: selectedProfile === profile }"
           >
             <div class="trow">
@@ -93,6 +94,7 @@ export default {
       currentPage: 1,
       sortProfiles: null,
       showDropDownContent: false,
+      pageCount:1
     };
   },
 
@@ -214,9 +216,6 @@ export default {
 
   },
   computed: {
-    pageCount() {
-      return Math.ceil(this.profiles.length / this.pageSize);
-    },
     filteredProfiles() {
       const query = this.searchText.toLowerCase().trim();
       const filtered = query
@@ -265,7 +264,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data);
-          this.pageCount = response.data;
+          this.pageCount = response.data +1;
         })
         .catch((error) => {
           console.error(error);
