@@ -103,7 +103,7 @@
                 <div style="flex: 1">
                   <div class="search">
                     <label for="query">Search: </label>
-                    <input id="query" v-model="query" type="text" required />
+                    <input id="query" v-model="query" type="text" v-on:keydown.enter="search" required />
 
                     <button type="submit" style="margin-left: 10px" @click="search">
                       Submit
