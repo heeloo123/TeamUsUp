@@ -1,7 +1,11 @@
 <template>
   <div style="margin: inherit; text-align: -webkit-center">
     <div class="background">
-      <div style="font-size: 40px; padding: 20px">Admin page</div>
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>Admin page </p>
+      </div>
+     
       <div class="container">
         <div style="padding: 10px">
           <div class="search-bar">
@@ -292,7 +296,7 @@ export default {
   margin: 50px;
   text-align: left;
   padding: 20px;
-  margin-top: -10px;
+  margin-top: 20px;
 }
 
 .trow {
