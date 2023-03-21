@@ -2,14 +2,14 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <!---->
-      <div>
+      <!-- <div>
      
  
         <router-link to="/AdminPage"> admin page</router-link>|
         <router-link to="/notification">notification page</router-link>|
         <router-link to="/test">test</router-link>|
        
-      </div>
+      </div> -->
 
       <form style="display: inline-flex; text-align: -webkit-center; margin: 50px">
         <div style="width: 500px; height: 500px">
