@@ -1,15 +1,22 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
+      <div class="header">
+        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p>
+          Student Info |  Create profile
+        </p>
+      </div>
       <div class="container">
         <div class="item">
-          <h1 style="font-size: 40px; margin-left: -1200px">Create your profile</h1>
+        
           <form class="detail" @submit.prevent="CreateProfile">
+           <div style="display: flex;">
             <div class="profile-pic">
               <img v-if="imagePreview" :src="imagePreview" alt="Image Preview" />
             </div>
 
-            <div style="padding: 15px; margin: 15px">
+            <div style="padding: 15px; margin: 15px;width: -webkit-fill-available;">
               <div style="font-size: 40px; margin-top: -10px">
                 <span style="margin-right: "> {{ $state.user.firstName }} </span>
                 <span> {{" "}}{{ $state.user.lastName }} </span>
@@ -47,7 +54,7 @@
                   {{ major.majorName }}
                 </option>
               </select>
-
+              <p></p>
               <div style="font-size: 30px">Biography:</div>
 
               <textarea
@@ -63,14 +70,15 @@
                 style="
                   display: flex;
                   justify-content: space-between;
-                  margin-left: -350px;
-                  margin-top: 80px;
+                  
+                  margin-top: 0px;
                 "
               >
                 <button class="defaultBtn" @click.prevent="CancelAlert">Cancel</button>
                 <button class="defaultBtn" type="submit">Create</button>
               </div>
             </div>
+          </div>
           </form>
         </div>
       </div>
@@ -225,29 +233,24 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  background: rgb(207, 205, 205);
-  height: 100vh;
-  width: 100vw;
-  margin: -10px;
-  font-family: math;
-}
+
 
 .container {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   display: flex;
   margin: 20px;
-  width: auto;
+  width: -webkit-fill-available;
   margin: 50px;
 }
 
 .item {
-  display: inline-table;
+  display: inline;
+  width: -webkit-fill-available;
 }
 
 .detail {
-  display: flex;
+  
   padding: 20px;
   text-align: left;
   margin: 20px;
@@ -260,7 +263,7 @@ input[type="text"] {
   padding: 10px;
   border: transparent;
   background: rgb(234, 229, 229);
-  width: 500px;
+  width: -webkit-fill-available;
 }
 
 textarea {
@@ -268,7 +271,7 @@ textarea {
   font-size: 20px;
   padding: 10px;
   border: transparent;
-  width: 1200px;
+  width: -webkit-fill-available;
   min-height: 100px;
   height: auto;
   background: rgb(234, 229, 229);
@@ -292,5 +295,10 @@ textarea {
   border-radius: 20px;
   padding: 5px;
   font-size: 17px;
+}
+.profile-pic{
+  margin-right:20px;
+  width: 250px;
+  margin-top: 30px;
 }
 </style>
