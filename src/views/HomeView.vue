@@ -8,7 +8,7 @@
         <router-link to="/AdminPage"> admin page</router-link>|
         <router-link to="/notification">notification page</router-link>|
         <router-link to="/test">test</router-link>|
-       
+        <router-link to="/EditProfile">CreateProfile</router-link>|
       </div> -->
 
       <form style="display: inline-flex; text-align: -webkit-center; margin: 50px">

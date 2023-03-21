@@ -284,9 +284,7 @@ export default {
 </script>
 
 <style scoped>
-.background{
-  height:100%
-}
+
 
 .container {
   background: rgb(255, 255, 255);
