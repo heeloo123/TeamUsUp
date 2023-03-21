@@ -31,13 +31,13 @@
             <div>
              <router-link to="/Profile" class="link">
             <div class="router1">
-            <h3>view your profile here</h3>
+            <h3>View your profile here</h3>
             <img class="CP" alt="viewP" src="../assets/icons8-female-profile-100.png" />
             </div>
           </router-link>
           <router-link to="/ownPView " class="link">
             <div class="router2">
-            <h3>view your project here</h3>
+            <h3>View your project here</h3>
             <img class="CP" alt="Create" src="../assets/icons8-project-setup-100.png" />
 
             </div>

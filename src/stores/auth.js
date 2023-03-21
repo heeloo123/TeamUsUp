@@ -1,6 +1,6 @@
 
 import { defineStore } from "pinia";
-
+const Swal = require("sweetalert2");
 import axios from "axios";
 
 const API_URL = "http://49.245.48.28:8080/api";
@@ -43,7 +43,16 @@ export const useAuthStore = defineStore({
           
 
           this.jsessionID = result.data.jsessionID;
-        } else {
+        } else if(result.status === 401){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid email or password!',
+          })
+          this.isAuthenticated = false;
+          console.log("login failed!");
+        }
+        else {
           // Login failed
 
           this.isAuthenticated = false;
