@@ -106,12 +106,10 @@ export default {
   async mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       axios
-        .get(`${API_URL}/profile/userProfile`, { headers })
+        .get(`${API_URL}/profile/userProfile`, {withCredentials:true })
         .then((response) => {
           console.log(response.data);
           console.log("project", response.data.projects);
@@ -139,16 +137,14 @@ export default {
     }
   },
   methods: {
-    async evaluation() {
+    evaluation() {
       const auth = useAuthStore();
       if (auth.isAuthenticated) {
         axios.post(
           `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.selectedProjectId}&&evaluatorID=${this.selectedEvaluatorId}&&evaluateeID=${this.selectedEvaluateeId}`,
           {},
           {
-            headers: {
-              "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
-            },
+            withCredentials:true
           }
         );
       }

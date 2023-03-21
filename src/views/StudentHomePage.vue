@@ -101,15 +101,13 @@ export default {
     if (auth.isAuthenticated) {
       Swal.showLoading();
 
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       try {
-        const response = await axios.get(`${API_URL}/profile/userProfile`, { headers });
+        const response = await axios.get(`${API_URL}/profile/userProfile`, {withCredentials:true});
 
         if (response === 200) {
-          this.showCreafeProfile = true;
+          this.showCreateProfile = true;
         }
       } catch (error) {
         console.error(error);

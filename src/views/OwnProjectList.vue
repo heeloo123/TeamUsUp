@@ -86,12 +86,10 @@ export default {
     if (auth.isAuthenticated) {
       Swal.showLoading();
 
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       axios
-        .get(`${API_URL}/profile/userProfile`, { headers })
+        .get(`${API_URL}/profile/userProfile`, {withCredentials:true})
         .then((response) => {
           console.log(response.data);
           console.log("project", response.data.projects);
@@ -101,7 +99,7 @@ export default {
           this.projects = response.data.projects.map((project) => {
             console.log(project.reference);
             axios
-              .get(`${API_URL}/project/` + project.reference, { headers })
+              .get(`${API_URL}/project/` + project.reference, { withCredentials:true })
 
               .catch((error) => {
                 console.error(error);

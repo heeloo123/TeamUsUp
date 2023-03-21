@@ -124,15 +124,13 @@ export default {
   async mounted() {
 
     // make an axios GET request to retrieve the list of majors
-    console.log("mounted function");
+
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       axios
-        .get("http://49.245.48.28:8080/api/profile/majors", { headers })
+        .get("http://49.245.48.28:8080/api/profile/majors", { withCredentials:true})
 
         .then((response) => {
           // store the list of majors in the data object
@@ -143,9 +141,7 @@ export default {
         });
       axios
         .get("http://49.245.48.28:8080/api/profile/userProfile", {
-          headers: {
-            "session-ID": auth.jsessionID,
-          },
+          withCredentials:true
         })
         .then((res) => {
           this.bio = res.data.biography;
@@ -217,9 +213,7 @@ export default {
               profileID: this.profileID,
             },
             {
-              headers: {
-                "session-ID": auth.jsessionID,
-              },
+              withCredentials:true
             }
           )
           .then((res) => {
@@ -235,8 +229,7 @@ export default {
                   {
                     headers: {
                       "Content-Type": "multipart/form-data",
-                      "session-ID": auth.jsessionID,
-                    },
+                    },withCredentials:true
                   }
                 );
               }

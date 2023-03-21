@@ -208,15 +208,12 @@ export default {
     },
 
     async processMessageAction(notificationID, action) {
-      const auth = useAuthStore;
       axios
         .post(
           `${API_URL}/notification/processAction/`,
           {},
           {
-            headers: {
-              "session-ID": auth.jsessionID,
-            },
+            withCredentials:true,
             params: {
               notificationID: notificationID,
               action: action,
@@ -244,21 +241,18 @@ export default {
     },
 
     async markRead(notificationID) {
-      const auth = useAuthStore;
       axios
         .post(
           `${API_URL}/notification/markAsRead/?notificationID=` + notificationID,
           {},
           {
-            headers: {
-              "session-ID": auth.jsessionID,
-            },
+            withCredentials:true,
           }
         )
         .then((response) => {
           console.log(response.readStatus);
           const notification = this.notifications.find(
-            (notification) => notification.notificationId == notificationID
+            (notification) => notification.notificationId === notificationID
           );
           notification.read = true;
           console.log(notification.readStatus);
@@ -306,9 +300,6 @@ export default {
     const auth = useAuthStore();
 
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
       Swal.showLoading();
       notificationStore
         .fetchAnyNotification()
@@ -316,7 +307,7 @@ export default {
       Swal.hideLoading();
       console.log(this.notifications);
 
-      axios.get(`${API_URL}/profile/userProfile`, { headers }).then((response) => {
+      axios.get(`${API_URL}/profile/userProfile`, { withCredentials:true}).then((response) => {
         console.log(response.data);
         console.log("project", response.data.projects);
         this.profile = response.data;
@@ -324,7 +315,7 @@ export default {
         this.projects = response.data.projects.map((project) => {
           console.log(project.reference);
           axios
-            .get(`${API_URL}/project/` + project.reference, { headers })
+            .get(`${API_URL}/project/` + project.reference, { withCredentials:true })
 
             .catch((error) => {
               console.error(error);

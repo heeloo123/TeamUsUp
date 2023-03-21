@@ -198,15 +198,13 @@ export default {
   mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
-      axios.get(`${API_URL}/profile/userProfile`, { headers }).then((response) => {
+
+      axios.get(`${API_URL}/profile/userProfile`, { withCredentials:true}).then((response) => {
         console.log(response);
         this.profile = response.data;
       });
       axios
-        .get(`${API_URL}/project/${this.$route.params.reference}`, { headers })
+        .get(`${API_URL}/project/${this.$route.params.reference}`, {withCredentials:true })
 
         .then((response) => {
           this.project = response.data;

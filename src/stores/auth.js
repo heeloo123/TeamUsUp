@@ -19,49 +19,42 @@ export const useAuthStore = defineStore({
     hasProfile:false,
   }),
   actions: {
-    async login(user) {
-      try {
-        let result = await axios.post(
-          API_URL + "/login",
-          {},
-          {
-            headers: {
-              Authorization: "Basic " + btoa(user.email + ":" + user.password),
-            },
-            withCredentials: true,
-          }
-        );
-
+    login(user) {
+      axios.post(
+          API_URL + "/checkAuth",
+          {'email':user.email,
+          'password': user.password}
+      ).then((result) => {
         if (result.status === 202 || result.status === 200) {
           // Login successful
           console.log(result.data); // The user object returned by the server
           this.isAuthenticated = true;
           this.user = result.data;
-          console.log("isAuthenticated", this.isAuthenticated);
+          axios.post(API_URL+"/login",{},{
+            headers: {
+              Authorization: "Basic " + btoa(user.email + ":" + user.password),
+            },
+            withCredentials: true,
+          }).then((res) =>{
+            console.log("isAuthenticated", this.isAuthenticated);
+            this.user = res.data;
+            console.log("Login successful");
 
-          console.log("Login successful");
-          
-
-          this.jsessionID = result.data.jsessionID;
-        } else if(result.status === 401){
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Invalid email or password!',
           })
-          this.isAuthenticated = false;
-          console.log("login failed!");
-        }
-        else {
-          // Login failed
 
-          this.isAuthenticated = false;
-          console.log("login failed!");
         }
-      } catch (error) {
-        console.error(error);
-      }
-    }, async fetchUserProfile() {
+      }).catch((error) => {
+        console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Invalid email or password!',
+        })
+      })
+    }
+
+
+    , async fetchUserProfile() {
       try {
         const result = await axios.get(`${API_URL}/profile/userProfile`, {
           headers: {

@@ -341,9 +341,7 @@ export default {
                 projectID: this.projectID,
               },
               {
-                headers: {
-                  "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
-                },
+                withCredentials:true
               }
             )
             .then((result) => {
@@ -359,8 +357,7 @@ export default {
                     {
                       headers: {
                         "Content-Type": "multipart/form-data",
-                        "session-ID": auth.jsessionID,
-                      },
+                      },withCredentials:true
                     }
                   );
 
@@ -368,17 +365,13 @@ export default {
                 this.addedList.forEach((user) => {
                   axios.post("http://49.245.48.28:8080/api/project/addParticipant"
                       , user.role
-                      , {headers:{
-                          'session-ID':auth.jsessionID
-                        }})
+                      , {withCredentials:true})
                 });
                 this.removedList.forEach((user) => {
                   console.log(user.role)
                   axios.delete("http://49.245.48.28:8080/api/project/removeParticipant",
                       {
-                        headers: {
-                          "session-ID": auth.jsessionID,
-                        },
+                        withCredentials:true,
                         data: user.role
                       }
                   );

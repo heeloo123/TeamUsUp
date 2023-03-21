@@ -103,12 +103,10 @@ export default {
     if (auth.isAuthenticated) {
       Swal.showLoading();
 
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       axios
-        .get(`${API_URL}/profile/userProfile`, { headers })
+        .get(`${API_URL}/profile/userProfile`, { withCredentials:true })
         .then((response) => {
           console.log(response.data);
           console.log("project", response.data.projects);
@@ -137,10 +135,7 @@ export default {
       event.target.src = require("../assets/icons8-user-64.png");
     },
     async toggleActiveStatus() {
-      const auth = useAuthStore();
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       const confirmation = await Swal.fire({
         title: "Are you sure?",
@@ -159,7 +154,7 @@ export default {
           const response = await axios.patch(
             `${API_URL}/profile/updateStatus?status=` + this.isDeactivated,
             {},
-            { headers }
+            { withCredentials:true}
           );
 
           console.log(response);

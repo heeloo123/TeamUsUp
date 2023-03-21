@@ -205,11 +205,9 @@ export default {
   mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
       axios
-        .get(`${API_URL}/profile/userProfile`, { headers })
+        .get(`${API_URL}/profile/userProfile`, {withCredentials:true })
         .then((response) => {
           console.log(response.data);
           this.profile = response.data;
@@ -220,7 +218,7 @@ export default {
           console.error(error);
         });
       axios
-        .get(`${API_URL}/project/${this.$route.params.reference}`, { headers })
+        .get(`${API_URL}/project/${this.$route.params.reference}`, { withCredentials:true })
         .then((response) => {
           console.log(response.data);
           this.project = response.data;
@@ -245,9 +243,7 @@ export default {
               skills: this.skills,
             },
             {
-              headers: {
-                "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
-              },
+              withCredentials:true
             }
           )
           .then((response) => {

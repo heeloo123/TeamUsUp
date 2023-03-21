@@ -247,9 +247,7 @@ export default {
                 projectParticipants: this.userList,
               },
               {
-                headers: {
-                  "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
-                },
+                withCredentials:true
               }
             )
             .then((result) => {
@@ -265,8 +263,8 @@ export default {
                     {
                       headers: {
                         "Content-Type": "multipart/form-data",
-                        "session-ID": auth.jsessionID,
-                      },
+
+                      }, withCredentials:true
                     }
                   );
                 }
