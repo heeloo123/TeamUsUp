@@ -19,7 +19,7 @@
             >
               <div style="font-size: 40px; margin-top: -10px">
                 <span>{{ profile.firstName }} </span>
-                <span>{{ profile.lastName }} </span>
+                <span>{{" "}}{{ profile.lastName }} </span>
               </div>
               <p></p>
               <div style="font-size: 20px">Major: <span

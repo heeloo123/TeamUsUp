@@ -75,7 +75,6 @@
 <script>
 import axios from "axios";
 const Swal = require("sweetalert2");
-import { useAuthStore } from "@/stores/auth";
 //import PageHeader from './Header.vue'
 export default {
   componenets: {
@@ -145,17 +144,12 @@ export default {
      
 
       //auto log in user
-      const authStore = useAuthStore();
-      await authStore.login({
-        email: this.email,
-        password: this.password,
-      });
-      this.$router.push({ name: "StudentHome" });
+      this.$router.push({ name: "home" });
       console.log(this.email, this.password);
     }  
   } catch (error) {
     Swal.fire({
-        title: "Somethings went wrong..",
+        title: "Something went wrong..",
         icon: "error",
         timer: 1000,
         showConfirmButton: false,
