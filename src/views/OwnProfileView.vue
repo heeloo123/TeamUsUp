@@ -101,7 +101,7 @@ export default {
   async mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      Swal.showLoading();
+     
 
       const headers = {
         "session-ID": auth.jsessionID,
@@ -120,9 +120,7 @@ export default {
         .catch((error) => {
           console.error(error);
         })
-        .finally(() => {
-          Swal.hideLoading();
-        });
+       
     }
   },
   computed: {
