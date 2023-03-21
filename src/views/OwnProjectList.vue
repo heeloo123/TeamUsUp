@@ -126,7 +126,7 @@ export default {
           console.error(error);
         })
         .finally(() => {
-          Swal.hideLoading();
+          Swal.close()
         });
     }
   },

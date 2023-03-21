@@ -125,7 +125,7 @@ export default {
   },
   watch: {
     $route() {
-      // Re-compute the showSignUp computed property when the route changes
+      
       this.$forceUpdate();
     },
   },
