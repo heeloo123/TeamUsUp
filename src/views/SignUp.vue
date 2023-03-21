@@ -155,7 +155,7 @@ export default {
     }  
   } catch (error) {
     Swal.fire({
-        title: "Email already exists",
+        title: "Somethings went wrong..",
         icon: "error",
         timer: 1000,
         showConfirmButton: false,
