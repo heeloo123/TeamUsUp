@@ -22,7 +22,7 @@
               <div>
                 <div class="name">
                   <span>{{ profile.firstName }} </span>
-                  <span>{{ profile.lastName }} </span>
+                  <span>{{" "}}{{ profile.lastName }} </span>
                   <label style="float: right"
                     ><router-link to="/EditProfile" class="Ep" 
                     >
