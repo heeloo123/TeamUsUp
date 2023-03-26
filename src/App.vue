@@ -1,8 +1,12 @@
 <script setup>
 
 import NavView from "./views/NavView.vue";
-
-
+import {onMounted} from "vue";
+import {useAuthStore} from "@/stores/auth";
+onMounted(()=>{
+  const auth = useAuthStore();
+  auth.retrieveLogin();
+})
 </script>
 
 <template>

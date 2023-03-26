@@ -5,8 +5,7 @@
         <label><img src="../assets/icons8-user-32.png" /></label>
         <p>Student Info | Notification</p>
       </div>
- 
-
+   
       <div class="container">
         <div style="border-bottom: solid 1px; padding-bottom: 10px;">
   <h2 style="font-size: 24px; font-weight: bold;">Notifications</h2>
@@ -27,29 +26,6 @@
             >
               <span class="readflag" @click="markRead(notification.notificationId)">
                 {{ notification.message }}
-                
-                <!-- <button
-                  v-if="
-                    notification.actionRequired &&
-                    notification.timeActionPerf === null &&
-                    notification.read === false
-                  "
-                  class="actionBtn"
-                  @click="processMessageAction(notification.notificationId, true)"
-                >
-                  Yes
-                </button> -->
-                <!-- <button
-                  v-if="
-                    notification.actionRequired &&
-                    notification.timeActionPerf === null &&
-                    notification.read === false
-                  "
-                  class="actionBtn"
-                  @click="processMessageAction(notification.notificationId, false)"
-                >
-                  No
-                </button> -->
 
                 <div class="emailTimeStamp">
                   {{ formatDate(notification.timeCreated) }}
@@ -70,6 +46,7 @@
             <button style="margin-top:-20px; border:transparent; background:transparent;float:right" @click="handleCloseEvent(message)">
               <img style="width: 15px" src="../assets/delete.png" alt="delete icon" />
             </button>
+            <div v-if="selectedMessage.actionRequired">
               <p>Dear student {{ profile.firstName }} {{ profile.lastName }} ,</p>
               <p>
                 You have been added as a participant to <span style="text-decoration: underline 1px;">
@@ -101,6 +78,18 @@
             Reject
             </button>
           </span>
+        </div>
+        <div v-if="!selectedMessage.actionRequired"> 
+          <p>Dear student {{ profile.firstName }} {{ profile.lastName }} ,</p>
+          Your team member has evaluated you on {{
+                  projects.find(
+                    (project) => project.reference === selectedMessage.projectID
+                  ).header
+                }}.
+          Please review the feedback and use it to improve your future performance in team projects. Let's continue to work together and achieve great things.
+         
+        
+        </div>
             </div>
 
            
@@ -162,6 +151,7 @@ export default {
       currentFilter: "all",
       profile: {},
       projects: [],
+      project:{}
     };
   },
 
@@ -250,6 +240,7 @@ export default {
           }
         )
         .then((response) => {
+          
           console.log(response.readStatus);
           const notification = this.notifications.find(
             (notification) => notification.notificationId === notificationID
@@ -306,7 +297,7 @@ export default {
         .then(() => (this.notifications = useNotificationStore().notifications));
       Swal.hideLoading();
       console.log(this.notifications);
-
+      
       axios.get(`${API_URL}/profile/userProfile`, { withCredentials:true}).then((response) => {
         console.log(response.data);
         console.log("project", response.data.projects);
@@ -316,11 +307,15 @@ export default {
           console.log(project.reference);
           axios
             .get(`${API_URL}/project/` + project.reference, { withCredentials:true })
+            .then((response) => {
+              this.project = response.data;
+              console.log(response)
+            })
 
             .catch((error) => {
               console.error(error);
             });
-          return project;
+           return project; 
         });
       });
     }

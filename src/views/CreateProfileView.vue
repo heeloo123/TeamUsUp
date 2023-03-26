@@ -170,9 +170,7 @@ export default {
             "http://49.245.48.28:8080/api/profile/createProfile",
             { biography: this.bio, majors: foundMajor },
             {
-              headers: {
-                "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
-              },
+             withCredentials:true,
             }
           )
           .then((res) => {

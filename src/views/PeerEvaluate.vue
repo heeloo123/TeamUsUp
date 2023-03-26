@@ -59,14 +59,14 @@
                 margin-top: 60px;
                 text-align: left;
               ">
-            <label>Evaluate for : {{ userProfile.firstName }} {{ userProfile.lastName }}</label>
+            <label>Evaluate for : <span style="margin-left:10px">{{ userProfile.firstName }} {{ userProfile.lastName }}</span> </label>
 
             <div style="padding: 10px; margin-left: -10px">
-              Project name : {{ project.projectName }}
+              Project name : <span style="margin-left:10px">{{ project.projectName }}</span> 
             </div>
             <div v-for="role in project.nameRoleMap" :key="role">
               <div v-if="role.id.profileID === profile.profileID">
-                <label style="font-size: 22px">Project role : {{ role.projectRole }}
+                <label style="font-size: 22px">Project role : <span style="margin-left:10px"> {{ role.projectRole }}</span>
                 </label>
               </div>
             </div>
@@ -87,7 +87,7 @@
         <div style="margin: 20px">
           <form @submit.prevent="submitEvaluation">
             <div class="evaForm">
-              <textarea style="width: -webkit-fill-available;height:100px;padding:10px" placeholder="comment.." />
+              <textarea style="width: -webkit-fill-available;height:100px;padding:10px" placeholder="comment.." v-model="comments"/>
               <div class="rating_form">
                 <div class="rate">
                   <label>Teamwork</label>
@@ -168,6 +168,7 @@ export default {
       teamwork: "",
       skills: "",
       communication: "",
+      comments: "",
     };
   },
   mounted() {
@@ -224,7 +225,7 @@ export default {
           .post(
             `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=${this.$route.params.profileID}`,
             {
-              comments: this.comment,
+              comments: this.comments,
               communication: this.communication,
               teamwork: this.teamwork,
               skill: this.skills,
@@ -251,7 +252,7 @@ export default {
   computed: {
     profileImageSrc() {
       const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/profile/image/${this.profile.profileID}`;
+      const imagePath = `/api/profile/image/${this.userProfile.profileID}`;
       return baseUrl + imagePath;
     },
     $state() {

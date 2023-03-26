@@ -75,7 +75,7 @@
                 required
               ></textarea>
 
-              <div style="margin-left: -250px;margin-top:-100px">
+              <div style="margin-left: -250px;margin-top:-70px">
                 <input
                   type="file"
                   id="profilePic"
@@ -119,6 +119,7 @@ export default {
       selectedMajor: null,
       profilePic: "",
       profileID: "",
+      
     };
   },
   async mounted() {
@@ -147,6 +148,7 @@ export default {
           this.bio = res.data.biography;
           this.selectedMajors = res.data.majors;
           this.profileID = res.data.profileID;
+          
         });
     }
   },
@@ -273,6 +275,7 @@ export default {
       return baseUrl + imagePath;
     },
   },
+
 };
 </script>
 

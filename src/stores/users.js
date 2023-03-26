@@ -21,7 +21,7 @@ actions: {
     async getProfiles() {
         this.users = { loading: true };
         try {
-            this.users = await axios.get(`${API_URL}/userProfile`);
+            this.users = await axios.get(`${API_URL}/userProfile`, {withCredentials:true});
         }
             catch(error) {
                 this.users = { error }

@@ -359,7 +359,12 @@ export default {
                         "Content-Type": "multipart/form-data",
                       },withCredentials:true
                     }
-                  );
+                  ).catch(() => {
+                    Swal.fire({
+                      icon:'warning',
+                      text: 'Image could not be updated'
+                    })
+                  });
 
                 }
                 this.addedList.forEach((user) => {

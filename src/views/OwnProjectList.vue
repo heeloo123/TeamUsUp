@@ -22,9 +22,8 @@
                   background:lightgrey
                 "
               >
-                <div style="width: 190px">Project ID</div>
                 <div style="flex: 1">Project Name</div>
-                <div style="flex: 2.2">Project Description</div>
+                <div style="flex: 3">Project Description</div>
               </div>
 
               <div>
@@ -46,9 +45,8 @@
                     
                   "
                 >
-                  <span style="width: 190px">{{ project.reference }}</span>
                   <span style="flex: 1">{{ project.header }}</span>
-                  <span style="flex: 2"
+                  <span style="flex: 3"
                     ><div>
                       {{ project.descriptor }}
                     </div></span

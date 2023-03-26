@@ -51,15 +51,24 @@ export const useAuthStore = defineStore({
           text: 'Invalid email or password!',
         })
       })
+    }, retrieveLogin(){
+      if(document.cookie != null){
+        console.log('attempting login')
+        axios.post(API_URL+"/login",{}, {
+          withCredentials: true
+        }).then((res) =>{
+          this.isAuthenticated = true;
+          this.user = res.data;
+        })
+      }else{
+        console.log('cookie not logged')
+      }
     }
 
 
     , async fetchUserProfile() {
       try {
         const result = await axios.get(`${API_URL}/profile/userProfile`, {
-          headers: {
-            "session-ID": this.jsessionID,
-          },
           withCredentials: true,
         });
 

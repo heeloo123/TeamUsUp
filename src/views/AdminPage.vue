@@ -248,9 +248,7 @@ export default {
 
       axios
         .get(`${API_URL}/admin/userList?pageNo=0&pageSize=10`, {
-          headers: {
-            "session-ID": auth.jsessionID,
-          },
+          withCredentials:true
         })
         .then((response) => {
           console.log(response.data);
@@ -262,9 +260,7 @@ export default {
 
       axios
         .get(`${API_URL}/admin/pageCount?pageSize=10`, {
-          headers: {
-            "session-ID": auth.jsessionID,
-          },
+          withCredentials:true
         })
         .then((response) => {
           console.log(response.data);
