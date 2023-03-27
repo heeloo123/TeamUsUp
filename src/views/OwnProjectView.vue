@@ -159,7 +159,7 @@
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 import Swal from "sweetalert2";
 
 export default {
@@ -181,8 +181,11 @@ export default {
       for (const [name, user] of Object.entries(this.project.nameRoleMap)) {
         console.log(name);
         console.log(user);
-        options.push(name);
-        role.push(user);
+        if(user.id.profileID != this.profile.profileID && !this.evaluations.find((evaluation) => {return evaluation.id.evaluatorID == this.profile.profileID && evaluation.id.evaluateeID == user.id.profileID})){
+          options.push(name);
+          role.push(user);
+        }
+
       }
       console.log("Options : " + options);
       try {
@@ -285,8 +288,8 @@ export default {
   },
   computed: {
     projectImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/project/image/${this.project.projectID}`;
+      const baseUrl = process.env.VUE_APP_API_URL;
+      const imagePath = `/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
     },
   },

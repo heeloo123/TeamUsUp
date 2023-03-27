@@ -41,7 +41,7 @@
 <script>
 import axios from "axios";
 const Swal = require("sweetalert2");
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "ForgetPaswordView",

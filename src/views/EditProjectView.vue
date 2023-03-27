@@ -26,7 +26,7 @@
                 <div
                   style="
                     height: 250px;
-                    overflow-y: auto;
+                    overflow-y: scroll;
                     margin-top: 5px;
                     background: rgb(239, 232, 232);
                     border-radius: 10px;
@@ -204,7 +204,7 @@ export default {
         "session-ID": auth.jsessionID,
       };
       axios
-        .get(`http://49.245.48.28:8080/api/project/` + this.$route.params.reference, {
+        .get(`${process.env.VUE_APP_API_URL}/project/` + this.$route.params.reference, {
           headers,
         })
         .then((response) => {
@@ -254,7 +254,7 @@ export default {
       reader.readAsDataURL(this.file);
     },
     async search() {
-      const url = `http://49.245.48.28:8080/api/search?query=${this.query}`;
+      const url = `${process.env.VUE_APP_API_URL}/search?query=${this.query}`;
       axios
         .get(url)
         .then((response) => {
@@ -333,7 +333,7 @@ export default {
         if (auth.isAuthenticated) {
           axios
             .patch(
-              "http://49.245.48.28:8080/api/project/editProject",
+                process.env.VUE_APP_API_URL+"/project/editProject",
               {
                 projectName: this.projectName,
                 projectDescription: this.projectDescription,
@@ -352,7 +352,7 @@ export default {
                   formData.append("image", this.file);
 
                   axios.post(
-                    "http://49.245.48.28:8080/api/project/image/" + this.projectID,
+                      process.env.VUE_APP_API_URL+"/project/image/" + this.projectID,
                     formData,
                     {
                       headers: {
@@ -368,13 +368,13 @@ export default {
 
                 }
                 this.addedList.forEach((user) => {
-                  axios.post("http://49.245.48.28:8080/api/project/addParticipant"
+                  axios.post(process.env.VUE_APP_API_URL+"/project/addParticipant"
                       , user.role
                       , {withCredentials:true})
                 });
                 this.removedList.forEach((user) => {
                   console.log(user.role)
-                  axios.delete("http://49.245.48.28:8080/api/project/removeParticipant",
+                  axios.delete(process.env.VUE_APP_API_URL+"/project/removeParticipant",
                       {
                         withCredentials:true,
                         data: user.role

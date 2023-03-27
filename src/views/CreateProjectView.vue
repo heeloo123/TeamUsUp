@@ -24,17 +24,16 @@
                 <div
                   style="
                     height: 250px;
-                    overflow-y: auto;
+                    overflow-y: scroll;
                     margin-top: 5px;
                     background: rgb(239, 232, 232);
                     border-radius: 10px;
                     margin-right: 20px;
                   "
                 >
-                  <ul style="font-size:25px">
+                  <ul style="font-size:25px" class="userlist">
                     <li v-for="(user, index) in userList" :key="index">
                       <span>{{ user.name }} </span>
-                      <span>{{ user.projectRole }}</span>
 
                       <button
                         style="background: transparent; border: transparent"
@@ -46,6 +45,8 @@
                           alt="delete icon"
                         />
                       </button>
+                      <br>
+                      <input type="text" v-model="user.projectRole" placeholder="Enter Role">
                     </li>
                   </ul>
                 </div>
@@ -188,7 +189,7 @@ export default {
       }
     },
     async search() {
-      const url = `http://49.245.48.28:8080/api/search?query=${this.query}`;
+      const url = `${process.env.VUE_APP_API_URL}/search?query=${this.query}`;
       axios
         .get(url)
         .then((response) => {
@@ -240,7 +241,7 @@ export default {
         if (auth.isAuthenticated) {
           axios
             .post(
-              "http://49.245.48.28:8080/api/project/createProject",
+                process.env.VUE_APP_API_URL+"/project/createProject",
               {
                 projectName: this.projectName,
                 projectDescription: this.projectDescription,
@@ -258,7 +259,7 @@ export default {
                   formData.append("image", this.file);
 
                   axios.post(
-                    "http://49.245.48.28:8080/api/project/image/" + result.data,
+                      process.env.VUE_APP_API_URL+"/project/image/" + result.data,
                     formData,
                     {
                       headers: {
@@ -375,4 +376,12 @@ textarea {
 .result span:hover {
   background: rgb(255, 255, 255);
 }
+.userlist input {
+  width: auto;
+  background-color: rgb(255, 255, 255);
+  margin-left: -20px;
+  padding-left: 10px;
+  font-size: 15px;
+}
+
 </style>

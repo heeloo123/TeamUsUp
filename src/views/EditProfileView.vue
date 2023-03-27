@@ -8,8 +8,8 @@
       </div>
       <div class="container">
         <div class="item">
-          
           <form class="detail" @submit.prevent="EditProfile">
+            <br>
             <div class="profile-pic">
               <img
                 v-if="imagePreview || profileImageSrc"
@@ -131,7 +131,7 @@ export default {
 
 
       axios
-        .get("http://49.245.48.28:8080/api/profile/majors", { withCredentials:true})
+        .get(process.env.VUE_APP_API_URL+"/profile/majors", { withCredentials:true})
 
         .then((response) => {
           // store the list of majors in the data object
@@ -141,7 +141,7 @@ export default {
           console.log(error);
         });
       axios
-        .get("http://49.245.48.28:8080/api/profile/userProfile", {
+        .get(process.env.VUE_APP_API_URL+"/profile/userProfile", {
           withCredentials:true
         })
         .then((res) => {
@@ -208,7 +208,7 @@ export default {
       if (auth.isAuthenticated) {
         axios
           .patch(
-            "http://49.245.48.28:8080/api/profile/editProfile",
+              process.env.VUE_APP_API_URL+"/profile/editProfile",
             {
               biography: this.bio,
               majors: this.selectedMajors,
@@ -226,7 +226,7 @@ export default {
                 formData.append("image", this.file);
 
                 axios.post(
-                  "http://49.245.48.28:8080/api/profile/userProfile/image",
+                    process.env.VUE_APP_API_URL+"/profile/userProfile/image",
                   formData,
                   {
                     headers: {
@@ -270,8 +270,8 @@ export default {
       return useAuthStore();
     },
     profileImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/profile/image/${this.profileID}`;
+      const baseUrl = process.env.VUE_APP_API_URL;
+      const imagePath = `/profile/image/${this.profileID}`;
       return baseUrl + imagePath;
     },
   },

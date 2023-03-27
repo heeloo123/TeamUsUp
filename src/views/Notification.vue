@@ -10,13 +10,13 @@
         <div style="border-bottom: solid 1px; padding-bottom: 10px;">
   <h2 style="font-size: 24px; font-weight: bold;">Notifications</h2>
   <div style="display: flex; gap: 10px; " class="Button">
-    <button style="background-color: {{ currentFilter === 'all' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'all' ? 'underline' : 'none' }};" type="radio" @click="currentFilter = 'all'">All</button>
-    <button style="background-color: {{ currentFilter === 'read' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'read' ? 'underline' : 'none' }};" @click="currentFilter = 'read'">Read</button>
-    <button style="background-color: {{ currentFilter === 'unread' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'unread' ? 'underline' : 'none' }};" type="radio"  @click="currentFilter = 'unread'">Unread</button>
+    <button style="background-color: {{ currentFilter === 'all' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'all' ? 'underline' : 'none' }};" type="radio" @click="currentFilter = 'all'; selectedMessage = null">All</button>
+    <button style="background-color: {{ currentFilter === 'read' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'read' ? 'underline' : 'none' }};" @click="currentFilter = 'read'; selectedMessage = null">Read</button>
+    <button style="background-color: {{ currentFilter === 'unread' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'unread' ? 'underline' : 'none' }};" type="radio"  @click="currentFilter = 'unread';selectedMessage = null">Unread</button>
   </div>
 </div>
-        <div style="display: inline-flex;margin-top:30px">
-          <div class="messageTable">
+        <div style="display: inline-flex; margin-top:30px">
+          <div class="messageTable" >
             <div
               class="cell"
               v-for="notification in filteredNotifications"
@@ -34,7 +34,7 @@
               </span>
             </div>
           </div>
-          <div class="notificationBox" v-if="showMessageBox">
+          <div class="notificationBox" v-if="showMessageBox" >
            
             <div
               v-if="
@@ -46,7 +46,7 @@
             <button style="margin-top:-20px; border:transparent; background:transparent;float:right" @click="handleCloseEvent(message)">
               <img style="width: 15px" src="../assets/delete.png" alt="delete icon" />
             </button>
-            <div v-if="selectedMessage.actionRequired">
+            <div v-if="selectedMessage.actionRequired" class ="popup">
               <p>Dear student {{ profile.firstName }} {{ profile.lastName }} ,</p>
               <p>
                 You have been added as a participant to <span style="text-decoration: underline 1px;">
@@ -64,7 +64,7 @@
                 selectedMessage.actionRequired && selectedMessage.timeActionPerf === null
               "
               class="actionBtn"
-              @click="processMessageAction(selectedMessage.notificationId, true)"
+              @click="processMessageAction(selectedMessage.notificationId, true); selectedMessage.timeActionPerf = Date.now()"
             >
             Accept
             </button>
@@ -73,13 +73,13 @@
                 selectedMessage.actionRequired && selectedMessage.timeActionPerf === null
               "
               class="actionBtn"
-              @click="processMessageAction(selectedMessage.notificationId, false)"
+              @click="processMessageAction(selectedMessage.notificationId, false);  selectedMessage.timeActionPerf = Date.now()"
             >
             Reject
             </button>
           </span>
         </div>
-        <div v-if="!selectedMessage.actionRequired"> 
+        <div v-if="!selectedMessage.actionRequired" class="popup">
           <p>Dear student {{ profile.firstName }} {{ profile.lastName }} ,</p>
           Your team member has evaluated you on {{
                   projects.find(
@@ -112,7 +112,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useNotificationStore } from "@/stores/notification";
 import Swal from "sweetalert2";
 
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "notificationView",
@@ -328,6 +328,7 @@ export default {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   width: auto;
+  max-width: 90%;
   margin: 50px;
   padding: 20px;
   margin-top: 20px;
@@ -357,9 +358,10 @@ export default {
 }
 
 .notificationBox {
-  width: auto;
+  width: 30%;
+  max-width: 30%;
   text-align: left;
-  flex:3;
+  flex:1;
   padding:30px;
   background: rgb(252, 248, 248);
 }
@@ -371,12 +373,20 @@ export default {
  margin-top:70px;
 }
 .messageTable {
-  width: -webkit-fill-available;
+  width: auto;
+  max-width: 100%;
   text-align: left;
-  flex: 4;
+  flex: 2;
   
 }
 .Button :hover{
  background: rgb(189, 184, 184);
+}
+.popup{
+  width: 20vw;
+  max-width: 20vw;
+  height: 20vh;
+  max-height: 20vh;
+  overflow-y: scroll;
 }
 </style>

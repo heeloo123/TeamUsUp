@@ -110,7 +110,7 @@ export default {
 
 
       axios
-        .get("http://49.245.48.28:8080/api/profile/majors", { withCredentials:true })
+        .get(process.env.VUE_APP_API_URL+"/api/profile/majors", { withCredentials:true })
 
         .then((response) => {
           // store the list of majors in the data object
@@ -167,7 +167,7 @@ export default {
         });
         axios
           .post(
-            "http://49.245.48.28:8080/api/profile/createProfile",
+              process.env.VUE_APP_API_URL+"/profile/createProfile",
             { biography: this.bio, majors: foundMajor },
             {
              withCredentials:true,
@@ -181,13 +181,12 @@ export default {
                 formData.append("image", this.file);
 
                 axios.post(
-                  "http://49.245.48.28:8080/api/profile/userProfile/image",
+                    process.env.VUE_APP_API_URL+"/profile/userProfile/image",
                   formData,
                   {
                     headers: {
                       "Content-Type": "multipart/form-data",
-                      "session-ID": auth.jsessionID,
-                    },
+                    }, withCredentials:true
                   }
                 );
               }

@@ -10,12 +10,13 @@ export const useProjectStore = defineStore({
     skillSums: {},
     communicationSums: {},
     evaluateeIDs: {},
+    API_URL: process.env.VUE_APP_API_URL
   }),
 
   actions: {
     async fetchProject(projectID) {
       try {
-        const response = await axios.get(`http://49.245.48.28:8080/api/project/${projectID}`)
+        const response = await axios.get(`${this.API_URL}/project/${projectID}`)
         const data = response.data
 
         const evaluateeIDs = {}

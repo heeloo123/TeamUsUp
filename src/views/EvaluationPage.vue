@@ -70,7 +70,7 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 //import Swal from "sweetalert2";
 
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "EvaluationPage",
@@ -118,7 +118,7 @@ export default {
           this.projectsParticipated = response.data.projectsParticipated;
           this.projectsParticipated.forEach((project) => {
             axios
-              .get(`http://49.245.48.28:8080/api/project/${project.id.projectID}`)
+              .get(`${process.env.VUE_APP_API_URL}/project/${project.id.projectID}`)
               .then((response) => {
                 this.projects.push(response.data);
                 console.log(response.data);
@@ -141,7 +141,7 @@ export default {
       const auth = useAuthStore();
       if (auth.isAuthenticated) {
         axios.post(
-          `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.selectedProjectId}&&evaluatorID=${this.selectedEvaluatorId}&&evaluateeID=${this.selectedEvaluateeId}`,
+          `${process.env.VUE_APP_API_URL}/evaluation/postEvaluation?projectID=${this.selectedProjectId}&&evaluatorID=${this.selectedEvaluatorId}&&evaluateeID=${this.selectedEvaluateeId}`,
           {},
           {
             withCredentials:true

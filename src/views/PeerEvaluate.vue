@@ -65,7 +65,7 @@
               Project name : <span style="margin-left:10px">{{ project.projectName }}</span> 
             </div>
             <div v-for="role in project.nameRoleMap" :key="role">
-              <div v-if="role.id.profileID === profile.profileID">
+              <div v-if="role.id.profileID === userProfile.profileID">
                 <label style="font-size: 22px">Project role : <span style="margin-left:10px"> {{ role.projectRole }}</span>
                 </label>
               </div>
@@ -153,7 +153,7 @@
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "SelfEva",
@@ -177,7 +177,7 @@ export default {
 
       axios
         .get(
-          `http://49.245.48.28:8080/api/profile/viewProfile/` +
+          `${process.env.VUE_APP_API_URL}/profile/viewProfile/` +
           this.$route.params.profileID,
           {withCredentials:true}
         )
@@ -223,7 +223,7 @@ export default {
       if (auth.isAuthenticated) {
         axios
           .post(
-            `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=${this.$route.params.profileID}`,
+            `${process.env.VUE_APP_API_URL}/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=${this.$route.params.profileID}`,
             {
               comments: this.comments,
               communication: this.communication,
@@ -251,8 +251,8 @@ export default {
   },
   computed: {
     profileImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/profile/image/${this.userProfile.profileID}`;
+      const baseUrl = process.env.VUE_APP_API_URL;
+      const imagePath = `/profile/image/${this.userProfile.profileID}`;
       return baseUrl + imagePath;
     },
     $state() {

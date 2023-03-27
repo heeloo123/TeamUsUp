@@ -35,7 +35,7 @@
             <img class="CP" alt="viewP" src="../assets/icons8-female-profile-100.png" />
             </div>
           </router-link>
-          <router-link to="/ownPView " class="link">
+          <router-link to="/ownPView" class="link">
             <div class="router2">
             <h3>View your project here</h3>
             <img class="CP" alt="Create" src="../assets/icons8-project-setup-100.png" />
@@ -80,7 +80,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuthStore } from "@/stores/auth";
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "HomeView",

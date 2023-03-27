@@ -2,8 +2,9 @@
 import { defineStore } from "pinia";
 const Swal = require("sweetalert2");
 import axios from "axios";
+import {useNotificationStore} from "@/stores/notification";
 
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export const useAuthStore = defineStore({
   id: "auth",
@@ -40,7 +41,7 @@ export const useAuthStore = defineStore({
             this.user = res.data;
             console.log("Login successful");
 
-          })
+          }).then(() => useNotificationStore().fetchNewNotification())
 
         }
       }).catch((error) => {
@@ -59,6 +60,7 @@ export const useAuthStore = defineStore({
         }).then((res) =>{
           this.isAuthenticated = true;
           this.user = res.data;
+          this.fetchUserProfile();
         })
       }else{
         console.log('cookie not logged')

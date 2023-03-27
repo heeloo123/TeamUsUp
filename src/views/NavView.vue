@@ -68,7 +68,6 @@
 <script>
 import DropDown from "../components/DropDown.vue";
 import { useAuthStore } from "@/stores/auth";
-import {useNotificationStore} from "@/stores/notification";
 
 export default {
   name: "NavView",
@@ -103,9 +102,7 @@ export default {
     "$state.isAuthenticated"(newValue) {
       this.$nextTick(() => {
         console.log("showlogin updated", !newValue);
-        const notificationStore = useNotificationStore();
-        notificationStore.fetchNewNotification();
-        this.notifications = notificationStore.notifications
+
       });
     },
   },
