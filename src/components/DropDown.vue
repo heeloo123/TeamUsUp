@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown">
-    <span class="toggle_img">
+    <span class="toggle_img" title="Profile">
       <img src="../assets/icons8-user-48.png" @click="toggleDropdown"
     /></span>
     <ul v-if="showDropdown">

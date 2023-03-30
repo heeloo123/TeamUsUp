@@ -2,9 +2,11 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
         <p>
-          Student Info |  Create profile
+          / Create profile
         </p>
       </div>
       <div class="container">
@@ -35,7 +37,7 @@
                 </ul>
               </div>
 
-              <span style="font-size: 30px">Major:</span>
+              <span style="font-size: 30px">Major :</span>
 
               <select
                 class="majorSelect"
@@ -55,7 +57,7 @@
                 </option>
               </select>
               <p></p>
-              <div style="font-size: 30px">Biography:</div>
+              <div style="font-size: 30px">Biography :</div>
 
               <textarea
                 placeholder="Enter your biography here"
@@ -110,7 +112,7 @@ export default {
 
 
       axios
-        .get(process.env.VUE_APP_API_URL+"/api/profile/majors", { withCredentials:true })
+        .get(process.env.VUE_APP_API_URL+"/profile/majors", { withCredentials:true })
 
         .then((response) => {
           // store the list of majors in the data object

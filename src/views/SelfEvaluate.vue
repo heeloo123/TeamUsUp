@@ -18,7 +18,7 @@
       <div style="display:inline-flex;text-align: -webkit-auto;">
         <div style="">
           <h3>Using this evaluation form scales</h3>
-          <p>The scales are from 1 to 5. Assess these as:</p>
+          <p>The scales are from 1 to 5. Assess these as :</p>
           <p>1 = Very poor, or even obstructive, contribution to the project process</p>
           <p>2 = Poor contribution to the project process</p>
           <p>3 = acceptable contribution to the project process</p>
@@ -88,7 +88,7 @@
 
           <div>
             On the scale 1 - 5 above, rate your own contribution to the group on each of
-            the criteria below:
+            the criteria below :
           </div>
         </div>
         <!--input area------------------------------->

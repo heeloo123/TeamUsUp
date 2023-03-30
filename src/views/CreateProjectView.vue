@@ -2,12 +2,15 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
         <p>
-          Student Info | <router-link to="/Profile">Profile</router-link> |
-          <router-link to="/ownPView">Recent Project</router-link> | Create project
+          /
+          <router-link to="/ownPView">Recent Project</router-link> / Create project
         </p>
       </div>
+      <h1 style="color:grey">Create project</h1>
       <div class="container">
         <div class="item">
           <form class="detail" @submit.prevent="createProject">
@@ -19,7 +22,7 @@
                 <input type="file" id="projectPic" v-on:change="handleFileSelect" />
               </div>
               <p></p>
-              <span>Project participants: </span>
+              <span>Project participants : </span>
               <div style="flex: 1">
                 <div
                   style="
@@ -55,7 +58,7 @@
 
             <div style="margin-left: 50px;width: -webkit-fill-available">
               <p></p>
-              <span style="font-size: 25px">Project name:</span>
+              <span style="font-size: 25px">Project name :</span>
               <input
                 placeholder="Enter your Project name"
                 type="text"
@@ -64,7 +67,7 @@
                 required
               />
               <p></p>
-              <div style="font-size: 25px">Project description:</div>
+              <div style="font-size: 25px">Project description :</div>
 
               <textarea
                 placeholder="Enter project discription here (words limit 200 )"
@@ -75,7 +78,7 @@
               <div style="display: flex; flex-direction: row">
                 <div style="flex: 1">
                   <form @submit.prevent="search" class="search">
-                    <label for="query">Search User: </label>
+                    <label for="query">Search User : </label>
                     <input id="query" v-model="query" type="text" required />
 
                     <button style="margin-left: 10px" type="submit">Submit</button>
@@ -99,7 +102,7 @@
                         >
                           <span v-if="result.resultType === 'Profile'">
                             {{ result.header }} ({{ result.descriptor }})
-                            <input type="text" v-model="roleMap[index]" />
+                            <input  type="text" v-model="roleMap[index]" placeholder="Enter role here"/>
                             <button
                               v-if="result.addButton"
                               @click.prevent="addUser(result, index)"
@@ -293,9 +296,7 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  height: 100;
-}
+
 
 .container {
   background: rgb(255, 255, 255);
@@ -373,8 +374,8 @@ textarea {
   font-size: 16px;
 }
 
-.result span:hover {
-  background: rgb(255, 255, 255);
+.searchU li:hover {
+  background: rgb(207, 206, 206);
 }
 .userlist input {
   width: auto;
@@ -384,4 +385,12 @@ textarea {
   font-size: 15px;
 }
 
+.result input{
+  background-color: rgb(255, 255, 255);
+  min-width: 50px;
+  width: auto;
+  border-radius: 20px;
+  font-size: 15px;
+  margin-right:10px
+}
 </style>

@@ -3,11 +3,18 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
+ 
         <p >
-          <router-link to="/searchPage">Search </router-link> | User Profile |
+           / <router-link to="/searchPage">Search </router-link> /
+           <button style="border: transparent;" class="buttn" @click="$router.go(-1)"> Previous Page
+           </button> /
           {{ profile.firstName }} {{ profile.lastName }}
         </p>
       </div>
+      <h1 style="color:grey">User profile</h1>
       <div class="container">
         <div class="item">
           <form class="detail">
@@ -22,7 +29,7 @@
                 <span>{{" "}}{{ profile.lastName }} </span>
               </div>
               <p></p>
-              <div style="font-size: 20px">Major: <span
+              <div style="font-size: 20px">Major : <span
                   style="
                   border-radius: 20px;
                   font-size: 20px;
@@ -40,7 +47,7 @@
 
               <p></p>
 
-              <div style="font-size: 20px">Biography:</div>
+              <div style="font-size: 20px">Biography &dtrif;</div>
               <div
                 style="
                   border-radius: 10px;
@@ -48,22 +55,22 @@
                   padding: 10px;
                   border: transparent;
                   width: -webkit-fill-available;
-                  min-height: 100px;
+                  min-height: 50px;
                   height: auto;
-                  background: rgb(234, 229, 229);
+                  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
                 "
               >
                 {{ profile.biography }}
               </div>
             </div>
           </form>
-          <label style="font-size: 25px; vertical-align: top; horiz-align: left; float: left"
-            >Recent Project</label
+          <h2 style="float: left; font-size: 18px; margin-top: -20px; margin-left: 30px"
+            >Recent Project &dtrif;</h2
           >
           <br>
           <div class="Project-container" >
-            <div style="width: -webkit-fill-available">
-              <div style="display: flex; width: -webkit-fill-available">
+            <div style="width: -webkit-fill-available;">
+              <div style="display: flex; width: -webkit-fill-available;border-bottom: solid 3px darkgrey;">
                 <div style="flex: 1">Project Name</div>
                 <div style="flex: 2.9">Project Description</div>
               </div>
@@ -83,7 +90,8 @@
                     width: auto;
                     padding: 5px;
                     color: black;
-                    background: white;
+                    border-bottom: solid 3px lightgrey;
+                    
                   "
                 >
                   <span style="flex: 1">{{ project.projectName }}</span>
@@ -161,6 +169,7 @@ export default {
 </script>
 
 <style scoped>
+
 .container {
   background: rgb(255, 255, 255);
   border-radius: 20px;
@@ -179,7 +188,8 @@ export default {
 }
 .Project-container {
   margin: 10px;
-  background: rgb(234, 231, 231);
+  background-color: rgb(246, 244, 244);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   display: flex;
   width: -webkit-fill-available;
   border-radius: 20px;
@@ -188,7 +198,10 @@ export default {
   text-align: left;
 }
 
-.proD :hover{
-  background: rgb(205, 199, 199);
+.Pc :hover{
+ background: rgb(203, 202, 202);
 }
+.buttn:hover{
+  background: rgb(203, 201, 201);
+ }
 </style>

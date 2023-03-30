@@ -47,6 +47,9 @@
             <button class="SignUpButton" v-if="showSignUp" :disabled="buttonDisabled">
               <router-link class="link" to="/SignUp">Sign-Up Now</router-link>
             </button>
+            <button class="SignUpButton" v-if="!showSignUp" :disabled="buttonDisabled">
+              <router-link class="link" to="/home">Dashboard</router-link>
+            </button>
           </nav>
         </form>
       </form>
