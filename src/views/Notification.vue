@@ -30,7 +30,7 @@
                 <div class="emailTimeStamp">
                   {{ formatDate(notification.timeCreated) }}
                 </div>
-                {{ notification.read ? "" : "Unread" }}
+              <span style="color:red">  {{ notification.read ? "" : "Unread" }}</span>
               </span>
             </div>
           </div>
