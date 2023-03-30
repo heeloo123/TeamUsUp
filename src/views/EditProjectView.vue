@@ -112,6 +112,7 @@
                       Submit
                     </button>
                   </div>
+                  <div class="searchU">
                   <div
                     class="result"
                     style="
@@ -131,7 +132,7 @@
                       >
                         <span v-if="result.resultType === 'Profile'">
                           {{ result.header }} ({{ result.descriptor }})
-                          <input type="text" v-model="result.projectRole" />
+                          <input type="text" v-model="result.projectRole" placeholder="Enter role here"/>
                           <button
                             v-if="result.addButton"
                             @click.prevent="addUser(result, result.header)"
@@ -151,7 +152,7 @@
                     </ul>
 
                     <p v-else class="result" style="padding: 10px">No results found.</p>
-                  </div>
+                  </div></div>
                 </div>
               </div>
               <span
@@ -454,6 +455,11 @@ textarea {
   height: 200px;
   border-radius: 20px;
 }
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .searchU input {
   padding: 15px;
@@ -464,7 +470,6 @@ textarea {
 }
 
 .searchU ul {
-  padding: 20px;
 }
 
 .searchU li {
@@ -480,8 +485,8 @@ textarea {
   font-size: 16px;
 }
 
-.result span:hover {
-  background: rgb(255, 255, 255);
+.result li:hover {
+  background:  rgb(207, 206, 206);
 }
 
 .userlist {
@@ -494,5 +499,13 @@ textarea {
   margin-left: -20px;
   padding-left: 10px;
   font-size: 15px;
+}
+.result input{
+  background-color: rgb(255, 255, 255);
+  min-width: 50px;
+  width: auto;
+  border-radius: 20px;
+  font-size: 15px;
+  margin-right:10px
 }
 </style>
