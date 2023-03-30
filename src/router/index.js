@@ -23,6 +23,7 @@ import { useAuthStore } from "@/stores/auth";
 import ownPView from "@/views/OwnProjectList.vue";
 import testUse from "@/views/testUse.vue";
 import CommentPage from "@/views/CommentView.vue";
+import helpPage from "@/views/helpPage.vue";
 
 const authGuard = (to, from, next) => {
   const authStore = useAuthStore()
@@ -188,6 +189,10 @@ const routes = [
     path: "/CommentPage/:reference",
     name: "CommentPage",
     component: CommentPage,
+  },{
+    path: "/help",
+    name: "help",
+    component: helpPage,
   }
 ];
 
