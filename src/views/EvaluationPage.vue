@@ -22,7 +22,7 @@
     </div> -->
 
     <div>
-      <label for="evaluatee">Select an evaluatee:</label>
+      <label for="evaluatee">Select an evaluatee :</label>
       
       <select v-model="selectedEvaluateeId" id="evaluatee">
         <option
@@ -38,20 +38,20 @@
     <button @click="openForm">Finish</button>
 
     <div v-if="showForm">
-      <h2>Project: {{ selectedProjectId }}</h2>
-      <h2>Evaluatee: {{ selectedEvaluateeId }}</h2>
-      <h2>Evaluator: {{ profile.profileID}}</h2>
+      <h2>Project : {{ selectedProjectId }}</h2>
+      <h2>Evaluatee : {{ selectedEvaluateeId }}</h2>
+      <h2>Evaluator : {{ profile.profileID}}</h2>
 
-      <label for="comment">Comment:</label>
+      <label for="comment">Comment :</label>
       <textarea v-model="comment" id="comment"></textarea>
 
-      <label for="teamwork">Teamwork (1-5):</label>
+      <label for="teamwork">Teamwork (1-5) :</label>
       <input v-model.number="teamwork" id="teamwork" type="number" min="1" max="5" />
 
-      <label for="skill">Skill (1-5):</label>
+      <label for="skill">Skill (1-5) :</label>
       <input v-model.number="skill" id="skill" type="number" min="1" max="5" />
 
-      <label for="communication">Communication (1-5):</label>
+      <label for="communication">Communication (1-5) :</label>
       <input
         v-model.number="communication"
         id="communication"

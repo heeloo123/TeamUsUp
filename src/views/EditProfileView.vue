@@ -2,8 +2,10 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
-        <p>Student Info | <router-link to="/Profile" class="Rp">Profile</router-link> | Edit Profile</p>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
+        <p>/ <router-link to="/Profile" class="Rp">Profile</router-link> / Edit Profile</p>
         
       </div>
       <div class="container">
@@ -46,7 +48,7 @@
                 </ul>
               </div>
 
-              <span style="font-size: 25px">Major:</span>
+              <span style="font-size: 25px">Major :</span>
 
               <select
                 class="majorSelect"
@@ -67,7 +69,7 @@
                 </option>
               </select>
 
-              <div style="font-size: 25px;margin-top:10px">Biography:</div>
+              <div style="font-size: 25px;margin-top:10px">Biography :</div>
 
               <textarea
                 placeholder="Enter your biography here"

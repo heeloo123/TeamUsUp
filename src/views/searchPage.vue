@@ -1,12 +1,17 @@
 <template>
    <div class="header">
-        <p style="font-family: math;">
-          Search User Profile & Project  
+    <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
+   <p>/</p>
+        <p>
+          <router-link to="/searchPage" style="color:black">Search User Profile & Project </router-link>
+          
         </p>
       </div>
   <div class="container">
     <form @submit.prevent="search" class="search">
-      <label for="query">Search: </label>
+      <label for="query">Search : </label>
       <input id="query" v-model="query" type="text" required />
 
       <input id="all" type="radio" v-model="searchType" value="" checked />
@@ -25,18 +30,18 @@
     </form>
   </div>
 
-  <div style="margin: 20px; border-top: solid 1px; padding: 10px">
+  <div style="margin: 20px; padding: 10px">
     <ul v-if="results.length">
       <li v-for="(result, index) in results" :key="index">
         <div v-if="result.resultType === 'Project'" >
           <router-link style="text-decoration: none;"
             :to="{ name: 'StudentProject', params: { reference: result.reference } }"
             class="nameP" >
-          <div >
+          <div style="margin-top:10px">
           <span style="margin-left:15px;"> {{ result.header }}</span>
 
           <span style="float:right;margin-right:20px">{{ result.resultType }}</span>
-           <p> Description: {{ result.descriptor }}</p>
+           <p> Description : {{ result.descriptor }}</p>
           </div>
           </router-link>
         </div>
@@ -44,17 +49,17 @@
           <router-link style="text-decoration: none;"
             :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
             class="nameP" >
-          <div >
+          <div style="margin-top:10px" >
           <span style="margin-left:15px;"> {{ result.header }}</span>
           <span style="float:right;margin-right:20px">{{ result.resultType }}</span>
-         <p>Major: {{ result.descriptor }}</p> 
+         <p>Major : {{ result.descriptor }}</p> 
          </div>
           </router-link>
         </div>
       </li>
     </ul>
 
-    <p v-else class="result">No results found.</p>
+    <p v-else class="result" style="text-align: center;">No results found.</p>
   </div>
 </template>
 
@@ -104,20 +109,20 @@ export default {
 }
 
 .container {
-  background: rgb(233, 230, 230);
-  border-radius: 20px;
-  padding: 20px;
-  max-width: -webkit-fill-available;
+  
+  border-radius: 0px;
+  padding: 10px;
+  justify-content: center;
   width: 100%;
-  display: block;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 20px;
+  display: flex;
+  align-items: center;
+  /* justify-content: flex-start;
+  align-items: flex-start; */
+  margin: 10px;
 }
 
 .search {
   display: contents;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
@@ -128,7 +133,7 @@ export default {
 }
 
 .search input[type="text"] {
-  width: 60%;
+  width: 30%;
   padding: 5px;
   border-radius: 5px;
   border: none;
@@ -150,16 +155,22 @@ export default {
 
 ul {
   width: -webkit-fill-available;
+  list-style-type: none;
+   
 }
+s
 
 li {
-  margin-bottom: 5px;
-  background: whitesmoke;
+margin-bottom: 5px;
+
+  
+  
 }
 
 li p {
-  margin: 10px 0;
+  
   padding-left: 20px;
+   
 }
 
 li a {
@@ -169,9 +180,12 @@ li a {
   color: rgb(0, 0, 0);
   padding-left: 20px;
   font-family: math;
+  
 }
 .nameP{
   width: -webkit-fill-available;
+  background: rgb(248, 245, 245);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   
 }
 .nameP:hover{

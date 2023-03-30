@@ -2,11 +2,20 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
-        <p>Student Info | Profile</p>
-        <p><router-link to="/ownPView" class="Rp">Recent project </router-link></p>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
+   <p>/</p>
+        
+        <p>
+           <router-link to="/Profile"> Student Profile </router-link> 
+        </p>
+        
       </div>
-      <p v-if="isDeactivated === true" class="message">your account is deactivated!</p>
+      <p v-if="isDeactivated === true" class="message">Your account is deactivated!</p>
+      <p><router-link to="/ownPView" class="Rp">Recent project </router-link></p>
+      <h1 style="color:grey">Student Profile</h1>
+
       <div class="containerA">
         <div class="item">
           <form class="detail">
@@ -34,17 +43,17 @@
                 </div>
 
                 <div class="infoD" style="display: flex">
-                  <div class="textH" style="flex: 1">Student email:</div>
+                  <div class="textH" style="flex: 1">Student email :</div>
                   <div class="textB" style="flex: 2">{{ profile.email }}</div>
                 </div>
 
                 <div class="infoD" style="display: flex">
-                  <div class="textH" style="flex: 1">Student ID:</div>
+                  <div class="textH" style="flex: 1">Student ID :</div>
                   <div class="textB" style="flex: 2">{{ profile.profileID }}</div>
                 </div>
 
                 <div class="infoD" style="display: flex">
-                  <div class="textH" style="flex: 1">Major:</div>
+                  <div class="textH" style="flex: 1">Major :</div>
                   <div class="textB" style="flex: 2">
                     <span v-for="major in majors" :key="major.majorCode">
                       <li>{{ major.majorName }}</li>
@@ -53,7 +62,7 @@
                 </div>
 
                 <div class="infoD" style="display: flex">
-                  <div class="textH" style="flex: 1">Biography:</div>
+                  <div class="textH" style="flex: 1">Biography :</div>
                   <div class="textB" style="flex: 2">{{ profile.biography }}</div>
                 </div>
               </div>
@@ -66,7 +75,7 @@
             >
               {{ !isDeactivated ? "Deactivate" : "Reactivate" }}
             </button>
-            <p v-if="isDeactivated === false"> your account is <span style="color:green; font:bolder; font-size:15px">active</span> .</p>
+            <p v-if="isDeactivated === false"> Your account is <span style="color:green; font:bolder; font-size:15px">active</span> .</p>
             <p v-if="isDeactivated === true" class="message">
               Your account has been <span style="color:brown;font-size:20px">deactivated</span>. It will need 1 hour to reactivate. If you
               wish to immediate reactivate your account, please send an email to
@@ -126,7 +135,7 @@ export default {
   computed: {
     profileImageSrc() {
       const baseUrl = process.env.VUE_APP_API_URL;
-      const imagePath = `/api/profile/image/${this.profile.profileID}`;
+      const imagePath = `/profile/image/${this.profile.profileID}`;
       return baseUrl + imagePath;
     },
   },
@@ -188,7 +197,8 @@ export default {
 }
 
 .Rp {
-  margin-left: 1050px;
+  float:right;
+  margin-right: 20px;
   background: rgb(196, 193, 193);
   padding: 10px;
   color: black;
@@ -204,7 +214,7 @@ export default {
   border-radius: 8px;
   margin: 20px;
   width: auto;
-  margin: 50px;
+ 
   display: -webkit-inline-box;
 }
 

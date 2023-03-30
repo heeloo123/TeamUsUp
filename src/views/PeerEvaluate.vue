@@ -2,10 +2,13 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
         <p>
-          Student Info | <router-link to="/ownPView"> Recent Project </router-link> |
-          {{ project.projectID }} {{ project.projectName }} | Evaluation
+          / <router-link to="/ownPView"> Recent Project </router-link> /
+          <button style="border: transparent;" class="buttn" @click="$router.go(-1)"> {{ project.projectID }}
+          {{ project.projectName }} </button> / Evaluation
         </p>
       </div>
       <div>
@@ -18,7 +21,7 @@
       <div style="display: inline-flex; text-align: -webkit-auto">
         <div style="">
           <h3>Using this evaluation form scales</h3>
-          <p>The scales are from 1 to 5. Assess these as:</p>
+          <p>The scales are from 1 to 5. Assess these as :</p>
           <p>1 = Very poor, or even obstructive, contribution to the project process</p>
           <p>2 = Poor contribution to the project process</p>
           <p>3 = acceptable contribution to the project process</p>
@@ -321,4 +324,8 @@ export default {
 .score {
   margin-left: 100px;
 }
+.buttn:hover{
+  background: rgb(203, 201, 201);
+ }
+ 
 </style>

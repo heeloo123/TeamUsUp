@@ -2,13 +2,18 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
+  
+        
         <p>
-          Student Info | <router-link to="/Profile">Profile</router-link> |Recent Project
+          / <router-link to="/Profile"> Student Profile </router-link> / <router-link to="/ownPView"> Recent Project </router-link> 
         </p>
-        <p><router-link to="/CreateProject" class="Rp">Create project</router-link></p>
+        
       </div>
-      
+      <p><router-link to="/CreateProject" class="Rp">Create project</router-link></p>
+      <h1 style="color:grey">Recent Project List</h1>
       <div class="container">
         <div class="item">
           <div class="Project-container">
@@ -146,7 +151,8 @@ export default {
 <style scoped>
 
 .Rp {
-  margin-left: 950px;
+  float:right;
+  margin-right: 20px;
   background: rgb(196, 193, 193);
   padding: 10px;
   color: black;

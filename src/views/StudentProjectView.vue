@@ -2,33 +2,39 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
         <p>
-          <router-link to="/searchPage">Search </router-link> | Project |
+         / <router-link to="/searchPage">Search </router-link> / <button style="border: transparent;" class="buttn" @click="$router.go(-1)"> Previous Page
+           </button> /
           {{ project.projectID }} {{ project.projectName }}
         </p>
       </div>
+      <h1 style="color:grey">Project : {{ project.projectName }}</h1>
       <div class="container">
-        <div calss="item">
+        <div class="item">
           <form class="detail">
             <div class="project-pic">
               <img :src="projectImageSrc" alt="Project img" />
             </div>
             <p></p>
-            <div class="text" style="display: block; margin-left: 20px">
-              <span style="font-size: 25px">Project name: </span>
+            <div class="text">
+              <span style="font-size: 18px">Project name :</span>
               <label> {{ project.projectName }}</label>
 
               <div style="margin-top: 10px">
-                <div style="font-size: 25px">Project description:</div>
-                <p style="width: -webkit-fill-available">
+                <span style="font-size: 18px">Project description &dtrif;</span> 
+                <p>
                   {{ project.projectDescription }}
                 </p>
               </div>
             </div>
           </form>
 
-          <h2 style="margin-left: -370px; font-size: 30px; margin-top: -30px; overflow: auto;">
-            Project members
+          
+          <h2 style="float: left; font-size: 18px; margin-top: -30px; margin-left: 80px">
+            Project members &dtrif;
           </h2>
           <div class="memberlist">
             <RouterLink
@@ -39,73 +45,75 @@
               v-for="(role, name) in project.nameRoleMap"
               :key="name"
             >
-              <div
-                style="
-                  border-radius: 20px;
-                  display: flex;
-                  background: rgb(234, 231, 231);
-                  border: transparent;
-                  margin: 20px;
-                "
-              >
+              <div class="ho" @mouseenter="role.hover = true" @mouseleave="role.hover = false">
                 <div class="profileImg">
                   <img :src="role.profileImage" alt="profile picture" />
                 </div>
 
                 <div class="name-role">
-                  <label>
-                    Name: <span style="padding-left: 60px">{{ name }}</span></label
-                  >
+                    <label>
+                      Name :<span>{{ name }}</span></label
+                    >
+                    <label
+                      >Role :<span>{{ role.projectRole }}</span></label
+                    >
+                  
 
-                  <label
-                    >Role:<span style="padding-left: 75px">{{
-                      role.projectRole
-                    }}</span></label
-                  >
-                  <label>
-                    ProfileID :<span style="padding-left: 20px">{{
-                      role.id.profileID
-                    }}</span>
-                  </label>
+                  </div>
+                <div class="comments">
+                  <ul v-if="role.hover">Comments <br>
+                    <li v-for="comment in comments(role)" :key="comment">{{ comment }}</li>
+                  </ul>
                 </div>
-<div style="margin-left: auto; margin-right:50px
-">
+
+
+
                 <div
                   class="skillInfo"
+                  style="
+                     margin-top: 20px;
+    font-size: 15px;
+    flex: 1;
+    display: inline;
+    text-align: left;
+                    "
                   v-if="evaluateeIDs[role.id.profileID]"
                 >
                   <p>
-                    Teamwork:
-                    {{
+                    Teamwork :
+                  <label> {{
                       Math.round(
                         (teamworkSums[role.id.profileID] /
                           evaluateeIDs[role.id.profileID]) *
                           100
                       ) / 100
                     }}
-                  </p>
+               </label>    </p>
                   <p>
-                    Skill:
-                    {{
+                    Skill :
+                    <label>   {{
                       Math.round(
                         (skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID]) *
                           100
                       ) / 100
                     }}
-                  </p>
+                </label>   </p>
                   <p>
                     Communication :
-                    {{
+                  <label>      {{
                       Math.round(
                         (communicationSums[role.id.profileID] /
                           evaluateeIDs[role.id.profileID]) *
                           100
                       ) / 100
                     }}
-                  </p>
-                </div></div>
+                </label>   </p>
+                
+               </div>
               </div>
+              
             </RouterLink>
+            
           </div>
         </div>
       </div>
@@ -189,39 +197,52 @@ export default {
       const imagePath = `/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
     },
+
   },
+  methods:{
+    comments(role){
+      const computedComments = [];
+      for(var i = 0; i< this.project.evaluations.length; i++){
+        if (this.project.evaluations[i].id.evaluateeID == role.id.profileID &&this.project.evaluations[i].comments != null){
+          computedComments.push(this.project.evaluations[i].comments);
+        }
+      }
+      return computedComments;
+    }
+  }
 };
 </script>
 
 <style scoped>
+
 .container {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   display: flex;
-  margin: 20px;
-  width: auto;
-  margin: 50px;
+  margin: 10px;
+  
+  width: 1200px;
 }
 
 .item {
-  display: inline-table;
+  width: -webkit-fill-available;
 }
 
 .detail {
-  display: flex;
+  
   padding: 20px;
   text-align: left;
-
-  margin-left: 60px;
+  display: inline-flex
 }
 
 .project-pic {
   background: rgb(234, 231, 231);
-  width: 200px;
-  height: 200px;
-  border-radius: 30px;
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
   margin-top: 30px;
   overflow: hidden;
+  margin-right:30px
 }
 
 .project-pic img {
@@ -231,8 +252,8 @@ export default {
 }
 
 .profileImg {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   margin: 20px;
   background: rgb(254, 254, 254);
   overflow: hidden;
@@ -246,34 +267,41 @@ export default {
 }
 
 .text {
-  font-size: 25px;
-  padding: 20px;
+  font-size: 18px;
+    margin-top: 0px;
+    padding: 20px;
+    display: inline;
+    width: auto;
 }
 
 .text p {
-  background: rgb(239, 232, 232);
   display: content;
-  min-height: 90px;
+  min-height: 50px;
   height: auto;
-  border-radius: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
   padding: 20px;
+  width: 700px;
 }
 
 .text label {
-  display: content;
-  width: 200px;
+  width:auto;
   height: auto;
   border-radius: 20px;
-  padding: 10px;
+  padding: 5px;
+  
+  
 }
 
 .name-role {
   margin: 30px;
-  display: inline;
-  font-size: 25px;
+  display: inline-grid;
+  font-size: 15px;
   padding: 10px;
-  text-align: left;
-  color: black;
+  max-width: 400px;
+  flex: 1;
+
+
 }
 
 .name-role label {
@@ -283,10 +311,12 @@ export default {
 
 .name-role span {
   margin-left: 10px;
+  text-align:left;
 }
 
 .memberlist {
-  margin-right: 30px;
+  
+ 
 }
 
 .memberlist a {
@@ -294,18 +324,61 @@ export default {
   color: black;
 }
 
-.memberlist :hover {
-  background-color: rgb(225, 225, 230);
-  color: rgb(8, 0, 255);
-}
-.skillInfo{
-  
 
-  font-size: 20px;
-  float:right;
-  padding: 10px;
-  flex:1;
-  text-align:left;
+.skillInfo{
+  text-align: left;
+  flex: 1;
+  padding-left: 5px;
+    
+}
+.ho {
+  border-radius: 20px;
+  display: flex;
+  background: rgb(244, 242, 242);
+  border: transparent;
+  margin: 20px;
+  color: black;
+  width:1000px;
+  max-height: 15vh;
+  height: 15vh;
+}
+
+.ho:hover {
+  background: rgb(206, 200, 200);
+}
+ul{
+  list-style-type: none;
+  justify-self: start;
+  padding: 2px;
+  margin: 0;
+  text-align: left;
+  font-weight: bold;
+  overflow-y: scroll;
+}
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-button:increment{
+
+}
+li{
+  text-align: left;
+  border-bottom: 1px grey solid;
+  font-weight: 100;
+  padding: 5px;
+}
+.buttn:hover{
+  background: rgb(203, 201, 201);
+ }
+.comments{
+  padding-top: 20px;
+  flex: 1;
+  max-height: 100%;
+  overflow-y: scroll;
+
+}
+::-webkit-scrollbar-thumb{
+  background: gray;
 
 }
 </style>

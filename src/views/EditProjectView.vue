@@ -2,14 +2,17 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
         <p>
-          Student Info | <router-link to="/Profile">Profile</router-link> |
-          <router-link to="/ownPView">Recent Project</router-link> | Edit Project |
+          / <router-link to="/Profile">Profile</router-link> /
+          <router-link to="/ownPView">Recent Project</router-link> / Edit Project /
           {{ projectID }}
           {{ projectName }}
         </p>
       </div>
+      <h1 style="color:grey">Edit Project</h1>
       <div class="container">
         <div class="item">
           <div class="detail" @submit.prevent="EditProject">
@@ -82,7 +85,7 @@
 
             <div style="margin-left: 50px; width: -webkit-fill-available">
               <p></p>
-              <span style="font-size: 25px">Project name:</span>
+              <span style="font-size: 25px">Project name :</span>
               <input
                 placeholder="Enter your Project name"
                 type="text"
@@ -91,7 +94,7 @@
                 required
               />
               <p></p>
-              <div style="font-size: 25px">Project description:</div>
+              <div style="font-size: 25px">Project description :</div>
 
               <textarea
                 placeholder="Enter project description here (words limit 200 )"
@@ -102,7 +105,7 @@
               <div style="display: flex; flex-direction: row">
                 <div style="flex: 1">
                   <div class="search">
-                    <label for="query">Search: </label>
+                    <label for="query">Search : </label>
                     <input id="query" v-model="query" type="text" v-on:keydown.enter="search" required />
 
                     <button type="submit" style="margin-left: 10px" @click="search">

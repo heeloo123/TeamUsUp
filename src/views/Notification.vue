@@ -2,8 +2,12 @@
   <div style="margin: inherit; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
-        <p>Student Info | Notification</p>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
+        <p>/ <router-link to="/notification" style="text-decoration: none;">
+          Notification
+        </router-link></p>
       </div>
    
       <div class="container">
@@ -327,8 +331,9 @@ export default {
 .container {
   background: rgb(255, 255, 255);
   border-radius: 20px;
+  min-width: 90%;
   width: auto;
-  max-width: 90%;
+  
   margin: 50px;
   padding: 20px;
   margin-top: 20px;
@@ -336,7 +341,8 @@ export default {
 }
 
 .cell {
-  width: auto;
+  
+  width: 800px;
   background: rgb(252, 248, 248);
   justify-content: space-between;
   margin: 2px;
@@ -351,7 +357,7 @@ export default {
 
 .emailTimeStamp {
  float: right;
- margin-left:20px
+ margin-left:50px
 }
 
 .readflag {

@@ -2,43 +2,34 @@
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
       <div class="header">
-        <label><img src="../assets/icons8-user-32.png" /></label>
+        <p > <router-link to="/home" style="color:#e12744;text-decoration: none;">
+         Dashboard
+        </router-link> </p> 
         <p>
-          Student Info | <router-link to="/ownPView"> Recent Project </router-link> |
+         / <router-link to="/ownPView"> Recent Project </router-link> /
           {{ project.projectID }} {{ project.projectName }}
         </p>
-        <p style="margin-left: 610px">
-          <!-- <button class="Rp">
-            <RouterLink
-              :to="{
-                name: 'SelfEva',
-                params: {
-                  reference: $route.params.reference,
-                },
-              }"
-              style="color: black; text-decoration: none"
-            >
-              self evaluation
-            </RouterLink>
-          </button> -->
-
-          <button class="Rp" @click.prevent="showUserList">Evaluation</button>
-          <button class="Rp" > <router-link
-                 
-                  :to="{
-                    name: 'CommentPage',
-                    params: { reference: $route.params.reference },
-                  }"
-                  style="text-decoration: none; color:black"
-                > View comment </router-link></button>
-        </p>
+      
       </div>
-      <p
+      <!-- <p
         style="font-size: 15px; margin-left: 900px; border: transparent"
         v-if="profile.profileID != project.owner_id"
       >
         Only project owner are able to edit the project
+      </p> -->
+      <p>
+        
+        <button class="Rp" @click.prevent="showUserList" title="Self and peer evaluation">Evaluation</button>
+        <button class="Rp" > <router-link title="View comment from other members!"
+               
+                :to="{
+                  name: 'CommentPage',
+                  params: { reference: $route.params.reference },
+                }"
+                style="text-decoration: none; color:black"
+              > View comment </router-link></button>
       </p>
+  <h1 style="color:grey">Project : {{ project.projectName }}</h1>
       <div class="container">
         <div class="item">
           <!---->
@@ -46,12 +37,12 @@
             <div class="project-pic">
               <img :src="projectImageSrc" alt="Project img" />
             </div>
-            <div style="width: -webkit-fill-available">
+            <p></p>
               <div class="text">
-                <span style="font-size: 20px">Project name: </span>
+                <span style="font-size: 18px">Project name :</span>
                 <label>{{ project.projectName }}</label>
 
-                <router-link
+                <router-link title="Edit project"
                   v-if="profile.profileID === project.owner_id"
                   :to="{
                     name: 'EditProjectView',
@@ -62,15 +53,15 @@
                   <img style="width: 30px" src="../assets/icons8-edit-48.png" />
                 </router-link>
 
-                <div style="margin-top: 20px">
-                  <div style="font-size: 20px">Project description:</div>
+                <div style="margin-top: 10px">
+                  <div style="font-size: 18px">Project description &dtrif;</div>
                   <p>{{ project.projectDescription }}</p>
                 </div>
               </div>
             </div>
-          </div>
+         
 
-          <h2 style="float: left; font-size: 20px; margin-top: -30px; margin-left: 30px">
+          <h2 style="float: left; font-size: 20px; margin-top: -30px; margin-left: 80px">
             Project members &dtrif;
           </h2>
           <div>
@@ -83,17 +74,17 @@
                 v-for="(role, name) in project.nameRoleMap"
                 :key="name"
               >
-                <div class="ho" style="">
+                <div class="ho">
                   <div class="profileImg">
                     <img :src="role.profileImage" alt="profile picture" />
                   </div>
 
                   <div class="name-role">
                     <label>
-                      Name: <span>{{ name }}</span></label
+                      Name :<span>{{ name }}</span></label
                     >
                     <label
-                      >Role:<span>{{ role.projectRole }}</span></label
+                      >Role :<span>{{ role.projectRole }}</span></label
                     >
                     <label style="font-size: 12px" v-if="!role.accepted"
                       >This student has not yet accepted the project participant.</label
@@ -103,7 +94,7 @@
                   <div
                     style="
                      margin-top: 20px;
-    font-size: 20px;
+    font-size: 15px;
     flex: 1;
     display: inline;
     margin-left: 310px;
@@ -112,7 +103,7 @@
                     v-if="evaluateeIDs[role.id.profileID]"
                   >
                     <p>
-                      Teamwork:
+                      Teamwork :
                      <label>  {{
                       Math.round(
                         (teamworkSums[role.id.profileID] /
@@ -148,7 +139,7 @@
 
           <!---->
 
-          <div style="margin-left: px; display: flex"></div>
+         
         </div>
       </div>
     </div>
@@ -298,10 +289,12 @@ export default {
 
 <style scoped>
 .background {
-  height: 100vh;
+  min-height:100vh;
+  height: auto
 }
 .Rp {
-  margin-left:70px;
+  float:right;
+  margin-right: 20px;
   background: rgb(196, 193, 193);
   padding: 10px;
   color: black;
@@ -315,30 +308,31 @@ export default {
 .container {
   background: white;
   display: flex;
-  margin: 30px;
-  width: auto;
+  margin: 10px;
+  width: 1200px;
   border-radius: 5px;
 }
 
 .item {
-  display: inline;
+  
   width: -webkit-fill-available;
 }
 
 .detail {
-  display: flex;
+  display: inline-flex;
   padding: 20px;
   text-align: left;
-  width: -webkit-fill-available;
+ 
 }
 
 .project-pic {
   background: rgb(234, 231, 231);
-  width: 250px;
-  height: 200px;
-  border-radius: 30px;
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
   margin-top: 20px;
   overflow: hidden;
+  margin-right:30px
 }
 
 .project-pic img {
@@ -348,8 +342,8 @@ export default {
 }
 
 .profileImg {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   margin: 20px;
   background: rgb(254, 254, 254);
   overflow: hidden;
@@ -363,32 +357,35 @@ export default {
 }
 
 .text {
-  font-size: 20px;
-  padding: 10px;
+  font-size: 18px;
+    margin-top: 0px;
+    padding: 20px;
+    display: inline;
+    width: auto;
+    
 }
 
 .text p {
   display: content;
-  min-height: 70px;
+  min-height: 50px;
   height: auto;
-  border: solid 1px grey;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   padding: 30px;
-  width: auto;
+  width: 700px;
 }
 
 .text label {
-  display: content;
-  width: 200px;
+  width:auto;
   height: auto;
   border-radius: 20px;
-  padding: 20px;
+  padding: 5px;
 }
 
 .name-role {
   margin: 30px;
   display: inline-grid;
-  font-size: 25px;
+  font-size: 15px;
   padding: 10px;
   max-width: 400px;
   flex: 1;
@@ -401,10 +398,11 @@ export default {
 
 .name-role span {
   margin-left: 10px;
+  text-align:left;
 }
 
 .memberlist {
-  margin-right: 30px;
+  
 }
 
 .memberlist a {
@@ -418,6 +416,7 @@ export default {
   border: transparent;
   margin: 20px;
   color: black;
+  width:1000px
 }
 
 .ho:hover {

@@ -1,41 +1,44 @@
 <template>
   <div style="display: flex; text-align: -webkit-center">
     <div class="background">
-      <h1>Welcome to TeamUsUp portal!</h1>
+      <h1 style="float:left"> <router-link to="/home" style="margin-left:100px;border-bottom: solid 5px grey;text-decoration: none;">
+         Dashboard
+        </router-link> </h1> 
+     
 
       <div v-if="showCreateProfile">
-        <h2 style="color: darkslategrey">
+       
+        <div style="background:white;margin:30px;margin-top:80px;padding:20px;border-radius:10px">
+         <h3 style="color: darkslategrey">
           Ready to showcase your teamwork skills? Create a new project now and start
           collaborating with others.
-        </h2>
-        <div style="background:white;margin:30px;padding:20px;border-radius:10px">
-        
+        </h3>
 
         <div class="router-container">
           <img class="Tw" alt="Teamwork" src="../assets/teamwork.png" />
          <div >
-          <router-link to="/CreateProject" class="link">
+          <router-link to="/CreateProject" class="link" title="You can create a new project here!">
             <div class="router">
-            <h3>Ready to collaborate? Create your project now.</h3>
+            <h3>Ready to collaborate? Create your project now</h3>
             <img class="CP" alt="Create" src="../assets/icons8-create-100.png" />
             </div>
           </router-link>
-          <router-link to="/searchPage" class="link">
+          <router-link to="/searchPage" class="link" title="Click and start searching">
             <div class="router2">
-            <h3>Search user&project</h3>
+            <h3>Search user & project</h3>
             <img class="CP" alt="Create" src="../assets/icons8-search-100.png" />
             </div>
           </router-link>
 
 </div>
             <div>
-             <router-link to="/Profile" class="link">
+             <router-link to="/Profile" class="link" title="You can view your profile here!">
             <div class="router1">
             <h3>View your profile here</h3>
             <img class="CP" alt="viewP" src="../assets/icons8-female-profile-100.png" />
             </div>
           </router-link>
-          <router-link to="/ownPView" class="link">
+          <router-link to="/ownPView" class="link" title="You can view your project here!">
             <div class="router2">
             <h3>View your project here</h3>
             <img class="CP" alt="Create" src="../assets/icons8-project-setup-100.png" />
@@ -52,15 +55,16 @@
       </div>
 
       <div v-else>
-        <h2>
-          Start building your teamwork history by creating your profile.
-        </h2>
-        <div style="background:white;margin:30px;padding:20px;border-radius:10px">
-        <div class="router-container">
+       
+        <div style="background:white;margin:30px;;margin-top:80px;padding:20px;border-radius:10px">
+         <h3>
+          Start building your teamwork history by creating your profile
+        </h3>
+          <div class="router-container">
           <img class="Tw" alt="Teamwork" src="../assets/teamwork.png" />
-          <router-link to="/CreateProfile" class="link">
+          <router-link to="/CreateProfile" class="link" title="Start create your profile first!">
             <div class="router0">
-            <h2>Get started by creating your profile today.</h2>
+            <h2>Get started by creating your profile today</h2>
             <img class="CP1" alt="Createprofile" src="../assets/icons8-add-user-male-100.png" />
             
             </div>
@@ -221,4 +225,5 @@ export default {
   width: 150px;
   margin-top:20px
 }
+
 </style>

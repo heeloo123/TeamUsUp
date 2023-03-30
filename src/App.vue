@@ -23,7 +23,8 @@ onMounted(()=>{
 <style>
 .background {
   background: rgb(244, 243, 243);
-  height: 100vh;
+  min-height:100vh;
+  height: auto;
   width: 100vw;
   margin: -10px;
   font-family: math;
@@ -80,7 +81,8 @@ nav a.router-link-exact-active {
   border-bottom: ridge;
   border-top: hidden;
   display: flex;
-  padding-top: 10px;
+  padding-top: 0px;
+  font-family: math;
 }
 .header img {
   margin-top: 8px;
@@ -91,5 +93,23 @@ nav a.router-link-exact-active {
   margin-left: 10px;
   text-align: left;
 }
+.link[title]:hover:after {
+  content: attr(title);
+  padding: 5px;
+  color: #fff;
+  background-color: #000;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: 5px;
+}
 
+.link[title]:hover:after {
+  opacity: 1;
+}
 </style>

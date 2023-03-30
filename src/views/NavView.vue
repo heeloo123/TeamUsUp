@@ -10,7 +10,7 @@
           />
         </router-link>
 
-        <router-link to="/home">
+        <router-link to="/home" title="Dashboard">
           <img
             style="width: 30px; margin-top: 10px"
             alt="TeamUsUp logo"
@@ -20,7 +20,7 @@
 
       
         
-   <router-link to="/SearchPage"> <img
+   <router-link to="/SearchPage" title="Search"> <img
             style="width: 20px; margin-left:20px;margin-top:15px"
             alt="TeamUsUp logo"
             src="../assets/icons8-search-32.png"
@@ -43,7 +43,7 @@
 
       <label v-if="showDropDown" class="userDropdown">
         <label class="image">
-          <RouterLink to="/notification"
+          <RouterLink to="/notification" title="Notification"
             ><img src="../assets/notification.png" @mouseover="hoveringNotification = true" @mouseleave = "hoveringNotification = false"
           /></RouterLink>
         </label>
