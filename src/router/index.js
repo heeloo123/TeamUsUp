@@ -24,6 +24,7 @@ import ownPView from "@/views/OwnProjectList.vue";
 import testUse from "@/views/testUse.vue";
 import CommentPage from "@/views/CommentView.vue";
 import helpPage from "@/views/helpPage.vue";
+import helpNav from "@/helpPage/helpNav.vue";
 
 const authGuard = (to, from, next) => {
   const authStore = useAuthStore()
@@ -193,6 +194,11 @@ const routes = [
     path: "/help",
     name: "help",
     component: helpPage,
+  },
+  {
+    path: "/helpNav",
+    name: "helpNav",
+    component: helpNav,
   }
 ];
 
