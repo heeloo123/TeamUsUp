@@ -22,7 +22,7 @@ import searchPage from "@/views/searchPage.vue";
 import { useAuthStore } from "@/stores/auth";
 import ownPView from "@/views/OwnProjectList.vue";
 import testUse from "@/views/testUse.vue";
-
+import helpPage from "@/views/helpPage.vue";
 
 const authGuard = (to, from, next) => {
   const authStore = useAuthStore()
@@ -183,6 +183,10 @@ const routes = [
     path: "/test",
     name: "test",
     component: testUse,
+  },{
+    path: "/help",
+    name: "help",
+    component: helpPage,
   }
 ];
 
