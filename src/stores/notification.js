@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
-import {useAuthStore} from "@/stores/auth";
 import axios from 'axios';
-const API_URL ="http://49.245.48.28:8080/api/notification";
+const API_URL =process.env.VUE_APP_API_URL+ "/notification";
 
 export const useNotificationStore = defineStore ({
     id: "notification",
@@ -11,12 +10,9 @@ export const useNotificationStore = defineStore ({
 
     actions: {
         async fetchNewNotification() {
-            const auth = useAuthStore()
             try {
             const response = await axios.get(`${API_URL}/retrieveNew`, {
-                headers: {
-                    'session-ID':auth.jsessionID
-                }
+               withCredentials:true
             });
             this.notifications = response.data;
         }
@@ -25,12 +21,9 @@ export const useNotificationStore = defineStore ({
             }
         },
         async fetchAnyNotification() {
-            const auth = useAuthStore()
             try {
                 const response = await axios.get(`${API_URL}/retrieveAny`, {
-                    headers: {
-                        'session-ID':auth.jsessionID
-                    }
+                    withCredentials:true
                 });
                 this.notifications = response.data;
             }

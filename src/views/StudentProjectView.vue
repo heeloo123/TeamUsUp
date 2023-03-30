@@ -127,7 +127,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://49.245.48.28:8080/api/project/${this.$route.params.reference}`)
+      .get(`${process.env.VUE_APP_API_URL}/project/${this.$route.params.reference}`)
       .then((response) => {
         this.project = response.data;
         this.status = response.status;
@@ -185,8 +185,8 @@ export default {
   },
   computed: {
     projectImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/project/image/${this.project.projectID}`;
+      const baseUrl = process.env.VUE_APP_API_URL;
+      const imagePath = `/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
     },
   },

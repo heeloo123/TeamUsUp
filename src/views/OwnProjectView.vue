@@ -23,6 +23,14 @@
           </button> -->
 
           <button class="Rp" @click.prevent="showUserList">Evaluation</button>
+          <button class="Rp" > <router-link
+                 
+                  :to="{
+                    name: 'CommentPage',
+                    params: { reference: $route.params.reference },
+                  }"
+                  style="text-decoration: none; color:black"
+                > View comment </router-link></button>
         </p>
       </div>
       <p
@@ -94,29 +102,43 @@
 
                   <div
                     style="
-                      margin-left: 600px;
-                      margin-top: 20px;
-                      font-size: 20px;
-                      display: inline-grid;
+                     margin-top: 20px;
+    font-size: 20px;
+    flex: 1;
+    display: inline;
+    margin-left: 310px;
+    text-align: left;
                     "
                     v-if="evaluateeIDs[role.id.profileID]"
                   >
                     <p>
                       Teamwork:
-                      {{
-                        teamworkSums[role.id.profileID] / evaluateeIDs[role.id.profileID]
-                      }}
+                     <label>  {{
+                      Math.round(
+                        (teamworkSums[role.id.profileID] /
+                          evaluateeIDs[role.id.profileID]) *
+                          100
+                      ) / 100
+                    }}</label>
                     </p>
                     <p>
                       Skill :
-                      {{ skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID] }}
-                    </p>
+                     <label>{{
+                      Math.round(
+                        (skillSums[role.id.profileID] / evaluateeIDs[role.id.profileID]) *
+                          100
+                      ) / 100
+                    }}
+                  </label>   </p>
                     <p>
                       Communication :
-                      {{
-                        communicationSums[role.id.profileID] /
-                        evaluateeIDs[role.id.profileID]
-                      }}
+                    <label> {{
+                      Math.round(
+                        (communicationSums[role.id.profileID] /
+                          evaluateeIDs[role.id.profileID]) *
+                          100
+                      ) / 100
+                    }}</label> 
                     </p>
                   </div>
                 </div>
@@ -137,7 +159,7 @@
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 import Swal from "sweetalert2";
 
 export default {
@@ -159,8 +181,11 @@ export default {
       for (const [name, user] of Object.entries(this.project.nameRoleMap)) {
         console.log(name);
         console.log(user);
-        options.push(name);
-        role.push(user);
+        if(user.id.profileID != this.profile.profileID && !this.evaluations.find((evaluation) => {return evaluation.id.evaluatorID == this.profile.profileID && evaluation.id.evaluateeID == user.id.profileID})){
+          options.push(name);
+          role.push(user);
+        }
+
       }
       console.log("Options : " + options);
       try {
@@ -198,15 +223,13 @@ export default {
   mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
-      axios.get(`${API_URL}/profile/userProfile`, { headers }).then((response) => {
+
+      axios.get(`${API_URL}/profile/userProfile`, { withCredentials:true}).then((response) => {
         console.log(response);
         this.profile = response.data;
       });
       axios
-        .get(`${API_URL}/project/${this.$route.params.reference}`, { headers })
+        .get(`${API_URL}/project/${this.$route.params.reference}`, {withCredentials:true })
 
         .then((response) => {
           this.project = response.data;
@@ -265,8 +288,8 @@ export default {
   },
   computed: {
     projectImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/project/image/${this.project.projectID}`;
+      const baseUrl = process.env.VUE_APP_API_URL;
+      const imagePath = `/project/image/${this.project.projectID}`;
       return baseUrl + imagePath;
     },
   },
@@ -275,10 +298,10 @@ export default {
 
 <style scoped>
 .background {
-  height: 100%;
+  height: 100vh;
 }
 .Rp {
-  margin-left: 100px;
+  margin-left:70px;
   background: rgb(196, 193, 193);
   padding: 10px;
   color: black;

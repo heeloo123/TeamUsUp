@@ -5,19 +5,18 @@
         <label><img src="../assets/icons8-user-32.png" /></label>
         <p>Student Info | Notification</p>
       </div>
- 
-
+   
       <div class="container">
         <div style="border-bottom: solid 1px; padding-bottom: 10px;">
   <h2 style="font-size: 24px; font-weight: bold;">Notifications</h2>
   <div style="display: flex; gap: 10px; " class="Button">
-    <button style="background-color: {{ currentFilter === 'all' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'all' ? 'underline' : 'none' }};" type="radio" @click="currentFilter = 'all'">All</button>
-    <button style="background-color: {{ currentFilter === 'read' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'read' ? 'underline' : 'none' }};" @click="currentFilter = 'read'">Read</button>
-    <button style="background-color: {{ currentFilter === 'unread' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'unread' ? 'underline' : 'none' }};" type="radio"  @click="currentFilter = 'unread'">Unread</button>
+    <button style="background-color: {{ currentFilter === 'all' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'all' ? 'underline' : 'none' }};" type="radio" @click="currentFilter = 'all'; selectedMessage = null">All</button>
+    <button style="background-color: {{ currentFilter === 'read' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'read' ? 'underline' : 'none' }};" @click="currentFilter = 'read'; selectedMessage = null">Read</button>
+    <button style="background-color: {{ currentFilter === 'unread' ? 'lightgray' : 'white' }}; border: none; text-decoration: {{ currentFilter === 'unread' ? 'underline' : 'none' }};" type="radio"  @click="currentFilter = 'unread';selectedMessage = null">Unread</button>
   </div>
 </div>
-        <div style="display: inline-flex;margin-top:30px">
-          <div class="messageTable">
+        <div style="display: inline-flex; margin-top:30px">
+          <div class="messageTable" >
             <div
               class="cell"
               v-for="notification in filteredNotifications"
@@ -27,29 +26,6 @@
             >
               <span class="readflag" @click="markRead(notification.notificationId)">
                 {{ notification.message }}
-                
-                <!-- <button
-                  v-if="
-                    notification.actionRequired &&
-                    notification.timeActionPerf === null &&
-                    notification.read === false
-                  "
-                  class="actionBtn"
-                  @click="processMessageAction(notification.notificationId, true)"
-                >
-                  Yes
-                </button> -->
-                <!-- <button
-                  v-if="
-                    notification.actionRequired &&
-                    notification.timeActionPerf === null &&
-                    notification.read === false
-                  "
-                  class="actionBtn"
-                  @click="processMessageAction(notification.notificationId, false)"
-                >
-                  No
-                </button> -->
 
                 <div class="emailTimeStamp">
                   {{ formatDate(notification.timeCreated) }}
@@ -58,7 +34,7 @@
               </span>
             </div>
           </div>
-          <div class="notificationBox" v-if="showMessageBox">
+          <div class="notificationBox" v-if="showMessageBox" >
            
             <div
               v-if="
@@ -70,6 +46,7 @@
             <button style="margin-top:-20px; border:transparent; background:transparent;float:right" @click="handleCloseEvent(message)">
               <img style="width: 15px" src="../assets/delete.png" alt="delete icon" />
             </button>
+            <div v-if="selectedMessage.actionRequired" class ="popup">
               <p>Dear student {{ profile.firstName }} {{ profile.lastName }} ,</p>
               <p>
                 You have been added as a participant to <span style="text-decoration: underline 1px;">
@@ -87,7 +64,7 @@
                 selectedMessage.actionRequired && selectedMessage.timeActionPerf === null
               "
               class="actionBtn"
-              @click="processMessageAction(selectedMessage.notificationId, true)"
+              @click="processMessageAction(selectedMessage.notificationId, true); selectedMessage.timeActionPerf = Date.now()"
             >
             Accept
             </button>
@@ -96,11 +73,23 @@
                 selectedMessage.actionRequired && selectedMessage.timeActionPerf === null
               "
               class="actionBtn"
-              @click="processMessageAction(selectedMessage.notificationId, false)"
+              @click="processMessageAction(selectedMessage.notificationId, false);  selectedMessage.timeActionPerf = Date.now()"
             >
             Reject
             </button>
           </span>
+        </div>
+        <div v-if="!selectedMessage.actionRequired" class="popup">
+          <p>Dear student {{ profile.firstName }} {{ profile.lastName }} ,</p>
+          Your team member has evaluated you on {{
+                  projects.find(
+                    (project) => project.reference === selectedMessage.projectID
+                  ).header
+                }}.
+          Please review the feedback and use it to improve your future performance in team projects. Let's continue to work together and achieve great things.
+         
+        
+        </div>
             </div>
 
            
@@ -123,7 +112,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useNotificationStore } from "@/stores/notification";
 import Swal from "sweetalert2";
 
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "notificationView",
@@ -162,6 +151,7 @@ export default {
       currentFilter: "all",
       profile: {},
       projects: [],
+      project:{}
     };
   },
 
@@ -208,15 +198,12 @@ export default {
     },
 
     async processMessageAction(notificationID, action) {
-      const auth = useAuthStore;
       axios
         .post(
           `${API_URL}/notification/processAction/`,
           {},
           {
-            headers: {
-              "session-ID": auth.jsessionID,
-            },
+            withCredentials:true,
             params: {
               notificationID: notificationID,
               action: action,
@@ -244,21 +231,19 @@ export default {
     },
 
     async markRead(notificationID) {
-      const auth = useAuthStore;
       axios
         .post(
           `${API_URL}/notification/markAsRead/?notificationID=` + notificationID,
           {},
           {
-            headers: {
-              "session-ID": auth.jsessionID,
-            },
+            withCredentials:true,
           }
         )
         .then((response) => {
+          
           console.log(response.readStatus);
           const notification = this.notifications.find(
-            (notification) => notification.notificationId == notificationID
+            (notification) => notification.notificationId === notificationID
           );
           notification.read = true;
           console.log(notification.readStatus);
@@ -306,17 +291,14 @@ export default {
     const auth = useAuthStore();
 
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
       Swal.showLoading();
       notificationStore
         .fetchAnyNotification()
         .then(() => (this.notifications = useNotificationStore().notifications));
       Swal.hideLoading();
       console.log(this.notifications);
-
-      axios.get(`${API_URL}/profile/userProfile`, { headers }).then((response) => {
+      
+      axios.get(`${API_URL}/profile/userProfile`, { withCredentials:true}).then((response) => {
         console.log(response.data);
         console.log("project", response.data.projects);
         this.profile = response.data;
@@ -324,12 +306,16 @@ export default {
         this.projects = response.data.projects.map((project) => {
           console.log(project.reference);
           axios
-            .get(`${API_URL}/project/` + project.reference, { headers })
+            .get(`${API_URL}/project/` + project.reference, { withCredentials:true })
+            .then((response) => {
+              this.project = response.data;
+              console.log(response)
+            })
 
             .catch((error) => {
               console.error(error);
             });
-          return project;
+           return project; 
         });
       });
     }
@@ -342,6 +328,7 @@ export default {
   background: rgb(255, 255, 255);
   border-radius: 20px;
   width: auto;
+  max-width: 90%;
   margin: 50px;
   padding: 20px;
   margin-top: 20px;
@@ -371,9 +358,10 @@ export default {
 }
 
 .notificationBox {
-  width: auto;
+  width: 30%;
+  max-width: 30%;
   text-align: left;
-  flex:3;
+  flex:1;
   padding:30px;
   background: rgb(252, 248, 248);
 }
@@ -385,12 +373,20 @@ export default {
  margin-top:70px;
 }
 .messageTable {
-  width: -webkit-fill-available;
+  width: auto;
+  max-width: 100%;
   text-align: left;
-  flex: 4;
+  flex: 2;
   
 }
 .Button :hover{
  background: rgb(189, 184, 184);
+}
+.popup{
+  width: 20vw;
+  max-width: 20vw;
+  height: 20vh;
+  max-height: 20vh;
+  overflow-y: scroll;
 }
 </style>

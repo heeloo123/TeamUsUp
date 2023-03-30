@@ -59,14 +59,14 @@
                 margin-top: 60px;
                 text-align: left;
               ">
-            <label>Evaluate for : {{ userProfile.firstName }} {{ userProfile.lastName }}</label>
+            <label>Evaluate for : <span style="margin-left:10px">{{ userProfile.firstName }} {{ userProfile.lastName }}</span> </label>
 
             <div style="padding: 10px; margin-left: -10px">
-              Project name : {{ project.projectName }}
+              Project name : <span style="margin-left:10px">{{ project.projectName }}</span> 
             </div>
             <div v-for="role in project.nameRoleMap" :key="role">
-              <div v-if="role.id.profileID === profile.profileID">
-                <label style="font-size: 22px">Project role : {{ role.projectRole }}
+              <div v-if="role.id.profileID === userProfile.profileID">
+                <label style="font-size: 22px">Project role : <span style="margin-left:10px"> {{ role.projectRole }}</span>
                 </label>
               </div>
             </div>
@@ -87,7 +87,7 @@
         <div style="margin: 20px">
           <form @submit.prevent="submitEvaluation">
             <div class="evaForm">
-              <textarea style="width: -webkit-fill-available;height:100px;padding:10px" placeholder="comment.." />
+              <textarea style="width: -webkit-fill-available;height:100px;padding:10px" placeholder="comment.." v-model="comments"/>
               <div class="rating_form">
                 <div class="rate">
                   <label>Teamwork</label>
@@ -153,7 +153,7 @@
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "SelfEva",
@@ -168,19 +168,18 @@ export default {
       teamwork: "",
       skills: "",
       communication: "",
+      comments: "",
     };
   },
   mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
       axios
         .get(
-          `http://49.245.48.28:8080/api/profile/viewProfile/` +
+          `${process.env.VUE_APP_API_URL}/profile/viewProfile/` +
           this.$route.params.profileID,
-          { headers }
+          {withCredentials:true}
         )
         .then((response) => {
           console.log("user", response.data);
@@ -196,7 +195,7 @@ export default {
         });
 
       axios
-        .get(`${API_URL}/profile/userProfile`, { headers })
+        .get(`${API_URL}/profile/userProfile`, { withCredentials:true })
         .then((response) => {
           console.log(response.data);
           this.profile = response.data;
@@ -207,7 +206,7 @@ export default {
           console.error(error);
         });
       axios
-        .get(`${API_URL}/project/${this.$route.params.reference}`, { headers })
+        .get(`${API_URL}/project/${this.$route.params.reference}`, { withCredentials:true })
         .then((response) => {
           console.log(response.data);
           this.project = response.data;
@@ -224,17 +223,15 @@ export default {
       if (auth.isAuthenticated) {
         axios
           .post(
-            `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=${this.$route.params.profileID}`,
+            `${process.env.VUE_APP_API_URL}/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=${this.$route.params.profileID}`,
             {
-              comments: this.comment,
+              comments: this.comments,
               communication: this.communication,
               teamwork: this.teamwork,
               skill: this.skills,
             },
             {
-              headers: {
-                "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
-              },
+              withCredentials:true
             }
           )
           .then((response) => {
@@ -254,8 +251,8 @@ export default {
   },
   computed: {
     profileImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/profile/image/${this.profile.profileID}`;
+      const baseUrl = process.env.VUE_APP_API_URL;
+      const imagePath = `/profile/image/${this.userProfile.profileID}`;
       return baseUrl + imagePath;
     },
     $state() {

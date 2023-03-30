@@ -22,9 +22,8 @@
                   background:lightgrey
                 "
               >
-                <div style="width: 190px">Project ID</div>
                 <div style="flex: 1">Project Name</div>
-                <div style="flex: 2.2">Project Description</div>
+                <div style="flex: 3">Project Description</div>
               </div>
 
               <div>
@@ -46,9 +45,8 @@
                     
                   "
                 >
-                  <span style="width: 190px">{{ project.reference }}</span>
                   <span style="flex: 1">{{ project.header }}</span>
-                  <span style="flex: 2"
+                  <span style="flex: 3"
                     ><div>
                       {{ project.descriptor }}
                     </div></span
@@ -68,7 +66,7 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
 
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "ownProject",
@@ -86,12 +84,10 @@ export default {
     if (auth.isAuthenticated) {
       Swal.showLoading();
 
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       axios
-        .get(`${API_URL}/profile/userProfile`, { headers })
+        .get(`${API_URL}/profile/userProfile`, {withCredentials:true})
         .then((response) => {
           console.log(response.data);
           console.log("project", response.data.projects);
@@ -101,7 +97,7 @@ export default {
           this.projects = response.data.projects.map((project) => {
             console.log(project.reference);
             axios
-              .get(`${API_URL}/project/` + project.reference, { headers })
+              .get(`${API_URL}/project/` + project.reference, { withCredentials:true })
 
               .catch((error) => {
                 console.error(error);
@@ -134,7 +130,7 @@ export default {
   },
   computed: {
     profileImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
+      const baseUrl = process.env.VUE_APP_API_URL;
       const imagePath = `/profile/image/${this.profile.profileID}`;
       return baseUrl + imagePath;
     },

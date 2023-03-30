@@ -125,7 +125,7 @@ export default {
         Swal.showLoading();
       },
     });
-    let result = await axios.post("http://49.245.48.28:8080/api/register", {
+    let result = await axios.post(process.env.VUE_APP_API_URL+ "/register", {
       email: this.email,
       password: this.password,
       firstName: this.firstName,

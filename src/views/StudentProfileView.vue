@@ -57,15 +57,15 @@
               </div>
             </div>
           </form>
-          <label style="margin-left: -800px; font-size: 25px"
+          <label style="font-size: 25px; vertical-align: top; horiz-align: left; float: left"
             >Recent Project</label
           >
-          <div class="Project-container">
+          <br>
+          <div class="Project-container" >
             <div style="width: -webkit-fill-available">
               <div style="display: flex; width: -webkit-fill-available">
-                <div style="width: 200px">Project ID</div>
                 <div style="flex: 1">Project Name</div>
-                <div style="flex: 2.2">Project Description</div>
+                <div style="flex: 2.9">Project Description</div>
               </div>
               <div class="Pc">
                 <router-link
@@ -86,9 +86,8 @@
                     background: white;
                   "
                 >
-                  <span style="width: 200px">{{ project.projectID }}</span>
                   <span style="flex: 1">{{ project.projectName }}</span>
-                  <span style="flex: 2">{{ project.projectDescription }}</span>
+                  <span style="flex: 3">{{ project.projectDescription }}</span>
                 </router-link>
               </div>
             </div>
@@ -116,7 +115,7 @@ export default {
   mounted() {
     axios
       .get(
-        `http://49.245.48.28:8080/api/profile/viewProfile/${this.$route.params.reference}`
+        `${process.env.VUE_APP_API_URL}/profile/viewProfile/${this.$route.params.reference}`
       )
       .then((response) => {
         this.responseData = response.data;
@@ -132,7 +131,7 @@ export default {
           this.projectsParticipated.forEach((project) => {
             axios
               .get(
-                `http://49.245.48.28:8080/api/project/${project.id.projectID}`
+                `${process.env.VUE_APP_API_URL}/project/${project.id.projectID}`
               )
               .then((response) => {
                 this.projects.push(response.data);
@@ -153,8 +152,8 @@ export default {
   },
   computed: {
     profileImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/profile/image/${this.profile.profileID}`;
+      const baseUrl = process.env.VUE_APP_API_URL;
+      const imagePath = `/profile/image/${this.profile.profileID}`;
       return baseUrl + imagePath;
     },
   },

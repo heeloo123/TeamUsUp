@@ -4,7 +4,7 @@
       <img src="../assets/icons8-user-48.png" @click="toggleDropdown"
     /></span>
     <ul v-if="showDropdown">
-      <li><RouterLink to="/Profile">Profile</RouterLink></li>
+      <li><RouterLink  v-if="authStore.isAuthenticated" to="/Profile">Profile</RouterLink><RouterLink v-else to="/createProfile">Create Profile</RouterLink></li>
       <li v-if="authStore.isAdmin"><RouterLink to="/AdminPage">Admin Page</RouterLink></li>
       <li><RouterLink to="/ownPView">Project</RouterLink></li>
       <li><a href="#" @click="logout">Logout</a></li>

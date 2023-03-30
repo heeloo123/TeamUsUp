@@ -186,7 +186,7 @@
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "SelfEva",
@@ -205,11 +205,9 @@ export default {
   mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
       axios
-        .get(`${API_URL}/profile/userProfile`, { headers })
+        .get(`${API_URL}/profile/userProfile`, {withCredentials:true })
         .then((response) => {
           console.log(response.data);
           this.profile = response.data;
@@ -220,7 +218,7 @@ export default {
           console.error(error);
         });
       axios
-        .get(`${API_URL}/project/${this.$route.params.reference}`, { headers })
+        .get(`${API_URL}/project/${this.$route.params.reference}`, { withCredentials:true })
         .then((response) => {
           console.log(response.data);
           this.project = response.data;
@@ -237,7 +235,7 @@ export default {
       if (auth.isAuthenticated) {
         axios
           .post(
-            `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=${this.evaluateeId}`,
+            `${process.env.VUE_APP_API_URL}/evaluation/postEvaluation?projectID=${this.$route.params.reference}&evaluateeID=${this.evaluateeId}`,
             {
               comments: this.comment,
               communication: this.communication,
@@ -245,9 +243,7 @@ export default {
               skills: this.skills,
             },
             {
-              headers: {
-                "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
-              },
+              withCredentials:true
             }
           )
           .then((response) => {
@@ -267,8 +263,8 @@ export default {
   },
   computed: {
     profileImageSrc() {
-      const baseUrl = "http://49.245.48.28:8080";
-      const imagePath = `/api/profile/image/${this.profile.profileID}`;
+      const baseUrl = process.env.VUE_APP_API_URL;
+      const imagePath = `/profile/image/${this.profile.profileID}`;
       return baseUrl + imagePath;
     },
     $state() {

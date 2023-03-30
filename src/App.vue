@@ -1,8 +1,13 @@
 <script setup>
 
 import NavView from "./views/NavView.vue";
-
-
+import {onMounted} from "vue";
+import {useAuthStore} from "@/stores/auth";
+onMounted(()=>{
+  const auth = useAuthStore();
+  auth.retrieveLogin();
+  console.log("api url is " +  process.env.VUE_APP_API_URL)
+})
 </script>
 
 <template>

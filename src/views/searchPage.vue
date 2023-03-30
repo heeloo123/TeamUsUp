@@ -33,10 +33,10 @@
             :to="{ name: 'StudentProject', params: { reference: result.reference } }"
             class="nameP" >
           <div >
-          {{ result.reference }} | <span style="margin-left:15px;"> {{ result.header }}</span>
+          <span style="margin-left:15px;"> {{ result.header }}</span>
 
           <span style="float:right;margin-right:20px">{{ result.resultType }}</span>
-           <p> Discription: {{ result.descriptor }}</p>
+           <p> Description: {{ result.descriptor }}</p>
           </div>
           </router-link>
         </div>
@@ -45,7 +45,7 @@
             :to="{ name: 'StudentProfile', params: { reference: result.reference } }"
             class="nameP" >
           <div >
-          {{ result.reference }} | <span style="margin-left:15px;"> {{ result.header }}</span>
+          <span style="margin-left:15px;"> {{ result.header }}</span>
           <span style="float:right;margin-right:20px">{{ result.resultType }}</span>
          <p>Major: {{ result.descriptor }}</p> 
          </div>
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     search() {
-      const url = `http://49.245.48.28:8080/api/search?query=${this.query}`;
+      const url = `${process.env.VUE_APP_API_URL}/search?query=${this.query}`;
       axios
         .get(url)
         .then((response) => {

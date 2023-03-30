@@ -70,7 +70,7 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 //import Swal from "sweetalert2";
 
-const API_URL = "http://49.245.48.28:8080/api";
+const API_URL = process.env.VUE_APP_API_URL;
 
 export default {
   name: "EvaluationPage",
@@ -106,12 +106,10 @@ export default {
   async mounted() {
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       axios
-        .get(`${API_URL}/profile/userProfile`, { headers })
+        .get(`${API_URL}/profile/userProfile`, {withCredentials:true })
         .then((response) => {
           console.log(response.data);
           console.log("project", response.data.projects);
@@ -120,7 +118,7 @@ export default {
           this.projectsParticipated = response.data.projectsParticipated;
           this.projectsParticipated.forEach((project) => {
             axios
-              .get(`http://49.245.48.28:8080/api/project/${project.id.projectID}`)
+              .get(`${process.env.VUE_APP_API_URL}/project/${project.id.projectID}`)
               .then((response) => {
                 this.projects.push(response.data);
                 console.log(response.data);
@@ -139,16 +137,14 @@ export default {
     }
   },
   methods: {
-    async evaluation() {
+    evaluation() {
       const auth = useAuthStore();
       if (auth.isAuthenticated) {
         axios.post(
-          `http://49.245.48.28:8080/api/evaluation/postEvaluation?projectID=${this.selectedProjectId}&&evaluatorID=${this.selectedEvaluatorId}&&evaluateeID=${this.selectedEvaluateeId}`,
+          `${process.env.VUE_APP_API_URL}/evaluation/postEvaluation?projectID=${this.selectedProjectId}&&evaluatorID=${this.selectedEvaluatorId}&&evaluateeID=${this.selectedEvaluateeId}`,
           {},
           {
-            headers: {
-              "session-ID": auth.jsessionID != null ? auth.jsessionID : "Placeholder",
-            },
+            withCredentials:true
           }
         );
       }

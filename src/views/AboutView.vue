@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       userlist: [],
-    
+
       showDropdown: false,
     };
   },
@@ -73,12 +73,10 @@ export default {
     // make an axios GET request to retrieve the list of majors
     const auth = useAuthStore();
     if (auth.isAuthenticated) {
-      const headers = {
-        "session-ID": auth.jsessionID,
-      };
+
 
       axios
-        .get("http://49.245.48.28:8080/api/admin/userList?pageNo=1", { headers })
+        .get(process.env.VUE_APP_API_URL+"/admin/userList?pageNo=1", { withCredentials:true})
 
         .then((response) => {
           // store the list of majors in the data object
