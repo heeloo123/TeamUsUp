@@ -174,7 +174,11 @@
         <li>Click Logout to formally logout from the system.</li>
       </ol>
 
-      <h1 id="general">General</h1>
+      <h1 id="general">General 
+        
+      
+      
+      </h1>
       <h2 id="home-page">Home page</h2>
       <p>
         The home page serves as the starting point for accessing of TeamUsUp system. The
