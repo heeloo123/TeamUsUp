@@ -13,9 +13,7 @@ onMounted(()=>{
 <template>
    <main>
    <NavView />
-   
    </main>
-
 
 </template>
 
