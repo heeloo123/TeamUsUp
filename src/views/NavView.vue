@@ -29,6 +29,7 @@
       </div>
 
       <label style="float: right">
+        <router-link to="/help" class="link" title="Get help"><img style="width:20px;margin-right:5px;margin-bottom:-5px" src="../assets/iconHelp/icons8-help-50.png"/>Help</router-link>
         <button
           class="loginBtn"
           v-if="showLoginBtn"
@@ -42,6 +43,8 @@
       <!-- <label v-if="auth.isAuthenticated" class="userDropdown"> -->
 
       <label v-if="showDropDown" class="userDropdown">
+        <router-link to="/help" class="link" title="Get help"><img style="width:20px;margin-right:5px;margin-bottom:-5px" src="../assets/iconHelp/icons8-help-50.png"/>Help</router-link>
+      
         <label class="image">
           <RouterLink to="/notification" title="Notification"
             ><img src="../assets/notification.png" @mouseover="hoveringNotification = true" @mouseleave = "hoveringNotification = false"
@@ -161,4 +164,5 @@ NotificationDropDown{
   width: 20%;
   height: 20%;
 }
+
 </style>

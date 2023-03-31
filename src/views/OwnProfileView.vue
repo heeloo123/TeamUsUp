@@ -79,7 +79,7 @@
             <p v-if="isDeactivated === true" class="message">
               Your account has been <span style="color:brown;font-size:20px">deactivated</span>. It will need 1 hour to reactivate. If you
               wish to immediate reactivate your account, please send an email to
-              admin@example.com with your request.
+              sparklechus@gmail.com with your request.
             </p>
           </div>
         </div>
